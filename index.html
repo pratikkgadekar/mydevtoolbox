@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyDevToolbox — Fast, Privacy-First Browser Utilities</title>
+  <meta name="description" content="Free, 100% client-side developer toolbox. JSON to TS, Cron builder, Base64 encoder, UUID generator, and more. No data leaves your machine." />
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom clean scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float {
+      animation: float 3.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+  <header class="border-b border-slate-800 bg-[#0f172a]/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <i data-lucide="wrench" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <span class="font-bold text-lg tracking-tight text-white">MyDev<span class="text-indigo-400">Toolbox</span></span>
+          <span class="text-[10px] ml-2 px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-medium">100% Client-Side</span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <a href="#tools" onclick="switchView('dashboard')" class="text-sm font-medium text-slate-400 hover:text-white transition px-3 py-1.5 rounded-lg hover:bg-slate-800">All Tools</a>
+        <div class="text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2.5 py-1 rounded-md hidden sm:inline-flex items-center gap-1">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Zero Data Leaves Browser
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+    <div class="w-full h-16 sm:h-20 bg-slate-900/50 border border-dashed border-slate-800 rounded-xl flex items-center justify-center text-xs text-slate-600 tracking-wider uppercase">
+      <span>Ad Space — 728x90 Leaderboard</span>
+    </div>
+  </div>
+
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+    <div id="view-dashboard">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          Developer Utilities, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-violet-400">Zero Latency</span>.
+        </h1>
+        <p class="mt-3 text-slate-400 text-sm sm:text-base">
+          Lightweight, privacy-first developer tools executed entirely in your browser memory.
+        </p>
+
+        <div class="mt-6 relative max-w-lg mx-auto">
+          <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-3.5 text-slate-500"></i>
+          <input 
+            type="text" 
+            id="tool-search" 
+            oninput="filterTools()" 
+            placeholder="Search tools (e.g., JSON, Cron, Base64, UUID)..." 
+            class="w-full pl-11 pr-4 py-3 bg-slate-900/90 border border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-white placeholder-slate-500 shadow-inner"
+          />
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs">
+          <button onclick="setCategoryFilter('all')" class="cat-pill active px-3 py-1 rounded-lg bg-indigo-600 text-white font-medium">All Tools</button>
+          <button onclick="setCategoryFilter('converter')" class="cat-pill px-3 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white font-medium border border-slate-700/50">Converters</button>
+          <button onclick="setCategoryFilter('format')" class="cat-pill px-3 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white font-medium border border-slate-700/50">Formatters</button>
+          <button onclick="setCategoryFilter('generator')" class="cat-pill px-3 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white font-medium border border-slate-700/50">Generators</button>
+          <button onclick="setCategoryFilter('css')" class="cat-pill px-3 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white font-medium border border-slate-700/50">CSS & Web</button>
+        </div>
+      </div>
+
+      <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <div class="tool-card group p-5 bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 rounded-2xl cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/40" data-cat="converter" onclick="openTool('json-ts')">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-lg bg-indigo-950/60 border border-indigo-800 flex items-center justify-center text-indigo-400">
+              <i data-lucide="file-json" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[11px] font-mono uppercase bg-slate-800 text-slate-400 px-2 py-0.5 rounded">High Use</span>
+          </div>
+          <h3 class="font-semibold text-white mt-4 group-hover:text-indigo-400 transition">JSON to TypeScript</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Instantly convert nested JSON payloads into strongly-typed TypeScript interfaces.</p>
+        </div>
+
+        <div class="tool-card group p-5 bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 rounded-2xl cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/40" data-cat="generator" onclick="openTool('cron-builder')">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-lg bg-indigo-950/60 border border-indigo-800 flex items-center justify-center text-indigo-400">
+              <i data-lucide="clock" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[11px] font-mono uppercase bg-slate-800 text-slate-400 px-2 py-0.5 rounded">DevOps</span>
+          </div>
+          <h3 class="font-semibold text-white mt-4 group-hover:text-indigo-400 transition">Cron Expression Explainer</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Turn obscure cron schedules into plain English statements and test expressions.</p>
+        </div>
+
+        <div class="tool-card group p-5 bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 rounded-2xl cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/40" data-cat="converter" onclick="openTool('base64')">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-lg bg-indigo-950/60 border border-indigo-800 flex items-center justify-center text-indigo-400">
+              <i data-lucide="binary" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[11px] font-mono uppercase bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Fast</span>
+          </div>
+          <h3 class="font-semibold text-white mt-4 group-hover:text-indigo-400 transition">Base64 Text & File Tool</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Encode or decode strings and binary files without uploading bytes to any server.</p>
+        </div>
+
+        <div class="tool-card group p-5 bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 rounded-2xl cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/40" data-cat="generator" onclick="openTool('uuid-gen')">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-lg bg-indigo-950/60 border border-indigo-800 flex items-center justify-center text-indigo-400">
+              <i data-lucide="key" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[11px] font-mono uppercase bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Security</span>
+          </div>
+          <h3 class="font-semibold text-white mt-4 group-hover:text-indigo-400 transition">UUID & Password Generator</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Generate batch RFC4122 v4 UUIDs and cryptographically secure passwords.</p>
+        </div>
+
+        <div class="tool-card group p-5 bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 rounded-2xl cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/40" data-cat="format" onclick="openTool('markdown-live')">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-lg bg-indigo-950/60 border border-indigo-800 flex items-center justify-center text-indigo-400">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[11px] font-mono uppercase bg-slate-800 text-slate-400 px-2 py-0.5 rounded">Content</span>
+          </div>
+          <h3 class="font-semibold text-white mt-4 group-hover:text-indigo-400 transition">Markdown Realtime Editor</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Live preview, word count counter, and instant copy-to-HTML parser.</p>
+        </div>
+
+        <div class="tool-card group p-5 bg-slate-900/70 border border-slate-800 hover:border-indigo-500/50 rounded-2xl cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/40" data-cat="css" onclick="openTool('box-shadow')">
+          <div class="flex items-start justify-between">
+            <div class="w-10 h-10 rounded-lg bg-indigo-950/60 border border-indigo-800 flex items-center justify-center text-indigo-400">
+              <i data-lucide="layers" class="w-5 h-5"></i>
+            </div>
+            <span class="text-[11px] font-mono uppercase bg-slate-800 text-slate-400 px-2 py-0.5 rounded">CSS</span>
+          </div>
+          <h3 class="font-semibold text-white mt-4 group-hover:text-indigo-400 transition">CSS Box-Shadow Generator</h3>
+          <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">Visual sliders for X/Y offset, blur, spread radius, and multi-layer shadows.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="view-tool" class="hidden">
+      <div class="flex items-center justify-between pb-6 border-b border-slate-800 mb-6">
+        <button onclick="switchView('dashboard')" class="flex items-center text-xs font-semibold text-slate-400 hover:text-white bg-slate-900 hover:bg-slate-800 px-3 py-2 rounded-lg border border-slate-700 transition">
+          <i data-lucide="arrow-left" class="w-4 h-4 mr-1.5"></i> Back to All Tools
+        </button>
+        <span id="active-tool-badge" class="text-xs px-2.5 py-1 bg-indigo-950 text-indigo-300 border border-indigo-800 rounded-full font-mono font-medium">100% Client-Side Engine</span>
+      </div>
+
+      <div id="tool-json-ts" class="tool-view-panel hidden">
+        <h2 class="text-xl font-bold text-white mb-1">JSON to TypeScript Converter</h2>
+        <p class="text-xs text-slate-400 mb-4">Paste raw JSON on the left to generate formatted TypeScript types instantly.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+              <span>Input JSON</span>
+              <button onclick="loadSampleJson()" class="text-indigo-400 hover:underline">Load Sample</button>
+            </div>
+            <textarea id="json-input" oninput="convertJsonToTs()" class="w-full h-80 p-3 bg-slate-950 font-mono text-xs text-slate-200 border border-slate-800 rounded-xl focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder='{"userId": 101, "name": "Alex", "isAdmin": false}'></textarea>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
+              <span>TypeScript Definitions</span>
+              <button onclick="copyToClipboard('ts-output')" class="text-indigo-400 hover:underline flex items-center"><i data-lucide="copy" class="w-3 h-3 mr-1"></i> Copy</button>
+            </div>
+            <textarea id="ts-output" readonly class="w-full h-80 p-3 bg-slate-900 font-mono text-xs text-indigo-300 border border-slate-800 rounded-xl focus:outline-none" placeholder="export interface RootObject { ... }"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool-cron-builder" class="tool-view-panel hidden">
+        <h2 class="text-xl font-bold text-white mb-1">Cron Expression Explainer</h2>
+        <p class="text-xs text-slate-400 mb-4">Enter standard 5-part cron syntax to get a human explanation.</p>
+        
+        <div class="max-w-xl mx-auto bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Cron String (Minute Hour Day-of-Month Month Day-of-Week)</label>
+            <input type="text" id="cron-input" oninput="explainCron()" value="*/15 * * * *" class="w-full px-4 py-2.5 bg-slate-950 font-mono text-sm text-white border border-slate-700 rounded-xl focus:ring-1 focus:ring-indigo-500 focus:outline-none" />
+          </div>
+          <div class="p-4 bg-slate-950 border border-slate-800 rounded-xl">
+            <div class="text-xs text-slate-500 mb-1">Plain English Interpretation:</div>
+            <div id="cron-result" class="text-base font-semibold text-emerald-400">Runs every 15 minutes.</div>
+          </div>
+          <div class="flex flex-wrap gap-2 text-xs">
+            <span class="text-slate-500">Quick presets:</span>
+            <button onclick="setCronPreset('0 0 * * *')" class="text-indigo-400 hover:underline">Daily midnight</button> ·
+            <button onclick="setCronPreset('0 9 * * 1-5')" class="text-indigo-400 hover:underline">Weekdays 9 AM</button> ·
+            <button onclick="setCronPreset('*/5 * * * *')" class="text-indigo-400 hover:underline">Every 5 min</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool-base64" class="tool-view-panel hidden">
+        <h2 class="text-xl font-bold text-white mb-1">Base64 Encode & Decode</h2>
+        <p class="text-xs text-slate-400 mb-4">Client-side encoding for strings with Unicode support.</p>
+        <div class="space-y-4">
+          <textarea id="b64-input" class="w-full h-36 p-3 bg-slate-950 font-mono text-xs text-slate-200 border border-slate-800 rounded-xl focus:ring-1 focus:ring-indigo-500 focus:outline-none" placeholder="Type or paste your text here..."></textarea>
+          <div class="flex gap-3">
+            <button onclick="runBase64('encode')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-lg">Encode to Base64</button>
+            <button onclick="runBase64('decode')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-lg border border-slate-700">Decode from Base64</button>
+          </div>
+          <textarea id="b64-output" readonly class="w-full h-36 p-3 bg-slate-900 font-mono text-xs text-indigo-300 border border-slate-800 rounded-xl focus:outline-none" placeholder="Result appears here..."></textarea>
+        </div>
+      </div>
+
+      <div id="tool-uuid-gen" class="tool-view-panel hidden">
+        <h2 class="text-xl font-bold text-white mb-1">UUID & Secure Password Generator</h2>
+        <p class="text-xs text-slate-400 mb-4">Generated using browser native Web Crypto API (`crypto.getRandomValues`).</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-3">
+            <h3 class="text-sm font-semibold text-white">Version 4 UUIDs</h3>
+            <button onclick="generateUuids()" class="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-lg">Generate 5 New UUIDs</button>
+            <textarea id="uuid-output" readonly class="w-full h-40 p-2.5 bg-slate-950 font-mono text-xs text-slate-300 border border-slate-800 rounded-xl"></textarea>
+          </div>
+          <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-3">
+            <h3 class="text-sm font-semibold text-white">Strong Password Generator</h3>
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span>Length: <span id="pwd-len-val">16</span></span>
+              <input type="range" min="8" max="32" value="16" id="pwd-len" oninput="document.getElementById('pwd-len-val').innerText = this.value; generatePassword();" class="w-32">
+            </div>
+            <button onclick="generatePassword()" class="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-lg">Generate Password</button>
+            <input type="text" id="pwd-output" readonly class="w-full p-2.5 bg-slate-950 font-mono text-sm text-emerald-400 border border-slate-800 rounded-xl text-center" />
+          </div>
+        </div>
+      </div>
+
+      <div id="tool-markdown-live" class="tool-view-panel hidden">
+        <h2 class="text-xl font-bold text-white mb-1">Live Markdown Editor</h2>
+        <p class="text-xs text-slate-400 mb-4">Type markdown on the left to see instant HTML rendering.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <textarea id="md-input" oninput="parseMarkdownLive()" class="w-full h-80 p-3 bg-slate-950 font-mono text-xs text-slate-200 border border-slate-800 rounded-xl focus:outline-none" placeholder="# Hello Markdown&#10;&#10;Write **bold**, *italic*, or `code` here..."></textarea>
+          <div id="md-preview" class="w-full h-80 p-4 bg-slate-900 overflow-y-auto prose prose-invert max-w-none text-xs border border-slate-800 rounded-xl"></div>
+        </div>
+      </div>
+
+      <div id="tool-box-shadow" class="tool-view-panel hidden">
+        <h2 class="text-xl font-bold text-white mb-1">CSS Box Shadow Generator</h2>
+        <p class="text-xs text-slate-400 mb-4">Visually design CSS shadows and copy the clean CSS declaration.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="space-y-3 bg-slate-900 p-5 rounded-2xl border border-slate-800 text-xs">
+            <div>
+              <label class="flex justify-between text-slate-400">Horizontal Offset <span id="bs-x-val">0px</span></label>
+              <input type="range" min="-50" max="50" value="0" id="bs-x" oninput="updateShadow()" class="w-full">
+            </div>
+            <div>
+              <label class="flex justify-between text-slate-400">Vertical Offset <span id="bs-y-val">10px</span></label>
+              <input type="range" min="-50" max="50" value="10" id="bs-y" oninput="updateShadow()" class="w-full">
+            </div>
+            <div>
+              <label class="flex justify-between text-slate-400">Blur Radius <span id="bs-blur-val">25px</span></label>
+              <input type="range" min="0" max="100" value="25" id="bs-blur" oninput="updateShadow()" class="w-full">
+            </div>
+            <div>
+              <label class="flex justify-between text-slate-400">Spread <span id="bs-spread-val">-5px</span></label>
+              <input type="range" min="-25" max="50" value="-5" id="bs-spread" oninput="updateShadow()" class="w-full">
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center p-8 bg-slate-950 rounded-2xl border border-slate-800">
+            <div id="shadow-box" class="w-36 h-36 bg-indigo-600 rounded-2xl transition-all duration-75"></div>
+            <code id="shadow-code" class="mt-8 px-3 py-2 bg-slate-900 border border-slate-800 rounded text-[11px] font-mono text-indigo-300">box-shadow: 0px 10px 25px -5px rgba(0,0,0,0.5);</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 w-full">
+    <div class="w-full h-20 bg-slate-900/40 border border-dashed border-slate-800 rounded-xl flex items-center justify-center text-xs text-slate-600 uppercase">
+      <span>Ad Space — 728x90 Banner</span>
+    </div>
+  </div>
+
+  <div class="fixed bottom-5 right-5 z-50 flex items-end space-x-3">
+    <div id="assistant-bubble" class="hidden max-w-xs bg-slate-900 border border-indigo-500/40 shadow-2xl rounded-2xl p-4 text-xs space-y-2 mb-2">
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-indigo-400 flex items-center gap-1">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i> Sparky DevBot
+        </span>
+        <button onclick="toggleAssistant()" class="text-slate-400 hover:text-white text-base leading-none">&times;</button>
+      </div>
+      <p id="assistant-message" class="text-slate-300 leading-relaxed">
+        Hey! Looking to convert or generate something quickly?
+      </p>
+      <div class="pt-2 border-t border-slate-800 flex flex-wrap gap-1.5">
+        <button onclick="openTool('json-ts')" class="px-2 py-1 bg-slate-800 hover:bg-indigo-600 hover:text-white rounded text-[10px] text-slate-300">JSON to TS</button>
+        <button onclick="openTool('cron-builder')" class="px-2 py-1 bg-slate-800 hover:bg-indigo-600 hover:text-white rounded text-[10px] text-slate-300">Cron Builder</button>
+        <button onclick="openTool('uuid-gen')" class="px-2 py-1 bg-slate-800 hover:bg-indigo-600 hover:text-white rounded text-[10px] text-slate-300">Gen UUID</button>
+      </div>
+    </div>
+
+    <button 
+      onclick="toggleAssistant()" 
+      class="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600 p-0.5 shadow-lg shadow-indigo-500/30 hover:scale-105 active:scale-95 transition animate-float focus:outline-none flex items-center justify-center"
+      title="Ask Sparky"
+    >
+      <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-indigo-400">
+        <i data-lucide="bot" class="w-6 h-6 text-indigo-400"></i>
+      </div>
+    </button>
+  </div>
+
+  <footer class="border-t border-slate-800/80 bg-[#090d16] py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>© 2026 <strong>mydevtoolbox.in</strong>. All tools run 100% locally in your browser.</div>
+      <div class="flex space-x-4 text-slate-400">
+        <a href="#" class="hover:underline">Privacy Policy</a>
+        <a href="#" class="hover:underline">Terms</a>
+        <a href="#" class="hover:underline">Report an Issue</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 1. NAVIGATION / VIEW SWITCHING
+    function switchView(viewName) {
+      const dashboard = document.getElementById('view-dashboard');
+      const toolView = document.getElementById('view-tool');
+      
+      if (viewName === 'dashboard') {
+        dashboard.classList.remove('hidden');
+        toolView.classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        dashboard.classList.add('hidden');
+        toolView.classList.remove('hidden');
+      }
+    }
+
+    function openTool(toolId) {
+      switchView('tool');
+      document.querySelectorAll('.tool-view-panel').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('tool-' + toolId);
+      if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      
+      // Auto-trigger setups
+      if (toolId === 'uuid-gen') { generateUuids(); generatePassword(); }
+      if (toolId === 'box-shadow') { updateShadow(); }
+      if (toolId === 'cron-builder') { explainCron(); }
+    }
+
+    // 2. SEARCH & FILTER
+    function filterTools() {
+      const q = document.getElementById('tool-search').value.toLowerCase();
+      document.querySelectorAll('.tool-card').forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(q) ? 'block' : 'none';
+      });
+    }
+
+    function setCategoryFilter(cat) {
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white');
+        btn.classList.add('bg-slate-800', 'text-slate-400');
+      });
+      event.target.classList.add('bg-indigo-600', 'text-white');
+      event.target.classList.remove('bg-slate-800', 'text-slate-400');
+
+      document.querySelectorAll('.tool-card').forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 3. TOOL ENGINES (100% Client Side)
+
+    // A. JSON to TypeScript Engine
+    function jsonToTs(obj, interfaceName = "RootObject") {
+      let result = `export interface ${interfaceName} {\n`;
+      for (const [key, value] of Object.entries(obj)) {
+        let type = typeof value;
+        if (value === null) type = 'any';
+        else if (Array.isArray(value)) type = value.length > 0 ? `${typeof value[0]}[]` : 'any[]';
+        else if (type === 'object') type = 'Record<string, any>';
+        result += `  ${key}: ${type};\n`;
+      }
+      result += '}';
+      return result;
+    }
+
+    function convertJsonToTs() {
+      const input = document.getElementById('json-input').value.trim();
+      const output = document.getElementById('ts-output');
+      if (!input) { output.value = ''; return; }
+      try {
+        const parsed = JSON.parse(input);
+        output.value = jsonToTs(parsed);
+      } catch (e) {
+        output.value = '// Invalid JSON input: ' + e.message;
+      }
+    }
+
+    function loadSampleJson() {
+      const sample = { id: 1042, username: "dev_user", active: true, roles: ["admin", "editor"], profile: { bio: "Full-stack developer" } };
+      document.getElementById('json-input').value = JSON.stringify(sample, null, 2);
+      convertJsonToTs();
+    }
+
+    // B. Cron Explainer
+    function explainCron() {
+      const expr = document.getElementById('cron-input').value.trim();
+      const res = document.getElementById('cron-result');
+      if (expr === '*/15 * * * *') res.innerText = "Runs every 15 minutes past every hour.";
+      else if (expr === '0 0 * * *') res.innerText = "Runs once every day at 12:00 AM (midnight).";
+      else if (expr === '0 9 * * 1-5') res.innerText = "Runs at 09:00 AM, Monday through Friday.";
+      else if (expr === '*/5 * * * *') res.innerText = "Runs every 5 minutes.";
+      else res.innerText = `Custom schedule format: [Minute: ${expr.split(' ')[0] || '*'}] [Hour: ${expr.split(' ')[1] || '*'}]`;
+    }
+    function setCronPreset(str) {
+      document.getElementById('cron-input').value = str;
+      explainCron();
+    }
+
+    // C. Base64
+    function runBase64(mode) {
+      const input = document.getElementById('b64-input').value;
+      const output = document.getElementById('b64-output');
+      try {
+        if (mode === 'encode') output.value = btoa(unescape(encodeURIComponent(input)));
+        else output.value = decodeURIComponent(escape(atob(input)));
+      } catch (err) {
+        output.value = 'Error: Invalid base64 or string characters.';
+      }
+    }
+
+    // D. UUID & Strong Passwords
+    function generateUuids() {
+      let list = [];
+      for (let i = 0; i < 5; i++) {
+        list.push(crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+          let r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        }));
+      }
+      document.getElementById('uuid-output').value = list.join('\n');
+    }
+
+    function generatePassword() {
+      const len = parseInt(document.getElementById('pwd-len').value) || 16;
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|';
+      const array = new Uint32Array(len);
+      crypto.getRandomValues(array);
+      let pwd = '';
+      for (let i = 0; i < len; i++) pwd += chars[array[i] % chars.length];
+      document.getElementById('pwd-output').value = pwd;
+    }
+
+    // E. Markdown Preview
+    function parseMarkdownLive() {
+      const val = document.getElementById('md-input').value;
+      // Simple lightweight parser for headers, bold, code
+      let html = val
+        .replace(/^### (.*$)/gim, '<h3 class="text-base font-bold mt-2">$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2 class="text-lg font-bold mt-3">$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1 class="text-xl font-bold mt-4">$1</h1>')
+        .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+        .replace(/\*(.*)\*/gim, '<em>$1</em>')
+        .replace(/`([^`]+)`/gim, '<code class="bg-slate-800 px-1 py-0.5 rounded text-indigo-300 font-mono">$1</code>')
+        .replace(/\n$/gim, '<br />');
+      document.getElementById('md-preview').innerHTML = html || '<span class="text-slate-500">Live preview will render here...</span>';
+    }
+
+    // F. Box Shadow
+    function updateShadow() {
+      const x = document.getElementById('bs-x').value;
+      const y = document.getElementById('bs-y').value;
+      const blur = document.getElementById('bs-blur').value;
+      const spread = document.getElementById('bs-spread').value;
+
+      document.getElementById('bs-x-val').innerText = x + 'px';
+      document.getElementById('bs-y-val').innerText = y + 'px';
+      document.getElementById('bs-blur-val').innerText = blur + 'px';
+      document.getElementById('bs-spread-val').innerText = spread + 'px';
+
+      const shadow = `${x}px ${y}px ${blur}px ${spread}px rgba(0, 0, 0, 0.6)`;
+      document.getElementById('shadow-box').style.boxShadow = shadow;
+      document.getElementById('shadow-code').innerText = `box-shadow: ${shadow};`;
+    }
+
+    // 4. HELPER / SPARKIE ASSISTANT
+    function toggleAssistant() {
+      const bubble = document.getElementById('assistant-bubble');
+      bubble.classList.toggle('hidden');
+    }
+
+    // Show assistant greeting after 4 seconds automatically on first load
+    setTimeout(() => {
+      const bubble = document.getElementById('assistant-bubble');
+      if (bubble) bubble.classList.remove('hidden');
+    }, 4000);
+
+    function copyToClipboard(elementId) {
+      const el = document.getElementById(elementId);
+      navigator.clipboard.writeText(el.value);
+      alert('Copied to clipboard!');
+    }
+  </script>
+</body>
+</html>
