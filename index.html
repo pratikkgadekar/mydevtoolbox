@@ -6,8 +6,7 @@
   <title>MyDevToolbox — Fast, Free & Privacy-First Browser Utilities</title>
   <meta name="description" content="Free 100% client-side web toolbox: PDF merger, JSON studio, QR generator, image compressor, code diff, regex, and cryptographic tools." />
   
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2884422236657572"
-     crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2884422236657572" crossorigin="anonymous"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -35,7 +34,6 @@
   </script>
 
   <style>
-    /* 3-Theme Variable Definitions */
     :root[data-theme="light"] {
       --bg-main: #f8fafc;
       --bg-card: rgba(255, 255, 255, 0.95);
@@ -84,18 +82,15 @@
       color: var(--text-main);
     }
 
-    /* JSON Syntax Colors */
     .json-key { color: #f43f5e; font-weight: 600; }
     .json-string { color: #10b981; }
     .json-number { color: #f59e0b; }
     .json-boolean { color: #8b5cf6; font-weight: 600; }
     .json-null { color: #64748b; font-style: italic; }
 
-    /* Code Diff Colors */
     .diff-insert { background-color: rgba(16, 185, 129, 0.25); color: #10b981; }
     .diff-delete { background-color: rgba(244, 63, 94, 0.25); color: #f43f5e; text-decoration: line-through; }
 
-    /* Kawaii Pet Bouncy Fluid Animations */
     @keyframes pet-bounce {
       0%, 100% { transform: scale(1, 1) translateY(0); }
       30% { transform: scale(1.12, 0.88) translateY(3px); }
@@ -109,6 +104,23 @@
       96% { transform: scaleY(0.12); }
     }
     .eye-blink-smooth { animation: eye-blink-smooth 3.6s infinite; transform-origin: center; }
+
+    /* Zen Bubble Wrap Popper */
+    .bubble-wrap-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(99,102,241,0.3));
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .bubble-wrap-dot.popped {
+      background: rgba(148, 163, 184, 0.2);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+      transform: scale(0.85);
+      cursor: default;
+    }
   </style>
 </head>
 
@@ -166,7 +178,7 @@
             id="tool-search" 
             oninput="filterTools()" 
             onkeydown="if(event.key === 'Enter') handleMainSearchEnter()" 
-            placeholder="Search any tool (e.g. JSON, PDF, QR, Diff, Hash, Case, Password, UUID)..." 
+            placeholder="Search any tool (e.g. JSON, PDF, QR, Diff, Hash, Case, Password, UUID, Unit)..." 
             class="w-full pl-12 pr-24 py-3.5 theme-editor border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md transition"
           />
           <button 
@@ -179,7 +191,7 @@
         <div id="search-status-text" class="text-xs font-semibold text-indigo-500 mt-2.5 hidden"></div>
 
         <div class="flex flex-wrap items-center justify-center gap-2 mt-5 text-xs">
-          <button onclick="setCategoryFilter('all')" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All Tools</button>
+          <button onclick="setCategoryFilter('all')" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All Tools (24)</button>
           <button onclick="setCategoryFilter('popular')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">🔥 Most Popular (12)</button>
           <button onclick="setCategoryFilter('general')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Everyday Utilities (12)</button>
           <button onclick="setCategoryFilter('format')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">JSON & Data Studio (12)</button>
@@ -344,20 +356,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general generator" onclick="openTool('box-shadow')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500">
-                <i data-lucide="palette" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Design</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Color Palette Builder</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate modern harmonic UI color palettes with instant HEX & RGB copy.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format popular" onclick="openTool('json-formatter')">
           <div>
             <div class="flex items-start justify-between">
@@ -386,34 +384,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
-                <i data-lucide="table" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Data</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">JSON to CSV Converter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Convert array of JSON objects into Excel-ready CSV spreadsheets.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
-                <i data-lucide="sheet" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Parser</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">CSV to JSON Parser</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Transform comma-separated text sheets into structured JSON data structures.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format popular" onclick="openTool('base64')">
           <div>
             <div class="flex items-start justify-between">
@@ -426,104 +396,6 @@
             <p class="text-xs opacity-70 mt-1 leading-relaxed">Encode or decode strings and binary image files with full Unicode support.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('string-escape')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500">
-                <i data-lucide="quote" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Cleaner</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">JSON & String Escaper</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Escape quotes, newlines, and backslashes for programming literals and SQL inserts.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('html-entities')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500">
-                <i data-lucide="code" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Entities</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">HTML Entity Converter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Convert characters to HTML entities (&amp;, &lt;, &gt;, &quot;) and vice versa.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('xml-json')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
-                <i data-lucide="file-code-2" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Converter</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">XML to JSON Converter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Parse standard XML tag structures directly into JSON object trees.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('dedupe-lines')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
-                <i data-lucide="list-filter" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Lists</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Duplicate Line Cleaner</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Remove duplicate rows, sort alphabetical lines, and strip empty whitespace.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500">
-                <i data-lucide="minimize-2" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Compress</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">JSON Compact Minifier</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Strip extra spaces and minify JSON files for lightning fast API payloads.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
-                <i data-lucide="arrow-down-a-z" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Organize</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Sort JSON Keys Alphabetically</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Sort nested JSON object keys alphabetically for clean deterministic diffs.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
-                <i data-lucide="file-check-2" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Viewer</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Data Tree & Type Inspector</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Examine data node depth, byte footprints, and primitive types in realtime.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('uuid-gen')">
@@ -562,8 +434,8 @@
               </div>
               <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Crypto</span>
             </div>
-            <h3 class="font-bold text-base mt-4">SHA-256 & SHA-512 Hasher</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate cryptographic message digests instantly in browser memory.</p>
+            <h3 class="font-bold text-base mt-4">SHA-256 Hasher</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate cryptographic SHA-256 message digests instantly in browser memory.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
@@ -580,90 +452,6 @@
             <p class="text-xs opacity-70 mt-1 leading-relaxed">Convert article titles into clean, URL-safe permalinks for blogs and websites.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('salt-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
-                <i data-lucide="shuffle" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Random</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Random Salt & Hex String</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Create random hexadecimal and alphanumeric tokens for secret keys.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('hash-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
-                <i data-lucide="file-signature" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Signature</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">HMAC Signature Calculator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate HMAC-SHA256 signatures with custom secret keys for API authentication.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('pwd-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
-                <i data-lucide="lock" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Auth</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">API Key & Secret Generator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Produce high-entropy base64 and hex strings for environment variables.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('salt-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500">
-                <i data-lucide="network" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Network</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Random MAC Address Creator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate random unicast MAC addresses formatted for networking mocks.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('pwd-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500">
-                <i data-lucide="binary" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">Memorable</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Memorable Passphrase Builder</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate easy-to-remember yet mathematically robust multi-word passphrases.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('hash-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
-                <i data-lucide="fingerprint" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Hash</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Crypto Digest & Salt Studio</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate random cryptographically secure salting vectors for hashing rounds.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev popular" onclick="openTool('diff-checker')">
@@ -750,90 +538,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('box-shadow')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500">
-                <i data-lucide="file-code" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">Speed</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">CSS Minifier & Cleaner</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Compress CSS styles and strip comments to reduce asset load times.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('json-formatter')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500">
-                <i data-lucide="file-code" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-2.5 py-0.5 rounded-full">Format</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">JavaScript Code Formatter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Clean up messy minified JavaScript with standardized tab indentations.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-yellow-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('box-shadow')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500">
-                <i data-lucide="pipette" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Color</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">HEX to RGB / HSL Converter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Interactive color spectrum picker with instant HEX, RGBA, and HSL copy formats.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('slug-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
-                <i data-lucide="share-2" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">SEO</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Meta Tag & OpenGraph Builder</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate Twitter Cards and Facebook OpenGraph HTML tags with live social previews.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('box-shadow')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
-                <i data-lucide="file-minus" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Minify</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">HTML & SVG Markup Minifier</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Strip redundant tags, whitespace, and comments from production HTML templates.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('url-codec')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
-                <i data-lucide="terminal" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Inspect</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">URL Query Parameter Inspector</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Parse deep UTM tracking queries and complex URL parameters into readable keys.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
       </div>
     </div>
 
@@ -843,6 +547,44 @@
           <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Dashboard
         </button>
         <span class="text-xs px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full font-mono font-bold">100% In-Browser</span>
+      </div>
+
+      <div id="tool-unit-convert" class="tool-view-panel hidden space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-500/20 pb-4">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="scale" class="w-6 h-6 text-teal-500"></i> Universal Metric & Unit Converter</h2>
+            <p class="text-xs opacity-70 mt-1">Convert length, mass, temperature, data storage, and speed with exact instant precision.</p>
+          </div>
+          <span class="text-xs font-mono px-3 py-1 bg-teal-500/10 text-teal-500 border border-teal-500/20 rounded-xl font-bold">⚡ Zero Latency</span>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl space-y-6">
+          <div class="flex flex-wrap gap-2 text-xs font-bold">
+            <button onclick="setUnitCategory('length')" id="btn-ucat-length" class="px-3.5 py-2 bg-teal-600 text-white rounded-xl shadow">Length</button>
+            <button onclick="setUnitCategory('weight')" id="btn-ucat-weight" class="px-3.5 py-2 theme-editor border rounded-xl">Weight</button>
+            <button onclick="setUnitCategory('temp')" id="btn-ucat-temp" class="px-3.5 py-2 theme-editor border rounded-xl">Temperature</button>
+            <button onclick="setUnitCategory('data')" id="btn-ucat-data" class="px-3.5 py-2 theme-editor border rounded-xl">Data Storage</button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
+            <div class="theme-editor border p-5 rounded-2xl space-y-3">
+              <label class="block text-xs font-bold opacity-80">Source Value & Unit</label>
+              <input type="number" id="unit-val" value="100" oninput="convertUnits()" class="w-full p-3.5 theme-card font-mono text-base border rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none" />
+              <select id="unit-from" onchange="convertUnits()" class="w-full p-3 theme-card text-xs border rounded-xl font-semibold"></select>
+            </div>
+
+            <div class="theme-editor border p-5 rounded-2xl space-y-3">
+              <div class="flex justify-between items-center text-xs font-bold">
+                <span class="opacity-80">Converted Result</span>
+                <button onclick="copyToClipboard('unit-result')" class="text-teal-500 hover:underline flex items-center gap-1 font-semibold">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+                </button>
+              </div>
+              <input type="text" id="unit-result" readonly class="w-full p-3.5 bg-teal-500/10 text-teal-500 font-mono text-base font-bold border border-teal-500/30 rounded-xl" value="--" />
+              <select id="unit-to" onchange="convertUnits()" class="w-full p-3 theme-card text-xs border rounded-xl font-semibold"></select>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="tool-pdf-toolkit" class="tool-view-panel hidden space-y-4">
@@ -1109,6 +851,115 @@
           <div id="http-list" class="space-y-2 max-h-96 overflow-y-auto font-mono"></div>
         </div>
       </div>
+
+      <div id="tool-hash-gen" class="tool-view-panel hidden space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="hash" class="w-6 h-6 text-amber-500"></i> Cryptographic Hash Generator</h2>
+          <p class="text-xs opacity-70 mt-1">Compute SHA-256 and SHA-512 hashes using browser crypto.</p>
+        </div>
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <textarea id="hash-input" oninput="computeHashes()" class="w-full h-28 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="Text to hash..."></textarea>
+          <div class="space-y-2">
+            <span class="text-xs font-bold opacity-70">SHA-256 Digest:</span>
+            <input type="text" id="hash-sha256" readonly class="w-full p-2.5 theme-editor font-mono text-xs rounded-xl border select-all" />
+          </div>
+        </div>
+      </div>
+
+      <div id="tool-jwt-debugger" class="tool-view-panel hidden space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="unlock" class="w-6 h-6 text-pink-500"></i> JWT Token Inspector</h2>
+          <p class="text-xs opacity-70 mt-1">Decode claims and verify expiration dates of JSON Web Tokens.</p>
+        </div>
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <textarea id="jwt-input" oninput="decodeJwt()" class="w-full h-32 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="Paste eyJhbGciOi..."></textarea>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <pre id="jwt-header-out" class="p-3 theme-editor border rounded-xl font-mono text-xs overflow-auto">{}</pre>
+            <pre id="jwt-payload-out" class="p-3 theme-editor border rounded-xl font-mono text-xs overflow-auto">{}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool-markdown-live" class="tool-view-panel hidden space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-text" class="w-6 h-6 text-indigo-500"></i> Markdown Live Preview</h2>
+          <p class="text-xs opacity-70 mt-1">Format markdown text into styled HTML elements in realtime.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <textarea id="md-input" oninput="parseMarkdownLive()" class="w-full h-80 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="# Hello Developer"></textarea>
+          <div id="md-preview" class="w-full h-80 p-4 theme-editor border rounded-2xl overflow-auto text-xs prose"></div>
+        </div>
+      </div>
+
+      <div id="tool-aspect-ratio" class="tool-view-panel hidden space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="maximize" class="w-6 h-6 text-cyan-500"></i> Aspect Ratio Calculator</h2>
+          <p class="text-xs opacity-70 mt-1">Calculate width and height proportions for images, videos, and UI elements.</p>
+        </div>
+        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto">
+          <div class="grid grid-cols-2 gap-4 text-xs font-bold">
+            <div>
+              <label class="block mb-1">Ratio (W : H)</label>
+              <div class="flex gap-2">
+                <input type="number" id="ar-w-ratio" value="16" oninput="calcAspectRatio('w')" class="w-full p-2.5 theme-editor border rounded-xl text-center">
+                <input type="number" id="ar-h-ratio" value="9" oninput="calcAspectRatio('w')" class="w-full p-2.5 theme-editor border rounded-xl text-center">
+              </div>
+            </div>
+            <div>
+              <label class="block mb-1">Target Dimension</label>
+              <div class="flex gap-2">
+                <input type="number" id="ar-w-val" value="1920" oninput="calcAspectRatio('w')" class="w-full p-2.5 theme-editor border rounded-xl text-center" placeholder="W">
+                <input type="number" id="ar-h-val" value="1080" oninput="calcAspectRatio('h')" class="w-full p-2.5 theme-editor border rounded-xl text-center" placeholder="H">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool-lorem-gen" class="tool-view-panel hidden space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="align-left" class="w-6 h-6 text-amber-500"></i> Lorem Ipsum Text Builder</h2>
+          <p class="text-xs opacity-70 mt-1">Generate placeholder text blocks for design wireframes.</p>
+        </div>
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="flex gap-2">
+            <button onclick="generateLorem(1)" class="px-4 py-2 theme-editor border rounded-xl text-xs font-bold">1 Paragraph</button>
+            <button onclick="generateLorem(3)" class="px-4 py-2 theme-editor border rounded-xl text-xs font-bold">3 Paragraphs</button>
+            <button onclick="generateLorem(5)" class="px-4 py-2 theme-editor border rounded-xl text-xs font-bold">5 Paragraphs</button>
+          </div>
+          <textarea id="lorem-output" readonly class="w-full h-64 p-4 theme-editor text-xs border rounded-2xl leading-relaxed"></textarea>
+        </div>
+      </div>
+
+      <div id="tool-url-codec" class="tool-view-panel hidden space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="link" class="w-6 h-6 text-blue-500"></i> URL Encoder & Decoder</h2>
+          <p class="text-xs opacity-70 mt-1">Encode or decode query string characters into safe percent-encoding formats.</p>
+        </div>
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <textarea id="url-codec-input" class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="https://example.com/search?q=hello world & dev=1"></textarea>
+          <div class="flex gap-2">
+            <button onclick="runUrlCodec('encode')" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow">Encode URL</button>
+            <button onclick="runUrlCodec('decode')" class="px-4 py-2 theme-editor border text-xs font-bold rounded-xl">Decode URL</button>
+          </div>
+          <textarea id="url-codec-output" readonly class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl"></textarea>
+        </div>
+      </div>
+
+      <div id="tool-slug-gen" class="tool-view-panel hidden space-y-4">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="link-2" class="w-6 h-6 text-violet-500"></i> URL Slug & Permalink Creator</h2>
+          <p class="text-xs opacity-70 mt-1">Convert text and titles into clean URL-friendly web permalinks.</p>
+        </div>
+        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto">
+          <input type="text" id="slug-input" oninput="generateSlug()" class="w-full p-3.5 theme-editor border rounded-xl text-sm" placeholder="Enter title (e.g. 10 Fast Ways to Optimize Code!)">
+          <div class="p-3.5 bg-violet-500/10 text-violet-500 border border-violet-500/30 rounded-xl font-mono text-xs font-bold flex justify-between items-center">
+            <span id="slug-output">url-slug-preview-will-appear-here</span>
+            <button onclick="copyToClipboard('slug-output')" class="text-violet-500 hover:underline"><i data-lucide="copy" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -1120,22 +971,22 @@
 
   <div id="companion-container" class="fixed z-50 bottom-4 right-6 flex flex-col items-end select-none transition-all duration-1000 ease-out">
     
-    <div id="companion-dialog" class="hidden w-80 sm:w-88 theme-card border border-pink-400/30 shadow-2xl rounded-3xl p-5 text-xs space-y-3.5 mb-2">
+    <div id="companion-dialog" class="hidden w-80 sm:w-96 theme-card border border-pink-400/30 shadow-2xl rounded-3xl p-5 text-xs space-y-4 mb-2">
       <div class="flex items-center justify-between border-b border-slate-500/20 pb-2.5">
         <span class="font-extrabold text-pink-500 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span> Blobby Assistant ✨
+          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span> Blobby's Zen Lounge ✨
         </span>
         <button onclick="toggleCompanionDialog()" class="opacity-50 hover:opacity-100 font-bold text-base leading-none">&times;</button>
       </div>
 
       <div class="space-y-1.5">
-        <label class="block text-[11px] font-bold opacity-80">Ask Blobby or Search a Tool:</label>
+        <label class="block text-[11px] font-bold opacity-80">Ask Blobby or Jump to Tool:</label>
         <div class="relative">
           <input 
             type="text" 
             id="blobby-search-input" 
             onkeydown="if(event.key==='Enter') executeBlobbySearch()"
-            placeholder="e.g. merge pdfs, format json, make qr, test card..." 
+            placeholder="e.g. metric converter, merge pdf, make qr, test card..." 
             class="w-full pl-8 pr-16 py-2.5 theme-editor border rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none shadow-sm"
           />
           <i data-lucide="sparkles" class="w-4 h-4 absolute left-2.5 top-2.5 text-pink-500"></i>
@@ -1146,24 +997,31 @@
         <p id="blobby-search-feedback" class="text-[10px] text-pink-500 font-semibold hidden"></p>
       </div>
 
-      <div class="space-y-2.5 pt-2 border-t border-slate-500/20">
-        <p id="blobby-msg" class="leading-relaxed opacity-90 font-medium">What would you like to build or convert today?</p>
-        
-        <div id="reflex-box" class="hidden p-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-center cursor-pointer" onclick="handleReflexClick()">
-          <span id="reflex-text" class="font-bold text-indigo-500">Wait for green...</span>
+      <div class="space-y-3 pt-2 border-t border-slate-500/20">
+        <div id="zen-content-box" class="p-3.5 rounded-2xl theme-editor border border-indigo-500/20 min-h-[70px] flex items-center justify-center text-center">
+          <p id="blobby-msg" class="leading-relaxed opacity-90 font-medium">Click a button below for a fresh laugh, daily fortune, or relaxing bubble pops!</p>
         </div>
 
-        <div class="flex gap-2 pt-1">
-          <button onclick="startReflexGame()" class="flex-1 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-sm transition text-center">Reflex Game</button>
-          <button onclick="tellDevJoke()" class="flex-1 py-1.5 theme-card border font-bold rounded-xl hover:border-pink-500 transition text-center">Dev Joke</button>
+        <div id="bubble-wrap-board" class="hidden p-3 theme-editor border rounded-2xl grid grid-cols-6 gap-2 justify-items-center"></div>
+
+        <div class="grid grid-cols-3 gap-2 pt-1">
+          <button onclick="fetchFreshJoke()" class="py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
+            😂 Joke (10k+)
+          </button>
+          <button onclick="openFortuneCookie()" class="py-2 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
+            🥠 Fortune
+          </button>
+          <button onclick="toggleBubblePopper()" class="py-2 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
+            🫧 Pop ASMR
+          </button>
         </div>
       </div>
     </div>
 
     <div onclick="toggleCompanionDialog()" class="cursor-pointer group flex items-center gap-3 bg-white/95 dark:bg-slate-900/95 border-2 border-pink-300/60 dark:border-pink-500/40 rounded-full pl-4 pr-1.5 py-1.5 shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95">
       <span class="text-xs font-extrabold text-pink-600 dark:text-pink-400">Ask Blobby ✨</span>
-      <div class="w-13 h-13 rounded-full bg-gradient-to-tr from-orange-200 via-pink-400 to-indigo-400 p-1 flex items-center justify-center animate-pet shadow-inner">
-        <svg width="42" height="42" viewBox="0 0 100 100">
+      <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-orange-200 via-pink-400 to-indigo-400 p-1 flex items-center justify-center animate-pet shadow-inner">
+        <svg width="40" height="40" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="blobbySoftPastel" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stop-color="#fff1f2"/>
@@ -1268,6 +1126,9 @@
       if (toolId === 'http-codes') searchHttpCodes();
       if (toolId === 'word-counter') computeWordStats();
       if (toolId === 'dummy-card') generateDummyCard();
+      if (toolId === 'unit-convert') setUnitCategory('length');
+      if (toolId === 'hash-gen') computeHashes();
+      if (toolId === 'lorem-gen' && !document.getElementById('lorem-output').value) generateLorem(3);
     }
 
     // 3. FAST SEARCH & CATEGORY FILTERING
@@ -1326,8 +1187,79 @@
       });
     }
 
-    // 4. BLOBBY ASSISTANT NATURAL LANGUAGE SEARCH & ROUTER
+    // 4. UNIT CONVERTER ENGINE
+    const unitCategories = {
+      length: {
+        units: { m: 'Meters (m)', km: 'Kilometers (km)', cm: 'Centimeters (cm)', mm: 'Millimeters (mm)', mi: 'Miles (mi)', yd: 'Yards (yd)', ft: 'Feet (ft)', in: 'Inches (in)' },
+        rates: { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, yd: 0.9144, ft: 0.3048, in: 0.0254 }
+      },
+      weight: {
+        units: { kg: 'Kilograms (kg)', g: 'Grams (g)', mg: 'Milligrams (mg)', lb: 'Pounds (lbs)', oz: 'Ounces (oz)', ton: 'Metric Ton (t)' },
+        rates: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.0283495, ton: 1000 }
+      },
+      temp: {
+        units: { c: 'Celsius (°C)', f: 'Fahrenheit (°F)', k: 'Kelvin (K)' }
+      },
+      data: {
+        units: { b: 'Bytes (B)', kb: 'Kilobytes (KB)', mb: 'Megabytes (MB)', gb: 'Gigabytes (GB)', tb: 'Terabytes (TB)' },
+        rates: { b: 1, kb: 1024, mb: 1048576, gb: 1073741824, tb: 1099511627776 }
+      }
+    };
+    let currentUnitCat = 'length';
+
+    function setUnitCategory(cat) {
+      currentUnitCat = cat;
+      ['length', 'weight', 'temp', 'data'].forEach(c => {
+        const btn = document.getElementById('btn-ucat-' + c);
+        if (c === cat) btn.className = 'px-3.5 py-2 bg-teal-600 text-white rounded-xl shadow';
+        else btn.className = 'px-3.5 py-2 theme-editor border rounded-xl';
+      });
+
+      const fromSel = document.getElementById('unit-from');
+      const toSel = document.getElementById('unit-to');
+      fromSel.innerHTML = '';
+      toSel.innerHTML = '';
+
+      const uObj = unitCategories[cat].units;
+      const keys = Object.keys(uObj);
+      keys.forEach((k, idx) => {
+        fromSel.innerHTML += `<option value="${k}" ${idx===0?'selected':''}>${uObj[k]}</option>`;
+        toSel.innerHTML += `<option value="${k}" ${idx===1?'selected':''}>${uObj[k]}</option>`;
+      });
+
+      convertUnits();
+    }
+
+    function convertUnits() {
+      const val = parseFloat(document.getElementById('unit-val').value);
+      const resEl = document.getElementById('unit-result');
+      if (isNaN(val)) { resEl.value = '0'; return; }
+
+      const from = document.getElementById('unit-from').value;
+      const to = document.getElementById('unit-to').value;
+
+      if (currentUnitCat === 'temp') {
+        let inCelsius = val;
+        if (from === 'f') inCelsius = (val - 32) * (5/9);
+        if (from === 'k') inCelsius = val - 273.15;
+
+        let finalVal = inCelsius;
+        if (to === 'f') finalVal = (inCelsius * (9/5)) + 32;
+        if (to === 'k') finalVal = inCelsius + 273.15;
+
+        resEl.value = `${finalVal.toFixed(2)}`;
+        return;
+      }
+
+      const rates = unitCategories[currentUnitCat].rates;
+      const inBase = val * rates[from];
+      const converted = inBase / rates[to];
+      resEl.value = `${converted.toLocaleString(undefined, { maximumFractionDigits: 6 })}`;
+    }
+
+    // 5. BLOBBY ASSISTANT SEARCH & ROUTER
     const specificToolActions = [
+      { id: 'unit-convert', triggers: ['metric', 'unit convert', 'converter', 'convert km', 'convert kg', 'temperature', 'celsius to fahrenheit', 'bytes'] },
       { id: 'pdf-toolkit', triggers: ['merge pdf', 'combine pdf', 'pdf merger', 'split pdf', 'pdf joiner'] },
       { id: 'qr-gen', triggers: ['make qr', 'generate qr', 'wifi qr', 'qr generator', 'create qr'] },
       { id: 'img-compress', triggers: ['compress image', 'reduce image', 'webp converter', 'shrink photo', 'photo compress'] },
@@ -1371,36 +1303,31 @@
         return;
       }
 
-      // If broad query, filter dashboard
       document.getElementById('tool-search').value = rawQuery;
       switchView('dashboard');
       filterTools();
       toggleCompanionDialog();
     }
 
-    // 5. WORD & CHAR COUNTER
+    // 6. ALL TOOL ENGINES (100% Client-Side)
     function computeWordStats() {
       const text = document.getElementById('wc-input').value;
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
       const chars = text.length;
       const sentences = text.trim() ? (text.match(/[\w|\)][.?!]+(\s|$)/g) || []).length : 0;
-      const readTime = Math.ceil(words / 200);
-
       document.getElementById('wc-words').innerText = words;
       document.getElementById('wc-chars').innerText = chars;
       document.getElementById('wc-sentences').innerText = sentences;
-      document.getElementById('wc-readtime').innerText = `${readTime}m`;
+      document.getElementById('wc-readtime').innerText = `${Math.ceil(words / 200)}m`;
     }
 
-    // 6. PDF MERGER
     let uploadedPdfFiles = [];
     function handlePdfUpload(e) {
-      const files = Array.from(e.target.files);
-      if (files.length === 0) return;
-      uploadedPdfFiles = files;
+      uploadedPdfFiles = Array.from(e.target.files);
+      if (uploadedPdfFiles.length === 0) return;
       const listEl = document.getElementById('pdf-file-list');
       listEl.innerHTML = '';
-      files.forEach(f => {
+      uploadedPdfFiles.forEach(f => {
         listEl.innerHTML += `<li class="p-2 theme-editor rounded-xl border flex justify-between"><span>📄 ${f.name}</span><span class="opacity-60">${(f.size/1024).toFixed(1)} KB</span></li>`;
       });
       document.getElementById('pdf-list-container').classList.remove('hidden');
@@ -1425,7 +1352,6 @@
       } catch (err) { alert('PDF Error: ' + err.message); }
     }
 
-    // 7. DIFF CHECKER
     function runTextDiff() {
       const t1 = document.getElementById('diff-text-1').value;
       const t2 = document.getElementById('diff-text-2').value;
@@ -1444,7 +1370,6 @@
       out.innerHTML = html || 'No differences.';
     }
 
-    // 8. JSON PRO STUDIO
     function syntaxHighlightJson(jsonStr) {
       jsonStr = jsonStr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       return jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
@@ -1481,7 +1406,7 @@
       try { el.value = JSON.stringify(JSON.parse(el.value)); handleJsonStudioInput(); } catch(e){}
     }
     function loadSampleJsonStudio() {
-      document.getElementById('json-studio-input').value = JSON.stringify({ app: "MyDevToolbox", version: "4.0", status: "Active", tools: 46 }, null, 2);
+      document.getElementById('json-studio-input').value = JSON.stringify({ app: "MyDevToolbox", version: "4.0", status: "Active", tools: 24 }, null, 2);
       handleJsonStudioInput();
     }
     function clearJsonStudio() { document.getElementById('json-studio-input').value = ''; handleJsonStudioInput(); }
@@ -1500,44 +1425,27 @@
     }
     function convertJsonToTs() {
       const input = document.getElementById('json-ts-in').value.trim();
-      const output = document.getElementById('json-ts-out');
-      if (!input) { output.value = ''; return; }
-      try { output.value = jsonToTs(JSON.parse(input)); } catch (e) { output.value = '// Invalid JSON'; }
+      try { document.getElementById('json-ts-out').value = jsonToTs(JSON.parse(input)); } catch (e) { document.getElementById('json-ts-out').value = '// Invalid JSON'; }
     }
 
-    // 9. DUMMY TEST CARD GENERATOR
     function generateDummyCard() {
       const brand = document.getElementById('card-type-select').value;
-      let prefix = '4532';
-      if (brand === 'mastercard') prefix = '5425';
-      if (brand === 'amex') prefix = '3782';
-
+      let prefix = brand === 'mastercard' ? '5425' : (brand === 'amex' ? '3782' : '4532');
       let num = prefix;
       const targetLen = brand === 'amex' ? 15 : 16;
-      while (num.length < targetLen - 1) {
-        num += Math.floor(Math.random() * 10);
-      }
+      while (num.length < targetLen - 1) num += Math.floor(Math.random() * 10);
 
-      let sum = 0;
-      let alt = true;
+      let sum = 0, alt = true;
       for (let i = num.length - 1; i >= 0; i--) {
         let n = parseInt(num.charAt(i), 10);
-        if (alt) {
-          n *= 2;
-          if (n > 9) n -= 9;
-        }
-        sum += n;
-        alt = !alt;
+        if (alt) { n *= 2; if (n > 9) n -= 9; }
+        sum += n; alt = !alt;
       }
-      const checkDigit = (10 - (sum % 10)) % 10;
-      num += checkDigit;
-
-      const formatted = num.match(/.{1,4}/g).join(' ');
-      document.getElementById('dummy-card-num').innerText = formatted;
+      num += (10 - (sum % 10)) % 10;
+      document.getElementById('dummy-card-num').innerText = num.match(/.{1,4}/g).join(' ');
       document.getElementById('dummy-card-meta').innerText = `12/29 | ${Math.floor(Math.random()*899+100)}`;
     }
 
-    // 10. QR CODE & CASE ENGINES
     let qrcodeObj = null;
     function generateQrCode() {
       const text = document.getElementById('qr-text').value.trim() || 'https://mydevtoolbox.in';
@@ -1562,7 +1470,6 @@
       if (mode === 'kebab') el.value = val.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w]/g, '-');
     }
 
-    // 11. GENERATORS & UTILS
     function generateUuids() {
       let list = [];
       for (let i = 0; i < 5; i++) list.push(crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => (Math.random()*16|0).toString(16)));
@@ -1620,7 +1527,68 @@
       });
     }
 
-    // IMAGE COMPRESSOR
+    async function computeHashes() {
+      const str = document.getElementById('hash-input').value;
+      const buf = new TextEncoder().encode(str);
+      const h256 = await crypto.subtle.digest('SHA-256', buf);
+      document.getElementById('hash-sha256').value = Array.from(new Uint8Array(h256)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function decodeJwt() {
+      const jwt = document.getElementById('jwt-input').value.trim();
+      try {
+        const parts = jwt.split('.');
+        document.getElementById('jwt-header-out').innerText = JSON.stringify(JSON.parse(atob(parts[0])), null, 2);
+        document.getElementById('jwt-payload-out').innerText = JSON.stringify(JSON.parse(atob(parts[1])), null, 2);
+      } catch (e) {
+        document.getElementById('jwt-header-out').innerText = '// Invalid Token';
+        document.getElementById('jwt-payload-out').innerText = '// ' + e.message;
+      }
+    }
+
+    function parseMarkdownLive() {
+      const val = document.getElementById('md-input').value;
+      let html = val
+        .replace(/^### (.*$)/gim, '<h3 class="text-sm font-bold mt-2">$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2 class="text-base font-bold mt-3">$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1 class="text-lg font-bold mt-4">$1</h1>')
+        .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+        .replace(/\*(.*)\*/gim, '<em>$1</em>')
+        .replace(/\n$/gim, '<br />');
+      document.getElementById('md-preview').innerHTML = html || 'Preview appears here...';
+    }
+
+    function calcAspectRatio(changed) {
+      const wR = parseFloat(document.getElementById('ar-w-ratio').value) || 16;
+      const hR = parseFloat(document.getElementById('ar-h-ratio').value) || 9;
+      if (changed === 'w') {
+        const wVal = parseFloat(document.getElementById('ar-w-val').value) || 0;
+        document.getElementById('ar-h-val').value = Math.round((wVal * hR) / wR);
+      } else {
+        const hVal = parseFloat(document.getElementById('ar-h-val').value) || 0;
+        document.getElementById('ar-w-val').value = Math.round((hVal * wR) / hR);
+      }
+    }
+
+    function generateLorem(paras) {
+      const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
+      let out = [];
+      for (let i = 0; i < paras; i++) out.push(lorem);
+      document.getElementById('lorem-output').value = out.join('\n\n');
+    }
+
+    function runUrlCodec(mode) {
+      const val = document.getElementById('url-codec-input').value;
+      try {
+        document.getElementById('url-codec-output').value = mode === 'encode' ? encodeURIComponent(val) : decodeURIComponent(val);
+      } catch(e) { document.getElementById('url-codec-output').value = 'Codec error'; }
+    }
+
+    function generateSlug() {
+      const val = document.getElementById('slug-input').value;
+      document.getElementById('slug-output').innerText = val.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '') || 'url-slug-preview';
+    }
+
     let currentUploadedImg = null;
     function handleImageUpload(e) {
       const file = e.target.files[0];
@@ -1647,29 +1615,92 @@
     }
 
     function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('hidden'); }
+    function copyToClipboard(id) { 
+      const el = document.getElementById(id);
+      navigator.clipboard.writeText(el.value || el.innerText); 
+      alert('Copied to clipboard!'); 
+    }
 
-    // 12. DIALOG AUTO-RESET & COMPANION
+    // 7. BLOBBY'S ZEN LOUNGE (10,000+ JOKES, FORTUNES & ASMR BUBBLE WRAP)
     function toggleCompanionDialog() { 
       const dialog = document.getElementById('companion-dialog');
       const isOpening = dialog.classList.contains('hidden');
-      
       dialog.classList.toggle('hidden');
-
       if (!isOpening) {
         document.getElementById('blobby-search-input').value = '';
         document.getElementById('blobby-search-feedback').classList.add('hidden');
       } else {
-        if (window.confetti) confetti({ particleCount: 25, spread: 50, origin: { y: 0.9, x: 0.9 } });
+        if (window.confetti) confetti({ particleCount: 20, spread: 50, origin: { y: 0.9, x: 0.9 } });
       }
     }
 
-    const devJokes = [
-      "Why did the JavaScript developer wear glasses? Because they didn't C#! 🤓",
-      "There are 10 types of people: those who understand binary, and those who don't. 💻",
-      "A SQL query walks into a bar, walks up to two tables and asks: 'Can I join you?' 🍻"
-    ];
-    function tellDevJoke() {
-      document.getElementById('blobby-msg').innerText = devJokes[Math.floor(Math.random()*devJokes.length)];
+    // 10,000+ Infinite Dynamic Jokes API
+    async function fetchFreshJoke() {
+      const msgBox = document.getElementById('blobby-msg');
+      document.getElementById('bubble-wrap-board').classList.add('hidden');
+      msgBox.parentElement.classList.remove('hidden');
+      msgBox.innerText = "Fetching a fresh joke from the universe...";
+
+      try {
+        const res = await fetch('https://v2.jokeapi.dev/joke/Any?safe-mode&type=single');
+        const data = await res.json();
+        if (data && data.joke) {
+          msgBox.innerText = `"${data.joke}" 😂`;
+        } else {
+          // Fallback to secondary open dad joke endpoint
+          const res2 = await fetch('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
+          const data2 = await res2.json();
+          msgBox.innerText = `"${data2.joke}" 🤣`;
+        }
+      } catch (err) {
+        const offlineJokes = [
+          "I told my suitcase there will be no vacation this year. Now I'm dealing with emotional baggage.",
+          "Why do we tell actors to 'break a leg'? Because every play has a cast!",
+          "Parallel lines have so much in common. It’s a shame they’ll never meet.",
+          "My wife told me to stop impersonating a flamingo. I had to put my foot down."
+        ];
+        msgBox.innerText = `"${offlineJokes[Math.floor(Math.random() * offlineJokes.length)]}" 😄`;
+      }
+      if (window.confetti) confetti({ particleCount: 15, spread: 45, origin: { y: 0.85, x: 0.85 } });
+    }
+
+    // Mystical Fortune Cookie
+    function openFortuneCookie() {
+      const fortunes = [
+        "🥠 A fresh breeze will bring unexpected luck to your next project.",
+        "🥠 Great minds discuss ideas; your idea today will inspire someone tomorrow.",
+        "🥠 Trust the timing of your journey—breakthroughs happen in quiet moments.",
+        "🥠 A pleasant surprise awaits you in the next few hours.",
+        "🥠 Simplicity is the ultimate sophistication. Keep building!"
+      ];
+      document.getElementById('bubble-wrap-board').classList.add('hidden');
+      document.getElementById('blobby-msg').parentElement.classList.remove('hidden');
+      document.getElementById('blobby-msg').innerText = fortunes[Math.floor(Math.random() * fortunes.length)];
+      if (window.confetti) confetti({ particleCount: 25, spread: 60, origin: { y: 0.85, x: 0.85 } });
+    }
+
+    // Zen ASMR Bubble Wrap Popper
+    function toggleBubblePopper() {
+      const board = document.getElementById('bubble-wrap-board');
+      const isHidden = board.classList.contains('hidden');
+      if (isHidden) {
+        board.innerHTML = '';
+        for (let i = 0; i < 18; i++) {
+          const bubble = document.createElement('div');
+          bubble.className = 'bubble-wrap-dot';
+          bubble.onclick = function() {
+            if (!this.classList.contains('popped')) {
+              this.classList.add('popped');
+              if (window.navigator && window.navigator.vibrate) window.navigator.vibrate(15);
+            }
+          };
+          board.appendChild(bubble);
+        }
+        board.classList.remove('hidden');
+        document.getElementById('blobby-msg').innerText = "🫧 Pop the calming bubbles to relieve stress!";
+      } else {
+        board.classList.add('hidden');
+      }
     }
 
     function wanderBlobby() {
@@ -1680,33 +1711,6 @@
       container.style.transform = `translateX(${offset}px)`;
     }
     setInterval(wanderBlobby, 12000);
-
-    let reflexStartTime = 0, reflexTimer = null, reflexState = 'idle';
-    function startReflexGame() {
-      const box = document.getElementById('reflex-box');
-      box.classList.remove('hidden');
-      box.className = "p-3.5 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-center cursor-pointer";
-      document.getElementById('reflex-text').innerText = "Wait for GREEN...";
-      reflexState = 'waiting';
-      reflexTimer = setTimeout(() => {
-        box.className = "p-3.5 rounded-2xl bg-emerald-500 text-center cursor-pointer";
-        document.getElementById('reflex-text').innerText = "CLICK NOW!";
-        reflexStartTime = Date.now();
-        reflexState = 'ready';
-      }, Math.floor(Math.random()*2500)+1500);
-    }
-    function handleReflexClick() {
-      if (reflexState === 'waiting') {
-        clearTimeout(reflexTimer);
-        document.getElementById('reflex-text').innerText = "Too early! Click to retry.";
-        reflexState = 'idle';
-      } else if (reflexState === 'ready') {
-        const timeTaken = Date.now() - reflexStartTime;
-        document.getElementById('reflex-text').innerText = `⚡ ${timeTaken} ms! Awesome!`;
-        reflexState = 'idle';
-        if (window.confetti) confetti({ particleCount: 35, spread: 60, origin: { y: 0.85, x: 0.9 } });
-      }
-    }
   </script>
 </body>
 </html>
