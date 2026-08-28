@@ -6,10 +6,8 @@
   <title>MyDevToolbox — Fast, Free & Privacy-First Browser Utilities</title>
   <meta name="description" content="Free 100% client-side web toolbox: PDF merger, JSON studio, QR generator, image compressor, code diff, regex, and cryptographic tools." />
   
-  <!-- Google AdSense Auto Ads Snippet -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2884422236657572" crossorigin="anonymous"></script>
 
-  <!-- Tailwind CSS, Icons, Confetti, QR Engine, PDF-Lib & Diff Match Patch -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -17,7 +15,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/diff-match-patch/1.0.5/index.min.js"></script>
   
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -123,49 +120,111 @@
       transform: scale(0.85);
       cursor: default;
     }
+
+    /* Dropdown hover behavior */
+    .nav-dropdown:hover .nav-menu {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+    }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col font-sans antialiased relative selection:bg-indigo-500 selection:text-white">
 
-  <!-- ================= TOP NAVBAR ================= -->
   <header class="border-b theme-card sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-          <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="h-16 flex items-center justify-between">
+        
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
+            <span class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">100% Client-Side</span>
+          </div>
         </div>
-        <div>
-          <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
-          <span class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">100% Client-Side</span>
-        </div>
-      </div>
 
-      <div class="flex items-center space-x-3">
-        <button onclick="switchView('dashboard')" class="text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">Dashboard</button>
+        <nav class="hidden md:flex items-center space-x-1 text-xs font-bold">
+          
+          <div class="relative nav-dropdown py-4">
+            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
+              <span>Everyday Utilities</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
+            </button>
+            <div class="nav-menu hidden absolute left-0 top-12 w-56 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
+              <a onclick="openTool('pdf-toolkit')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">📄 PDF Merger</a>
+              <a onclick="openTool('qr-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">📱 QR Code Generator</a>
+              <a onclick="openTool('img-compress')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🖼️ Image Compressor</a>
+              <a onclick="openTool('case-convert')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔤 Text Case Converter</a>
+              <a onclick="openTool('unit-convert')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">⚖️ Metric Converter</a>
+              <a onclick="openTool('word-counter')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">📝 Word Counter</a>
+            </div>
+          </div>
 
-        <!-- 3-Way Theme Switcher -->
-        <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
-          <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
-          <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
-          <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Dark"><i data-lucide="moon" class="w-4 h-4"></i></button>
+          <div class="relative nav-dropdown py-4">
+            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
+              <span>JSON & Data</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
+            </button>
+            <div class="nav-menu hidden absolute left-0 top-12 w-56 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
+              <a onclick="openTool('json-formatter')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">⚡ JSON Pro Studio</a>
+              <a onclick="openTool('json-ts')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔷 JSON to TypeScript</a>
+              <a onclick="openTool('base64')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔢 Base64 Encode/Decode</a>
+              <a onclick="openTool('url-codec')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔗 URL Encoder/Decoder</a>
+            </div>
+          </div>
+
+          <div class="relative nav-dropdown py-4">
+            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
+              <span>Security & Generators</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
+            </button>
+            <div class="nav-menu hidden absolute left-0 top-12 w-56 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
+              <a onclick="openTool('uuid-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔑 UUID v4 Batch Creator</a>
+              <a onclick="openTool('pwd-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🛡️ Strong Password Generator</a>
+              <a onclick="openTool('dummy-card')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">💳 Dummy Test Card Generator</a>
+              <a onclick="openTool('hash-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">#️⃣ SHA-256 Hasher</a>
+              <a onclick="openTool('slug-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🏷️ URL Slug Creator</a>
+            </div>
+          </div>
+
+          <div class="relative nav-dropdown py-4">
+            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
+              <span>Developer & Web</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
+            </button>
+            <div class="nav-menu hidden absolute right-0 top-12 w-60 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
+              <a onclick="openTool('diff-checker')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔄 Code Diff Comparator</a>
+              <a onclick="openTool('jwt-debugger')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔓 JWT Token Inspector</a>
+              <a onclick="openTool('cron-builder')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">⏰ Cron Expression Explainer</a>
+              <a onclick="openTool('box-shadow')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🎨 CSS Box-Shadow Studio</a>
+              <a onclick="openTool('regex-tester')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔍 Regex Sandbox & Matcher</a>
+              <a onclick="openTool('http-codes')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🌐 HTTP Status Codes Inspector</a>
+            </div>
+          </div>
+
+        </nav>
+
+        <div class="flex items-center space-x-3">
+          <button onclick="switchView('dashboard')" class="text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">Dashboard</button>
+
+          <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
+            <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
+            <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
+            <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Dark"><i data-lucide="moon" class="w-4 h-4"></i></button>
+          </div>
         </div>
+
       </div>
     </div>
   </header>
 
-  <!-- ================= AD SLOT: TOP LEADERBOARD ================= -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
     <div class="w-full h-16 sm:h-20 theme-card border border-dashed rounded-2xl flex items-center justify-center text-xs opacity-50 tracking-wider uppercase font-semibold">
       <span>Ad Space — 728x90 Leaderboard</span>
     </div>
   </div>
 
-  <!-- ================= MAIN CONTAINER ================= -->
   <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 
-    <!-- VIEW 1: DASHBOARD -->
     <div id="view-dashboard">
       <div class="text-center max-w-2xl mx-auto mb-10 pt-2">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 text-xs font-bold mb-3">
@@ -178,7 +237,6 @@
           Fast, free micro-utilities running purely in your browser memory.
         </p>
 
-        <!-- Search Bar -->
         <div class="mt-6 relative max-w-xl mx-auto flex items-center">
           <i data-lucide="search" class="w-5 h-5 absolute left-4 text-slate-400"></i>
           <input 
@@ -198,7 +256,6 @@
         
         <div id="search-status-text" class="text-xs font-semibold text-indigo-500 mt-2.5 hidden"></div>
 
-        <!-- Filter Tabs (Exact 12 Tools in Each Filtered Category) -->
         <div class="flex flex-wrap items-center justify-center gap-2 mt-5 text-xs">
           <button onclick="setCategoryFilter('all')" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All Tools</button>
           <button onclick="setCategoryFilter('popular')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">🔥 Most Popular (12)</button>
@@ -209,10 +266,8 @@
         </div>
       </div>
 
-      <!-- Tools Grid -->
       <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <!-- 1. PDF Merger -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('pdf-toolkit')">
           <div>
             <div class="flex items-start justify-between">
@@ -225,7 +280,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 2. QR Code Generator -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('qr-gen')">
           <div>
             <div class="flex items-start justify-between">
@@ -238,7 +292,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 3. Image Compressor -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('img-compress')">
           <div>
             <div class="flex items-start justify-between">
@@ -251,7 +304,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 4. Text Case Converter -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('case-convert')">
           <div>
             <div class="flex items-start justify-between">
@@ -264,7 +316,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 5. Universal Unit Converter -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('unit-convert')">
           <div>
             <div class="flex items-start justify-between">
@@ -277,7 +328,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 6. Markdown Realtime Editor -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('markdown-live')">
           <div>
             <div class="flex items-start justify-between">
@@ -290,7 +340,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 7. Word & Character Counter -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('word-counter')">
           <div>
             <div class="flex items-start justify-between">
@@ -303,8 +352,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 8. Aspect Ratio Calculator -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('aspect-ratio')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general dev" onclick="openTool('aspect-ratio')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="maximize" class="w-6 h-6"></i></div>
@@ -316,7 +364,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 9. Lorem Ipsum Generator -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general generator" onclick="openTool('lorem-gen')">
           <div>
             <div class="flex items-start justify-between">
@@ -329,8 +376,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 10. URL Encoder / Decoder -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general format" onclick="openTool('url-codec')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general format dev" onclick="openTool('url-codec')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="link" class="w-6 h-6"></i></div>
@@ -342,7 +388,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 11. Dummy Test Card Generator -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general generator popular" onclick="openTool('dummy-card')">
           <div>
             <div class="flex items-start justify-between">
@@ -355,8 +400,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 12. JSON Pro Studio -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format popular" onclick="openTool('json-formatter')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general format popular" onclick="openTool('json-formatter')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="code-2" class="w-6 h-6"></i></div>
@@ -368,7 +412,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 13. JSON to TS -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format dev popular" onclick="openTool('json-ts')">
           <div>
             <div class="flex items-start justify-between">
@@ -381,8 +424,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 14. Base64 Tool -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format popular" onclick="openTool('base64')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format popular dev" onclick="openTool('base64')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="binary" class="w-6 h-6"></i></div>
@@ -394,8 +436,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 15. UUID Generator -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('uuid-gen')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular format" onclick="openTool('uuid-gen')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="key" class="w-6 h-6"></i></div>
@@ -407,7 +448,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 16. Strong Password Generator -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('pwd-gen')">
           <div>
             <div class="flex items-start justify-between">
@@ -420,8 +460,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 17. Hash Generator -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('hash-gen')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator format dev" onclick="openTool('hash-gen')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="hash" class="w-6 h-6"></i></div>
@@ -433,8 +472,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 18. URL Slug Maker -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular format general" onclick="openTool('slug-gen')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular format dev" onclick="openTool('slug-gen')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="link-2" class="w-6 h-6"></i></div>
@@ -446,7 +484,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 19. Text & Code Diff Checker -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev popular format" onclick="openTool('diff-checker')">
           <div>
             <div class="flex items-start justify-between">
@@ -459,7 +496,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 20. JWT Debugger -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev generator format" onclick="openTool('jwt-debugger')">
           <div>
             <div class="flex items-start justify-between">
@@ -472,7 +508,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 21. Cron Explainer -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev generator" onclick="openTool('cron-builder')">
           <div>
             <div class="flex items-start justify-between">
@@ -485,7 +520,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 22. CSS Box Shadow -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev generator" onclick="openTool('box-shadow')">
           <div>
             <div class="flex items-start justify-between">
@@ -498,7 +532,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 23. Regex Tester -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev format" onclick="openTool('regex-tester')">
           <div>
             <div class="flex items-start justify-between">
@@ -511,8 +544,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 24. HTTP Status Codes -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev format" onclick="openTool('http-codes')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev format generator" onclick="openTool('http-codes')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="server" class="w-6 h-6"></i></div>
@@ -527,7 +559,6 @@
       </div>
     </div>
 
-    <!-- VIEW 2: ACTIVE TOOL VIEW (GUARANTEED TO RENDER ALL PANELS) -->
     <div id="view-tool" class="hidden">
       <div class="flex items-center justify-between pb-6 border-b border-slate-500/20 mb-6">
         <button onclick="switchView('dashboard')" class="flex items-center text-xs font-bold theme-card px-4 py-2.5 rounded-2xl border hover:border-indigo-500 transition">
@@ -536,7 +567,6 @@
         <span class="text-xs px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full font-mono font-bold">100% In-Browser</span>
       </div>
 
-      <!-- ACTIVE TOOL 1: METRIC & UNIT CONVERTER -->
       <div id="tool-unit-convert" class="tool-view-panel hidden space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-500/20 pb-4">
           <div>
@@ -575,7 +605,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 2: PDF MERGER -->
       <div id="tool-pdf-toolkit" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-stack" class="w-6 h-6 text-rose-500"></i> Client-Side PDF Merger</h2>
@@ -596,7 +625,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 3: DUMMY TEST CARD GENERATOR -->
       <div id="tool-dummy-card" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6 text-amber-500"></i> Dummy Test Card Generator</h2>
@@ -625,7 +653,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 4: UUID GENERATOR -->
       <div id="tool-uuid-gen" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="key" class="w-6 h-6 text-blue-500"></i> UUID v4 Batch Creator</h2>
@@ -637,7 +664,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 5: JSON PRO STUDIO -->
       <div id="tool-json-formatter" class="tool-view-panel hidden space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
@@ -666,7 +692,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 6: QR CODE -->
       <div id="tool-qr-gen" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="qr-code" class="w-6 h-6 text-emerald-500"></i> Live QR Code Generator</h2>
@@ -684,7 +709,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 7: IMAGE COMPRESSOR -->
       <div id="tool-img-compress" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="image" class="w-6 h-6 text-pink-500"></i> Image Compressor & WebP Converter</h2>
@@ -703,7 +727,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 8: CASE CONVERT -->
       <div id="tool-case-convert" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="type" class="w-6 h-6 text-amber-500"></i> Text Case Converter</h2>
@@ -722,7 +745,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 9: WORD COUNTER -->
       <div id="tool-word-counter" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="spell-check" class="w-6 h-6 text-violet-500"></i> Word & Character Counter</h2>
@@ -739,7 +761,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 10: DIFF CHECKER -->
       <div id="tool-diff-checker" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="git-compare" class="w-6 h-6 text-indigo-500"></i> Text & Code Diff Comparator</h2>
@@ -758,7 +779,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 11: JSON TO TS -->
       <div id="tool-json-ts" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-json" class="w-6 h-6 text-indigo-500"></i> JSON to TypeScript Converter</h2>
@@ -770,7 +790,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 12: PASSWORD GENERATOR -->
       <div id="tool-pwd-gen" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="shield-check" class="w-6 h-6 text-emerald-500"></i> Strong Password & Token Generator</h2>
@@ -783,7 +802,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 13: BASE64 -->
       <div id="tool-base64" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="binary" class="w-6 h-6 text-teal-500"></i> Base64 Text Encoder & Decoder</h2>
@@ -799,7 +817,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 14: CRON EXPLAINER -->
       <div id="tool-cron-builder" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="clock" class="w-6 h-6 text-purple-500"></i> Cron Expression Explainer</h2>
@@ -811,7 +828,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 15: BOX SHADOW -->
       <div id="tool-box-shadow" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-cyan-500"></i> CSS Box Shadow Studio</h2>
@@ -831,7 +847,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 16: REGEX TESTER (UPGRADED INTERACTIVE STUDIO) -->
       <div id="tool-regex-tester" class="tool-view-panel hidden space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-500/20 pb-4">
           <div>
@@ -854,7 +869,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 17: HTTP STATUS CODES (UPGRADED INTERACTIVE STUDIO) -->
       <div id="tool-http-codes" class="tool-view-panel hidden space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-500/20 pb-4">
           <div>
@@ -864,13 +878,11 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <!-- Left Column: Search & Code List -->
           <div class="theme-card border p-4 rounded-3xl space-y-3">
             <input type="text" id="http-search" oninput="searchHttpCodes()" placeholder="Search code (200, 404, 500, Unauthorized)..." class="w-full p-3 theme-editor text-xs border rounded-xl" />
             <div id="http-list" class="space-y-1.5 max-h-[380px] overflow-y-auto font-mono text-xs"></div>
           </div>
 
-          <!-- Right Column: Interactive Detail Viewer -->
           <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-4 flex flex-col justify-between">
             <div>
               <div class="flex items-center gap-3">
@@ -888,7 +900,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 18: HASH GENERATOR -->
       <div id="tool-hash-gen" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="hash" class="w-6 h-6 text-amber-500"></i> Cryptographic Hash Generator</h2>
@@ -903,7 +914,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 19: JWT DEBUGGER -->
       <div id="tool-jwt-debugger" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="unlock" class="w-6 h-6 text-pink-500"></i> JWT Token Inspector</h2>
@@ -918,7 +928,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 20: MARKDOWN LIVE -->
       <div id="tool-markdown-live" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-text" class="w-6 h-6 text-indigo-500"></i> Markdown Live Preview</h2>
@@ -930,7 +939,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 21: ASPECT RATIO -->
       <div id="tool-aspect-ratio" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="maximize" class="w-6 h-6 text-cyan-500"></i> Aspect Ratio Calculator</h2>
@@ -956,7 +964,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 22: LOREM IPSUM -->
       <div id="tool-lorem-gen" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="align-left" class="w-6 h-6 text-amber-500"></i> Lorem Ipsum Text Builder</h2>
@@ -972,7 +979,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 23: URL CODEC -->
       <div id="tool-url-codec" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="link" class="w-6 h-6 text-blue-500"></i> URL Encoder & Decoder</h2>
@@ -988,7 +994,6 @@
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 24: URL SLUG MAKER -->
       <div id="tool-slug-gen" class="tool-view-panel hidden space-y-4">
         <div>
           <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="link-2" class="w-6 h-6 text-violet-500"></i> URL Slug & Permalink Creator</h2>
@@ -1006,14 +1011,12 @@
     </div>
   </main>
 
-  <!-- ================= AD SPACE: BOTTOM ================= -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 w-full">
     <div class="w-full h-20 theme-card border border-dashed rounded-2xl flex items-center justify-center text-xs opacity-50 uppercase font-semibold">
       <span>Ad Space — 728x90 Banner</span>
     </div>
   </div>
 
-  <!-- ================= KAWAII BLOBBY (10,000+ JOKES, ZEN BUBBLE POPPER & FORTUNES) ================= -->
   <div id="companion-container" class="fixed z-50 bottom-4 right-6 flex flex-col items-end select-none transition-all duration-1000 ease-out">
     
     <div id="companion-dialog" class="hidden w-80 sm:w-96 theme-card border border-pink-400/30 shadow-2xl rounded-3xl p-5 text-xs space-y-4 mb-2">
@@ -1024,7 +1027,6 @@
         <button onclick="toggleCompanionDialog()" class="opacity-50 hover:opacity-100 font-bold text-base leading-none">&times;</button>
       </div>
 
-      <!-- Smart Search Box -->
       <div class="space-y-1.5">
         <label class="block text-[11px] font-bold opacity-80">Ask Blobby or Jump to Tool:</label>
         <div class="relative">
@@ -1043,19 +1045,16 @@
         <p id="blobby-search-feedback" class="text-[10px] text-pink-500 font-semibold hidden"></p>
       </div>
 
-      <!-- Interactive Lounge Display Area -->
       <div class="space-y-3 pt-2 border-t border-slate-500/20">
         <div id="zen-content-box" class="p-3.5 rounded-2xl theme-editor border border-indigo-500/20 min-h-[70px] flex items-center justify-center text-center">
           <p id="blobby-msg" class="leading-relaxed opacity-90 font-medium">Click a button below for a fresh laugh, daily fortune, or relaxing bubble pops!</p>
         </div>
 
-        <!-- Interactive Bubble Wrap Board -->
         <div id="bubble-wrap-board" class="hidden p-3 theme-editor border rounded-2xl grid grid-cols-6 gap-2 justify-items-center"></div>
 
-        <!-- Action Controls -->
         <div class="grid grid-cols-3 gap-2 pt-1">
           <button onclick="fetchFreshJoke()" class="py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
-            😂 Joke (10k+)
+            😂 Jokes
           </button>
           <button onclick="openFortuneCookie()" class="py-2 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
             🥠 Fortune
@@ -1067,7 +1066,6 @@
       </div>
     </div>
 
-    <!-- Soft Pastel Kawaii Bouncy Character Button -->
     <div onclick="toggleCompanionDialog()" class="cursor-pointer group flex items-center gap-3 bg-white/95 dark:bg-slate-900/95 border-2 border-pink-300/60 dark:border-pink-500/40 rounded-full pl-4 pr-1.5 py-1.5 shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95">
       <span class="text-xs font-extrabold text-pink-600 dark:text-pink-400">Ask Blobby ✨</span>
       <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-orange-200 via-pink-400 to-indigo-400 p-1 flex items-center justify-center animate-pet shadow-inner">
@@ -1097,7 +1095,6 @@
     </div>
   </div>
 
-  <!-- ================= FOOTER & MODALS ================= -->
   <footer class="border-t theme-card py-8 text-center text-xs opacity-70 mt-auto">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>© 2026 <strong>mydevtoolbox.in</strong>. All tools run 100% locally in your browser memory.</div>
@@ -1109,7 +1106,6 @@
     </div>
   </footer>
 
-  <!-- PRIVACY MODAL -->
   <div id="privacy-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="theme-card border rounded-3xl max-w-lg w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto text-xs">
       <div class="flex justify-between items-center border-b border-slate-500/20 pb-3">
@@ -1121,7 +1117,6 @@
     </div>
   </div>
 
-  <!-- TERMS MODAL -->
   <div id="terms-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="theme-card border rounded-3xl max-w-lg w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto text-xs">
       <div class="flex justify-between items-center border-b border-slate-500/20 pb-3">
@@ -1132,7 +1127,6 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     lucide.createIcons();
 
@@ -1312,7 +1306,7 @@
       resEl.value = `${converted.toLocaleString(undefined, { maximumFractionDigits: 6 })}`;
     }
 
-    // 5. BLOBBY SMART SEARCH & ROUTER
+    // 5. BLOBBY ASSISTANT SEARCH & ROUTER
     const specificToolActions = [
       { id: 'unit-convert', triggers: ['metric', 'unit convert', 'converter', 'convert km', 'convert kg', 'temperature', 'celsius to fahrenheit', 'bytes'] },
       { id: 'pdf-toolkit', triggers: ['merge pdf', 'combine pdf', 'pdf merger', 'split pdf', 'pdf joiner'] },
@@ -1364,7 +1358,7 @@
       toggleCompanionDialog();
     }
 
-    // 6. ALL TOOL ENGINES (100% Client-Side)
+    // 6. ALL TOOL ENGINES
     function computeWordStats() {
       const text = document.getElementById('wc-input').value;
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
@@ -1441,7 +1435,7 @@
       const status = document.getElementById('json-studio-status');
       const output = document.getElementById('json-studio-output');
       const metrics = document.getElementById('json-metrics');
-      metrics.innerText = `${val ? val.split('\n').length : 0} lines | ${new Blob([val]).size} bytes`;
+      metrics.innerText = `${val ? val.split('\n').length : 0} lines \vert{} ${new Blob([val]).size} bytes`;
       if (!val) { output.innerHTML = '// Output...'; return; }
       try {
         const parsed = JSON.parse(val);
@@ -1473,7 +1467,7 @@
         if (value === null) type = 'any';
         else if (Array.isArray(value)) type = value.length > 0 ? `${typeof value[0]}[]` : 'any[]';
         else if (type === 'object') type = 'Record<string, any>';
-        result += `  ${key}: ${type};\n`;
+        result += `  ${key}:${type};\n`;
       }
       result += '}';
       return result;
@@ -1559,7 +1553,7 @@
       const y = document.getElementById('bs-y').value;
       const blur = document.getElementById('bs-blur').value;
       const spread = document.getElementById('bs-spread').value;
-      const shadow = `${x}px ${y}px ${blur}px ${spread}px rgba(0, 0, 0, 0.25)`;
+      const shadow = `${x}px${y}px ${blur}px${spread}px rgba(0, 0, 0, 0.25)`;
       document.getElementById('shadow-box').style.boxShadow = shadow;
       document.getElementById('shadow-code').innerText = `box-shadow: ${shadow};`;
     }
@@ -1591,7 +1585,6 @@
       } catch (e) { document.getElementById('regex-matches').innerText = 'Regex Syntax Error: ' + e.message; }
     }
 
-    // INTERACTIVE HTTP STATUS DATABASE
     const httpCodesData = [
       { c: 200, m: "OK", class: "2xx Success", desc: "Standard response for successful HTTP requests. The payload contains the requested resource.", curl: "fetch('/api/user').then(res => console.log(res.status)); // 200" },
       { c: 201, m: "Created", class: "2xx Success", desc: "The request has succeeded and a new resource has been created as a result.", curl: "fetch('/api/user', {method:'POST'}).then(r => r.status); // 201" },
@@ -1620,7 +1613,7 @@
     function selectHttpCode(code) {
       const item = httpCodesData.find(i => i.c === code);
       if (!item) return;
-      document.getElementById('http-detail-badge').innerText = `${item.c} ${item.m}`;
+      document.getElementById('http-detail-badge').innerText = `${item.c}${item.m}`;
       document.getElementById('http-detail-class').innerText = item.class;
       document.getElementById('http-detail-desc').innerText = item.desc;
       document.getElementById('http-detail-code').innerText = item.curl;
@@ -1720,7 +1713,7 @@
       alert('Copied to clipboard!'); 
     }
 
-    // 7. BLOBBY'S ZEN LOUNGE
+    // 7. BLOBBY'S ZEN LOUNGE (10,000+ JOKES, FORTUNES & ASMR BUBBLE WRAP)
     function toggleCompanionDialog() { 
       const dialog = document.getElementById('companion-dialog');
       const isOpening = dialog.classList.contains('hidden');
