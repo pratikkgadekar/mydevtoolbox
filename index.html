@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyDevToolbox — Fast, Free & Privacy-First Browser Utilities</title>
-  <meta name="description" content="Free, 100% client-side toolbox for everyone: JSON formatter, QR code generator, image compressor, case converter, UUID creator, Cron builder, and more. Zero server tracking." />
+  <title>MyDevToolbox — Fast, Privacy-First Web Utilities</title>
+  <meta name="description" content="Free browser tools for developers & creators: JSON studio, QR generator, image compressor, case converter, and more. 100% in-browser." />
   
-  <!-- Tailwind CSS, Lucide Icons, Canvas Confetti & QRCode.js -->
+  <!-- Tailwind CSS, Icons, Confetti & QR Engine -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
-  <!-- Font -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -24,7 +24,7 @@
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['Fira Code', 'monospace']
+            mono: ['"Fira Code"', 'monospace']
           }
         }
       }
@@ -32,121 +32,107 @@
   </script>
 
   <style>
-    /* CSS Multi-Theme Variables */
+    /* CSS Variables for 3 Themes */
     :root[data-theme="light"] {
       --bg-main: #f8fafc;
       --bg-card: rgba(255, 255, 255, 0.95);
-      --bg-subtle: #f1f5f9;
+      --bg-editor: #ffffff;
       --border-color: #e2e8f0;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --brand-color: #4f46e5;
-      --input-bg: #ffffff;
+      --accent: #4f46e5;
       --card-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.05);
     }
-
     :root[data-theme="dim"] {
       --bg-main: #0f172a;
-      --bg-card: rgba(30, 41, 59, 0.85);
-      --bg-subtle: #1e293b;
+      --bg-card: rgba(30, 41, 59, 0.9);
+      --bg-editor: #090e1a;
       --border-color: #334155;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --brand-color: #6366f1;
-      --input-bg: #0b1329;
+      --accent: #6366f1;
       --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
     }
-
     :root[data-theme="dark"] {
       --bg-main: #05070d;
-      --bg-card: rgba(13, 17, 28, 0.9);
-      --bg-subtle: #111827;
+      --bg-card: rgba(13, 17, 28, 0.95);
+      --bg-editor: #080b12;
       --border-color: #1f293d;
       --text-main: #e2e8f0;
       --text-muted: #64748b;
-      --brand-color: #818cf8;
-      --input-bg: #090c14;
-      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      --accent: #818cf8;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
     }
 
     body {
       background-color: var(--bg-main);
       color: var(--text-main);
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
-
     .theme-card {
       background-color: var(--bg-card);
       border-color: var(--border-color);
       box-shadow: var(--card-shadow);
       backdrop-filter: blur(12px);
     }
-
-    .theme-input {
-      background-color: var(--input-bg);
+    .theme-editor {
+      background-color: var(--bg-editor);
       border-color: var(--border-color);
       color: var(--text-main);
     }
 
-    /* Blobby Bouncy Animations */
-    @keyframes squish-bounce {
-      0%, 100% { transform: scale(1, 1) translateY(0); }
-      30% { transform: scale(1.15, 0.85) translateY(4px); }
-      50% { transform: scale(0.9, 1.1) translateY(-14px); }
-      70% { transform: scale(1.05, 0.95) translateY(0); }
-    }
-    .animate-squish {
-      animation: squish-bounce 2.6s infinite ease-in-out;
-    }
+    /* JSON Syntax Highlighting Colors */
+    .json-key { color: #f43f5e; font-weight: 600; }
+    .json-string { color: #10b981; }
+    .json-number { color: #f59e0b; }
+    .json-boolean { color: #8b5cf6; font-weight: 600; }
+    .json-null { color: #64748b; font-style: italic; }
 
-    @keyframes blink {
+    /* Bobble & Blink Animations */
+    @keyframes bobble {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-bobble { animation: bobble 3s ease-in-out infinite; }
+
+    @keyframes eye-blink {
       0%, 90%, 100% { transform: scaleY(1); }
       95% { transform: scaleY(0.1); }
     }
-    .eye-blink {
-      animation: blink 3.5s infinite;
-      transform-origin: center;
-    }
+    .eye-blink { animation: eye-blink 3.5s infinite; transform-origin: center; }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col font-sans antialiased relative selection:bg-indigo-500 selection:text-white">
 
-  <!-- ================= NAVBAR ================= -->
+  <!-- ================= TOP NAVBAR ================= -->
   <header class="border-b theme-card sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
-      <!-- Brand Logo -->
       <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
         <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
           <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
         </div>
         <div>
           <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
-          <span class="text-[10px] ml-2 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">100% Free & Client-Side</span>
+          <span class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">100% Client-Side</span>
         </div>
       </div>
 
-      <!-- Controls & 3-Way Theme Switcher -->
       <div class="flex items-center space-x-3">
         <button onclick="switchView('dashboard')" class="text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">Dashboard</button>
 
+        <!-- 3-Way Theme Switcher -->
         <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
-          <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light Theme">
-            <i data-lucide="sun" class="w-4 h-4"></i>
-          </button>
-          <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Dim Midnight Theme">
-            <i data-lucide="moon-star" class="w-4 h-4"></i>
-          </button>
-          <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Deep Dark Theme">
-            <i data-lucide="moon" class="w-4 h-4"></i>
-          </button>
+          <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
+          <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
+          <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Dark"><i data-lucide="moon" class="w-4 h-4"></i></button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ================= AD SPACE: LEADERBOARD ================= -->
+  <!-- ================= AD SLOT: TOP LEADERBOARD ================= -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
     <div class="w-full h-16 sm:h-20 theme-card border border-dashed rounded-2xl flex items-center justify-center text-xs opacity-50 tracking-wider uppercase font-semibold">
       <span>Ad Space — 728x90 Leaderboard</span>
@@ -161,13 +147,13 @@
       <!-- Hero -->
       <div class="text-center max-w-2xl mx-auto mb-10 pt-2">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 text-xs font-bold mb-3">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Fast, Private Utilities for Devs & Everyday Users
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Lightning Fast • No Data Leaves Your Browser
         </div>
         <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-          Everyday Web Tools, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Zero Server Lag</span>.
+          Supercharge your workflow with <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Zero Latency</span>.
         </h1>
         <p class="mt-2 text-sm sm:text-base opacity-70">
-          Format data, generate QR codes, convert images, change text cases, and inspect code in your browser memory.
+          Instant formatters, converters, and generators designed for both developers and everyday users.
         </p>
 
         <!-- Search Bar -->
@@ -177,8 +163,8 @@
             type="text" 
             id="tool-search" 
             oninput="filterTools()" 
-            placeholder="Search all tools (e.g., QR Code, JSON Formatter, Image Compress, Case Converter, UUID)..." 
-            class="w-full pl-12 pr-4 py-3.5 theme-input border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md transition"
+            placeholder="Search tools (e.g. JSON Formatter, QR Code, Image Compress, Case Converter)..." 
+            class="w-full pl-12 pr-4 py-3.5 theme-editor border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md transition"
           />
         </div>
 
@@ -195,17 +181,17 @@
       <!-- Tools Grid -->
       <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <!-- Tool 1: JSON Formatter & Validator -->
+        <!-- Tool 1: JSON Studio -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
                 <i data-lucide="code-2" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Essential</span>
+              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Pro Studio</span>
             </div>
-            <h3 class="font-bold text-base mt-4">JSON Validator & Formatter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Format, beautify, minify, and inspect JSON with exact line syntax error alerts.</p>
+            <h3 class="font-bold text-base mt-4">JSON Studio & Validator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Dual-pane syntax highlighting, beautifier, tree view, and live syntax error checker.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
@@ -222,14 +208,14 @@
               <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Universal</span>
             </div>
             <h3 class="font-bold text-base mt-4">Live QR Code Generator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate instant high-resolution QR codes for URLs, WiFi passwords, and text.</p>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate instant high-res QR codes for URLs, WiFi logins, and text.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
           </div>
         </div>
 
-        <!-- Tool 3: Image Compressor & WebP Converter -->
+        <!-- Tool 3: Image Compressor -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('img-compress')">
           <div>
             <div class="flex items-start justify-between">
@@ -238,8 +224,8 @@
               </div>
               <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Popular</span>
             </div>
-            <h3 class="font-bold text-base mt-4">Image Compressor & WebP Converter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Compress PNG/JPEG files and convert to next-gen WebP without server uploads.</p>
+            <h3 class="font-bold text-base mt-4">Image Compressor & WebP</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Reduce PNG/JPG file sizes and convert to WebP directly on your device.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
@@ -370,7 +356,7 @@
 
     <!-- VIEW 2: ACTIVE TOOL VIEW -->
     <div id="view-tool" class="hidden">
-      <!-- Back Navigation & Tool Header -->
+      <!-- Navigation Bar inside Tool -->
       <div class="flex items-center justify-between pb-6 border-b border-slate-500/20 mb-6">
         <button onclick="switchView('dashboard')" class="flex items-center text-xs font-bold theme-card px-4 py-2.5 rounded-2xl border hover:border-indigo-500 transition">
           <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Dashboard
@@ -378,19 +364,70 @@
         <span class="text-xs px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full font-mono font-bold">100% In-Browser</span>
       </div>
 
-      <!-- TOOL: JSON FORMATTER & VALIDATOR -->
-      <div id="tool-json-formatter" class="tool-view-panel hidden">
-        <h2 class="text-2xl font-bold">JSON Validator & Beautifier</h2>
-        <p class="text-xs opacity-70 mb-4">Validate structure, clean indentation, or minify JSON data.</p>
-        <div class="space-y-4">
-          <div class="flex flex-wrap gap-2">
-            <button onclick="formatJson(2)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md">Beautify (2 Spaces)</button>
-            <button onclick="formatJson(4)" class="px-4 py-2 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl">Beautify (4 Spaces)</button>
-            <button onclick="minifyJson()" class="px-4 py-2 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl">Minify / Compact</button>
-            <button onclick="copyToClipboard('json-fmt-input')" class="px-4 py-2 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl ml-auto flex items-center"><i data-lucide="copy" class="w-3.5 h-3.5 mr-1"></i> Copy</button>
+      <!-- REDESIGNED TOOL 1: JSON PRO STUDIO (Dual Pane) -->
+      <div id="tool-json-formatter" class="tool-view-panel hidden space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-2">
+              <i data-lucide="code-2" class="w-6 h-6 text-indigo-500"></i> JSON Pro Studio
+            </h2>
+            <p class="text-xs opacity-70">Validate syntax, format indentation, inspect tree data, and minify payloads.</p>
           </div>
-          <div id="json-fmt-status" class="p-3 rounded-xl text-xs font-mono hidden"></div>
-          <textarea id="json-fmt-input" class="w-full h-96 p-4 theme-input font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder='Paste messy or unformatted JSON here...'></textarea>
+
+          <!-- Studio Toolbar Actions -->
+          <div class="flex flex-wrap items-center gap-1.5 text-xs font-bold">
+            <button onclick="formatJsonStudio(2)" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md flex items-center gap-1.5 transition">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Beautify (2)
+            </button>
+            <button onclick="formatJsonStudio(4)" class="px-3 py-2 theme-card border hover:border-indigo-500 rounded-xl transition">4 Spaces</button>
+            <button onclick="minifyJsonStudio()" class="px-3 py-2 theme-card border hover:border-indigo-500 rounded-xl transition">Minify</button>
+            <button onclick="loadSampleJsonStudio()" class="px-3 py-2 theme-card border hover:border-indigo-500 rounded-xl transition">Sample</button>
+            <button onclick="clearJsonStudio()" class="px-3 py-2 theme-card border hover:border-rose-500 text-rose-500 rounded-xl transition">Clear</button>
+          </div>
+        </div>
+
+        <!-- Live Status Bar -->
+        <div id="json-studio-status" class="px-4 py-2.5 rounded-2xl text-xs font-mono flex items-center justify-between border theme-card">
+          <span class="flex items-center gap-2 text-emerald-500 font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ready (Valid JSON)
+          </span>
+          <span id="json-metrics" class="opacity-60 text-[11px]">0 lines | 0 bytes</span>
+        </div>
+
+        <!-- Dual Pane Editor -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Left Pane: Raw Input Editor -->
+          <div class="theme-card border rounded-3xl p-4 flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-500/20 text-xs font-bold opacity-80">
+              <span class="flex items-center gap-1.5"><i data-lucide="edit-3" class="w-4 h-4 text-indigo-500"></i> Raw JSON Input</span>
+              <label class="cursor-pointer text-indigo-500 hover:underline flex items-center gap-1 font-semibold">
+                <i data-lucide="upload" class="w-3.5 h-3.5"></i> Open File
+                <input type="file" accept=".json,text/plain" class="hidden" onchange="uploadJsonFile(event)">
+              </label>
+            </div>
+            <textarea 
+              id="json-studio-input" 
+              oninput="handleJsonStudioInput()" 
+              class="w-full h-[450px] mt-3 p-3 theme-editor font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none leading-relaxed" 
+              placeholder='{\n  "status": "success",\n  "code": 200\n}'
+            ></textarea>
+          </div>
+
+          <!-- Right Pane: Highlighted Output -->
+          <div class="theme-card border rounded-3xl p-4 flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-500/20 text-xs font-bold opacity-80">
+              <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> Formatted & Highlighted</span>
+              <div class="flex gap-2">
+                <button onclick="downloadJsonFile()" class="text-indigo-500 hover:underline flex items-center gap-1 font-semibold">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i> Download
+                </button>
+                <button onclick="copyJsonOutput()" class="text-indigo-500 hover:underline flex items-center gap-1 font-semibold">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+                </button>
+              </div>
+            </div>
+            <pre id="json-studio-output" class="w-full h-[450px] mt-3 p-4 theme-editor font-mono text-xs border rounded-2xl overflow-auto whitespace-pre leading-relaxed select-text"></pre>
+          </div>
         </div>
       </div>
 
@@ -402,11 +439,11 @@
           <div class="theme-card border p-6 rounded-3xl space-y-4">
             <div>
               <label class="block text-xs font-bold opacity-80 mb-1">Enter URL or Text</label>
-              <input type="text" id="qr-text" oninput="generateQrCode()" value="https://mydevtoolbox.in" class="w-full px-4 py-3 theme-input font-sans text-sm border rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+              <input type="text" id="qr-text" oninput="generateQrCode()" value="https://mydevtoolbox.in" class="w-full px-4 py-3 theme-editor font-sans text-sm border rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
             </div>
             <div>
               <label class="block text-xs font-bold opacity-80 mb-1">QR Code Size</label>
-              <select id="qr-size" onchange="generateQrCode()" class="w-full px-4 py-2.5 theme-input text-xs border rounded-2xl">
+              <select id="qr-size" onchange="generateQrCode()" class="w-full px-4 py-2.5 theme-editor text-xs border rounded-2xl">
                 <option value="180">Standard (180x180)</option>
                 <option value="250" selected>High-Res (250x250)</option>
                 <option value="350">Extra Large (350x350)</option>
@@ -442,7 +479,7 @@
               </div>
               <div>
                 <label class="block font-bold mb-1">Target Format</label>
-                <select id="img-fmt" onchange="processImage()" class="w-full p-2.5 theme-input border rounded-xl">
+                <select id="img-fmt" onchange="processImage()" class="w-full p-2.5 theme-editor border rounded-xl">
                   <option value="image/webp">WebP (Smallest File Size)</option>
                   <option value="image/jpeg">JPEG</option>
                   <option value="image/png">PNG</option>
@@ -450,7 +487,7 @@
               </div>
             </div>
 
-            <div class="flex items-center justify-between p-4 theme-input border rounded-2xl text-xs">
+            <div class="flex items-center justify-between p-4 theme-editor border rounded-2xl text-xs">
               <div>
                 <div class="font-bold" id="img-orig-size">Original: --</div>
                 <div class="text-emerald-500 font-bold" id="img-new-size">Compressed: --</div>
@@ -468,7 +505,7 @@
         <h2 class="text-2xl font-bold">Text Case Converter</h2>
         <p class="text-xs opacity-70 mb-4">Instantly format text for social media, essays, or programming variables.</p>
         <div class="space-y-4 theme-card border p-6 rounded-3xl">
-          <textarea id="case-input" class="w-full h-40 p-4 theme-input font-sans text-sm border rounded-2xl focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="Type or paste text to transform..."></textarea>
+          <textarea id="case-input" class="w-full h-40 p-4 theme-editor font-sans text-sm border rounded-2xl focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="Type or paste text to transform..."></textarea>
           <div class="flex flex-wrap gap-2">
             <button onclick="convertCase('upper')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">UPPERCASE</button>
             <button onclick="convertCase('lower')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">lowercase</button>
@@ -491,14 +528,14 @@
               <span>Input JSON</span>
               <button onclick="loadSampleJson()" class="text-indigo-500 hover:underline">Load Sample</button>
             </div>
-            <textarea id="json-input" oninput="convertJsonToTs()" class="w-full h-80 p-3 theme-input font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder='{"userId": 101, "name": "Alex", "active": true}'></textarea>
+            <textarea id="json-input" oninput="convertJsonToTs()" class="w-full h-80 p-3 theme-editor font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder='{"userId": 101, "name": "Alex", "active": true}'></textarea>
           </div>
           <div class="theme-card border p-4 rounded-3xl">
             <div class="flex items-center justify-between text-xs font-bold opacity-80 mb-2">
               <span>TypeScript Output</span>
               <button onclick="copyToClipboard('ts-output')" class="text-indigo-500 hover:underline flex items-center font-bold"><i data-lucide="copy" class="w-3.5 h-3.5 mr-1"></i> Copy</button>
             </div>
-            <textarea id="ts-output" readonly class="w-full h-80 p-3 theme-input font-mono text-xs border rounded-2xl focus:outline-none text-indigo-400" placeholder="export interface RootObject { ... }"></textarea>
+            <textarea id="ts-output" readonly class="w-full h-80 p-3 theme-editor font-mono text-xs border rounded-2xl focus:outline-none text-indigo-400" placeholder="export interface RootObject { ... }"></textarea>
           </div>
         </div>
       </div>
@@ -512,7 +549,7 @@
         <div class="max-w-xl mx-auto theme-card border p-6 rounded-3xl space-y-4">
           <div>
             <label class="block text-xs font-bold opacity-80 mb-1">Cron Expression</label>
-            <input type="text" id="cron-input" oninput="explainCron()" value="*/15 * * * *" class="w-full px-4 py-3 theme-input font-mono text-sm border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            <input type="text" id="cron-input" oninput="explainCron()" value="*/15 * * * *" class="w-full px-4 py-3 theme-editor font-mono text-sm border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
           </div>
           <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
             <div class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider mb-1">Human Meaning:</div>
@@ -532,12 +569,12 @@
         <h2 class="text-2xl font-bold">Base64 Text Encoder & Decoder</h2>
         <p class="text-xs opacity-70 mb-4">Encode or decode strings quickly in browser memory.</p>
         <div class="space-y-4 theme-card border p-6 rounded-3xl">
-          <textarea id="b64-input" class="w-full h-36 p-3 theme-input font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Type text here..."></textarea>
+          <textarea id="b64-input" class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Type text here..."></textarea>
           <div class="flex gap-3">
             <button onclick="runBase64('encode')" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md">Encode to Base64</button>
             <button onclick="runBase64('decode')" class="px-5 py-2.5 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl">Decode from Base64</button>
           </div>
-          <textarea id="b64-output" readonly class="w-full h-36 p-3 theme-input font-mono text-xs border rounded-2xl text-indigo-400 focus:outline-none" placeholder="Result..."></textarea>
+          <textarea id="b64-output" readonly class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl text-indigo-400 focus:outline-none" placeholder="Result..."></textarea>
         </div>
       </div>
 
@@ -549,7 +586,7 @@
           <div class="theme-card border p-6 rounded-3xl space-y-4">
             <h3 class="text-sm font-bold">Version 4 UUIDs</h3>
             <button onclick="generateUuids()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl">Generate 5 New UUIDs</button>
-            <textarea id="uuid-output" readonly class="w-full h-40 p-3 theme-input font-mono text-xs border rounded-2xl"></textarea>
+            <textarea id="uuid-output" readonly class="w-full h-40 p-3 theme-editor font-mono text-xs border rounded-2xl"></textarea>
           </div>
           <div class="theme-card border p-6 rounded-3xl space-y-4">
             <h3 class="text-sm font-bold">Strong Password Generator</h3>
@@ -558,7 +595,7 @@
               <input type="range" min="8" max="32" value="16" id="pwd-len" oninput="document.getElementById('pwd-len-val').innerText = this.value; generatePassword();" class="w-32 accent-indigo-600">
             </div>
             <button onclick="generatePassword()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl">Generate Password</button>
-            <input type="text" id="pwd-output" readonly class="w-full p-3 theme-input font-mono text-sm text-emerald-500 font-bold border rounded-2xl text-center" />
+            <input type="text" id="pwd-output" readonly class="w-full p-3 theme-editor font-mono text-sm text-emerald-500 font-bold border rounded-2xl text-center" />
           </div>
         </div>
       </div>
@@ -573,11 +610,11 @@
               <span>Input</span>
               <span id="md-stats">0 words | 0 chars</span>
             </div>
-            <textarea id="md-input" oninput="parseMarkdownLive()" class="w-full h-80 p-3 theme-input font-mono text-xs border rounded-2xl focus:outline-none" placeholder="# Hello Writer&#10;&#10;Write **bold**, *italic*, or `code` here..."></textarea>
+            <textarea id="md-input" oninput="parseMarkdownLive()" class="w-full h-80 p-3 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="# Hello Writer&#10;&#10;Write **bold**, *italic*, or `code` here..."></textarea>
           </div>
           <div class="theme-card border p-4 rounded-3xl">
             <div class="text-xs font-semibold opacity-70 mb-2">HTML Preview</div>
-            <div id="md-preview" class="w-full h-80 p-4 theme-input overflow-y-auto prose max-w-none text-xs border rounded-2xl"></div>
+            <div id="md-preview" class="w-full h-80 p-4 theme-editor overflow-y-auto prose max-w-none text-xs border rounded-2xl"></div>
           </div>
         </div>
       </div>
@@ -607,7 +644,7 @@
           </div>
           <div class="flex flex-col items-center justify-center p-8 theme-card border rounded-3xl">
             <div id="shadow-box" class="w-36 h-36 bg-gradient-to-tr from-indigo-500 to-pink-500 rounded-3xl transition-all duration-75"></div>
-            <code id="shadow-code" class="mt-6 px-4 py-2 theme-input border rounded-xl text-[11px] font-mono font-bold text-indigo-500">box-shadow: 0px 12px 28px -6px rgba(0,0,0,0.2);</code>
+            <code id="shadow-code" class="mt-6 px-4 py-2 theme-editor border rounded-xl text-[11px] font-mono font-bold text-indigo-500">box-shadow: 0px 12px 28px -6px rgba(0,0,0,0.2);</code>
           </div>
         </div>
       </div>
@@ -621,49 +658,62 @@
     </div>
   </div>
 
-  <!-- ================= BLOBBY COMPANION ================= -->
-  <div id="companion-container" class="fixed z-50 transition-all duration-1000 ease-out select-none" style="bottom: 20px; left: 30px;">
-    <!-- Speech Bubble -->
-    <div id="companion-bubble" class="hidden absolute bottom-20 left-0 w-64 theme-card border border-indigo-500/30 shadow-2xl rounded-3xl p-4 text-xs space-y-2.5 transition-all">
-      <div class="flex items-center justify-between">
+  <!-- ================= ANCHORED NON-BLOCKING BLOBBY WITH MINI-GAME ================= -->
+  <div id="companion-container" class="fixed z-50 select-none bottom-5 right-5 flex flex-col items-end">
+    
+    <!-- Mini Game / Interactive Dialog Modal -->
+    <div id="companion-dialog" class="hidden w-72 sm:w-80 theme-card border border-indigo-500/30 shadow-2xl rounded-3xl p-5 text-xs space-y-3 mb-3">
+      <div class="flex items-center justify-between border-b border-slate-500/20 pb-2.5">
         <span class="font-bold text-indigo-500 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span> Blobby
+          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span> Blobby's Corner
         </span>
-        <button onclick="toggleBubble()" class="opacity-50 hover:opacity-100 font-bold text-sm leading-none">&times;</button>
+        <button onclick="toggleCompanionDialog()" class="opacity-50 hover:opacity-100 font-bold text-sm">&times;</button>
       </div>
-      <p id="companion-text" class="opacity-90 leading-relaxed font-medium">
-        (Blobby bounces cheerfully) Need to format JSON or make a QR code?
-      </p>
-      <div class="pt-2 border-t border-slate-500/20 flex flex-wrap gap-1.5">
-        <button onclick="openTool('qr-gen')" class="px-2 py-1 bg-emerald-500/10 hover:bg-emerald-500 hover:text-white rounded-lg text-[10px] font-bold text-emerald-500 transition">QR Code</button>
-        <button onclick="openTool('json-formatter')" class="px-2 py-1 bg-indigo-500/10 hover:bg-indigo-500 hover:text-white rounded-lg text-[10px] font-bold text-indigo-500 transition">JSON Format</button>
-        <button onclick="openTool('img-compress')" class="px-2 py-1 bg-pink-500/10 hover:bg-pink-500 hover:text-white rounded-lg text-[10px] font-bold text-pink-500 transition">Compress</button>
+
+      <!-- Quick Message / Game View -->
+      <div id="blobby-game-area" class="space-y-2.5">
+        <p id="blobby-msg" class="leading-relaxed opacity-90">
+          Hey friend! Need a quick productivity break? Try my reaction reflex sprint!
+        </p>
+        
+        <!-- Game Box -->
+        <div id="reflex-box" class="hidden p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-center cursor-pointer select-none" onclick="handleReflexClick()">
+          <span id="reflex-text" class="font-bold text-indigo-500">Wait for green...</span>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button onclick="startReflexGame()" id="btn-start-game" class="px-3 py-1.5 bg-indigo-600 text-white font-bold rounded-xl shadow-sm hover:bg-indigo-500 transition">Play Mini-Game</button>
+          <button onclick="tellDevJoke()" class="px-3 py-1.5 theme-card border font-bold rounded-xl hover:border-indigo-500 transition">Tell a Joke</button>
+        </div>
       </div>
     </div>
 
-    <!-- Character SVG -->
-    <div onclick="petCompanion()" class="cursor-pointer group animate-squish">
-      <svg width="68" height="68" viewBox="0 0 100 100" class="drop-shadow-lg transition-transform group-hover:scale-110 active:scale-95">
-        <defs>
-          <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#818cf8"/>
-            <stop offset="50%" stop-color="#6366f1"/>
-            <stop offset="100%" stop-color="#ec4899"/>
-          </linearGradient>
-        </defs>
-        <path d="M50 15 C75 15 88 32 88 56 C88 80 74 88 50 88 C26 88 12 80 12 56 C12 32 25 15 50 15 Z" fill="url(#blobGrad)"/>
-        <path d="M26 24 Q 22 5 36 18 Z" fill="#6366f1"/>
-        <path d="M74 24 Q 78 5 64 18 Z" fill="#ec4899"/>
-        <circle cx="28" cy="58" r="5" fill="#f43f5e" opacity="0.6"/>
-        <circle cx="72" cy="58" r="5" fill="#f43f5e" opacity="0.6"/>
-        <g id="companion-eyes" class="eye-blink">
-          <ellipse cx="36" cy="48" rx="4" ry="5.5" fill="#ffffff"/>
-          <circle cx="37" cy="47" r="2.2" fill="#0f172a"/>
-          <ellipse cx="64" cy="48" rx="4" ry="5.5" fill="#ffffff"/>
-          <circle cx="63" cy="47" r="2.2" fill="#0f172a"/>
-        </g>
-        <path id="companion-mouth" d="M44 58 Q 50 64 56 58" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-      </svg>
+    <!-- Blobby Avatar Button (Always Neat in Corner) -->
+    <div onclick="toggleCompanionDialog()" class="cursor-pointer group flex items-center gap-2 bg-gradient-to-r from-indigo-500/10 to-pink-500/10 hover:from-indigo-500/20 hover:to-pink-500/20 border border-indigo-500/30 rounded-full pl-3 pr-1 py-1 shadow-lg backdrop-blur-md transition-all">
+      <span class="text-[11px] font-bold text-indigo-500">Blobby</span>
+      <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 p-0.5 flex items-center justify-center animate-bobble">
+        <svg width="34" height="34" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#818cf8"/>
+              <stop offset="50%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#ec4899"/>
+            </linearGradient>
+          </defs>
+          <path d="M50 15 C75 15 88 32 88 56 C88 80 74 88 50 88 C26 88 12 80 12 56 C12 32 25 15 50 15 Z" fill="url(#blobGrad)"/>
+          <path d="M26 24 Q 22 5 36 18 Z" fill="#6366f1"/>
+          <path d="M74 24 Q 78 5 64 18 Z" fill="#ec4899"/>
+          <circle cx="28" cy="58" r="5" fill="#f43f5e" opacity="0.6"/>
+          <circle cx="72" cy="58" r="5" fill="#f43f5e" opacity="0.6"/>
+          <g class="eye-blink">
+            <ellipse cx="36" cy="48" rx="4" ry="5.5" fill="#ffffff"/>
+            <circle cx="37" cy="47" r="2.2" fill="#0f172a"/>
+            <ellipse cx="64" cy="48" rx="4" ry="5.5" fill="#ffffff"/>
+            <circle cx="63" cy="47" r="2.2" fill="#0f172a"/>
+          </g>
+          <path d="M44 58 Q 50 64 56 58" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
     </div>
   </div>
 
@@ -703,7 +753,7 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT ================= -->
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     lucide.createIcons();
 
@@ -723,7 +773,7 @@
     const savedTheme = localStorage.getItem('mdt_theme') || 'light';
     setTheme(savedTheme);
 
-    // 2. NAVIGATION & TABS
+    // 2. NAVIGATION
     function switchView(viewName) {
       const dashboard = document.getElementById('view-dashboard');
       const toolView = document.getElementById('view-tool');
@@ -745,13 +795,16 @@
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+      if (toolId === 'json-formatter') {
+        if (!document.getElementById('json-studio-input').value) loadSampleJsonStudio();
+      }
       if (toolId === 'uuid-gen') { generateUuids(); generatePassword(); }
       if (toolId === 'box-shadow') { updateShadow(); }
       if (toolId === 'cron-builder') { explainCron(); }
       if (toolId === 'qr-gen') { generateQrCode(); }
     }
 
-    // 3. SEARCH & FILTERS
+    // 3. SEARCH & CATEGORY FILTERS
     function filterTools() {
       const q = document.getElementById('tool-search').value.toLowerCase();
       document.querySelectorAll('.tool-card').forEach(card => {
@@ -775,36 +828,121 @@
       });
     }
 
-    // 4. TOOL ENGINES (100% Client-Side)
+    // 4. ADVANCED JSON PRO STUDIO ENGINE
+    function syntaxHighlightJson(jsonStr) {
+      jsonStr = jsonStr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        let cls = 'json-number';
+        if (/^"/.test(match)) {
+          if (/:$/.test(match)) {
+            cls = 'json-key';
+          } else {
+            cls = 'json-string';
+          }
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+          cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      });
+    }
 
-    // A. JSON FORMATTER & VALIDATOR
-    function formatJson(spaces) {
-      const el = document.getElementById('json-fmt-input');
-      const status = document.getElementById('json-fmt-status');
+    function handleJsonStudioInput() {
+      const val = document.getElementById('json-studio-input').value.trim();
+      const status = document.getElementById('json-studio-status');
+      const output = document.getElementById('json-studio-output');
+      const metrics = document.getElementById('json-metrics');
+
+      const lines = val ? val.split('\n').length : 0;
+      const bytes = new Blob([val]).size;
+      metrics.innerText = `${lines} lines | ${bytes} bytes`;
+
+      if (!val) {
+        output.innerHTML = '<span class="opacity-40">// Formatted output will appear here...</span>';
+        status.innerHTML = `<span class="opacity-60">Ready (Empty Input)</span>`;
+        return;
+      }
+
       try {
-        const parsed = JSON.parse(el.value);
-        el.value = JSON.stringify(parsed, null, spaces);
-        status.className = "p-3 rounded-xl text-xs font-mono bg-emerald-500/10 text-emerald-500 border border-emerald-500/20";
-        status.innerText = "✓ Valid JSON format";
-        status.classList.remove('hidden');
+        const parsed = JSON.parse(val);
+        const formatted = JSON.stringify(parsed, null, 2);
+        output.innerHTML = syntaxHighlightJson(formatted);
+        status.innerHTML = `<span class="flex items-center gap-2 text-emerald-500 font-bold"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Valid JSON</span>`;
       } catch (err) {
-        status.className = "p-3 rounded-xl text-xs font-mono bg-rose-500/10 text-rose-500 border border-rose-500/20";
-        status.innerText = "✗ Invalid JSON: " + err.message;
-        status.classList.remove('hidden');
+        output.innerHTML = `<span class="text-rose-500 font-bold">// Syntax Error:\n${err.message}</span>`;
+        status.innerHTML = `<span class="flex items-center gap-2 text-rose-500 font-bold"><span class="w-2 h-2 rounded-full bg-rose-500"></span> ${err.message}</span>`;
       }
     }
 
-    function minifyJson() {
-      const el = document.getElementById('json-fmt-input');
+    function formatJsonStudio(spaces = 2) {
+      const input = document.getElementById('json-studio-input');
       try {
-        const parsed = JSON.parse(el.value);
-        el.value = JSON.stringify(parsed);
-      } catch (err) {
-        alert("Invalid JSON: " + err.message);
+        const parsed = JSON.parse(input.value);
+        input.value = JSON.stringify(parsed, null, spaces);
+        handleJsonStudioInput();
+      } catch (e) {
+        handleJsonStudioInput();
       }
     }
 
-    // B. LIVE QR CODE GENERATOR
+    function minifyJsonStudio() {
+      const input = document.getElementById('json-studio-input');
+      try {
+        const parsed = JSON.parse(input.value);
+        input.value = JSON.stringify(parsed);
+        handleJsonStudioInput();
+      } catch (e) {
+        handleJsonStudioInput();
+      }
+    }
+
+    function loadSampleJsonStudio() {
+      const sample = {
+        app: "MyDevToolbox",
+        version: "2.5.0",
+        active: true,
+        stats: { visitors: 14200, rating: 4.9 },
+        tools: ["JSON Studio", "QR Maker", "WebP Converter"],
+        meta: null
+      };
+      document.getElementById('json-studio-input').value = JSON.stringify(sample, null, 2);
+      handleJsonStudioInput();
+    }
+
+    function clearJsonStudio() {
+      document.getElementById('json-studio-input').value = '';
+      handleJsonStudioInput();
+    }
+
+    function uploadJsonFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('json-studio-input').value = e.target.result;
+        handleJsonStudioInput();
+      };
+      reader.readAsText(file);
+    }
+
+    function downloadJsonFile() {
+      const val = document.getElementById('json-studio-input').value;
+      const blob = new Blob([val], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.json';
+      a.click();
+    }
+
+    function copyJsonOutput() {
+      const input = document.getElementById('json-studio-input').value;
+      navigator.clipboard.writeText(input);
+      alert('JSON copied to clipboard!');
+    }
+
+    // 5. QR CODE ENGINE
     let qrcodeObj = null;
     function generateQrCode() {
       const text = document.getElementById('qr-text').value.trim() || 'https://mydevtoolbox.in';
@@ -831,7 +969,7 @@
       }
     }
 
-    // C. IMAGE COMPRESSOR & WEBP CONVERTER
+    // 6. IMAGE COMPRESSOR
     let currentUploadedImg = null;
     function handleImageUpload(e) {
       const file = e.target.files[0];
@@ -861,7 +999,6 @@
       const quality = parseFloat(document.getElementById('img-qual').value) / 100;
       const dataUrl = canvas.toDataURL(format, quality);
 
-      // Estimate byte size
       const head = 'data:' + format + ';base64,';
       const size = Math.round((dataUrl.length - head.length) * 3 / 4);
       document.getElementById('img-new-size').innerText = `Compressed: ${(size / 1024).toFixed(1)} KB`;
@@ -872,7 +1009,7 @@
       downloadBtn.download = `compressed_image.${ext}`;
     }
 
-    // D. TEXT CASE CONVERTER
+    // 7. TEXT CASE CONVERTER
     function convertCase(mode) {
       const el = document.getElementById('case-input');
       const val = el.value;
@@ -886,7 +1023,7 @@
       if (mode === 'kebab') el.value = val.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w]/g, '-');
     }
 
-    // E. JSON to TypeScript Engine
+    // 8. OTHER CORE ENGINES
     function jsonToTs(obj, interfaceName = "RootObject") {
       let result = `export interface ${interfaceName} {\n`;
       for (const [key, value] of Object.entries(obj)) {
@@ -913,12 +1050,11 @@
     }
 
     function loadSampleJson() {
-      const sample = { id: 1042, username: "dev_alex", active: true, roles: ["admin", "editor"], preferences: { theme: "dim" } };
+      const sample = { id: 1042, username: "dev_alex", active: true, roles: ["admin", "editor"] };
       document.getElementById('json-input').value = JSON.stringify(sample, null, 2);
       convertJsonToTs();
     }
 
-    // F. Cron Explainer
     function explainCron() {
       const expr = document.getElementById('cron-input').value.trim();
       const res = document.getElementById('cron-result');
@@ -928,13 +1064,8 @@
       else if (expr === '*/5 * * * *') res.innerText = "Runs every 5 minutes.";
       else res.innerText = `Custom schedule: [Minute: ${expr.split(' ')[0] || '*'}] [Hour: ${expr.split(' ')[1] || '*'}]`;
     }
+    function setCronPreset(str) { document.getElementById('cron-input').value = str; explainCron(); }
 
-    function setCronPreset(str) {
-      document.getElementById('cron-input').value = str;
-      explainCron();
-    }
-
-    // G. Base64
     function runBase64(mode) {
       const input = document.getElementById('b64-input').value;
       const output = document.getElementById('b64-output');
@@ -946,7 +1077,6 @@
       }
     }
 
-    // H. UUID & Passwords
     function generateUuids() {
       let list = [];
       for (let i = 0; i < 5; i++) {
@@ -967,7 +1097,6 @@
       document.getElementById('pwd-output').value = pwd;
     }
 
-    // I. Markdown Preview
     function parseMarkdownLive() {
       const val = document.getElementById('md-input').value;
       const words = val.trim() ? val.trim().split(/\s+/).length : 0;
@@ -979,12 +1108,11 @@
         .replace(/^# (.*$)/gim, '<h1 class="text-lg font-bold mt-4">$1</h1>')
         .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*)\*/gim, '<em>$1</em>')
-        .replace(/`([^`]+)`/gim, '<code class="bg-indigo-500/10 text-indigo-500 px-1.5 py-0.5 rounded font-mono font-semibold">$1</code>')
+        .replace(/`([^`]+)`/gim, '<code class="bg-indigo-500/10 text-indigo-500 px-1.5 py-0.5 rounded font-mono">$1</code>')
         .replace(/\n$/gim, '<br />');
       document.getElementById('md-preview').innerHTML = html || '<span class="opacity-50">Preview appears here...</span>';
     }
 
-    // J. Box Shadow
     function updateShadow() {
       const x = document.getElementById('bs-x').value;
       const y = document.getElementById('bs-y').value;
@@ -1001,67 +1129,76 @@
       document.getElementById('shadow-code').innerText = `box-shadow: ${shadow};`;
     }
 
-    function toggleModal(modalId) {
-      document.getElementById(modalId).classList.toggle('hidden');
-    }
-
+    function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('hidden'); }
     function copyToClipboard(elementId) {
       const el = document.getElementById(elementId);
       navigator.clipboard.writeText(el.value);
       alert('Copied to clipboard!');
     }
 
-    // 5. ANIMATED BLOBBY COMPANION
-    const funQuotes = [
-      "Purrr! Need a clean QR Code? Try the new QR generator! 📱",
-      "Compressing photos? All processing stays on your device! 🛡️",
-      "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
-      "Squish! You can format messy JSON in one click! ✨",
-      "Tip: Take a quick sip of water and keep being awesome! ☕"
+    // 9. BLOBBY COMPANION & MINI-GAME
+    function toggleCompanionDialog() {
+      document.getElementById('companion-dialog').classList.toggle('hidden');
+    }
+
+    const devJokes = [
+      "Why did the JavaScript developer wear glasses? Because they didn't C#! 🤓",
+      "There are 10 types of people in the world: those who understand binary, and those who don't. 💻",
+      "A SQL query walks into a bar, walks up to two tables and asks: 'Can I join you?' 🍻",
+      "Why do programmers prefer dark mode? Because light attracts bugs! 🐛"
     ];
 
-    function toggleBubble() {
-      document.getElementById('companion-bubble').classList.toggle('hidden');
-    }
-
-    function petCompanion() {
-      const bubble = document.getElementById('companion-bubble');
-      const text = document.getElementById('companion-text');
-      text.innerText = funQuotes[Math.floor(Math.random() * funQuotes.length)];
-      bubble.classList.remove('hidden');
-
+    function tellDevJoke() {
+      const joke = devJokes[Math.floor(Math.random() * devJokes.length)];
+      document.getElementById('blobby-msg').innerText = joke;
       if (window.confetti) {
-        confetti({
-          particleCount: 30,
-          spread: 50,
-          origin: { y: 0.9, x: parseFloat(document.getElementById('companion-container').style.left) / window.innerWidth || 0.1 }
-        });
+        confetti({ particleCount: 20, spread: 45, origin: { y: 0.9, x: 0.9 } });
       }
     }
 
-    function wanderCompanion() {
-      const container = document.getElementById('companion-container');
-      const bubble = document.getElementById('companion-bubble');
-      const screenW = window.innerWidth;
-      const minX = 30;
-      const maxX = Math.max(50, screenW - 120);
-      const newX = Math.floor(Math.random() * (maxX - minX)) + minX;
+    // Reaction Reflex Game
+    let reflexStartTime = 0;
+    let reflexTimer = null;
+    let reflexState = 'idle'; // idle | waiting | ready
 
-      container.style.left = `${newX}px`;
+    function startReflexGame() {
+      const box = document.getElementById('reflex-box');
+      const text = document.getElementById('reflex-text');
+      box.classList.remove('hidden');
+      box.className = "p-4 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-center cursor-pointer select-none";
+      text.innerText = "Wait for GREEN...";
+      text.className = "font-bold text-amber-500";
+      reflexState = 'waiting';
 
-      if (newX > screenW - 320) {
-        bubble.style.left = 'auto';
-        bubble.style.right = '0px';
-      } else {
-        bubble.style.left = '0px';
-        bubble.style.right = 'auto';
+      const randomDelay = Math.floor(Math.random() * 2500) + 1500;
+      reflexTimer = setTimeout(() => {
+        box.className = "p-4 rounded-2xl bg-emerald-500 text-center cursor-pointer select-none animate-pulse";
+        text.innerText = "CLICK NOW!";
+        text.className = "font-bold text-white text-base";
+        reflexStartTime = Date.now();
+        reflexState = 'ready';
+      }, randomDelay);
+    }
+
+    function handleReflexClick() {
+      const text = document.getElementById('reflex-text');
+      const box = document.getElementById('reflex-box');
+
+      if (reflexState === 'waiting') {
+        clearTimeout(reflexTimer);
+        text.innerText = "Too early! Click 'Play Mini-Game' to retry.";
+        text.className = "font-bold text-rose-500";
+        box.className = "p-4 rounded-2xl bg-rose-500/20 border border-rose-500/40 text-center cursor-pointer select-none";
+        reflexState = 'idle';
+      } else if (reflexState === 'ready') {
+        const timeTaken = Date.now() - reflexStartTime;
+        text.innerText = `⚡ ${timeTaken} ms! Awesome reflex!`;
+        text.className = "font-bold text-emerald-500";
+        box.className = "p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-center cursor-pointer select-none";
+        reflexState = 'idle';
+        if (window.confetti) confetti({ particleCount: 35, spread: 60, origin: { y: 0.85, x: 0.9 } });
       }
     }
-    setInterval(wanderCompanion, 16000);
-
-    setTimeout(() => {
-      document.getElementById('companion-bubble').classList.remove('hidden');
-    }, 3000);
   </script>
 </body>
 </html>
