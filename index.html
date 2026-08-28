@@ -98,20 +98,20 @@
     .diff-insert { background-color: rgba(16, 185, 129, 0.25); color: #10b981; }
     .diff-delete { background-color: rgba(244, 63, 94, 0.25); color: #f43f5e; text-decoration: line-through; }
 
-    /* Kawaii Squishy Bounce */
-    @keyframes kawaii-bounce {
+    /* Kawaii Pet Bouncy Fluid Animations */
+    @keyframes pet-bounce {
       0%, 100% { transform: scale(1, 1) translateY(0); }
-      30% { transform: scale(1.18, 0.82) translateY(3px); }
-      50% { transform: scale(0.85, 1.15) translateY(-10px); }
-      70% { transform: scale(1.08, 0.92) translateY(0); }
+      30% { transform: scale(1.12, 0.88) translateY(3px); }
+      50% { transform: scale(0.92, 1.1) translateY(-8px); }
+      70% { transform: scale(1.05, 0.95) translateY(0); }
     }
-    .animate-kawaii { animation: kawaii-bounce 2.2s infinite ease-in-out; }
+    .animate-pet { animation: pet-bounce 2.8s infinite ease-in-out; }
 
-    @keyframes eye-sparkle {
-      0%, 90%, 100% { transform: scaleY(1); }
-      95% { transform: scaleY(0.1); }
+    @keyframes eye-blink-smooth {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.12); }
     }
-    .eye-sparkle { animation: eye-sparkle 3.2s infinite; transform-origin: center; }
+    .eye-blink-smooth { animation: eye-blink-smooth 3.6s infinite; transform-origin: center; }
   </style>
 </head>
 
@@ -528,7 +528,7 @@
             </div>
             <div class="flex justify-between items-center text-xs">
               <span class="opacity-60">Exp & CVV:</span>
-              <span id="dummy-card-meta" class="font-mono font-semibold">12/28 | 888</span>
+              <span id="dummy-card-meta" class="font-mono font-semibold">12/29 | 888</span>
             </div>
           </div>
         </div>
@@ -774,10 +774,10 @@
     </div>
   </div>
 
-  <!-- ================= KAWAII BLOBBY (HIGH-CONTRAST + SMART SEARCH) ================= -->
+  <!-- ================= KAWAII BLOBBY (SOFT PASTEL, BIGGER SIZE & SMART SEARCH) ================= -->
   <div id="companion-container" class="fixed z-50 bottom-4 right-6 flex flex-col items-end select-none transition-all duration-1000 ease-out">
     
-    <div id="companion-dialog" class="hidden w-80 sm:w-88 theme-card border border-indigo-500/30 shadow-2xl rounded-3xl p-5 text-xs space-y-3.5 mb-2">
+    <div id="companion-dialog" class="hidden w-80 sm:w-88 theme-card border border-pink-400/30 shadow-2xl rounded-3xl p-5 text-xs space-y-3.5 mb-2">
       <div class="flex items-center justify-between border-b border-slate-500/20 pb-2.5">
         <span class="font-extrabold text-pink-500 flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span> Blobby Assistant ✨
@@ -817,30 +817,44 @@
       </div>
     </div>
 
-    <!-- High-Contrast Kawaii Bouncy Character Button -->
-    <div onclick="toggleCompanionDialog()" class="cursor-pointer group flex items-center gap-2.5 bg-white/95 dark:bg-slate-900/95 border-2 border-pink-400/50 rounded-full pl-3.5 pr-1.5 py-1.5 shadow-xl backdrop-blur-md transition-all hover:scale-110 active:scale-95">
-      <span class="text-[11px] font-extrabold text-pink-600 dark:text-pink-400">Ask Blobby ✨</span>
-      <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-rose-400 via-pink-500 to-indigo-500 p-0.5 flex items-center justify-center animate-kawaii shadow-inner">
-        <svg width="32" height="32" viewBox="0 0 100 100">
+    <!-- Soft Pastel Kawaii Bouncy Character Button with Prominent 52px Face -->
+    <div onclick="toggleCompanionDialog()" class="cursor-pointer group flex items-center gap-3 bg-white/95 dark:bg-slate-900/95 border-2 border-pink-300/60 dark:border-pink-500/40 rounded-full pl-4 pr-1.5 py-1.5 shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95">
+      <span class="text-xs font-extrabold text-pink-600 dark:text-pink-400">Ask Blobby ✨</span>
+      <div class="w-13 h-13 rounded-full bg-gradient-to-tr from-orange-200 via-pink-400 to-indigo-400 p-1 flex items-center justify-center animate-pet shadow-inner">
+        <svg width="42" height="42" viewBox="0 0 100 100">
           <defs>
-            <linearGradient id="blobbyHighContrast" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ffedd5"/>
-              <stop offset="40%" stop-color="#f43f5e"/>
-              <stop offset="100%" stop-color="#6366f1"/>
+            <linearGradient id="blobbySoftPastel" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff1f2"/>
+              <stop offset="45%" stop-color="#fbcfe8"/>
+              <stop offset="100%" stop-color="#c4b5fd"/>
             </linearGradient>
           </defs>
-          <path d="M50 14 C78 14 92 32 92 58 C92 84 76 92 50 92 C24 92 8 84 8 58 C8 32 22 14 50 14 Z" fill="url(#blobbyHighContrast)" stroke="#4c0519" stroke-width="2.5"/>
-          <ellipse cx="24" cy="62" rx="7" ry="4" fill="#fda4af" opacity="0.95"/>
-          <ellipse cx="76" cy="62" rx="7" ry="4" fill="#fda4af" opacity="0.95"/>
-          <g class="eye-sparkle">
-            <ellipse cx="34" cy="46" rx="6.5" ry="8.5" fill="#0f172a"/>
-            <circle cx="36" cy="43" r="3" fill="#ffffff"/>
-            <circle cx="32" cy="49" r="1.5" fill="#ffffff"/>
-            <ellipse cx="66" cy="46" rx="6.5" ry="8.5" fill="#0f172a"/>
-            <circle cx="64" cy="43" r="3" fill="#ffffff"/>
-            <circle cx="68" cy="49" r="1.5" fill="#ffffff"/>
+          
+          <!-- Cute Squishy Body -->
+          <path d="M50 12 C78 12 92 30 92 58 C92 84 76 92 50 92 C24 92 8 84 8 58 C8 30 22 12 50 12 Z" fill="url(#blobbySoftPastel)" stroke="#fda4af" stroke-width="2"/>
+          
+          <!-- Soft Lighting Highlight on Top -->
+          <ellipse cx="50" cy="24" rx="22" ry="7" fill="#ffffff" opacity="0.65"/>
+          
+          <!-- Rosy Cheeks -->
+          <ellipse cx="23" cy="62" rx="7" ry="4.5" fill="#f472b6" opacity="0.8"/>
+          <ellipse cx="77" cy="62" rx="7" ry="4.5" fill="#f472b6" opacity="0.8"/>
+          
+          <!-- Big Glossy Kawaii Eyes with Double Sparkles -->
+          <g class="eye-blink-smooth">
+            <!-- Left Eye -->
+            <ellipse cx="34" cy="46" rx="7" ry="9.5" fill="#1e1b4b"/>
+            <circle cx="36.5" cy="42" r="3.2" fill="#ffffff"/>
+            <circle cx="31.5" cy="50" r="1.6" fill="#ffffff"/>
+            
+            <!-- Right Eye -->
+            <ellipse cx="66" cy="46" rx="7" ry="9.5" fill="#1e1b4b"/>
+            <circle cx="63.5" cy="42" r="3.2" fill="#ffffff"/>
+            <circle cx="68.5" cy="50" r="1.6" fill="#ffffff"/>
           </g>
-          <path d="M43 60 Q 50 68 57 60" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          
+          <!-- Sweet Smile Mouth -->
+          <path d="M43 59 Q 50 67 57 59" stroke="#1e1b4b" stroke-width="3.5" stroke-linecap="round" fill="none"/>
         </svg>
       </div>
     </div>
@@ -987,51 +1001,56 @@
       });
     }
 
-    // 4. BLOBBY ASSISTANT NATURAL LANGUAGE SEARCH
-    const toolKeywordsMap = [
-      { id: 'pdf-toolkit', keywords: ['pdf', 'merge pdf', 'combine pdf', 'pdf merger', 'split pdf'] },
-      { id: 'qr-gen', keywords: ['qr', 'qr code', 'make qr', 'wifi qr', 'barcode', 'link qr'] },
-      { id: 'img-compress', keywords: ['compress', 'image', 'webp', 'png', 'jpg', 'photo compress', 'reduce size'] },
-      { id: 'case-convert', keywords: ['case', 'uppercase', 'lowercase', 'title case', 'camelcase', 'snake case', 'capitalize'] },
-      { id: 'word-counter', keywords: ['word count', 'character count', 'read time', 'sentence counter', 'text stats'] },
-      { id: 'diff-checker', keywords: ['diff', 'compare text', 'code diff', 'git diff', 'differences'] },
-      { id: 'json-formatter', keywords: ['json', 'format json', 'json studio', 'validate json', 'beautify json', 'minify json', 'json formatter'] },
-      { id: 'json-ts', keywords: ['typescript', 'json to ts', 'interface', 'types', 'ts generator'] },
-      { id: 'jwt-debugger', keywords: ['jwt', 'token', 'decode jwt', 'jwt inspector', 'bearer token'] },
-      { id: 'uuid-gen', keywords: ['uuid', 'guid', 'v4 uuid', 'unique id'] },
-      { id: 'pwd-gen', keywords: ['password', 'secret', 'token generator', 'strong password', 'api key'] },
-      { id: 'cron-builder', keywords: ['cron', 'schedule', 'cron explainer', 'crontab'] },
-      { id: 'regex-tester', keywords: ['regex', 'regular expression', 'pattern matcher', 'regex sandbox'] },
-      { id: 'box-shadow', keywords: ['shadow', 'box shadow', 'css shadow', 'glow'] },
-      { id: 'http-codes', keywords: ['http', 'status code', '404', '500', '200 ok', 'http reference'] },
-      { id: 'base64', keywords: ['base64', 'b64', 'encode base64', 'decode base64'] },
-      { id: 'dummy-card', keywords: ['dummy card', 'credit card', 'card generator', 'luhn', 'test card'] }
+    // 4. BLOBBY ASSISTANT NATURAL LANGUAGE SEARCH & ROUTER
+    const specificToolActions = [
+      { id: 'pdf-toolkit', triggers: ['merge pdf', 'combine pdf', 'pdf merger', 'split pdf', 'pdf joiner'] },
+      { id: 'qr-gen', triggers: ['make qr', 'generate qr', 'wifi qr', 'qr generator', 'create qr'] },
+      { id: 'img-compress', triggers: ['compress image', 'reduce image', 'webp converter', 'shrink photo', 'photo compress'] },
+      { id: 'case-convert', triggers: ['uppercase', 'lowercase', 'title case', 'camelcase', 'snake case', 'kebab case', 'capitalize text'] },
+      { id: 'word-counter', triggers: ['word count', 'character count', 'reading time', 'count words', 'char counter'] },
+      { id: 'diff-checker', triggers: ['diff checker', 'compare text', 'code diff', 'git diff', 'compare code'] },
+      { id: 'json-formatter', triggers: ['json formatter', 'format json', 'json studio', 'validate json', 'beautify json', 'minify json', 'json validator'] },
+      { id: 'json-ts', triggers: ['json to ts', 'json to typescript', 'ts interface', 'json type generator'] },
+      { id: 'jwt-debugger', triggers: ['jwt debugger', 'decode jwt', 'jwt inspector', 'verify jwt', 'token decoder'] },
+      { id: 'uuid-gen', triggers: ['generate uuid', 'create uuid', 'v4 uuid', 'guid generator', 'random uuid'] },
+      { id: 'pwd-gen', triggers: ['generate password', 'strong password', 'password creator', 'make password', 'random token'] },
+      { id: 'cron-builder', triggers: ['cron builder', 'cron explainer', 'explain cron', 'crontab generator'] },
+      { id: 'regex-tester', triggers: ['regex tester', 'regex sandbox', 'test regex', 'regex matcher'] },
+      { id: 'box-shadow', triggers: ['box shadow', 'shadow generator', 'css shadow', 'shadow studio'] },
+      { id: 'http-codes', triggers: ['http status', 'http codes', 'status codes', '404 error', '500 error'] },
+      { id: 'base64', triggers: ['encode base64', 'decode base64', 'base64 converter'] },
+      { id: 'dummy-card', triggers: ['dummy card', 'test card', 'test credit card', 'card generator'] }
     ];
 
     function executeBlobbySearch() {
-      const query = document.getElementById('blobby-search-input').value.trim().toLowerCase();
+      const rawQuery = document.getElementById('blobby-search-input').value.trim();
+      const query = rawQuery.toLowerCase();
       const feedback = document.getElementById('blobby-search-feedback');
       if (!query) return;
 
-      let matchedToolId = null;
-      for (const item of toolKeywordsMap) {
-        if (item.keywords.some(k => query.includes(k) || k.includes(query))) {
-          matchedToolId = item.id;
+      let directMatchToolId = null;
+      for (const item of specificToolActions) {
+        if (item.triggers.some(t => query.includes(t) || t === query)) {
+          directMatchToolId = item.id;
           break;
         }
       }
 
-      if (matchedToolId) {
+      if (directMatchToolId) {
         feedback.innerText = `✨ Found! Opening tool...`;
         feedback.classList.remove('hidden');
         setTimeout(() => {
-          openTool(matchedToolId);
+          openTool(directMatchToolId);
           toggleCompanionDialog();
-        }, 350);
-      } else {
-        feedback.innerText = `Could not find an exact tool. Try 'JSON', 'PDF', 'QR', or 'Password'.`;
-        feedback.classList.remove('hidden');
+        }, 300);
+        return;
       }
+
+      // If broad query, filter dashboard
+      document.getElementById('tool-search').value = rawQuery;
+      switchView('dashboard');
+      filterTools();
+      toggleCompanionDialog();
     }
 
     // 5. WORD & CHAR COUNTER
@@ -1174,7 +1193,6 @@
         num += Math.floor(Math.random() * 10);
       }
 
-      // Compute valid check digit via Luhn Algorithm
       let sum = 0;
       let alt = true;
       for (let i = num.length - 1; i >= 0; i--) {
@@ -1189,7 +1207,6 @@
       const checkDigit = (10 - (sum % 10)) % 10;
       num += checkDigit;
 
-      // Format with spaces
       const formatted = num.match(/.{1,4}/g).join(' ');
       document.getElementById('dummy-card-num').innerText = formatted;
       document.getElementById('dummy-card-meta').innerText = `12/29 | ${Math.floor(Math.random()*899+100)}`;
@@ -1306,14 +1323,13 @@
 
     function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('hidden'); }
 
-    // 12. PLAYFUL BLOBBY & DIALOG AUTO-RESET
+    // 12. DIALOG AUTO-RESET & COMPANION
     function toggleCompanionDialog() { 
       const dialog = document.getElementById('companion-dialog');
       const isOpening = dialog.classList.contains('hidden');
       
       dialog.classList.toggle('hidden');
 
-      // Auto-clear input & feedback whenever closed
       if (!isOpening) {
         document.getElementById('blobby-search-input').value = '';
         document.getElementById('blobby-search-feedback').classList.add('hidden');
@@ -1335,7 +1351,7 @@
       const container = document.getElementById('companion-container');
       const dialog = document.getElementById('companion-dialog');
       if (!dialog.classList.contains('hidden')) return;
-      const offset = Math.floor(Math.random() * 40) - 20;
+      const offset = Math.floor(Math.random() * 30) - 15;
       container.style.transform = `translateX(${offset}px)`;
     }
     setInterval(wanderBlobby, 12000);
@@ -1344,7 +1360,7 @@
     function startReflexGame() {
       const box = document.getElementById('reflex-box');
       box.classList.remove('hidden');
-      box.className = "p-3.5 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-center cursor-pointer";
+      box.className = "p-3.5 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-center cursor-pointer";
       document.getElementById('reflex-text').innerText = "Wait for GREEN...";
       reflexState = 'waiting';
       reflexTimer = setTimeout(() => {
