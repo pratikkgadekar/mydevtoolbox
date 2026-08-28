@@ -1,36 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyDevToolbox — Fast, Friendly & Free Browser Utilities</title>
-  <meta name="description" content="Free, fresh, 100% client-side developer toolbox. JSON to TS, Cron builder, Base64, UUID, and more. Zero tracking, zero latency." />
+  <title>MyDevToolbox — Fast, Free & Privacy-First Browser Utilities</title>
+  <meta name="description" content="Free, 100% client-side toolbox for everyone: JSON formatter, QR code generator, image compressor, case converter, UUID creator, Cron builder, and more. Zero server tracking." />
   
-  <!-- Tailwind CSS & Lucide Icons -->
+  <!-- Tailwind CSS, Lucide Icons, Canvas Confetti & QRCode.js -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
-  <!-- Plus Jakarta Sans Font for a fresh, welcoming aesthetic -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
       theme: {
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
             mono: ['Fira Code', 'monospace']
-          },
-          colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              500: '#6366f1',
-              600: '#4f46e5',
-              700: '#4338ca',
-            }
           }
         }
       }
@@ -38,213 +32,335 @@
   </script>
 
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 7px; height: 7px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    /* CSS Multi-Theme Variables */
+    :root[data-theme="light"] {
+      --bg-main: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-subtle: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --brand-color: #4f46e5;
+      --input-bg: #ffffff;
+      --card-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.05);
+    }
 
-    /* Fresh Glassmorphism */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.85);
+    :root[data-theme="dim"] {
+      --bg-main: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.85);
+      --bg-subtle: #1e293b;
+      --border-color: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --brand-color: #6366f1;
+      --input-bg: #0b1329;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    :root[data-theme="dark"] {
+      --bg-main: #05070d;
+      --bg-card: rgba(13, 17, 28, 0.9);
+      --bg-subtle: #111827;
+      --border-color: #1f293d;
+      --text-main: #e2e8f0;
+      --text-muted: #64748b;
+      --brand-color: #818cf8;
+      --input-bg: #090c14;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-card {
+      background-color: var(--bg-card);
+      border-color: var(--border-color);
+      box-shadow: var(--card-shadow);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-    }
-    .glass-card:hover {
-      border-color: rgba(99, 102, 241, 0.4);
-      box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.12);
     }
 
-    /* Sparky Animations */
-    @keyframes bobble {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(3deg); }
+    .theme-input {
+      background-color: var(--input-bg);
+      border-color: var(--border-color);
+      color: var(--text-main);
     }
-    .animate-bobble {
-      animation: bobble 2.5s ease-in-out infinite;
+
+    /* Blobby Bouncy Animations */
+    @keyframes squish-bounce {
+      0%, 100% { transform: scale(1, 1) translateY(0); }
+      30% { transform: scale(1.15, 0.85) translateY(4px); }
+      50% { transform: scale(0.9, 1.1) translateY(-14px); }
+      70% { transform: scale(1.05, 0.95) translateY(0); }
+    }
+    .animate-squish {
+      animation: squish-bounce 2.6s infinite ease-in-out;
+    }
+
+    @keyframes blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+    .eye-blink {
+      animation: blink 3.5s infinite;
+      transform-origin: center;
     }
   </style>
 </head>
 
-<body class="bg-[#f8fafc] text-slate-800 min-h-screen flex flex-col font-sans antialiased relative overflow-x-hidden selection:bg-indigo-500 selection:text-white">
-
-  <!-- Ambient Light Background Gradients -->
-  <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-    <div class="absolute -top-[20%] left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-indigo-200/50 to-pink-200/40 blur-3xl opacity-60"></div>
-    <div class="absolute top-[30%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-bl from-teal-100/60 to-indigo-100/50 blur-3xl opacity-70"></div>
-  </div>
+<body class="min-h-screen flex flex-col font-sans antialiased relative selection:bg-indigo-500 selection:text-white">
 
   <!-- ================= NAVBAR ================= -->
-  <header class="border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40">
+  <header class="border-b theme-card sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
       <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/25">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
           <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
         </div>
         <div>
-          <span class="font-extrabold text-lg tracking-tight text-slate-900">MyDev<span class="text-indigo-600">Toolbox</span></span>
-          <span class="text-[11px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">100% Client-Side</span>
+          <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
+          <span class="text-[10px] ml-2 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">100% Free & Client-Side</span>
         </div>
       </div>
 
+      <!-- Controls & 3-Way Theme Switcher -->
       <div class="flex items-center space-x-3">
-        <button onclick="switchView('dashboard')" class="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition px-3.5 py-1.5 rounded-xl hover:bg-slate-100">All Tools</button>
-        <button onclick="sparkyDance()" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/70 font-semibold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition">
-          <i data-lucide="bot" class="w-4 h-4 text-indigo-600"></i> Poke Sparky!
-        </button>
+        <button onclick="switchView('dashboard')" class="text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">Dashboard</button>
+
+        <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
+          <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light Theme">
+            <i data-lucide="sun" class="w-4 h-4"></i>
+          </button>
+          <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Dim Midnight Theme">
+            <i data-lucide="moon-star" class="w-4 h-4"></i>
+          </button>
+          <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Deep Dark Theme">
+            <i data-lucide="moon" class="w-4 h-4"></i>
+          </button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- ================= AD SLOT: TOP LEADERBOARD ================= -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-5 w-full">
-    <div class="w-full h-16 sm:h-20 bg-white/60 border border-dashed border-slate-300 rounded-2xl flex items-center justify-center text-xs text-slate-400 font-medium tracking-wider uppercase shadow-sm">
-      <!-- Google AdSense Responsive Banner Slot (728x90) -->
+  <!-- ================= AD SPACE: LEADERBOARD ================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+    <div class="w-full h-16 sm:h-20 theme-card border border-dashed rounded-2xl flex items-center justify-center text-xs opacity-50 tracking-wider uppercase font-semibold">
       <span>Ad Space — 728x90 Leaderboard</span>
     </div>
   </div>
 
-  <!-- ================= MAIN CONTENT ================= -->
+  <!-- ================= MAIN CONTAINER ================= -->
   <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
 
     <!-- VIEW 1: DASHBOARD -->
     <div id="view-dashboard">
       <!-- Hero -->
-      <div class="text-center max-w-2xl mx-auto mb-10 pt-4">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-semibold mb-4">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Privacy Guaranteed • In-Browser Processing
+      <div class="text-center max-w-2xl mx-auto mb-10 pt-2">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 text-xs font-bold mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Fast, Private Utilities for Devs & Everyday Users
         </div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
-          Supercharge your workflow with <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">Zero Latency</span>.
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+          Everyday Web Tools, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Zero Server Lag</span>.
         </h1>
-        <p class="mt-3 text-slate-600 text-sm sm:text-base font-normal">
-          Lightweight, free utilities running purely in your browser memory. No signups, no servers.
+        <p class="mt-2 text-sm sm:text-base opacity-70">
+          Format data, generate QR codes, convert images, change text cases, and inspect code in your browser memory.
         </p>
 
         <!-- Search Bar -->
-        <div class="mt-7 relative max-w-xl mx-auto">
-          <i data-lucide="search" class="w-5 h-5 absolute left-4 top-3.5 text-slate-400"></i>
+        <div class="mt-6 relative max-w-xl mx-auto">
+          <i data-lucide="search" class="w-5 h-5 absolute left-4 top-3.5 opacity-40"></i>
           <input 
             type="text" 
             id="tool-search" 
             oninput="filterTools()" 
-            placeholder="Search tools (e.g. JSON to TS, Cron, Base64, UUID, Shadow)..." 
-            class="w-full pl-12 pr-4 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 text-slate-800 placeholder-slate-400 shadow-md shadow-slate-100 transition"
+            placeholder="Search all tools (e.g., QR Code, JSON Formatter, Image Compress, Case Converter, UUID)..." 
+            class="w-full pl-12 pr-4 py-3.5 theme-input border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md transition"
           />
         </div>
 
         <!-- Filter Tags -->
-        <div class="flex flex-wrap items-center justify-center gap-2 mt-5 text-xs">
-          <button onclick="setCategoryFilter('all')" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold shadow-sm shadow-indigo-500/30 transition">All Tools</button>
-          <button onclick="setCategoryFilter('converter')" class="cat-pill px-4 py-1.5 rounded-xl bg-white text-slate-600 hover:text-indigo-600 font-semibold border border-slate-200 shadow-sm transition">Converters</button>
-          <button onclick="setCategoryFilter('format')" class="cat-pill px-4 py-1.5 rounded-xl bg-white text-slate-600 hover:text-indigo-600 font-semibold border border-slate-200 shadow-sm transition">Formatters</button>
-          <button onclick="setCategoryFilter('generator')" class="cat-pill px-4 py-1.5 rounded-xl bg-white text-slate-600 hover:text-indigo-600 font-semibold border border-slate-200 shadow-sm transition">Generators</button>
-          <button onclick="setCategoryFilter('css')" class="cat-pill px-4 py-1.5 rounded-xl bg-white text-slate-600 hover:text-indigo-600 font-semibold border border-slate-200 shadow-sm transition">CSS Tools</button>
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs">
+          <button onclick="setCategoryFilter('all')" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All Tools</button>
+          <button onclick="setCategoryFilter('general')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Everyday Utilities</button>
+          <button onclick="setCategoryFilter('format')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">JSON & Text</button>
+          <button onclick="setCategoryFilter('generator')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Generators</button>
+          <button onclick="setCategoryFilter('dev')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Developer Tools</button>
         </div>
       </div>
 
       <!-- Tools Grid -->
       <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <!-- Tool Card 1 -->
-        <div class="tool-card glass-card p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="converter" onclick="openTool('json-ts')">
+        <!-- Tool 1: JSON Formatter & Validator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
+                <i data-lucide="code-2" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Essential</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">JSON Validator & Formatter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Format, beautify, minify, and inspect JSON with exact line syntax error alerts.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">
+            Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
+          </div>
+        </div>
+
+        <!-- Tool 2: QR Code Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('qr-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
+                <i data-lucide="qr-code" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Universal</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Live QR Code Generator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate instant high-resolution QR codes for URLs, WiFi passwords, and text.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">
+            Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
+          </div>
+        </div>
+
+        <!-- Tool 3: Image Compressor & WebP Converter -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('img-compress')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500">
+                <i data-lucide="image" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Popular</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Image Compressor & WebP Converter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Compress PNG/JPEG files and convert to next-gen WebP without server uploads.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">
+            Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
+          </div>
+        </div>
+
+        <!-- Tool 4: Text Case Converter -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('case-convert')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
+                <i data-lucide="type" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">For Writers</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Text Case Converter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Switch text instantly between Title Case, UPPERCASE, lowercase, camelCase, & snake_case.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">
+            Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
+          </div>
+        </div>
+
+        <!-- Tool 5: JSON to TypeScript -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('json-ts')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
                 <i data-lucide="file-json" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-50 text-indigo-600 border border-indigo-100 px-2.5 py-0.5 rounded-full">High Use</span>
+              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Dev</span>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mt-4 group-hover:text-indigo-600 transition">JSON to TypeScript</h3>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Instantly transform nested JSON payloads into clean, typed TypeScript interfaces.</p>
+            <h3 class="font-bold text-base mt-4">JSON to TypeScript</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Turn nested JSON into strongly-typed TypeScript interfaces.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-semibold text-indigo-600">
+          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
           </div>
         </div>
 
-        <!-- Tool Card 2 -->
-        <div class="tool-card glass-card p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('cron-builder')">
+        <!-- Tool 6: Cron Explainer -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('cron-builder')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500">
                 <i data-lucide="clock" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-purple-50 text-purple-600 border border-purple-100 px-2.5 py-0.5 rounded-full">DevOps</span>
+              <span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">DevOps</span>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mt-4 group-hover:text-indigo-600 transition">Cron Expression Explainer</h3>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Turn obscure cron schedules into plain English sentences with quick one-click presets.</p>
+            <h3 class="font-bold text-base mt-4">Cron Expression Explainer</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Translate 5-part cron syntax into human sentences with presets.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-semibold text-purple-600">
+          <div class="mt-4 flex items-center text-xs font-bold text-purple-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
           </div>
         </div>
 
-        <!-- Tool Card 3 -->
-        <div class="tool-card glass-card p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="converter" onclick="openTool('base64')">
+        <!-- Tool 7: Base64 Tool -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('base64')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500">
                 <i data-lucide="binary" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-teal-50 text-teal-600 border border-teal-100 px-2.5 py-0.5 rounded-full">Fast</span>
+              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Fast</span>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mt-4 group-hover:text-indigo-600 transition">Base64 Text & File Tool</h3>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Encode or decode strings and binary data with full UTF-8 support.</p>
+            <h3 class="font-bold text-base mt-4">Base64 Encode & Decode</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Encode or decode strings and binary data with full UTF-8 support.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-semibold text-teal-600">
+          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
           </div>
         </div>
 
-        <!-- Tool Card 4 -->
-        <div class="tool-card glass-card p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('uuid-gen')">
+        <!-- Tool 8: UUID & Passwords -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('uuid-gen')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
                 <i data-lucide="key" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-amber-50 text-amber-600 border border-amber-100 px-2.5 py-0.5 rounded-full">Security</span>
+              <span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Security</span>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mt-4 group-hover:text-indigo-600 transition">UUID & Password Generator</h3>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Generate batch RFC4122 v4 UUIDs and cryptographically secure passwords.</p>
+            <h3 class="font-bold text-base mt-4">UUID & Password Creator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate batch RFC4122 v4 UUIDs and strong customizable passwords.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-semibold text-amber-600">
+          <div class="mt-4 flex items-center text-xs font-bold text-blue-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
           </div>
         </div>
 
-        <!-- Tool Card 5 -->
-        <div class="tool-card glass-card p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('markdown-live')">
+        <!-- Tool 9: Markdown Editor -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('markdown-live')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
                 <i data-lucide="file-text" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-rose-50 text-rose-600 border border-rose-100 px-2.5 py-0.5 rounded-full">Content</span>
+              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Content</span>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mt-4 group-hover:text-indigo-600 transition">Markdown Live Editor</h3>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Real-time Markdown to formatted HTML previewer with live word/char counters.</p>
+            <h3 class="font-bold text-base mt-4">Markdown Realtime Editor</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Live Markdown to HTML converter with word and character metrics.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-semibold text-rose-600">
+          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
           </div>
         </div>
 
-        <!-- Tool Card 6 -->
-        <div class="tool-card glass-card p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="css" onclick="openTool('box-shadow')">
+        <!-- Tool 10: Box Shadow -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('box-shadow')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shadow-sm">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
                 <i data-lucide="layers" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-blue-50 text-blue-600 border border-blue-100 px-2.5 py-0.5 rounded-full">CSS</span>
+              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">CSS</span>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mt-4 group-hover:text-indigo-600 transition">CSS Box-Shadow Generator</h3>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Visual sliders for X/Y offset, blur, spread, and instant copyable CSS snippet.</p>
+            <h3 class="font-bold text-base mt-4">CSS Box-Shadow Generator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Visual sliders for offsets, blur, and spread with instant CSS copy.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-semibold text-blue-600">
+          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">
             Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
           </div>
         </div>
@@ -255,237 +371,359 @@
     <!-- VIEW 2: ACTIVE TOOL VIEW -->
     <div id="view-tool" class="hidden">
       <!-- Back Navigation & Tool Header -->
-      <div class="flex items-center justify-between pb-6 border-b border-slate-200 mb-6">
-        <button onclick="switchView('dashboard')" class="flex items-center text-xs font-bold text-slate-700 hover:text-indigo-600 bg-white hover:bg-slate-50 px-4 py-2.5 rounded-2xl border border-slate-200 shadow-sm transition">
+      <div class="flex items-center justify-between pb-6 border-b border-slate-500/20 mb-6">
+        <button onclick="switchView('dashboard')" class="flex items-center text-xs font-bold theme-card px-4 py-2.5 rounded-2xl border hover:border-indigo-500 transition">
           <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Dashboard
         </button>
-        <span id="active-tool-badge" class="text-xs px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full font-mono font-semibold">100% In-Browser</span>
+        <span class="text-xs px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full font-mono font-bold">100% In-Browser</span>
       </div>
 
-      <!-- ACTIVE TOOL 1: JSON TO TS -->
+      <!-- TOOL: JSON FORMATTER & VALIDATOR -->
+      <div id="tool-json-formatter" class="tool-view-panel hidden">
+        <h2 class="text-2xl font-bold">JSON Validator & Beautifier</h2>
+        <p class="text-xs opacity-70 mb-4">Validate structure, clean indentation, or minify JSON data.</p>
+        <div class="space-y-4">
+          <div class="flex flex-wrap gap-2">
+            <button onclick="formatJson(2)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md">Beautify (2 Spaces)</button>
+            <button onclick="formatJson(4)" class="px-4 py-2 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl">Beautify (4 Spaces)</button>
+            <button onclick="minifyJson()" class="px-4 py-2 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl">Minify / Compact</button>
+            <button onclick="copyToClipboard('json-fmt-input')" class="px-4 py-2 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl ml-auto flex items-center"><i data-lucide="copy" class="w-3.5 h-3.5 mr-1"></i> Copy</button>
+          </div>
+          <div id="json-fmt-status" class="p-3 rounded-xl text-xs font-mono hidden"></div>
+          <textarea id="json-fmt-input" class="w-full h-96 p-4 theme-input font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder='Paste messy or unformatted JSON here...'></textarea>
+        </div>
+      </div>
+
+      <!-- TOOL: QR CODE GENERATOR -->
+      <div id="tool-qr-gen" class="tool-view-panel hidden">
+        <h2 class="text-2xl font-bold">Live QR Code Generator</h2>
+        <p class="text-xs opacity-70 mb-4">Create clean, high-resolution QR codes for URLs, contact info, or Wi-Fi.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="theme-card border p-6 rounded-3xl space-y-4">
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Enter URL or Text</label>
+              <input type="text" id="qr-text" oninput="generateQrCode()" value="https://mydevtoolbox.in" class="w-full px-4 py-3 theme-input font-sans text-sm border rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">QR Code Size</label>
+              <select id="qr-size" onchange="generateQrCode()" class="w-full px-4 py-2.5 theme-input text-xs border rounded-2xl">
+                <option value="180">Standard (180x180)</option>
+                <option value="250" selected>High-Res (250x250)</option>
+                <option value="350">Extra Large (350x350)</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center p-8 theme-card border rounded-3xl space-y-4">
+            <div id="qrcode-container" class="p-4 bg-white rounded-2xl shadow-md"></div>
+            <button onclick="downloadQrCode()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-md flex items-center">
+              <i data-lucide="download" class="w-4 h-4 mr-1.5"></i> Download QR Image
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL: IMAGE COMPRESSOR & WEBP CONVERTER -->
+      <div id="tool-img-compress" class="tool-view-panel hidden">
+        <h2 class="text-2xl font-bold">Image Compressor & WebP Converter</h2>
+        <p class="text-xs opacity-70 mb-4">Compress and convert images locally using browser Canvas. No uploads necessary.</p>
+        <div class="theme-card border p-6 rounded-3xl space-y-5">
+          <div class="border-2 border-dashed border-slate-400/40 rounded-2xl p-8 text-center cursor-pointer hover:border-pink-500 transition" onclick="document.getElementById('img-file-input').click()">
+            <input type="file" id="img-file-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)" />
+            <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-pink-500 mb-2"></i>
+            <div class="text-sm font-bold">Click or Drag & Drop Image Here</div>
+            <div class="text-xs opacity-60 mt-1">Supports PNG, JPG, JPEG, and WebP</div>
+          </div>
+
+          <div id="img-process-panel" class="hidden space-y-4 pt-4 border-t border-slate-500/20">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div>
+                <label class="block font-bold mb-1">Quality Compression (<span id="img-qual-val">80</span>%)</label>
+                <input type="range" min="10" max="100" value="80" id="img-qual" oninput="document.getElementById('img-qual-val').innerText = this.value; processImage();" class="w-full accent-pink-500">
+              </div>
+              <div>
+                <label class="block font-bold mb-1">Target Format</label>
+                <select id="img-fmt" onchange="processImage()" class="w-full p-2.5 theme-input border rounded-xl">
+                  <option value="image/webp">WebP (Smallest File Size)</option>
+                  <option value="image/jpeg">JPEG</option>
+                  <option value="image/png">PNG</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between p-4 theme-input border rounded-2xl text-xs">
+              <div>
+                <div class="font-bold" id="img-orig-size">Original: --</div>
+                <div class="text-emerald-500 font-bold" id="img-new-size">Compressed: --</div>
+              </div>
+              <a id="img-download-link" class="px-5 py-2.5 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-md flex items-center cursor-pointer">
+                <i data-lucide="download" class="w-4 h-4 mr-1.5"></i> Download Result
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL: TEXT CASE CONVERTER -->
+      <div id="tool-case-convert" class="tool-view-panel hidden">
+        <h2 class="text-2xl font-bold">Text Case Converter</h2>
+        <p class="text-xs opacity-70 mb-4">Instantly format text for social media, essays, or programming variables.</p>
+        <div class="space-y-4 theme-card border p-6 rounded-3xl">
+          <textarea id="case-input" class="w-full h-40 p-4 theme-input font-sans text-sm border rounded-2xl focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="Type or paste text to transform..."></textarea>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="convertCase('upper')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">UPPERCASE</button>
+            <button onclick="convertCase('lower')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">lowercase</button>
+            <button onclick="convertCase('title')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">Title Case</button>
+            <button onclick="convertCase('camel')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">camelCase</button>
+            <button onclick="convertCase('snake')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">snake_case</button>
+            <button onclick="convertCase('kebab')" class="px-4 py-2 theme-card border hover:border-amber-500 text-xs font-bold rounded-xl">kebab-case</button>
+            <button onclick="copyToClipboard('case-input')" class="px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded-xl ml-auto flex items-center"><i data-lucide="copy" class="w-3.5 h-3.5 mr-1"></i> Copy Text</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOL: JSON TO TS -->
       <div id="tool-json-ts" class="tool-view-panel hidden">
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold text-slate-900">JSON to TypeScript Converter</h2>
-          <p class="text-xs text-slate-500">Paste your JSON on the left to generate formatted TypeScript interfaces automatically.</p>
-        </div>
-        
+        <h2 class="text-2xl font-bold">JSON to TypeScript Converter</h2>
+        <p class="text-xs opacity-70 mb-4">Transform JSON payloads into TypeScript definitions automatically.</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
-            <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2">
+          <div class="theme-card border p-4 rounded-3xl">
+            <div class="flex items-center justify-between text-xs font-bold opacity-80 mb-2">
               <span>Input JSON</span>
-              <button onclick="loadSampleJson()" class="text-indigo-600 hover:underline">Load Sample</button>
+              <button onclick="loadSampleJson()" class="text-indigo-500 hover:underline">Load Sample</button>
             </div>
-            <textarea id="json-input" oninput="convertJsonToTs()" class="w-full h-80 p-3 bg-slate-50 font-mono text-xs text-slate-800 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder='{"userId": 101, "name": "Alex", "isAdmin": false}'></textarea>
+            <textarea id="json-input" oninput="convertJsonToTs()" class="w-full h-80 p-3 theme-input font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder='{"userId": 101, "name": "Alex", "active": true}'></textarea>
           </div>
-          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
-            <div class="flex items-center justify-between text-xs font-semibold text-slate-600 mb-2">
+          <div class="theme-card border p-4 rounded-3xl">
+            <div class="flex items-center justify-between text-xs font-bold opacity-80 mb-2">
               <span>TypeScript Output</span>
-              <button onclick="copyToClipboard('ts-output')" class="text-indigo-600 hover:underline flex items-center font-bold"><i data-lucide="copy" class="w-3.5 h-3.5 mr-1"></i> Copy Code</button>
+              <button onclick="copyToClipboard('ts-output')" class="text-indigo-500 hover:underline flex items-center font-bold"><i data-lucide="copy" class="w-3.5 h-3.5 mr-1"></i> Copy</button>
             </div>
-            <textarea id="ts-output" readonly class="w-full h-80 p-3 bg-indigo-50/40 font-mono text-xs text-indigo-900 border border-indigo-100 rounded-2xl focus:outline-none" placeholder="export interface RootObject { ... }"></textarea>
+            <textarea id="ts-output" readonly class="w-full h-80 p-3 theme-input font-mono text-xs border rounded-2xl focus:outline-none text-indigo-400" placeholder="export interface RootObject { ... }"></textarea>
           </div>
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 2: CRON EXPLAINER -->
+      <!-- TOOL: CRON EXPLAINER -->
       <div id="tool-cron-builder" class="tool-view-panel hidden">
-        <div class="mb-4 text-center max-w-xl mx-auto">
-          <h2 class="text-2xl font-bold text-slate-900">Cron Expression Explainer</h2>
-          <p class="text-xs text-slate-500">Enter standard 5-part cron syntax to see the human-friendly schedule.</p>
+        <div class="max-w-xl mx-auto text-center mb-4">
+          <h2 class="text-2xl font-bold">Cron Expression Explainer</h2>
+          <p class="text-xs opacity-70">Enter standard 5-part cron syntax to see the human-friendly schedule.</p>
         </div>
-        
-        <div class="max-w-xl mx-auto bg-white p-7 rounded-3xl border border-slate-200 shadow-sm space-y-5">
+        <div class="max-w-xl mx-auto theme-card border p-6 rounded-3xl space-y-4">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1.5">Cron Syntax (Minute Hour Day Month Day-of-Week)</label>
-            <input type="text" id="cron-input" oninput="explainCron()" value="*/15 * * * *" class="w-full px-4 py-3 bg-slate-50 font-mono text-sm text-slate-900 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+            <label class="block text-xs font-bold opacity-80 mb-1">Cron Expression</label>
+            <input type="text" id="cron-input" oninput="explainCron()" value="*/15 * * * *" class="w-full px-4 py-3 theme-input font-mono text-sm border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
           </div>
-          <div class="p-4 bg-emerald-50/70 border border-emerald-200 rounded-2xl">
-            <div class="text-[11px] text-emerald-800 font-bold uppercase tracking-wider mb-1">Human Explanation:</div>
-            <div id="cron-result" class="text-base font-bold text-emerald-900">Runs every 15 minutes past every hour.</div>
+          <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
+            <div class="text-[10px] text-emerald-500 font-bold uppercase tracking-wider mb-1">Human Meaning:</div>
+            <div id="cron-result" class="text-base font-bold text-emerald-500">Runs every 15 minutes past every hour.</div>
           </div>
           <div class="flex flex-wrap gap-2 text-xs">
-            <span class="text-slate-400 font-medium">Quick presets:</span>
-            <button onclick="setCronPreset('0 0 * * *')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 text-indigo-700 font-semibold rounded-lg border border-slate-200">Daily midnight</button>
-            <button onclick="setCronPreset('0 9 * * 1-5')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 text-indigo-700 font-semibold rounded-lg border border-slate-200">Weekdays 9 AM</button>
-            <button onclick="setCronPreset('*/5 * * * *')" class="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 text-indigo-700 font-semibold rounded-lg border border-slate-200">Every 5 mins</button>
+            <span class="opacity-60">Presets:</span>
+            <button onclick="setCronPreset('0 0 * * *')" class="px-2.5 py-1 theme-card border hover:border-indigo-500 rounded-lg">Midnight</button>
+            <button onclick="setCronPreset('0 9 * * 1-5')" class="px-2.5 py-1 theme-card border hover:border-indigo-500 rounded-lg">Weekdays 9 AM</button>
+            <button onclick="setCronPreset('*/5 * * * *')" class="px-2.5 py-1 theme-card border hover:border-indigo-500 rounded-lg">Every 5m</button>
           </div>
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 3: BASE64 -->
+      <!-- TOOL: BASE64 -->
       <div id="tool-base64" class="tool-view-panel hidden">
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold text-slate-900">Base64 Encode & Decode</h2>
-          <p class="text-xs text-slate-500">Fast client-side encoding and decoding with UTF-8 support.</p>
-        </div>
-        <div class="space-y-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-          <textarea id="b64-input" class="w-full h-36 p-3 bg-slate-50 font-mono text-xs text-slate-800 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Type or paste your text here..."></textarea>
+        <h2 class="text-2xl font-bold">Base64 Text Encoder & Decoder</h2>
+        <p class="text-xs opacity-70 mb-4">Encode or decode strings quickly in browser memory.</p>
+        <div class="space-y-4 theme-card border p-6 rounded-3xl">
+          <textarea id="b64-input" class="w-full h-36 p-3 theme-input font-mono text-xs border rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Type text here..."></textarea>
           <div class="flex gap-3">
-            <button onclick="runBase64('encode')" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-500/20">Encode to Base64</button>
-            <button onclick="runBase64('decode')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl border border-slate-200">Decode from Base64</button>
+            <button onclick="runBase64('encode')" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md">Encode to Base64</button>
+            <button onclick="runBase64('decode')" class="px-5 py-2.5 theme-card border hover:border-indigo-500 text-xs font-bold rounded-xl">Decode from Base64</button>
           </div>
-          <textarea id="b64-output" readonly class="w-full h-36 p-3 bg-indigo-50/40 font-mono text-xs text-indigo-900 border border-indigo-100 rounded-2xl focus:outline-none" placeholder="Result appears here..."></textarea>
+          <textarea id="b64-output" readonly class="w-full h-36 p-3 theme-input font-mono text-xs border rounded-2xl text-indigo-400 focus:outline-none" placeholder="Result..."></textarea>
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 4: UUID & PASSWORDS -->
+      <!-- TOOL: UUID & PASSWORDS -->
       <div id="tool-uuid-gen" class="tool-view-panel hidden">
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold text-slate-900">UUID & Secure Password Generator</h2>
-          <p class="text-xs text-slate-500">Generated securely via browser Web Crypto API.</p>
-        </div>
+        <h2 class="text-2xl font-bold">UUID & Secure Password Creator</h2>
+        <p class="text-xs opacity-70 mb-4">Fast cryptographically secure pseudorandom token generators.</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <h3 class="text-sm font-bold text-slate-900">Version 4 UUIDs</h3>
-            <button onclick="generateUuids()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-sm">Generate 5 New UUIDs</button>
-            <textarea id="uuid-output" readonly class="w-full h-40 p-3 bg-slate-50 font-mono text-xs text-slate-700 border border-slate-200 rounded-2xl"></textarea>
+          <div class="theme-card border p-6 rounded-3xl space-y-4">
+            <h3 class="text-sm font-bold">Version 4 UUIDs</h3>
+            <button onclick="generateUuids()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl">Generate 5 New UUIDs</button>
+            <textarea id="uuid-output" readonly class="w-full h-40 p-3 theme-input font-mono text-xs border rounded-2xl"></textarea>
           </div>
-          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-            <h3 class="text-sm font-bold text-slate-900">Strong Password Generator</h3>
-            <div class="flex items-center justify-between text-xs font-semibold text-slate-600">
-              <span>Length: <span id="pwd-len-val" class="text-indigo-600 font-bold">16</span> chars</span>
+          <div class="theme-card border p-6 rounded-3xl space-y-4">
+            <h3 class="text-sm font-bold">Strong Password Generator</h3>
+            <div class="flex items-center justify-between text-xs font-semibold opacity-80">
+              <span>Length: <span id="pwd-len-val" class="text-indigo-500 font-bold">16</span> chars</span>
               <input type="range" min="8" max="32" value="16" id="pwd-len" oninput="document.getElementById('pwd-len-val').innerText = this.value; generatePassword();" class="w-32 accent-indigo-600">
             </div>
-            <button onclick="generatePassword()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-sm">Generate Password</button>
-            <input type="text" id="pwd-output" readonly class="w-full p-3 bg-emerald-50/70 font-mono text-sm text-emerald-900 font-bold border border-emerald-200 rounded-2xl text-center" />
+            <button onclick="generatePassword()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl">Generate Password</button>
+            <input type="text" id="pwd-output" readonly class="w-full p-3 theme-input font-mono text-sm text-emerald-500 font-bold border rounded-2xl text-center" />
           </div>
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 5: MARKDOWN -->
+      <!-- TOOL: MARKDOWN -->
       <div id="tool-markdown-live" class="tool-view-panel hidden">
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold text-slate-900">Live Markdown Editor</h2>
-          <p class="text-xs text-slate-500">Live formatting preview and word/character count calculator.</p>
-        </div>
+        <h2 class="text-2xl font-bold">Markdown Realtime Editor</h2>
+        <p class="text-xs opacity-70 mb-4">Live markdown preview with word count metrics.</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
-            <div class="flex justify-between text-xs font-semibold text-slate-500 mb-2">
-              <span>Markdown Input</span>
+          <div class="theme-card border p-4 rounded-3xl">
+            <div class="flex justify-between text-xs font-semibold opacity-70 mb-2">
+              <span>Input</span>
               <span id="md-stats">0 words | 0 chars</span>
             </div>
-            <textarea id="md-input" oninput="parseMarkdownLive()" class="w-full h-80 p-3 bg-slate-50 font-mono text-xs text-slate-800 border border-slate-200 rounded-2xl focus:outline-none" placeholder="# Hello Developer&#10;&#10;Write **bold**, *italic*, or `code` here..."></textarea>
+            <textarea id="md-input" oninput="parseMarkdownLive()" class="w-full h-80 p-3 theme-input font-mono text-xs border rounded-2xl focus:outline-none" placeholder="# Hello Writer&#10;&#10;Write **bold**, *italic*, or `code` here..."></textarea>
           </div>
-          <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
-            <div class="text-xs font-semibold text-slate-500 mb-2">Formatted HTML Output</div>
-            <div id="md-preview" class="w-full h-80 p-4 bg-slate-50/60 overflow-y-auto prose prose-slate max-w-none text-xs border border-slate-200 rounded-2xl"></div>
+          <div class="theme-card border p-4 rounded-3xl">
+            <div class="text-xs font-semibold opacity-70 mb-2">HTML Preview</div>
+            <div id="md-preview" class="w-full h-80 p-4 theme-input overflow-y-auto prose max-w-none text-xs border rounded-2xl"></div>
           </div>
         </div>
       </div>
 
-      <!-- ACTIVE TOOL 6: BOX SHADOW -->
+      <!-- TOOL: BOX SHADOW -->
       <div id="tool-box-shadow" class="tool-view-panel hidden">
-        <div class="mb-4">
-          <h2 class="text-2xl font-bold text-slate-900">CSS Box Shadow Generator</h2>
-          <p class="text-xs text-slate-500">Visually adjust sliders to produce smooth modern box shadows.</p>
-        </div>
+        <h2 class="text-2xl font-bold">CSS Box Shadow Generator</h2>
+        <p class="text-xs opacity-70 mb-4">Visual CSS shadow adjustments.</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div class="space-y-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm text-xs font-semibold">
+          <div class="space-y-4 theme-card border p-6 rounded-3xl text-xs font-semibold">
             <div>
-              <label class="flex justify-between text-slate-600 mb-1">Horizontal Offset <span id="bs-x-val" class="text-indigo-600 font-bold">0px</span></label>
+              <label class="flex justify-between opacity-80 mb-1">Horizontal Offset <span id="bs-x-val" class="text-indigo-500 font-bold">0px</span></label>
               <input type="range" min="-50" max="50" value="0" id="bs-x" oninput="updateShadow()" class="w-full accent-indigo-600">
             </div>
             <div>
-              <label class="flex justify-between text-slate-600 mb-1">Vertical Offset <span id="bs-y-val" class="text-indigo-600 font-bold">12px</span></label>
+              <label class="flex justify-between opacity-80 mb-1">Vertical Offset <span id="bs-y-val" class="text-indigo-500 font-bold">12px</span></label>
               <input type="range" min="-50" max="50" value="12" id="bs-y" oninput="updateShadow()" class="w-full accent-indigo-600">
             </div>
             <div>
-              <label class="flex justify-between text-slate-600 mb-1">Blur Radius <span id="bs-blur-val" class="text-indigo-600 font-bold">28px</span></label>
+              <label class="flex justify-between opacity-80 mb-1">Blur Radius <span id="bs-blur-val" class="text-indigo-500 font-bold">28px</span></label>
               <input type="range" min="0" max="100" value="28" id="bs-blur" oninput="updateShadow()" class="w-full accent-indigo-600">
             </div>
             <div>
-              <label class="flex justify-between text-slate-600 mb-1">Spread <span id="bs-spread-val" class="text-indigo-600 font-bold">-6px</span></label>
+              <label class="flex justify-between opacity-80 mb-1">Spread <span id="bs-spread-val" class="text-indigo-500 font-bold">-6px</span></label>
               <input type="range" min="-25" max="50" value="-6" id="bs-spread" oninput="updateShadow()" class="w-full accent-indigo-600">
             </div>
           </div>
-          <div class="flex flex-col items-center justify-center p-8 bg-white rounded-3xl border border-slate-200 shadow-sm">
-            <div id="shadow-box" class="w-36 h-36 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-3xl transition-all duration-75"></div>
-            <code id="shadow-code" class="mt-8 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] font-mono font-bold text-indigo-700">box-shadow: 0px 12px 28px -6px rgba(0,0,0,0.15);</code>
+          <div class="flex flex-col items-center justify-center p-8 theme-card border rounded-3xl">
+            <div id="shadow-box" class="w-36 h-36 bg-gradient-to-tr from-indigo-500 to-pink-500 rounded-3xl transition-all duration-75"></div>
+            <code id="shadow-code" class="mt-6 px-4 py-2 theme-input border rounded-xl text-[11px] font-mono font-bold text-indigo-500">box-shadow: 0px 12px 28px -6px rgba(0,0,0,0.2);</code>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- ================= AD SLOT: BOTTOM DISPLAY ================= -->
+  <!-- ================= AD SPACE: BOTTOM ================= -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 w-full">
-    <div class="w-full h-20 bg-white/60 border border-dashed border-slate-300 rounded-2xl flex items-center justify-center text-xs text-slate-400 font-medium uppercase shadow-sm">
-      <!-- Google AdSense Bottom Display Banner -->
+    <div class="w-full h-20 theme-card border border-dashed rounded-2xl flex items-center justify-center text-xs opacity-50 uppercase font-semibold">
       <span>Ad Space — 728x90 Banner</span>
     </div>
   </div>
 
-  <!-- ================= SPARKY: WANDERING INTERACTIVE BOT ================= -->
-  <div id="sparky-container" class="fixed z-50 transition-all duration-700 select-none cursor-grab active:cursor-grabbing" style="bottom: 24px; left: 24px;">
-    
-    <!-- Sparky Speech Bubble -->
-    <div id="assistant-bubble" class="hidden absolute bottom-16 left-0 w-64 bg-white/95 backdrop-blur-md border border-indigo-200 shadow-xl rounded-3xl p-4 text-xs space-y-2.5">
+  <!-- ================= BLOBBY COMPANION ================= -->
+  <div id="companion-container" class="fixed z-50 transition-all duration-1000 ease-out select-none" style="bottom: 20px; left: 30px;">
+    <!-- Speech Bubble -->
+    <div id="companion-bubble" class="hidden absolute bottom-20 left-0 w-64 theme-card border border-indigo-500/30 shadow-2xl rounded-3xl p-4 text-xs space-y-2.5 transition-all">
       <div class="flex items-center justify-between">
-        <span class="font-extrabold text-indigo-600 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Sparky Bot
+        <span class="font-bold text-indigo-500 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-pink-500 animate-ping"></span> Blobby
         </span>
-        <button onclick="toggleAssistant()" class="text-slate-400 hover:text-slate-700 font-bold text-sm leading-none">&times;</button>
+        <button onclick="toggleBubble()" class="opacity-50 hover:opacity-100 font-bold text-sm leading-none">&times;</button>
       </div>
-      <p id="assistant-message" class="text-slate-600 font-medium leading-relaxed">
-        Hey friend! What are we coding or converting today?
+      <p id="companion-text" class="opacity-90 leading-relaxed font-medium">
+        (Blobby bounces cheerfully) Need to format JSON or make a QR code?
       </p>
-      <div class="pt-2 border-t border-slate-100 flex flex-wrap gap-1.5">
-        <button onclick="openTool('json-ts')" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-600 hover:text-white rounded-lg text-[10px] font-bold text-indigo-700 transition">JSON to TS</button>
-        <button onclick="openTool('cron-builder')" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-600 hover:text-white rounded-lg text-[10px] font-bold text-indigo-700 transition">Cron</button>
-        <button onclick="openTool('uuid-gen')" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-600 hover:text-white rounded-lg text-[10px] font-bold text-indigo-700 transition">UUIDs</button>
+      <div class="pt-2 border-t border-slate-500/20 flex flex-wrap gap-1.5">
+        <button onclick="openTool('qr-gen')" class="px-2 py-1 bg-emerald-500/10 hover:bg-emerald-500 hover:text-white rounded-lg text-[10px] font-bold text-emerald-500 transition">QR Code</button>
+        <button onclick="openTool('json-formatter')" class="px-2 py-1 bg-indigo-500/10 hover:bg-indigo-500 hover:text-white rounded-lg text-[10px] font-bold text-indigo-500 transition">JSON Format</button>
+        <button onclick="openTool('img-compress')" class="px-2 py-1 bg-pink-500/10 hover:bg-pink-500 hover:text-white rounded-lg text-[10px] font-bold text-pink-500 transition">Compress</button>
       </div>
     </div>
 
-    <!-- Sparky Character Button -->
-    <div onclick="sparkyInteract()" class="w-14 h-14 rounded-full bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 p-1 shadow-xl shadow-indigo-500/30 hover:scale-110 active:scale-95 transition-transform animate-bobble flex items-center justify-center group">
-      <div class="w-full h-full bg-white rounded-full flex items-center justify-center text-indigo-600">
-        <i data-lucide="bot" class="w-7 h-7 group-hover:rotate-12 transition-transform"></i>
-      </div>
+    <!-- Character SVG -->
+    <div onclick="petCompanion()" class="cursor-pointer group animate-squish">
+      <svg width="68" height="68" viewBox="0 0 100 100" class="drop-shadow-lg transition-transform group-hover:scale-110 active:scale-95">
+        <defs>
+          <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#818cf8"/>
+            <stop offset="50%" stop-color="#6366f1"/>
+            <stop offset="100%" stop-color="#ec4899"/>
+          </linearGradient>
+        </defs>
+        <path d="M50 15 C75 15 88 32 88 56 C88 80 74 88 50 88 C26 88 12 80 12 56 C12 32 25 15 50 15 Z" fill="url(#blobGrad)"/>
+        <path d="M26 24 Q 22 5 36 18 Z" fill="#6366f1"/>
+        <path d="M74 24 Q 78 5 64 18 Z" fill="#ec4899"/>
+        <circle cx="28" cy="58" r="5" fill="#f43f5e" opacity="0.6"/>
+        <circle cx="72" cy="58" r="5" fill="#f43f5e" opacity="0.6"/>
+        <g id="companion-eyes" class="eye-blink">
+          <ellipse cx="36" cy="48" rx="4" ry="5.5" fill="#ffffff"/>
+          <circle cx="37" cy="47" r="2.2" fill="#0f172a"/>
+          <ellipse cx="64" cy="48" rx="4" ry="5.5" fill="#ffffff"/>
+          <circle cx="63" cy="47" r="2.2" fill="#0f172a"/>
+        </g>
+        <path id="companion-mouth" d="M44 58 Q 50 64 56 58" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      </svg>
     </div>
   </div>
 
-  <!-- ================= FOOTER & LEGAL MODALS ================= -->
-  <footer class="border-t border-slate-200 bg-white/90 py-8 text-center text-xs text-slate-500 mt-auto">
+  <!-- ================= FOOTER & MODALS ================= -->
+  <footer class="border-t theme-card py-8 text-center text-xs opacity-70 mt-auto">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>© 2026 <strong class="text-slate-800">mydevtoolbox.in</strong>. All tools run 100% locally in your browser.</div>
-      <div class="flex space-x-5 font-semibold text-slate-600">
-        <button onclick="toggleModal('privacy-modal')" class="hover:text-indigo-600 transition">Privacy Policy</button>
-        <button onclick="toggleModal('terms-modal')" class="hover:text-indigo-600 transition">Terms of Service</button>
-        <a href="mailto:contact@mydevtoolbox.in" class="hover:text-indigo-600 transition">Contact</a>
+      <div>© 2026 <strong>mydevtoolbox.in</strong>. All tools run 100% locally in your browser.</div>
+      <div class="flex space-x-5 font-semibold">
+        <button onclick="toggleModal('privacy-modal')" class="hover:text-indigo-500 transition">Privacy Policy</button>
+        <button onclick="toggleModal('terms-modal')" class="hover:text-indigo-500 transition">Terms of Service</button>
+        <a href="mailto:contact@mydevtoolbox.in" class="hover:text-indigo-500 transition">Contact</a>
       </div>
     </div>
   </footer>
 
-  <!-- PRIVACY POLICY MODAL -->
-  <div id="privacy-modal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto text-xs text-slate-600">
-      <div class="flex justify-between items-center border-b pb-3">
-        <h3 class="text-base font-bold text-slate-900">Privacy Policy</h3>
-        <button onclick="toggleModal('privacy-modal')" class="text-slate-400 hover:text-slate-800 font-bold text-base">&times;</button>
+  <!-- PRIVACY MODAL -->
+  <div id="privacy-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card border rounded-3xl max-w-lg w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto text-xs">
+      <div class="flex justify-between items-center border-b border-slate-500/20 pb-3">
+        <h3 class="text-base font-bold">Privacy Policy</h3>
+        <button onclick="toggleModal('privacy-modal')" class="font-bold text-base">&times;</button>
       </div>
-      <p>At <strong>MyDevToolbox.in</strong>, privacy is our foundational promise. All conversion tools, generators, and text utilities execute client-side using native JavaScript in your web browser.</p>
-      <p><strong>Data Processing:</strong> No text, JSON payloads, passwords, or files you input are ever sent to or stored on any external server.</p>
-      <p><strong>Third-Party Ads:</strong> We partner with Google AdSense to serve ads. Google uses cookies to display ads based on prior visits to our site or other websites on the internet.</p>
+      <p>At <strong>MyDevToolbox.in</strong>, privacy is guaranteed. All conversion tools and generators run client-side in your web browser.</p>
+      <p><strong>Zero Data Retention:</strong> No text, files, images, JSON payloads, or passwords ever leave your machine.</p>
+      <p><strong>Third-Party Ads:</strong> Google AdSense uses cookies to serve ads based on prior visits.</p>
     </div>
   </div>
 
   <!-- TERMS MODAL -->
-  <div id="terms-modal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-slate-200 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto text-xs text-slate-600">
-      <div class="flex justify-between items-center border-b pb-3">
-        <h3 class="text-base font-bold text-slate-900">Terms of Service</h3>
-        <button onclick="toggleModal('terms-modal')" class="text-slate-400 hover:text-slate-800 font-bold text-base">&times;</button>
+  <div id="terms-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card border rounded-3xl max-w-lg w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto text-xs">
+      <div class="flex justify-between items-center border-b border-slate-500/20 pb-3">
+        <h3 class="text-base font-bold">Terms of Service</h3>
+        <button onclick="toggleModal('terms-modal')" class="font-bold text-base">&times;</button>
       </div>
-      <p>By using <strong>MyDevToolbox.in</strong>, you agree that all utilities are provided "as is", without warranty of any kind.</p>
-      <p>We are not responsible for any software issues, data loss, or syntax errors resulting from the use of generated scripts, tokens, or interfaces.</p>
+      <p>All utilities are provided "as is", without warranty of any kind.</p>
     </div>
   </div>
 
-  <!-- ================= SCRIPTS ================= -->
+  <!-- ================= JAVASCRIPT ================= -->
   <script>
     lucide.createIcons();
 
-    // 1. NAVIGATION
+    // 1. THEME SWITCHER
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('mdt_theme', theme);
+      ['light', 'dim', 'dark'].forEach(t => {
+        const btn = document.getElementById('btn-theme-' + t);
+        if (t === theme) {
+          btn.className = "p-1.5 rounded-xl bg-indigo-600 text-white shadow-sm transition";
+        } else {
+          btn.className = "p-1.5 rounded-xl opacity-60 hover:opacity-100 transition";
+        }
+      });
+    }
+    const savedTheme = localStorage.getItem('mdt_theme') || 'light';
+    setTheme(savedTheme);
+
+    // 2. NAVIGATION & TABS
     function switchView(viewName) {
       const dashboard = document.getElementById('view-dashboard');
       const toolView = document.getElementById('view-tool');
@@ -510,9 +748,10 @@
       if (toolId === 'uuid-gen') { generateUuids(); generatePassword(); }
       if (toolId === 'box-shadow') { updateShadow(); }
       if (toolId === 'cron-builder') { explainCron(); }
+      if (toolId === 'qr-gen') { generateQrCode(); }
     }
 
-    // 2. SEARCH & FILTER
+    // 3. SEARCH & FILTERS
     function filterTools() {
       const q = document.getElementById('tool-search').value.toLowerCase();
       document.querySelectorAll('.tool-card').forEach(card => {
@@ -523,11 +762,9 @@
 
     function setCategoryFilter(cat) {
       document.querySelectorAll('.cat-pill').forEach(btn => {
-        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm');
-        btn.classList.add('bg-white', 'text-slate-600');
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
       });
-      event.target.classList.add('bg-indigo-600', 'text-white', 'shadow-sm');
-      event.target.classList.remove('bg-white', 'text-slate-600');
+      event.target.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
 
       document.querySelectorAll('.tool-card').forEach(card => {
         if (cat === 'all' || card.getAttribute('data-cat') === cat) {
@@ -538,7 +775,118 @@
       });
     }
 
-    // 3. TOOL ENGINES (100% Client-Side)
+    // 4. TOOL ENGINES (100% Client-Side)
+
+    // A. JSON FORMATTER & VALIDATOR
+    function formatJson(spaces) {
+      const el = document.getElementById('json-fmt-input');
+      const status = document.getElementById('json-fmt-status');
+      try {
+        const parsed = JSON.parse(el.value);
+        el.value = JSON.stringify(parsed, null, spaces);
+        status.className = "p-3 rounded-xl text-xs font-mono bg-emerald-500/10 text-emerald-500 border border-emerald-500/20";
+        status.innerText = "✓ Valid JSON format";
+        status.classList.remove('hidden');
+      } catch (err) {
+        status.className = "p-3 rounded-xl text-xs font-mono bg-rose-500/10 text-rose-500 border border-rose-500/20";
+        status.innerText = "✗ Invalid JSON: " + err.message;
+        status.classList.remove('hidden');
+      }
+    }
+
+    function minifyJson() {
+      const el = document.getElementById('json-fmt-input');
+      try {
+        const parsed = JSON.parse(el.value);
+        el.value = JSON.stringify(parsed);
+      } catch (err) {
+        alert("Invalid JSON: " + err.message);
+      }
+    }
+
+    // B. LIVE QR CODE GENERATOR
+    let qrcodeObj = null;
+    function generateQrCode() {
+      const text = document.getElementById('qr-text').value.trim() || 'https://mydevtoolbox.in';
+      const size = parseInt(document.getElementById('qr-size').value) || 250;
+      const container = document.getElementById('qrcode-container');
+      container.innerHTML = '';
+      qrcodeObj = new QRCode(container, {
+        text: text,
+        width: size,
+        height: size,
+        colorDark : "#0f172a",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+    }
+
+    function downloadQrCode() {
+      const img = document.querySelector('#qrcode-container img');
+      if (img && img.src) {
+        const a = document.createElement('a');
+        a.href = img.src;
+        a.download = 'qrcode.png';
+        a.click();
+      }
+    }
+
+    // C. IMAGE COMPRESSOR & WEBP CONVERTER
+    let currentUploadedImg = null;
+    function handleImageUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      document.getElementById('img-orig-size').innerText = `Original: ${(file.size / 1024).toFixed(1)} KB`;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        currentUploadedImg = new Image();
+        currentUploadedImg.onload = function() {
+          document.getElementById('img-process-panel').classList.remove('hidden');
+          processImage();
+        };
+        currentUploadedImg.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function processImage() {
+      if (!currentUploadedImg) return;
+      const canvas = document.createElement('canvas');
+      canvas.width = currentUploadedImg.width;
+      canvas.height = currentUploadedImg.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(currentUploadedImg, 0, 0);
+
+      const format = document.getElementById('img-fmt').value;
+      const quality = parseFloat(document.getElementById('img-qual').value) / 100;
+      const dataUrl = canvas.toDataURL(format, quality);
+
+      // Estimate byte size
+      const head = 'data:' + format + ';base64,';
+      const size = Math.round((dataUrl.length - head.length) * 3 / 4);
+      document.getElementById('img-new-size').innerText = `Compressed: ${(size / 1024).toFixed(1)} KB`;
+
+      const downloadBtn = document.getElementById('img-download-link');
+      downloadBtn.href = dataUrl;
+      const ext = format.split('/')[1];
+      downloadBtn.download = `compressed_image.${ext}`;
+    }
+
+    // D. TEXT CASE CONVERTER
+    function convertCase(mode) {
+      const el = document.getElementById('case-input');
+      const val = el.value;
+      if (!val) return;
+
+      if (mode === 'upper') el.value = val.toUpperCase();
+      if (mode === 'lower') el.value = val.toLowerCase();
+      if (mode === 'title') el.value = val.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+      if (mode === 'camel') el.value = val.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) => +match === 0 ? "" : index === 0 ? match.toLowerCase() : match.toUpperCase()).replace(/\s+/g, '');
+      if (mode === 'snake') el.value = val.trim().toLowerCase().replace(/\s+/g, '_').replace(/[^\w]/g, '_');
+      if (mode === 'kebab') el.value = val.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w]/g, '-');
+    }
+
+    // E. JSON to TypeScript Engine
     function jsonToTs(obj, interfaceName = "RootObject") {
       let result = `export interface ${interfaceName} {\n`;
       for (const [key, value] of Object.entries(obj)) {
@@ -565,11 +913,12 @@
     }
 
     function loadSampleJson() {
-      const sample = { id: 1042, username: "dev_alex", active: true, roles: ["admin", "editor"], preferences: { theme: "light", notifications: true } };
+      const sample = { id: 1042, username: "dev_alex", active: true, roles: ["admin", "editor"], preferences: { theme: "dim" } };
       document.getElementById('json-input').value = JSON.stringify(sample, null, 2);
       convertJsonToTs();
     }
 
+    // F. Cron Explainer
     function explainCron() {
       const expr = document.getElementById('cron-input').value.trim();
       const res = document.getElementById('cron-result');
@@ -579,11 +928,13 @@
       else if (expr === '*/5 * * * *') res.innerText = "Runs every 5 minutes.";
       else res.innerText = `Custom schedule: [Minute: ${expr.split(' ')[0] || '*'}] [Hour: ${expr.split(' ')[1] || '*'}]`;
     }
+
     function setCronPreset(str) {
       document.getElementById('cron-input').value = str;
       explainCron();
     }
 
+    // G. Base64
     function runBase64(mode) {
       const input = document.getElementById('b64-input').value;
       const output = document.getElementById('b64-output');
@@ -595,6 +946,7 @@
       }
     }
 
+    // H. UUID & Passwords
     function generateUuids() {
       let list = [];
       for (let i = 0; i < 5; i++) {
@@ -615,22 +967,24 @@
       document.getElementById('pwd-output').value = pwd;
     }
 
+    // I. Markdown Preview
     function parseMarkdownLive() {
       const val = document.getElementById('md-input').value;
       const words = val.trim() ? val.trim().split(/\s+/).length : 0;
       document.getElementById('md-stats').innerText = `${words} words | ${val.length} chars`;
 
       let html = val
-        .replace(/^### (.*$)/gim, '<h3 class="text-sm font-bold text-slate-900 mt-2">$1</h3>')
-        .replace(/^## (.*$)/gim, '<h2 class="text-base font-bold text-slate-900 mt-3">$1</h2>')
-        .replace(/^# (.*$)/gim, '<h1 class="text-lg font-bold text-slate-900 mt-4">$1</h1>')
+        .replace(/^### (.*$)/gim, '<h3 class="text-sm font-bold mt-2">$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2 class="text-base font-bold mt-3">$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1 class="text-lg font-bold mt-4">$1</h1>')
         .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*)\*/gim, '<em>$1</em>')
-        .replace(/`([^`]+)`/gim, '<code class="bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded font-mono font-semibold">$1</code>')
+        .replace(/`([^`]+)`/gim, '<code class="bg-indigo-500/10 text-indigo-500 px-1.5 py-0.5 rounded font-mono font-semibold">$1</code>')
         .replace(/\n$/gim, '<br />');
-      document.getElementById('md-preview').innerHTML = html || '<span class="text-slate-400">Preview will render here...</span>';
+      document.getElementById('md-preview').innerHTML = html || '<span class="opacity-50">Preview appears here...</span>';
     }
 
+    // J. Box Shadow
     function updateShadow() {
       const x = document.getElementById('bs-x').value;
       const y = document.getElementById('bs-y').value;
@@ -642,7 +996,7 @@
       document.getElementById('bs-blur-val').innerText = blur + 'px';
       document.getElementById('bs-spread-val').innerText = spread + 'px';
 
-      const shadow = `${x}px ${y}px ${blur}px ${spread}px rgba(0, 0, 0, 0.15)`;
+      const shadow = `${x}px ${y}px ${blur}px ${spread}px rgba(0, 0, 0, 0.25)`;
       document.getElementById('shadow-box').style.boxShadow = shadow;
       document.getElementById('shadow-code').innerText = `box-shadow: ${shadow};`;
     }
@@ -657,50 +1011,57 @@
       alert('Copied to clipboard!');
     }
 
-    // 4. SPARKY BOT: WANDERING & ENTERTAINMENT
-    const sparkyQuotes = [
-      "Fun fact: 0.1 + 0.2 is actually 0.30000000000000004 in JavaScript! 🤯",
-      "Did you know? MyDevToolbox never sends your text to a server. 100% private! 🛡️",
-      "Need a complex cron schedule? I've got you covered in the DevOps tab!",
-      "Writing clean code today? Don't forget to hydrate! 💧",
-      "Tip: You can drag me anywhere around the screen!"
+    // 5. ANIMATED BLOBBY COMPANION
+    const funQuotes = [
+      "Purrr! Need a clean QR Code? Try the new QR generator! 📱",
+      "Compressing photos? All processing stays on your device! 🛡️",
+      "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+      "Squish! You can format messy JSON in one click! ✨",
+      "Tip: Take a quick sip of water and keep being awesome! ☕"
     ];
 
-    function toggleAssistant() {
-      document.getElementById('assistant-bubble').classList.toggle('hidden');
+    function toggleBubble() {
+      document.getElementById('companion-bubble').classList.toggle('hidden');
     }
 
-    function sparkyInteract() {
-      const bubble = document.getElementById('assistant-bubble');
-      const msg = document.getElementById('assistant-message');
-      const randomQuote = sparkyQuotes[Math.floor(Math.random() * sparkyQuotes.length)];
-      msg.innerText = randomQuote;
+    function petCompanion() {
+      const bubble = document.getElementById('companion-bubble');
+      const text = document.getElementById('companion-text');
+      text.innerText = funQuotes[Math.floor(Math.random() * funQuotes.length)];
       bubble.classList.remove('hidden');
+
+      if (window.confetti) {
+        confetti({
+          particleCount: 30,
+          spread: 50,
+          origin: { y: 0.9, x: parseFloat(document.getElementById('companion-container').style.left) / window.innerWidth || 0.1 }
+        });
+      }
     }
 
-    // Wandering Mechanic: Moves across the screen bottom every 14 seconds
-    function wanderSparky() {
-      const container = document.getElementById('sparky-container');
-      const maxX = window.innerWidth - 100;
-      const randomX = Math.max(20, Math.floor(Math.random() * maxX));
-      container.style.left = `${randomX}px`;
-    }
-    setInterval(wanderSparky, 14000);
+    function wanderCompanion() {
+      const container = document.getElementById('companion-container');
+      const bubble = document.getElementById('companion-bubble');
+      const screenW = window.innerWidth;
+      const minX = 30;
+      const maxX = Math.max(50, screenW - 120);
+      const newX = Math.floor(Math.random() * (maxX - minX)) + minX;
 
-    function sparkyDance() {
-      const container = document.getElementById('sparky-container');
-      container.style.transition = 'all 0.3s ease';
-      container.style.transform = 'scale(1.3) rotate(20deg)';
-      setTimeout(() => {
-        container.style.transform = 'scale(1) rotate(0deg)';
-        sparkyInteract();
-      }, 300);
-    }
+      container.style.left = `${newX}px`;
 
-    // First greeting popup
+      if (newX > screenW - 320) {
+        bubble.style.left = 'auto';
+        bubble.style.right = '0px';
+      } else {
+        bubble.style.left = '0px';
+        bubble.style.right = 'auto';
+      }
+    }
+    setInterval(wanderCompanion, 16000);
+
     setTimeout(() => {
-      document.getElementById('assistant-bubble').classList.remove('hidden');
-    }, 2500);
+      document.getElementById('companion-bubble').classList.remove('hidden');
+    }, 3000);
   </script>
 </body>
 </html>
