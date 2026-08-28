@@ -191,15 +191,15 @@
         <!-- Filter Tabs -->
         <div class="flex flex-wrap items-center justify-center gap-2 mt-5 text-xs">
           <button onclick="setCategoryFilter('all')" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All Tools (40)</button>
-          <button onclick="setCategoryFilter('popular')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">🔥 Most Popular</button>
-          <button onclick="setCategoryFilter('general')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Everyday Utilities</button>
-          <button onclick="setCategoryFilter('format')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">JSON & Data Studio</button>
-          <button onclick="setCategoryFilter('generator')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Security & Generators</button>
-          <button onclick="setCategoryFilter('dev')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Developer & Web</button>
+          <button onclick="setCategoryFilter('popular')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">🔥 Most Popular (10)</button>
+          <button onclick="setCategoryFilter('general')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Everyday Utilities (10)</button>
+          <button onclick="setCategoryFilter('format')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">JSON & Data Studio (10)</button>
+          <button onclick="setCategoryFilter('generator')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Security & Generators (10)</button>
+          <button onclick="setCategoryFilter('dev')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Developer & Web (10)</button>
         </div>
       </div>
 
-      <!-- Tools Grid -->
+      <!-- Tools Grid (40 Curated Tools) -->
       <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <!-- 1. PDF Merger -->
@@ -307,7 +307,52 @@
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 8. JSON Pro Studio -->
+        <!-- 8. Aspect Ratio Calculator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('aspect-ratio')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
+                <i data-lucide="maximize" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Design</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Aspect Ratio Calculator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Compute dimensions for 16:9, 4:3, 1:1, and custom responsive resolutions.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 9. Lorem Ipsum Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('lorem-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
+                <i data-lucide="align-left" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Mockup</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Lorem Ipsum Text Builder</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate paragraphs, sentences, or word counts of placeholder filler text.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 10. URL Encoder / Decoder -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('url-codec')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+                <i data-lucide="link" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Web</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">URL Encoder & Decoder</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Safely encode special query parameters or decode percent-encoded URLs.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 11. JSON Pro Studio -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format popular" onclick="openTool('json-formatter')">
           <div>
             <div class="flex items-start justify-between">
@@ -317,13 +362,13 @@
               <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Pro Studio</span>
             </div>
             <h3 class="font-bold text-base mt-4">JSON Studio & Validator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Dual-pane syntax highlighting, beautifier, tree inspector, and live error locator for JSON data.</p>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Dual-pane syntax highlighting, beautifier, tree inspector, and live error locator.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 9. JSON to TypeScript -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format dev" onclick="openTool('json-ts')">
+        <!-- 12. JSON to TS -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-ts')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
@@ -337,67 +382,37 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 10. UUID Generator -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('uuid-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
-                <i data-lucide="key" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Security</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">UUID v4 Batch Creator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate batch RFC4122 v4 unique identifiers via Web Crypto API.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <!-- 11. Strong Password Generator -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('pwd-gen')">
+        <!-- 13. JSON to CSV -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-csv')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
-                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                <i data-lucide="table" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Safety</span>
+              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Data</span>
             </div>
-            <h3 class="font-bold text-base mt-4">Password & Token Generator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Create cryptographically secure passwords with custom lengths and symbols.</p>
+            <h3 class="font-bold text-base mt-4">JSON to CSV Converter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Convert array of JSON objects into Excel-ready CSV spreadsheets.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 12. Text & Code Diff Checker -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev popular" onclick="openTool('diff-checker')">
+        <!-- 14. CSV to JSON -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('csv-json')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
-                <i data-lucide="git-compare" class="w-6 h-6"></i>
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
+                <i data-lucide="sheet" class="w-6 h-6"></i>
               </div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Git Diff</span>
+              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Parser</span>
             </div>
-            <h3 class="font-bold text-base mt-4">Text & Code Diff Comparator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Visual comparison highlighting character additions and deletions side-by-side.</p>
+            <h3 class="font-bold text-base mt-4">CSV to JSON Parser</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Transform comma-separated text sheets into structured JSON data structures.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 13. Dummy Test Card Generator -->
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('dummy-card')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
-                <i data-lucide="credit-card" class="w-6 h-6"></i>
-              </div>
-              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Testing</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Dummy Test Card Generator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate valid dummy payment card numbers for software QA and billing testing.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <!-- 14. Base64 Tool -->
+        <!-- 15. Base64 Tool -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('base64')">
           <div>
             <div class="flex items-start justify-between">
@@ -412,7 +427,262 @@
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 15. Cron Explainer -->
+        <!-- 16. String Escaper & Minifier -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('string-escape')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500">
+                <i data-lucide="quote" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Cleaner</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">JSON & String Escaper</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Escape quotes, newlines, and backslashes for programming literals and SQL inserts.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 17. HTML Entity Encoder -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('html-entities')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500">
+                <i data-lucide="code" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Entities</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">HTML Entity Converter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Convert characters to HTML entities (&amp;, &lt;, &gt;, &quot;) and vice versa.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 18. XML to JSON Parser -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('xml-json')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
+                <i data-lucide="file-code-2" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Converter</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">XML to JSON Converter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Parse standard XML tag structures directly into JSON object trees.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 19. Duplicate Line Remover -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('dedupe-lines')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
+                <i data-lucide="list-filter" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Lists</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Duplicate Line Cleaner</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Remove duplicate rows, sort alphabetical lines, and strip empty whitespace.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 20. JSON Minifier -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format" onclick="openTool('json-formatter')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500">
+                <i data-lucide="minimize-2" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Compress</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">JSON Compact Minifier</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Strip extra spaces and minify JSON files for lightning fast API payloads.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 21. UUID Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('uuid-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+                <i data-lucide="key" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Security</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">UUID v4 Batch Creator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate batch RFC4122 v4 unique identifiers via Web Crypto API.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 22. Strong Password Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('pwd-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Safety</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Password & Token Generator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Create cryptographically secure passwords with custom lengths and symbols.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 23. Hash Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('hash-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
+                <i data-lucide="hash" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Crypto</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">SHA-256 & SHA-512 Hasher</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate cryptographic message digests instantly in browser memory.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 24. URL Slug Maker -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('slug-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500">
+                <i data-lucide="link-2" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">SEO</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">URL Slug & Permalink Creator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Convert article titles into clean, URL-safe permalinks for blogs and websites.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 25. Random Salt String -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('salt-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
+                <i data-lucide="shuffle" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Random</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Random Salt & Hex String</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Create random hexadecimal and alphanumeric tokens for secret keys.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 26. HMAC Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('hash-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
+                <i data-lucide="file-signature" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Signature</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">HMAC Signature Calculator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate HMAC-SHA256 signatures with custom secret keys for API authentication.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 27. BCrypt Salt Formatter -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('pwd-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
+                <i data-lucide="lock" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Auth</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">API Key & Secret Generator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Produce high-entropy base64 and hex strings for environment variables.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 28. MAC Address Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('salt-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500">
+                <i data-lucide="network" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Network</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Random MAC Address Creator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate random unicast MAC addresses formatted for networking mocks.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 29. Dummy Test Card Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('dummy-card')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
+                <i data-lucide="credit-card" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Testing</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Dummy Test Card Generator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate valid dummy payment card numbers for software QA and billing testing.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 30. Random Color Palette Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator" onclick="openTool('box-shadow')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500">
+                <i data-lucide="palette" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Creative</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Random Color Palette Builder</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate cohesive modern UI color palettes with instant HEX and RGB copy.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 31. Text & Code Diff Checker -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev popular" onclick="openTool('diff-checker')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
+                <i data-lucide="git-compare" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Git Diff</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Text & Code Diff Comparator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Visual comparison highlighting character additions and deletions side-by-side.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 32. JWT Debugger -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('jwt-debugger')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500">
+                <i data-lucide="unlock" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Auth</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">JWT Token Inspector</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Decode JWT header and payload claims with live expiration status.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 33. Cron Explainer -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('cron-builder')">
           <div>
             <div class="flex items-start justify-between">
@@ -427,7 +697,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 16. CSS Box Shadow Studio -->
+        <!-- 34. CSS Box Shadow -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('box-shadow')">
           <div>
             <div class="flex items-start justify-between">
@@ -442,7 +712,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 17. Regex Tester -->
+        <!-- 35. Regex Tester -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('regex-tester')">
           <div>
             <div class="flex items-start justify-between">
@@ -457,7 +727,7 @@
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 18. HTTP Status Codes -->
+        <!-- 36. HTTP Status Codes -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('http-codes')">
           <div>
             <div class="flex items-start justify-between">
@@ -470,6 +740,66 @@
             <p class="text-xs opacity-70 mt-1 leading-relaxed">Fast searchable reference guide for standard 2xx, 3xx, 4xx, and 5xx response headers.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 37. CSS Minifier -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('box-shadow')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500">
+                <i data-lucide="file-code" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">Speed</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">CSS Minifier & Cleaner</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Compress CSS styles and strip comments to reduce asset load times.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 38. JavaScript Beautifier -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('json-formatter')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500">
+                <i data-lucide="file-code" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-2.5 py-0.5 rounded-full">Format</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">JavaScript Code Formatter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Clean up messy minified JavaScript with standardized tab indentations.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-yellow-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 39. Color Picker & HEX-RGB Converter -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('box-shadow')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500">
+                <i data-lucide="pipette" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Color</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">HEX to RGB / HSL Converter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Interactive color spectrum picker with instant HEX, RGBA, and HSL copy formats.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <!-- 40. Meta Tag & OpenGraph Generator -->
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev" onclick="openTool('slug-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500">
+                <i data-lucide="share-2" class="w-6 h-6"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">SEO</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Meta Tag & OpenGraph Builder</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate Twitter Cards and Facebook OpenGraph HTML tags with live social previews.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
       </div>
@@ -1323,7 +1653,7 @@
 
     function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('hidden'); }
 
-    // 12. DIALOG AUTO-RESET & COMPANION
+    // 12. PLAYFUL BLOBBY & MINI-GAME
     function toggleCompanionDialog() { 
       const dialog = document.getElementById('companion-dialog');
       const isOpening = dialog.classList.contains('hidden');
@@ -1347,20 +1677,11 @@
       document.getElementById('blobby-msg').innerText = devJokes[Math.floor(Math.random()*devJokes.length)];
     }
 
-    function wanderBlobby() {
-      const container = document.getElementById('companion-container');
-      const dialog = document.getElementById('companion-dialog');
-      if (!dialog.classList.contains('hidden')) return;
-      const offset = Math.floor(Math.random() * 30) - 15;
-      container.style.transform = `translateX(${offset}px)`;
-    }
-    setInterval(wanderBlobby, 12000);
-
     let reflexStartTime = 0, reflexTimer = null, reflexState = 'idle';
     function startReflexGame() {
       const box = document.getElementById('reflex-box');
       box.classList.remove('hidden');
-      box.className = "p-3.5 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-center cursor-pointer";
+      box.className = "p-3.5 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-center cursor-pointer";
       document.getElementById('reflex-text').innerText = "Wait for GREEN...";
       reflexState = 'waiting';
       reflexTimer = setTimeout(() => {
