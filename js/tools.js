@@ -478,13 +478,6 @@ function testRegex() {
   }
 }
 
-function generateLorem(paras) {
-  const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-  let out = [];
-  for (let i = 0; i < paras; i++) out.push(lorem);
-  document.getElementById('lorem-output').value = out.join('\n\n');
-}
-
 function generateSlug() {
   const val = document.getElementById('slug-input').value;
   document.getElementById('slug-output').innerText =
