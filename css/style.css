@@ -1,0 +1,94 @@
+/* 3-Theme CSS Variables */
+:root[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-editor: #ffffff;
+  --border-color: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent: #4f46e5;
+  --card-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.05);
+}
+
+:root[data-theme="dim"] {
+  --bg-main: #0f172a;
+  --bg-card: rgba(30, 41, 59, 0.9);
+  --bg-editor: #090e1a;
+  --border-color: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #6366f1;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="dark"] {
+  --bg-main: #05070d;
+  --bg-card: rgba(13, 17, 28, 0.95);
+  --bg-editor: #080b12;
+  --border-color: #1f293d;
+  --text-main: #e2e8f0;
+  --text-muted: #64748b;
+  --accent: #818cf8;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.theme-card {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(12px);
+}
+
+.theme-editor {
+  background-color: var(--bg-editor);
+  border-color: var(--border-color);
+  color: var(--text-main);
+}
+
+/* Syntax Highlighting */
+.json-key { color: #f43f5e; font-weight: 600; }
+.json-string { color: #10b981; }
+.json-number { color: #f59e0b; }
+.json-boolean { color: #8b5cf6; font-weight: 600; }
+.json-null { color: #64748b; font-style: italic; }
+
+.diff-insert { background-color: rgba(16, 185, 129, 0.25); color: #10b981; }
+.diff-delete { background-color: rgba(244, 63, 94, 0.25); color: #f43f5e; text-decoration: line-through; }
+
+/* Kawaii Companion Physics */
+@keyframes pet-bounce {
+  0%, 100% { transform: scale(1, 1) translateY(0); }
+  30% { transform: scale(1.12, 0.88) translateY(3px); }
+  50% { transform: scale(0.92, 1.1) translateY(-8px); }
+  70% { transform: scale(1.05, 0.95) translateY(0); }
+}
+.animate-pet { animation: pet-bounce 2.8s infinite ease-in-out; }
+
+@keyframes eye-blink-smooth {
+  0%, 92%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.12); }
+}
+.eye-blink-smooth { animation: eye-blink-smooth 3.6s infinite; transform-origin: center; }
+
+/* Zen Bubble Wrap Popper */
+.bubble-wrap-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(99,102,241,0.3));
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.bubble-wrap-dot.popped {
+  background: rgba(148, 163, 184, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  transform: scale(0.85);
+  cursor: default;
+}
