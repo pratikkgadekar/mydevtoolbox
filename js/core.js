@@ -324,6 +324,7 @@ async function submitToolRequest(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderToolsGrid(); // Populates static grid if needed
   renderRecentTools();
   updateInstallBadgeCount();
   if (window.lucide) lucide.createIcons();
