@@ -6,6 +6,9 @@
   <title>MyDevToolbox — 100+ Offline & Privacy-First Developer Tools</title>
   <meta name="description" content="Free local-first developer suite: LLM token counters, WCAG accessibility, Markdown table builders, JSON studio, PDF mergers, QR generators, and crypto." />
   
+  <!-- Modern High-Res Vector SVG Favicon (Immediate Browser Tab Icon) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='50%25' stop-color='%238b5cf6'/%3E%3Cstop offset='100%25' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 6l2.2 4.8L23 13l-4.8 2.2L16 20l-2.2-4.8L9 13l4.8-2.2z' fill='%23ffffff'/%3E%3Ccircle cx='23' cy='23' r='2.5' fill='%23ffffff' opacity='0.85'/%3E%3C/svg%3E" />
+  
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#4f46e5" />
@@ -60,26 +63,22 @@
       </div>
 
       <div class="flex items-center space-x-2.5">
-        <!-- Request Tool Button -->
         <button onclick="toggleRequestModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-500 border border-indigo-500/20 text-xs font-bold transition">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
           <span>Request Tool</span>
         </button>
 
-        <!-- Install / Offline Button with Visible Counter Badge -->
         <button onclick="triggerPwaInstall()" id="btn-pwa-install" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
           <i data-lucide="laptop" class="w-3.5 h-3.5"></i>
           <span>Install Offline</span>
           <span id="install-counter-badge" class="ml-1 px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-mono font-bold shadow-sm">1.2k+</span>
         </button>
 
-        <!-- Command Palette -->
         <button onclick="toggleSpotlight()" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl border theme-card text-xs opacity-70 hover:opacity-100 transition">
           <i data-lucide="command" class="w-3.5 h-3.5"></i>
           <kbd class="px-1.5 py-0.5 bg-slate-500/10 border rounded text-[10px] font-mono">⌘K</kbd>
         </button>
 
-        <!-- 3-Way Theme Switcher -->
         <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
           <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
           <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
@@ -101,7 +100,9 @@
 
     <!-- DASHBOARD VIEW -->
     <div id="view-dashboard">
-      <div class="text-center max-w-3xl mx-auto mb-8 pt-2">
+      
+      <!-- HERO HEADER -->
+      <div class="text-center max-w-3xl mx-auto mb-6 pt-2">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 text-xs font-bold mb-3">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 100% In-Browser • In-Memory Processing • Zero Server Uploads
         </div>
@@ -109,36 +110,85 @@
           Every Developer Tool, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">In One Tab</span>.
         </h1>
         <p class="mt-2 text-sm sm:text-base opacity-70">
-          Over 100+ client-side developer utilities organized across 10 modules. Instant execution with zero server uploads.
+          Professional, client-side utility suite for engineering, formatting, AI prompting, and security analysis.
         </p>
 
-        <!-- Search Bar -->
-        <div class="mt-6 relative max-w-xl mx-auto flex items-center">
-          <i data-lucide="search" class="w-5 h-5 absolute left-4 text-slate-400"></i>
-          <input type="text" id="tool-search" oninput="filterTools()" onkeydown="if(event.key === 'Enter') handleMainSearchEnter()" placeholder="Search all 100+ tools (e.g. Tokens, JSON, PDF, Contrast, Hash)..." class="w-full pl-12 pr-24 py-3.5 theme-editor border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md transition" />
-          <button onclick="filterTools()" class="absolute right-2 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Search</button>
+        <!-- Search Bar with Inline Category Dropdown -->
+        <div class="mt-6 relative max-w-xl mx-auto flex items-center shadow-lg rounded-2xl theme-editor border">
+          <i data-lucide="search" class="w-5 h-5 ml-4 text-slate-400 flex-shrink-0"></i>
+          <input 
+            type="text" 
+            id="tool-search" 
+            oninput="filterTools()" 
+            onkeydown="if(event.key === 'Enter') handleMainSearchEnter()" 
+            placeholder="Search tools (e.g. Tokens, JSON, PDF, Contrast, Hash)..." 
+            class="w-full pl-3 pr-4 py-3.5 bg-transparent border-none text-sm focus:outline-none" 
+          />
+          <button onclick="filterTools()" class="mr-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">
+            Search
+          </button>
         </div>
         <div id="search-status-text" class="text-xs font-semibold text-indigo-500 mt-2.5 hidden"></div>
 
         <!-- Recent Tools History Strip -->
-        <div id="recent-tools-bar" class="hidden mt-4 flex items-center justify-center gap-2 text-xs">
-          <span class="opacity-60 text-[11px] font-bold uppercase">Recent:</span>
-          <div id="recent-tools-list" class="flex flex-wrap gap-1.5"></div>
+        <div id="recent-tools-bar" class="hidden mt-4 flex items-center justify-center gap-2 text-xs overflow-x-auto py-1">
+          <span class="opacity-60 text-[11px] font-bold uppercase flex-shrink-0">Recent:</span>
+          <div id="recent-tools-list" class="flex items-center gap-1.5"></div>
         </div>
 
-        <!-- Dynamic Category Filter Tabs (Counts updated by JS) -->
+        <!-- DE-CLUTTERED CATEGORY CONTROLS: Primary Pills + Dropdown -->
         <div class="flex flex-wrap items-center justify-center gap-2 mt-6 text-xs font-semibold">
-          <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All Tools <span class="pill-count">(100+)</span></button>
-          <button onclick="setCategoryFilter('popular')" data-pill="popular" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">🔥 Most Popular <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('ai')" data-pill="ai" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">🤖 AI & LLM <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('data')" data-pill="data" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">📊 Data & JSON <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('security')" data-pill="security" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">🔐 Security & Crypto <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('web')" data-pill="web" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">🌐 Web & APIs <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('design')" data-pill="design" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">🎨 CSS & UI <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('devops')" data-pill="devops" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">⚙️ DevOps & Cloud <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('text')" data-pill="text" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">📝 Content & Text <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('math')" data-pill="math" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">📐 Math & Units <span class="pill-count"></span></button>
-          <button onclick="setCategoryFilter('testing')" data-pill="testing" class="cat-pill px-4 py-1.5 rounded-xl theme-card border hover:border-indigo-500 transition">🧪 QA Testing <span class="pill-count"></span></button>
+          <!-- Primary Quick Tabs -->
+          <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">
+            All Tools
+          </button>
+          <button onclick="setCategoryFilter('popular')" data-pill="popular" class="cat-pill px-3.5 py-2 rounded-xl theme-card border hover:border-indigo-500 transition">
+            🔥 Popular
+          </button>
+          <button onclick="setCategoryFilter('ai')" data-pill="ai" class="cat-pill px-3.5 py-2 rounded-xl theme-card border hover:border-indigo-500 transition">
+            🤖 AI & LLM
+          </button>
+          <button onclick="setCategoryFilter('data')" data-pill="data" class="cat-pill px-3.5 py-2 rounded-xl theme-card border hover:border-indigo-500 transition">
+            📊 Data & JSON
+          </button>
+          <button onclick="setCategoryFilter('security')" data-pill="security" class="cat-pill px-3.5 py-2 rounded-xl theme-card border hover:border-indigo-500 transition">
+            🔐 Security
+          </button>
+          <button onclick="setCategoryFilter('web')" data-pill="web" class="cat-pill px-3.5 py-2 rounded-xl theme-card border hover:border-indigo-500 transition">
+            🌐 Web & APIs
+          </button>
+
+          <!-- Interactive More Categories Dropdown -->
+          <div class="relative inline-block text-left">
+            <button onclick="toggleMoreCategoriesDropdown()" id="btn-more-categories" class="flex items-center gap-1 px-3.5 py-2 rounded-xl theme-card border hover:border-indigo-500 transition text-xs font-bold">
+              <span id="more-cat-label">More Modules</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
+            </button>
+
+            <!-- Dropdown Menu items -->
+            <div id="dropdown-more-categories" class="hidden absolute right-0 z-50 mt-2 w-48 rounded-2xl theme-card border shadow-2xl p-1.5 space-y-1 text-xs">
+              <button onclick="selectDropdownCategory('design', '🎨 CSS & Design')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-indigo-500/10 flex items-center justify-between transition">
+                <span>🎨 CSS & Design</span>
+                <span class="pill-count text-[10px] opacity-60"></span>
+              </button>
+              <button onclick="selectDropdownCategory('devops', '⚙️ DevOps & Cloud')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-indigo-500/10 flex items-center justify-between transition">
+                <span>⚙️ DevOps & Cloud</span>
+                <span class="pill-count text-[10px] opacity-60"></span>
+              </button>
+              <button onclick="selectDropdownCategory('text', '📝 Content & Text')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-indigo-500/10 flex items-center justify-between transition">
+                <span>📝 Content & Text</span>
+                <span class="pill-count text-[10px] opacity-60"></span>
+              </button>
+              <button onclick="selectDropdownCategory('math', '📐 Math & Units')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-indigo-500/10 flex items-center justify-between transition">
+                <span>📐 Math & Units</span>
+                <span class="pill-count text-[10px] opacity-60"></span>
+              </button>
+              <button onclick="selectDropdownCategory('testing', '🧪 QA Testing')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-indigo-500/10 flex items-center justify-between transition">
+                <span>🧪 QA Testing</span>
+                <span class="pill-count text-[10px] opacity-60"></span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -458,9 +508,35 @@
         </div>
 
       </div>
+
+      <!-- PLATFORM ARCHITECTURE & PRIVACY GUARANTEE SECTION -->
+      <section class="mt-16 border-t border-slate-500/20 pt-12">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <h2 class="text-2xl font-extrabold tracking-tight">Enterprise Architecture, Local Execution</h2>
+          <p class="text-xs opacity-70 mt-1">Engineered for developers who handle proprietary payloads, tokens, and credentials.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 theme-card border rounded-3xl space-y-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+            <h3 class="text-sm font-bold">100% In-Memory Sandbox</h3>
+            <p class="text-xs opacity-70 leading-relaxed">Files, PDF bytes, cryptographic keys, and JSON payloads execute solely in browser memory via native Web APIs.</p>
+          </div>
+          <div class="p-6 theme-card border rounded-3xl space-y-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold"><i data-lucide="zap" class="w-5 h-5"></i></div>
+            <h3 class="text-sm font-bold">Sub-Millisecond Speed</h3>
+            <p class="text-xs opacity-70 leading-relaxed">Zero round-trip latency. Conversions and parsing operations happen at local CPU speed without network dependency.</p>
+          </div>
+          <div class="p-6 theme-card border rounded-3xl space-y-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold"><i data-lucide="hard-drive-download" class="w-5 h-5"></i></div>
+            <h3 class="text-sm font-bold">Progressive Web App</h3>
+            <p class="text-xs opacity-70 leading-relaxed">Installable natively to your desktop dock or home screen. Works reliably offline during flights or air-gapped environments.</p>
+          </div>
+        </div>
+      </section>
+
     </div>
 
-    <!-- VIEW 2: ACTIVE TOOL VIEW WITH DOCUMENTATION PANELS -->
+    <!-- VIEW 2: ACTIVE TOOL VIEW WITH USER GUIDE PANELS -->
     <div id="view-tool" class="hidden">
       <div class="flex items-center justify-between pb-6 border-b border-slate-500/20 mb-6">
         <button onclick="switchView('dashboard')" class="flex items-center text-xs font-bold theme-card px-4 py-2.5 rounded-2xl border hover:border-indigo-500 transition">
@@ -1023,6 +1099,7 @@
           <textarea id="url-codec-output" readonly class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl"></textarea>
         </div>
       </div>
+
     </div>
   </main>
 
