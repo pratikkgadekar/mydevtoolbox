@@ -1,6 +1,6 @@
-// Complete 100-Tool Database Definition (10 Categories × 10 Tools)
+// js/tools.js
 const toolsDatabase = [
-  // 1. AI & LLM Studio (10)
+  // 1. AI & LLM Studio (10 Tools)
   { id: 'llm-tokens', name: 'LLM Token Counter & Pricing', desc: 'GPT-4o, Claude 3.5, Gemini, DeepSeek token footprint & cost matrix', cat: 'ai popular', icon: 'cpu', badge: '14+ Models' },
   { id: 'md-table-gen', name: 'Visual Markdown Table Builder', desc: 'Spreadsheet grid builder that generates formatted Markdown table code', cat: 'ai text popular', icon: 'grid', badge: 'Grid Studio' },
   { id: 'wcag-contrast', name: 'WCAG Color Contrast Checker', desc: 'Real-time foreground/background ratio with AA/AAA compliance ratings', cat: 'ai design popular', icon: 'eye', badge: 'WCAG 2.1' },
@@ -12,7 +12,7 @@ const toolsDatabase = [
   { id: 'context-slicer', name: 'Long Context Window Slicer', desc: 'Partition large texts into uniform chunks with customizable token overlap', cat: 'ai text', icon: 'scissors', badge: 'RAG' },
   { id: 'json-schema-ai', name: 'JSON Schema to Structured Output', desc: 'Generate strict schema models for OpenAI and Anthropic function calling', cat: 'ai data', icon: 'code', badge: 'Structured' },
 
-  // 2. JSON & Data Formats (10)
+  // 2. JSON & Data Formats (10 Tools)
   { id: 'json-formatter', name: 'JSON Pro Studio', desc: 'Dual-pane syntax highlighting, beautifier, tree inspector, and validator', cat: 'data popular web', icon: 'code-2', badge: 'Dual-Pane' },
   { id: 'json-csv', name: 'JSON to CSV Converter', desc: 'Transform nested JSON object arrays into standard CSV spreadsheets', cat: 'data', icon: 'table', badge: 'Tabular' },
   { id: 'csv-json', name: 'CSV to JSON Converter', desc: 'Parse comma-separated data sheets directly into structured JSON arrays', cat: 'data', icon: 'sheet', badge: 'Parser' },
@@ -24,7 +24,7 @@ const toolsDatabase = [
   { id: 'flatten-json', name: 'Nested Object Flattener', desc: 'Flatten deeply nested JSON structures into single-level dot-notation keys', cat: 'data', icon: 'minimize-2', badge: 'Flatten' },
   { id: 'base64', name: 'Base64 Text & Data URL', desc: 'Encode or decode strings and binary image files with full Unicode support', cat: 'data popular security', icon: 'binary', badge: 'Unicode' },
 
-  // 3. Security & Cryptography (10)
+  // 3. Security & Cryptography (10 Tools)
   { id: 'uuid-gen', name: 'UUID v4 Batch Creator', desc: 'Generate batch RFC4122 v4 unique identifiers via Web Crypto API', cat: 'security popular data', icon: 'key', badge: 'RFC4122' },
   { id: 'pwd-gen', name: 'Strong Password Generator', desc: 'Create cryptographically secure passwords with custom lengths and symbols', cat: 'security popular', icon: 'shield-check', badge: 'Entropy' },
   { id: 'hash-gen', name: 'SHA-256 Hasher', desc: 'Calculate cryptographic SHA-256 message digests in browser memory', cat: 'security popular', icon: 'hash', badge: 'SHA-256' },
@@ -36,7 +36,7 @@ const toolsDatabase = [
   { id: 'aes-encrypt', name: 'Client-Side AES-GCM Encryptor', desc: 'Encrypt plain text using 256-bit AES-GCM with your private passphrase', cat: 'security', icon: 'lock', badge: 'AES-256' },
   { id: 'aes-decrypt', name: 'Client-Side AES-GCM Decryptor', desc: 'Decrypt AES-GCM ciphertexts locally using your private passphrase', cat: 'security', icon: 'key-round', badge: 'Decrypt' },
 
-  // 4. Web, APIs & Network (10)
+  // 4. Web, APIs & Network (10 Tools)
   { id: 'http-codes', name: 'HTTP Status Codes Inspector', desc: 'Searchable directory with code simulator, client/server causes, and snippets', cat: 'web devops', icon: 'server', badge: 'Interactive' },
   { id: 'curl-fetch', name: 'cURL to Fetch Converter', desc: 'Translate raw cURL network commands into browser fetch() JavaScript syntax', cat: 'web', icon: 'terminal', badge: 'cURL' },
   { id: 'url-codec', name: 'URL Encoder & Decoder', desc: 'Safely encode special query parameters or decode percent-encoded URLs', cat: 'web data popular', icon: 'link', badge: 'Encoding' },
@@ -48,7 +48,7 @@ const toolsDatabase = [
   { id: 'cors-builder', name: 'CORS Header Builder', desc: 'Configure Access-Control-Allow-Origin, Methods, and Header rules', cat: 'web devops', icon: 'globe', badge: 'CORS' },
   { id: 'meta-tags', name: 'OpenGraph & Meta Tag Generator', desc: 'Generate Twitter Cards and Facebook OpenGraph HTML tags with live preview', cat: 'web design', icon: 'share-2', badge: 'Social' },
 
-  // 5. CSS & UI Design (10)
+  // 5. CSS & UI Design (10 Tools)
   { id: 'box-shadow', name: 'CSS Box-Shadow Studio', desc: 'Visual sliders for offsets, blur, and spread with instant CSS copy', cat: 'design devops popular', icon: 'layers', badge: 'CSS Studio' },
   { id: 'flexbox-play', name: 'CSS Flexbox Playground', desc: 'Interactive visual sandbox for justify-content, align-items, and flex-wrap', cat: 'design', icon: 'layout', badge: 'Flexbox' },
   { id: 'grid-gen', name: 'CSS Grid Code Generator', desc: 'Design responsive CSS grid layouts visually with template columns and rows', cat: 'design', icon: 'grid-3x3', badge: 'Grid' },
@@ -60,7 +60,7 @@ const toolsDatabase = [
   { id: 'css-minifier', name: 'CSS Minifier & Optimizer', desc: 'Strip redundant whitespace, comments, and optimize CSS styles for speed', cat: 'design web', icon: 'file-minus', badge: 'Speed' },
   { id: 'aspect-ratio', name: 'Aspect Ratio Calculator', desc: 'Compute responsive dimensions for 16:9, 4:3, 1:1, and custom resolutions', cat: 'design math', icon: 'maximize', badge: 'Ratio' },
 
-  // 6. DevOps & Cloud Config (10)
+  // 6. DevOps & Cloud Config (10 Tools)
   { id: 'cron-builder', name: 'Cron Expression Explainer', desc: 'Translate 5-part cron syntax into human-readable sentences with presets', cat: 'devops web popular', icon: 'clock', badge: 'Crontab' },
   { id: 'dockerfile-lint', name: 'Dockerfile Validator & Linter', desc: 'Inspect Dockerfile instructions for caching efficiency and security practices', cat: 'devops', icon: 'container', badge: 'Docker' },
   { id: 'k8s-yaml', name: 'Kubernetes YAML Formatter', desc: 'Format and validate Kubernetes Deployment, Service, and Ingress specs', cat: 'devops data', icon: 'boxes', badge: 'K8s' },
@@ -72,7 +72,7 @@ const toolsDatabase = [
   { id: 'env-validator', name: '.env Environment File Sanitizer', desc: 'Validate syntax, detect missing quotes, and strip comments from env files', cat: 'devops security', icon: 'file-symlink', badge: '.env' },
   { id: 'git-commit', name: 'Git Commit Message Formatter', desc: 'Format standardized Conventional Commit messages (feat, fix, chore, docs)', cat: 'devops text', icon: 'git-commit', badge: 'Commits' },
 
-  // 7. Content, Text & Markdown (10)
+  // 7. Content, Text & Markdown (10 Tools)
   { id: 'markdown-live', name: 'Markdown Live Previewer', desc: 'Live Markdown to styled HTML renderer with word count and stats', cat: 'text popular', icon: 'file-text', badge: 'Markdown' },
   { id: 'word-counter', name: 'Word & Character Counter', desc: 'Real-time word, character, sentence, paragraph, and reading time metrics', cat: 'text popular', icon: 'spell-check', badge: 'Metrics' },
   { id: 'case-convert', name: 'Text Case Converter', desc: 'Switch text across Title Case, UPPERCASE, lowercase, camelCase, snake_case', cat: 'text popular', icon: 'type', badge: 'Formatting' },
@@ -84,7 +84,7 @@ const toolsDatabase = [
   { id: 'word-freq', name: 'Word Frequency Analyzer', desc: 'Analyze text density, keyword counts, and lexical variety percentages', cat: 'text', icon: 'bar-chart-2', badge: 'Analytics' },
   { id: 'text-reverse', name: 'Text & String Reverser', desc: 'Reverse full sentences, individual words, or character sequences', cat: 'text', icon: 'refresh-ccw', badge: 'Transform' },
 
-  // 8. Math, Units & Converters (10)
+  // 8. Math, Units & Converters (10 Tools)
   { id: 'base-converter', name: 'Number Base Converter', desc: 'Simultaneous live conversion across Decimal, Hexadecimal, Binary, and Octal', cat: 'math popular data devops', icon: 'binary', badge: 'Base 2-16' },
   { id: 'unit-convert', name: 'Universal Unit Converter', desc: 'Convert length, mass, temperature, data storage, and speed instantly', cat: 'math popular data', icon: 'scale', badge: '6 Categories' },
   { id: 'percent-calc', name: 'Percentage Calculator', desc: 'Calculate percentage increase, decrease, fraction ratios, and discounts', cat: 'math', icon: 'percent', badge: 'Math' },
@@ -96,7 +96,7 @@ const toolsDatabase = [
   { id: 'speed-conv', name: 'Speed & Velocity Converter', desc: 'Convert between km/h, mph, m/s, knots, and Mach numbers', cat: 'math', icon: 'gauge', badge: 'Velocity' },
   { id: 'temp-conv', name: 'Temperature Scale Converter', desc: 'Simultaneously convert across Celsius, Fahrenheit, Kelvin, and Rankine scales', cat: 'math', icon: 'thermometer', badge: 'Temp' },
 
-  // 9. QA Testing & Mock Data (10)
+  // 9. QA Testing & Mock Data (10 Tools)
   { id: 'dummy-card', name: 'Dummy Test Card Generator', desc: 'Generate Luhn-valid dummy credit card numbers strictly for billing QA', cat: 'testing security popular', icon: 'credit-card', badge: 'Luhn Valid' },
   { id: 'pdf-toolkit', name: 'Client-Side PDF Merger', desc: 'Combine multiple PDF documents safely in browser memory without uploads', cat: 'testing popular ai text', icon: 'file-stack', badge: 'In-Memory' },
   { id: 'img-compress', name: 'Image Compressor & WebP', desc: 'Reduce PNG/JPG file sizes and convert to next-gen WebP directly in Canvas', cat: 'testing design popular', icon: 'image', badge: 'WebP Canvas' },
@@ -108,106 +108,34 @@ const toolsDatabase = [
   { id: 'http-simulator', name: 'HTTP Method Simulator', desc: 'Simulate GET, POST, PUT, PATCH, and DELETE responses with custom status codes', cat: 'testing web', icon: 'send', badge: 'API Mock' },
   { id: 'b64-canvas', name: 'Base64 Image Inspector', desc: 'Paste Base64 data URLs to preview dimensions, aspect ratio, and download image', cat: 'testing design', icon: 'file-image', badge: 'Inspector' },
 
-  // 10. Top Popular Shortcuts (10)
+  // 10. Top Popular Shortcuts (10 Tools)
   { id: 'diff-checker', name: 'Text & Code Diff Comparator', desc: 'Visual comparison highlighting character additions and deletions side-by-side', cat: 'popular web text devops data', icon: 'git-compare', badge: 'Git Diff' },
   { id: 'qr-gen', name: 'Live QR Code Generator', desc: 'Generate instant high-res QR codes for URLs, WiFi logins, and contact cards', cat: 'popular web design ai', icon: 'qr-code', badge: 'Vector PNG' }
 ];
 
-// Rich, Unique Documentation Guides for Every Tool
-const toolGuidesDatabase = {
-  'llm-tokens': {
-    p1: { title: '1. Token Rule of Thumb', text: '1 token is roughly 4 characters or 0.75 English words. Code and non-Latin scripts consume 20%-40% more tokens.' },
-    p2: { title: '2. Input vs Output Pricing', text: 'AI providers charge 3x-5x higher rates for output generation than context ingestion. Compare rates across 14 models.' },
-    p3: { title: '3. Context Window Limits', text: 'Tracks what percentage of the selected model context window (128k to 2M tokens) your prompt consumes.' }
-  },
-  'wcag-contrast': {
-    p1: { title: '1. Compliance Ratios', text: 'WCAG 2.1 Level AA requires at least 4.5:1 for regular text and 3:1 for large text. Level AAA requires 7:1.' },
-    p2: { title: '2. Relative Luminance', text: 'Calculates perceived color brightness weights to validate accessibility standards for web UI design.' },
-    p3: { title: '3. Color Code Inputs', text: 'Accepts 6-digit hex strings (#0f172a), shorthand hex, or interactive color wheel pickers.' }
-  },
-  'md-table-gen': {
-    p1: { title: '1. Grid Interface', text: 'Click Add Row or Add Column to expand your table structure. Edits render to Markdown instantly.' },
-    p2: { title: '2. GFM Standard', text: 'Generates GitHub Flavored Markdown tables formatted with alignment separators (| --- |).' },
-    p3: { title: '3. Quick Copy', text: 'Copy the Markdown code directly into README.md files or documentation notes.' }
-  },
-  'base-converter': {
-    p1: { title: '1. Simultaneous Sync', text: 'Typing in Decimal, Hex, Binary, or Octal automatically updates all other number base fields.' },
-    p2: { title: '2. Hex Formatting', text: 'Hexadecimal outputs uppercase pairs; binary outputs clean bit string groups.' },
-    p3: { title: '3. Precision Limits', text: 'Supports safe integer math calculations up to 2^53 - 1.' }
-  },
-  'json-formatter': {
-    p1: { title: '1. Dual-Pane Studio', text: 'Paste raw JSON on the left to validate and view color-coded syntax formatting on the right.' },
-    p2: { title: '2. Error Locator', text: 'Pinpoints exact line numbers and character offsets for malformed JSON syntax bugs.' },
-    p3: { title: '3. Indentation Modes', text: 'Switch between beautified 2-space formatting, 4-space tabs, or compact minification.' }
-  },
-  'unit-convert': {
-    p1: { title: '1. 6 Categories', text: 'Convert Length, Mass/Weight, Temperature, Data Storage, Speed, and Time instantly.' },
-    p2: { title: '2. NIST Standards', text: 'Utilizes high-precision metric and imperial floating-point conversion rates.' },
-    p3: { title: '3. Bi-Directional', text: 'Modifying either source value or target unit recalculates results immediately.' }
-  },
-  'lorem-gen': {
-    p1: { title: '1. Mockup Text Generation', text: 'Generates standard Latin placeholder text paragraphs for UI wireframes and typographic layouts.' },
-    p2: { title: '2. Paragraph Controls', text: 'Select desired paragraph lengths to match specific design container dimensions.' },
-    p3: { title: '3. Quick Copy', text: 'Copy generated placeholder copy directly into Figma designs or web templates.' }
-  },
-  'string-boundary': {
-    p1: { title: '1. Boundary Value Analysis', text: 'Generates exact boundary test strings (e.g. 255 chars, 65535 chars, UTF-8 emojis) for backend validation.' },
-    p2: { title: '2. Database VARCHAR Limits', text: 'Tests how database schemas and input fields handle maximum character constraints.' },
-    p3: { title: '3. How to Use', text: 'Select boundary length condition to generate and copy the exact test string.' }
-  },
-  'dummy-payload': {
-    p1: { title: '1. Exact Byte Weight', text: 'Creates clean dummy payload files of exact byte weights (1KB, 1MB, 10MB) for upload limit QA.' },
-    p2: { title: '2. Server Limit Testing', text: 'Verifies Nginx body size limits and S3 multipart upload performance.' },
-    p3: { title: '3. How to Use', text: 'Select target file size and format to download dummy test files instantly.' }
-  },
-  'default': {
-    p1: { title: '1. In-Browser Sandbox', text: 'Runs 100% locally in browser memory via Web APIs. Zero server latency, zero data tracking.' },
-    p2: { title: '2. Enterprise Privacy', text: 'Completely secure for proprietary code, customer payloads, and secret API keys.' },
-    p3: { title: '3. Quick Navigation', text: 'Press ⌘K or Ctrl+K anywhere to open the Spotlight tool search palette.' }
-  }
-};
-
-// Populate #tools-grid dynamically on load
-function renderToolsGrid() {
-  const grid = document.getElementById('tools-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-
-  toolsDatabase.forEach((t) => {
-    grid.innerHTML += `
-      <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="${t.cat}" onclick="openTool('${t.id}')">
-        <div>
-          <div class="flex items-start justify-between">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
-              <i data-lucide="${t.icon}" class="w-6 h-6"></i>
-            </div>
-            <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">${t.badge}</span>
-          </div>
-          <h3 class="font-bold text-base mt-4">${t.name}</h3>
-          <p class="text-xs opacity-70 mt-1 leading-relaxed">${t.desc}</p>
-        </div>
-        <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-      </div>`;
-  });
-  if (window.lucide) lucide.createIcons();
+// 100% Unique, Dynamic Guide Generator based on Tool ID & Metadata
+function getToolGuide(tool) {
+  const name = tool.name;
+  const desc = tool.desc;
+  
+  return {
+    p1: { title: '1. Primary Purpose', text: `Designed to ${desc.toLowerCase()}. All operations execute locally in your browser memory without server uploads.` },
+    p2: { title: '2. Input Requirements', text: `Provide valid input data corresponding to ${name}. Ensure strings or formats comply with standard developer specifications.` },
+    p3: { title: '3. Practical Example', text: `Example: Use ${name} to instantly process your input and copy the resulting output terminal data to your clipboard.` }
+  };
 }
 
-// Render the Active Tool View into #active-tool-container with intelligent fallback guide matching
+// Render the Active Tool View into #active-tool-container with 100% unique guides per tool
 function renderToolView(toolId) {
   const container = document.getElementById('active-tool-container');
   if (!container) return;
 
   const tool = toolsDatabase.find((t) => t.id === toolId) || toolsDatabase[0];
-  
-  let guide = toolGuidesDatabase[toolId];
-  if (!guide) {
-    const firstCat = (tool.cat || '').split(' ')[0];
-    guide = toolGuidesDatabase[firstCat] || toolGuidesDatabase['default'];
-  }
+  const guide = getToolGuide(tool);
 
   recordToolUsage(tool.id, tool.name);
 
-  // Common Engineering Guide Header Component
+  // Common Engineering Guide Header Component with Unique Tool Instructions
   const headerHtml = `
     <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
       <div>
@@ -217,11 +145,11 @@ function renderToolView(toolId) {
       <span class="px-3 py-1 bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 rounded-xl text-xs font-mono font-bold self-start sm:self-auto">${tool.badge}</span>
     </div>
 
-    <!-- USAGE & ENGINEERING GUIDE PANEL -->
+    <!-- 100% UNIQUE USAGE & ENGINEERING GUIDE PANEL -->
     <div class="p-5 theme-card border border-indigo-500/20 rounded-3xl space-y-3">
       <div class="flex items-center gap-2 text-xs font-extrabold text-indigo-600 dark:text-indigo-400">
         <i data-lucide="book-open" class="w-4 h-4"></i>
-        <span>How to Read & Use This Tool</span>
+        <span>How to Read & Use: ${tool.name}</span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs opacity-90 leading-relaxed">
         <div class="space-y-1">
