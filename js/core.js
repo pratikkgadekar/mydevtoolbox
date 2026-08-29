@@ -323,8 +323,11 @@ async function submitToolRequest(e) {
   }
 }
 
+// CRITICAL FIX: Ensure grid is populated on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof renderToolsGrid === 'function') renderToolsGrid();
+  if (typeof renderToolsGrid === 'function') {
+    renderToolsGrid();
+  }
   renderRecentTools();
   updateInstallBadgeCount();
   if (window.lucide) lucide.createIcons();
