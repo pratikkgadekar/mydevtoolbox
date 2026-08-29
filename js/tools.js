@@ -113,338 +113,504 @@ const toolsDatabase = [
   { id: 'qr-gen', name: 'Live QR Code Generator', desc: 'Generate instant high-res QR codes for URLs, WiFi logins, and contact cards', cat: 'popular web design ai', icon: 'qr-code', badge: 'Vector PNG' }
 ];
 
-// Rich Documentation Guide Database for Every Tool
+// Rich, Tool-Specific Documentation Guides Database (Exact Guidance for All Categories)
 const toolGuidesDatabase = {
+  // AI & LLM
   'llm-tokens': {
-    p1: { title: '1. Token Rule of Thumb', text: 'In English, 1 token is roughly ~4 characters or 0.75 words. Code snippets, JSON symbols, and non-Latin alphabets consume 20% to 40% more tokens.' },
-    p2: { title: '2. Input vs Output Rates', text: 'AI providers charge 3x to 5x higher rates for tokens generated (output) compared to prompt context ingested (input). Use the matrix below to compare real inference costs.' },
-    p3: { title: '3. Context Window Health', text: 'Monitors prompt footprint against model limits (e.g., 128k tokens for GPT-4o, 200k for Claude 3.5, and 1M-2M for Gemini).' }
+    p1: { title: '1. Token Rule of Thumb', text: '1 token is roughly 4 characters or 0.75 English words. Code, punctuation, and non-Latin alphabets consume 20% to 40% more tokens.' },
+    p2: { title: '2. Input vs Output Pricing', text: 'AI providers charge 3x to 5x higher rates for output generation than context ingestion. The table compares real inference rates across 14 models.' },
+    p3: { title: '3. Context Window Limits', text: 'Tracks what percentage of the selected model context window (e.g., 128k for GPT-4o, 2M for Gemini) your prompt consumes.' }
   },
+  'prompt-cleaner': {
+    p1: { title: '1. Token Optimization', text: 'Strips duplicate spaces, invisible zero-width characters, and redundant blank lines to reduce token waste in prompts.' },
+    p2: { title: '2. Structural Normalization', text: 'Standardizes markdown heading hierarchies and blockquotes for deterministic AI model parsing.' },
+    p3: { title: '3. How to Use', text: 'Paste your prompt in the input workspace and click "Process & Run" to receive sanitized, cost-efficient prompt text.' }
+  },
+  'json-ts': {
+    p1: { title: '1. Automatic Type Inference', text: 'Analyzes JSON primitive values (strings, numbers, booleans) and nested arrays to generate typed TypeScript interfaces.' },
+    p2: { title: '2. Nested Type Structuring', text: 'Creates discrete sub-interfaces for child objects to keep your frontend and backend data contracts clean.' },
+    p3: { title: '3. How to Use', text: 'Paste any JSON response or payload in the left pane to instantly generate exportable TypeScript definitions.' }
+  },
+  'prompt-variables': {
+    p1: { title: '1. Mustache Syntax', text: 'Supports standard {{variable}} tags. Ideal for constructing batch prompt generation pipelines.' },
+    p2: { title: '2. Variable Extraction', text: 'Scans your prompt template to detect all variable keys and renders dynamic input fields for values.' },
+    p3: { title: '3. How to Use', text: 'Write your prompt with {{user_name}} or {{input_data}} placeholders, fill in the values, and copy the compiled text.' }
+  },
+  'few-shot-formatter': {
+    p1: { title: '1. Few-Shot In-Context Learning', text: 'LLMs perform significantly better when shown 2-3 input/output demonstration pairs before the actual task.' },
+    p2: { title: '2. Standardized Role Schemas', text: 'Formats examples according to system, user, and assistant message role specifications.' },
+    p3: { title: '3. How to Use', text: 'Input your raw sample pairs to output an API-ready message array format for OpenAI or Anthropic calls.' }
+  },
+  'temp-top-p': {
+    p1: { title: '1. Temperature Dynamics', text: 'Low temperature (0.0 - 0.2) yields focused, deterministic answers. High temperature (0.7 - 1.0) boosts creative variance.' },
+    p2: { title: '2. Top-P (Nucleus Sampling)', text: 'Restricts token selection to the top cumulative probability mass (e.g., 0.9 ignores the bottom 10% unlikely words).' },
+    p3: { title: '3. Pro Tip', text: 'Alter either Temperature OR Top-P for optimal tuning—adjusting both simultaneously often produces erratic outputs.' }
+  },
+  'context-slicer': {
+    p1: { title: '1. RAG Chunking', text: 'Splits lengthy documents into uniform token-sized blocks for vector embedding databases (Pinecone, Chroma, pgvector).' },
+    p2: { title: '2. Overlap Preservation', text: 'Maintains customizable token overlap between neighboring chunks so semantic context is not severed mid-sentence.' },
+    p3: { title: '3. How to Use', text: 'Set your target chunk size (e.g., 500 tokens) and overlap (50 tokens) to partition your source documentation.' }
+  },
+  'json-schema-ai': {
+    p1: { title: '1. Structured Outputs', text: 'Creates JSON Schema objects that guarantee the LLM response strictly follows your expected data types.' },
+    p2: { title: '2. Strict Mode Compliance', text: 'Includes required fields, type definitions, and additionalProperties: false required by OpenAI strict mode.' },
+    p3: { title: '3. How to Use', text: 'Input your desired JSON structure to output the corresponding JSON Schema definition for tool calling.' }
+  },
+
+  // JSON & Data
+  'json-formatter': {
+    p1: { title: '1. Dual-Pane Workflow', text: 'Paste raw or minified JSON in the left pane to validate, format, and inspect syntax tree structure.' },
+    p2: { title: '2. Error Locator', text: 'Pinpoints the exact line and character position of syntax bugs like missing quotes, brackets, or trailing commas.' },
+    p3: { title: '3. Formatting Modes', text: 'Switch between 2-space indentation, 4-space tab indentation, or compact single-line minification.' }
+  },
+  'json-csv': {
+    p1: { title: '1. Array Conversion', text: 'Flattens an array of uniform JSON objects into standard Comma-Separated Values (CSV) format.' },
+    p2: { title: '2. Header Auto-Detection', text: 'Extracts top-level object keys to generate the first CSV column header row automatically.' },
+    p3: { title: '3. How to Use', text: 'Paste [ { "name": "Alex", "age": 28 } ] to generate an Excel-compatible CSV table output.' }
+  },
+  'csv-json': {
+    p1: { title: '1. Spreadsheet Parser', text: 'Translates CSV rows into structured JSON object arrays with auto-detected data types.' },
+    p2: { title: '2. Escaped Strings & Commas', text: 'Properly handles quotation marks and comma delimiters within cell data fields.' },
+    p3: { title: '3. How to Use', text: 'Paste your raw CSV spreadsheet data into the input box to export structured JSON.' }
+  },
+  'xml-json': {
+    p1: { title: '1. Tag Hierarchy Parsing', text: 'Parses nested XML elements, parent-child nodes, and attributes into standard JSON dictionaries.' },
+    p2: { title: '2. SOAP & Feed Modernization', text: 'Ideal for migrating legacy SOAP API payloads and RSS/Atom feeds into REST JSON schemas.' },
+    p3: { title: '3. How to Use', text: 'Paste your <xml> block on the left and click Process to generate the corresponding JSON object.' }
+  },
+  'yaml-json': {
+    p1: { title: '1. YAML Config Conversion', text: 'Converts human-readable YAML configurations to standardized JSON structures.' },
+    p2: { title: '2. Indentation Safety', text: 'Validates strict 2-space YAML hierarchy rules to eliminate indentation bugs.' },
+    p3: { title: '3. How to Use', text: 'Paste Docker Compose, Kubernetes, or GitHub Actions YAML files to generate JSON syntax.' }
+  },
+  'json-sort': {
+    p1: { title: '1. Deterministic Sorting', text: 'Recursively sorts all object keys in alphabetical order (A to Z) across every nesting level.' },
+    p2: { title: '2. Clean Version Diffs', text: 'Eliminates noisy git diff changes caused by unpredictable JSON key ordering from different API responses.' },
+    p3: { title: '3. How to Use', text: 'Paste your JSON payload to produce an alphabetically sorted, deterministic JSON output.' }
+  },
+  'string-escape': {
+    p1: { title: '1. Literal Escaping', text: 'Escapes double quotes (\"), single quotes (\'), newlines (\\n), and backslashes (\\\\) for code strings.' },
+    p2: { title: '2. SQL & JSON Literals', text: 'Prevents syntax errors when hardcoding multi-line text into SQL statements or JavaScript string literals.' },
+    p3: { title: '3. How to Use', text: 'Paste raw multi-line text to generate an escaped string ready to embed inside double quotes.' }
+  },
+  'json-depth': {
+    p1: { title: '1. Payload Metrics', text: 'Analyzes JSON string byte weight, total node count, key count, and maximum nesting depth level.' },
+    p2: { title: '2. Performance Optimization', text: 'Detects deeply nested object trees that may trigger call stack limits or slow down mobile client parsers.' },
+    p3: { title: '3. How to Use', text: 'Paste your JSON data to view comprehensive memory and structure metrics.' }
+  },
+  'flatten-json': {
+    p1: { title: '1. Dot-Notation Flattening', text: 'Flattens nested JSON objects into a single-level key-value map using dot paths (e.g., user.address.city).' },
+    p2: { title: '2. Database Ingestion', text: 'Ideal for loading complex JSON payloads into relational SQL tables or flat analytics stores (BigQuery, Redshift).' },
+    p3: { title: '3. How to Use', text: 'Paste any nested JSON payload to produce a flattened 1-level key-value dictionary.' }
+  },
+  'base64': {
+    p1: { title: '1. UTF-8 Unicode Support', text: 'Encodes and decodes strings using safe UTF-8 byte conversion to prevent corruption of emojis and special characters.' },
+    p2: { title: '2. Data URLs & Assets', text: 'Supports converting text strings to Base64 and parsing data:text/plain;base64 URIs.' },
+    p3: { title: '3. How to Use', text: 'Paste your plain text to encode into Base64, or paste Base64 to decode back into readable text.' }
+  },
+
+  // Security & Crypto
+  'uuid-gen': {
+    p1: { title: '1. RFC4122 Standard', text: 'Generates Version 4 UUIDs (Universally Unique Identifiers) with 122 bits of cryptographically strong randomness.' },
+    p2: { title: '2. Collision Resistance', text: 'The probability of generating duplicate v4 UUIDs is practically zero (1 in 2.71 quintillion).' },
+    p3: { title: '3. How to Use', text: 'Click the generate button to create batches of clean, lowercase or uppercase UUIDs.' }
+  },
+  'pwd-gen': {
+    p1: { title: '1. Web Crypto Randomness', text: 'Uses crypto.getRandomValues() for true cryptographic randomness rather than predictable Math.random().' },
+    p2: { title: '2. Entropy Customization', text: 'Configure password length (8 to 64 characters) and toggle symbols, numbers, uppercase, and lowercase characters.' },
+    p3: { title: '3. Pro Tip', text: 'Passphrases with 16+ characters and mixed character sets provide high defense against brute-force attacks.' }
+  },
+  'hash-gen': {
+    p1: { title: '1. SHA-256 Digest', text: 'Calculates a 256-bit (64-character hexadecimal) cryptographic hash digest of any input text.' },
+    p2: { title: '2. One-Way Verification', text: 'SHA-256 is mathematically irreversible. Ideal for verifying checksums and data integrity.' },
+    p3: { title: '3. How to Use', text: 'Type or paste your text to view the computed SHA-256 digest updated in real time.' }
+  },
+  'sha512-gen': {
+    p1: { title: '1. 512-Bit Security', text: 'Produces a 128-character hexadecimal hash digest designed for high-security applications and certificates.' },
+    p2: { title: '2. Avalanche Effect', text: 'Changing a single character in the input string completely alters the resulting hash output.' },
+    p3: { title: '3. How to Use', text: 'Paste your source data to calculate the corresponding SHA-512 cryptographic signature.' }
+  },
+  'hmac-gen': {
+    p1: { title: '1. Message Authentication', text: 'Computes a hash-based message authentication code using SHA-256 combined with your secret key.' },
+    p2: { title: '2. API Webhook Signatures', text: 'Standard format used by Stripe, GitHub, and AWS webhooks to verify request authenticity.' },
+    p3: { title: '3. How to Use', text: 'Enter your payload and secret key to generate the HMAC-SHA256 signature.' }
+  },
+  'jwt-debugger': {
+    p1: { title: '1. JWT Architecture', text: 'Decodes the Header (algorithm & token type), Payload (claims & expiration), and Signature components of JSON Web Tokens.' },
+    p2: { title: '2. Expiration Verification', text: 'Parses the exp and nbf claims to display human-readable timestamps and validity status.' },
+    p3: { title: '3. Privacy Guarantee', text: 'Tokens are parsed purely in-memory—secret keys and sensitive claims are never sent to external servers.' }
+  },
+  'salt-gen': {
+    p1: { title: '1. Cryptographic Salting', text: 'Generates random hex, base64, and alphanumeric byte strings for password hashing rounds and session tokens.' },
+    p2: { title: '2. Rainbow Table Defense', text: 'Appending unique random salts to passwords prevents precomputed rainbow table dictionary attacks.' },
+    p3: { title: '3. How to Use', text: 'Select your desired byte length (16, 32, 64 bytes) to generate high-entropy salt strings.' }
+  },
+  'passphrase-gen': {
+    p1: { title: '1. Diceware Passphrases', text: 'Generates multi-word passphrases using a curated dictionary of common, memorable words separated by hyphens.' },
+    p2: { title: '2. Usability & Strength', text: 'Passphrases like "correct-horse-battery-staple" are easier for humans to remember while resisting automated cracking.' },
+    p3: { title: '3. How to Use', text: 'Choose the word count (4 to 8 words) and separator character to generate strong passphrases.' }
+  },
+  'aes-encrypt': {
+    p1: { title: '1. AES-256-GCM Standard', text: 'Encrypts plain text using the Advanced Encryption Standard in Galois/Counter Mode with 256-bit key length.' },
+    p2: { title: '2. PBKDF2 Key Derivation', text: 'Derives a cryptographic key from your passphrase using 100,000 rounds of PBKDF2 with SHA-256 and random IV.' },
+    p3: { title: '3. How to Use', text: 'Enter your message and private passphrase to generate an encrypted ciphertext string.' }
+  },
+  'aes-decrypt': {
+    p1: { title: '1. Authenticated Decryption', text: 'Decrypts AES-GCM ciphertexts and verifies authentication tags to ensure the message was not tampered with.' },
+    p2: { title: '2. Passphrase Verification', text: 'Requires the exact secret passphrase used during encryption. An incorrect passphrase fails decryption safely.' },
+    p3: { title: '3. How to Use', text: 'Paste the encrypted payload and enter your secret passphrase to restore the original plain text.' }
+  },
+
+  // Web & Network
+  'http-codes': {
+    p1: { title: '1. Status Code Directory', text: 'Search standard 1xx (Informational), 2xx (Success), 3xx (Redirection), 4xx (Client Error), and 5xx (Server Error) codes.' },
+    p2: { title: '2. Root Causes & Fixes', text: 'Explains common client-side mistakes (e.g., 401 Unauthorized vs 403 Forbidden) and backend server crashes.' },
+    p3: { title: '3. Code Examples', text: 'Provides copyable cURL commands and JavaScript fetch() syntax for handling status responses.' }
+  },
+  'curl-fetch': {
+    p1: { title: '1. Command Translation', text: 'Parses terminal curl requests (headers, HTTP methods, authorization, JSON body) into JavaScript fetch() syntax.' },
+    p2: { title: '2. Async/Await Output', text: 'Outputs clean, production-ready async/await code compatible with modern browser and Node.js environments.' },
+    p3: { title: '3. How to Use', text: 'Paste a curl -X POST https://api.com -H "Auth: Bearer" -d "{}" command to generate fetch code.' }
+  },
+  'url-codec': {
+    p1: { title: '1. Percent-Encoding', text: 'Encodes reserved characters (spaces, ?, &, =, /) into %20, %3F, and %26 for safe transmission in query parameters.' },
+    p2: { title: '2. Component vs Full URL', text: 'Supports encodeURIComponent (for individual query parameters) and encodeURI (for complete URL strings).' },
+    p3: { title: '3. How to Use', text: 'Paste messy URLs or query strings to encode or decode special characters.' }
+  },
+  'url-parser': {
+    p1: { title: '1. URL Deconstruction', text: 'Extracts protocol, hostname, port, pathname, hash anchor, and search query parameters into structured tables.' },
+    p2: { title: '2. UTM Parameter Inspector', text: 'Highlights utm_source, utm_medium, and utm_campaign tracking tokens for marketing audits.' },
+    p3: { title: '3. How to Use', text: 'Paste any complex URL with query strings to view parameters organized as key-value pairs.' }
+  },
+  'basic-auth': {
+    p1: { title: '1. Basic Auth Standard', text: 'Constructs RFC7617 Authorization: Basic headers by joining username:password with a colon and Base64 encoding.' },
+    p2: { title: '2. API Testing', text: 'Useful for testing protected endpoints in Postman, cURL, or custom HTTP client configurations.' },
+    p3: { title: '3. How to Use', text: 'Enter your API username and password to generate the exact Authorization header string.' }
+  },
+  'slug-gen': {
+    p1: { title: '1. Clean Permalinks', text: 'Converts article titles and strings into lowercase, hyphen-separated, URL-friendly permalinks.' },
+    p2: { title: '2. Special Character Removal', text: 'Strips punctuation, accents, and symbols while collapsing multiple spaces into single hyphens.' },
+    p3: { title: '3. How to Use', text: 'Type any article title to generate an SEO-friendly URL slug (e.g., "my-article-title").' }
+  },
+  'html-entities': {
+    p1: { title: '1. XSS Prevention', text: 'Converts characters like <, >, &, ", and \' into &lt;, &gt;, &amp;, &quot;, and &#39; for safe HTML rendering.' },
+    p2: { title: '2. Two-Way Conversion', text: 'Switch between encoding raw text to named/numeric HTML entities or decoding entities back into plain characters.' },
+    p3: { title: '3. How to Use', text: 'Paste text or HTML snippets to escape characters and prevent browser markup injection.' }
+  },
+  'ua-parser': {
+    p1: { title: '1. Client Parsing', text: 'Deconstructs User-Agent request strings to detect browser family, version, OS platform, and CPU architecture.' },
+    p2: { title: '2. Device Classification', text: 'Classifies traffic between Desktop, Mobile, Tablet, Bot crawler, or headless testing environments.' },
+    p3: { title: '3. How to Use', text: 'Paste any User-Agent string (or inspect your own current browser UA string) for detailed breakdown.' }
+  },
+  'cors-builder': {
+    p1: { title: '1. Access-Control Rules', text: 'Constructs Access-Control-Allow-Origin, Allow-Methods, Allow-Headers, and Max-Age server response headers.' },
+    p2: { title: '2. Security Best Practices', text: 'Recommends specific domain whitelisting over wildcard (*) headers for authenticated endpoints.' },
+    p3: { title: '3. How to Use', text: 'Select allowed origins and HTTP methods to generate Nginx, Express.js, or Apache CORS configurations.' }
+  },
+  'meta-tags': {
+    p1: { title: '1. OpenGraph & Twitter Cards', text: 'Generates <meta property="og:title"> and <meta name="twitter:card"> tags for social media link sharing.' },
+    p2: { title: '2. Live Preview Simulation', text: 'Simulates how your link title, description, and preview image will display when shared on Twitter, Slack, and Facebook.' },
+    p3: { title: '3. How to Use', text: 'Fill in your page title, description, and image URL to copy the complete HTML head tag block.' }
+  },
+
+  // Design & CSS
   'wcag-contrast': {
     p1: { title: '1. Compliance Ratios', text: 'WCAG 2.1 Level AA requires a minimum ratio of 4.5:1 for regular text and 3:1 for large text (18pt+). Level AAA requires 7:1.' },
     p2: { title: '2. Perceptual Luminance', text: 'Calculated using relative luminance formulas (sRGB values weighted by human eye cone sensitivity) for reliable accessibility validation.' },
     p3: { title: '3. Color Code Inputs', text: 'Accepts 6-digit hex color strings (#ffffff), 3-digit shorthand (#fff), or interactive color wheel pickers.' }
   },
-  'md-table-gen': {
-    p1: { title: '1. Grid Interface', text: 'Click "+ Add Row" or "+ Add Column" to expand your spreadsheet layout. All edits render to standard Markdown syntax instantly.' },
-    p2: { title: '2. Markdown Table Standard', text: 'Generates GitHub Flavored Markdown (GFM) tables formatted with header separators (| --- |) for seamless documentation rendering.' },
-    p3: { title: '3. One-Click Copy', text: 'Use the "Copy Markdown" action to paste directly into README.md, Obsidian notes, or documentation repositories.' }
+  'box-shadow': {
+    p1: { title: '1. Visual Multi-Layer Shadows', text: 'Adjust horizontal offset (X), vertical offset (Y), blur radius, spread distance, and color opacity with sliders.' },
+    p2: { title: '2. Smooth Elevation Layers', text: 'Layering multiple subtle shadows creates realistic, elevation-based design depth (inspired by Tailwind and Stripe UI).' },
+    p3: { title: '3. How to Use', text: 'Use the interactive sliders to customize your shadow and copy the generated CSS box-shadow rule.' }
   },
+  'flexbox-play': {
+    p1: { title: '1. Alignment Controls', text: 'Interactively test justify-content (main axis), align-items (cross axis), flex-direction, and flex-wrap properties.' },
+    p2: { title: '2. Responsive Container', text: 'Visual sandbox demonstrating how flex children behave when resizing and distributing space.' },
+    p3: { title: '3. How to Use', text: 'Click property toggles to observe child element layout shifts and copy the clean CSS flex rules.' }
+  },
+  'grid-gen': {
+    p1: { title: '1. 2D Layout Design', text: 'Configure grid-template-columns and grid-template-rows using fractional units (1fr), pixels, and auto-fill repeat() functions.' },
+    p2: { title: '2. Gap Spacing', text: 'Adjust row-gap and column-gap spacing between grid track items visually.' },
+    p3: { title: '3. How to Use', text: 'Set column counts and spacing to generate responsive CSS Grid layout declarations.' }
+  },
+  'color-convert': {
+    p1: { title: '1. Format Interoperability', text: 'Simultaneously converts color codes across HEX (#ffffff), RGB (255, 255, 255), HSL (0, 0%, 100%), and CSS color keywords.' },
+    p2: { title: '2. Alpha Channel Transparency', text: 'Supports 8-digit HEX and RGBA formats for designing transparent color overlays.' },
+    p3: { title: '3. How to Use', text: 'Enter any valid color format to view and copy all equivalent alternative CSS notations.' }
+  },
+  'palette-gen': {
+    p1: { title: '1. Color Harmony Math', text: 'Calculates mathematically balanced color harmonies: Complementary (180°), Analogous (30°), Triadic (120°), and Monochromatic.' },
+    p2: { title: '2. UI Design System Tones', text: 'Generates 50 to 900 shade distributions (50, 100, 200... 900) for cohesive UI component theming.' },
+    p3: { title: '3. How to Use', text: 'Pick a base brand color to generate matching palette palettes with one-click HEX copy buttons.' }
+  },
+  'glassmorphism': {
+    p1: { title: '1. Frosted Glass Styling', text: 'Combines backdrop-filter: blur(), semi-transparent background colors, and subtle border highlights.' },
+    p2: { title: '2. Cross-Browser Support', text: 'Includes standard backdrop-filter and -webkit-backdrop-filter properties for full Safari and iOS compatibility.' },
+    p3: { title: '3. How to Use', text: 'Adjust blur strength, background opacity, and border radiance to generate modern glassmorphic card styles.' }
+  },
+  'border-radius': {
+    p1: { title: '1. 8-Point Asymmetric Radii', text: 'Configures independent horizontal and vertical radii for all four corners (border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%).' },
+    p2: { title: '2. Organic Blob Shapes', text: 'Creates modern organic blob shapes and fluid button styles for contemporary websites.' },
+    p3: { title: '3. How to Use', text: 'Drag corner control handles to sculpt organic shapes and copy the resulting CSS border-radius value.' }
+  },
+  'gradient-gen': {
+    p1: { title: '1. Multi-Stop Transitions', text: 'Creates linear-gradient() and radial-gradient() transitions with custom angle rotation and color stop percentages.' },
+    p2: { title: '2. CSS Output', text: 'Generates clean background-image CSS declarations compatible with all modern browsers.' },
+    p3: { title: '3. How to Use', text: 'Add color stops, adjust angle degrees, and copy the gradient declaration for your CSS stylesheets.' }
+  },
+  'css-minifier': {
+    p1: { title: '1. Asset Compression', text: 'Strips comments (/* */), removes redundant whitespace, collapses zero units (0px to 0), and compresses color codes.' },
+    p2: { title: '2. Page Speed Boost', text: 'Reduces CSS file transfer sizes by 20% to 40% to improve First Contentful Paint (FCP) scores.' },
+    p3: { title: '3. How to Use', text: 'Paste your raw CSS styles and click Process to generate a production-ready minified stylesheet.' }
+  },
+
+  // DevOps & Cloud
+  'cron-builder': {
+    p1: { title: '1. 5-Part Cron Syntax', text: 'Deconstructs standard cron expressions: Minute (0-59), Hour (0-23), Day of Month (1-31), Month (1-12), and Day of Week (0-6).' },
+    p2: { title: '2. Human-Readable Translation', text: 'Translates expressions like */15 * * * * into clear sentences ("Every 15 minutes, every day").' },
+    p3: { title: '3. Preset Shortcuts', text: 'Includes quick-pick presets for common schedules: hourly, daily midnight, weekly, and monthly jobs.' }
+  },
+  'dockerfile-lint': {
+    p1: { title: '1. Docker Layer Caching', text: 'Checks that package installations (RUN apt-get) and dependency files (package.json) run before copying full application code.' },
+    p2: { title: '2. Security Best Practices', text: 'Warns against running containers as the root user and recommends specific base image tags over :latest.' },
+    p3: { title: '3. How to Use', text: 'Paste your Dockerfile to inspect recommendations for smaller image sizes and faster builds.' }
+  },
+  'k8s-yaml': {
+    p1: { title: '1. Spec Validation', text: 'Validates apiVersion, kind, metadata, and spec definitions for Kubernetes Deployments, Services, and Ingresses.' },
+    p2: { title: '2. Indentation Formatting', text: 'Enforces strict 2-space YAML formatting to prevent silent deployment parse failures in kubectl apply.' },
+    p3: { title: '3. How to Use', text: 'Paste raw Kubernetes manifest files to format indentation and validate object structure.' }
+  },
+  'chmod-calc': {
+    p1: { title: '1. Octal & Symbolic Notation', text: 'Calculates octal permission codes (e.g., 755, 644, 700) and symbolic notation (-rwxr-xr-x) for Linux filesystems.' },
+    p2: { title: '2. User / Group / Others', text: 'Configures Read (4), Write (2), and Execute (1) bits across Owner, Group, and Public permission groups.' },
+    p3: { title: '3. How to Use', text: 'Check the desired permission checkboxes to copy the exact chmod 755 file.sh command.' }
+  },
+  'subnet-calc': {
+    p1: { title: '1. CIDR Calculations', text: 'Calculates subnet mask, wildcard mask, network address, broadcast address, and total usable host IPs for IPv4 subnets.' },
+    p2: { title: '2. Prefix Notation', text: 'Supports prefix lengths from /0 to /32 (e.g., 192.168.1.0/24 provides 254 usable host addresses).' },
+    p3: { title: '3. How to Use', text: 'Enter an IP address and CIDR prefix length to inspect complete networking allocation boundaries.' }
+  },
+  'ipv6-expand': {
+    p1: { title: '1. RFC5952 Formatting', text: 'Expands compressed IPv6 addresses (e.g., 2001:db8::1) to full 32-hex character representation or compresses redundant zeros.' },
+    p2: { title: '2. Network Auditing', text: 'Standardizes disparate IPv6 address formats for firewall access lists and router routing tables.' },
+    p3: { title: '3. How to Use', text: 'Paste any IPv6 address to toggle between fully expanded 8-hextet format and compressed canonical format.' }
+  },
+  'nginx-format': {
+    p1: { title: '1. Block Indentation', text: 'Standardizes nested server {}, location {}, and upstream {} configuration blocks with uniform tab spacing.' },
+    p2: { title: '2. Directive Semicolons', text: 'Ensures closing semicolons (;) are aligned for readability across complex reverse proxy rules.' },
+    p3: { title: '3. How to Use', text: 'Paste messy nginx.conf blocks to format and beautify the configuration structure.' }
+  },
+  'b64-file': {
+    p1: { title: '1. Binary Reconstruction', text: 'Reconstructs raw Base64 encoded strings back into downloadable binary files (PDFs, images, ZIPs, audio).' },
+    p2: { title: '2. MIME-Type Detection', text: 'Auto-detects data URL headers (data:image/png;base64,...) to assign proper file extensions.' },
+    p3: { title: '3. How to Use', text: 'Paste a Base64 string, select your desired filename, and click download to save the binary file locally.' }
+  },
+  'env-validator': {
+    p1: { title: '1. Syntax Validation', text: 'Checks .env configuration files for unquoted multi-word values, syntax typos, and duplicate environment keys.' },
+    p2: { title: '2. Secret Leak Detection', text: 'Warns when sensitive credentials appear without standard formatting in production configuration files.' },
+    p3: { title: '3. How to Use', text: 'Paste your .env file contents to validate syntax and clean whitespace.' }
+  },
+  'git-commit': {
+    p1: { title: '1. Conventional Commits', text: 'Structures commit messages using industry standards: type(scope): short description followed by optional body and breaking changes.' },
+    p2: { title: '2. Standardized Types', text: 'Select from conventional types: feat (new feature), fix (bug fix), chore (maintenance), docs (documentation), refactor, and test.' },
+    p3: { title: '3. How to Use', text: 'Fill in the commit type, scope, and summary to generate a clean, professional git commit -m message.' }
+  },
+
+  // Content & Text
+  'markdown-live': {
+    p1: { title: '1. Realtime Markdown Preview', text: 'Renders GitHub Flavored Markdown (GFM) headings, bold/italic styles, code fences, blockquotes, and lists in real time.' },
+    p2: { title: '2. Live Document Statistics', text: 'Displays real-time word count, character count, sentence count, and estimated reading time as you write.' },
+    p3: { title: '3. How to Use', text: 'Type markdown in the left editor to inspect the styled HTML output on the right.' }
+  },
+  'word-counter': {
+    p1: { title: '1. Comprehensive Text Metrics', text: 'Calculates exact word count, character count (with and without spaces), paragraph count, and sentence totals.' },
+    p2: { title: '2. Reading & Speaking Time', text: 'Estimates reading time (based on 200 words per minute) and speaking duration (based on 130 WPM).' },
+    p3: { title: '3. How to Use', text: 'Paste articles, blog drafts, or essays to inspect real-time readability metrics.' }
+  },
+  'case-convert': {
+    p1: { title: '1. Multi-Case Transformation', text: 'Switch text across UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case, and PascalCase.' },
+    p2: { title: '2. Developer & Writing Friendly', text: 'Convert human titles into variable names for programming or format copy for headings and documentation.' },
+    p3: { title: '3. How to Use', text: 'Paste your text and click any of the case buttons to convert formatting instantly.' }
+  },
+  'dedupe-lines': {
+    p1: { title: '1. Duplicate Removal', text: 'Scans multi-line lists to remove repeated lines while preserving the original list sequence or sorting alphabetically.' },
+    p2: { title: '2. Case Sensitivity & Trimming', text: 'Supports case-insensitive deduplication and automatic trimming of leading/trailing line whitespace.' },
+    p3: { title: '3. How to Use', text: 'Paste messy lists, email directories, or key arrays to produce a clean, deduplicated line list.' }
+  },
+  'sort-lines': {
+    p1: { title: '1. Sorting Algorithms', text: 'Sort lines alphabetically (A to Z or Z to A), naturally (supporting numbers 1, 2, 10 properly), or by line length.' },
+    p2: { title: '2. List Management', text: 'Ideal for organizing import statements, dependency arrays, CSS selectors, or contact lists.' },
+    p3: { title: '3. How to Use', text: 'Paste list items into the workspace and select your desired sorting order.' }
+  },
+  'whitespace-clean': {
+    p1: { title: '1. Whitespace Normalization', text: 'Strips trailing spaces from line endings, collapses consecutive empty lines, and converts tab characters to spaces.' },
+    p2: { title: '2. Clean Source Formatting', text: 'Eliminates invisible whitespace noise before committing text to version control repositories.' },
+    p3: { title: '3. How to Use', text: 'Paste unformatted text to remove unnecessary carriage returns and trailing whitespace.' }
+  },
+  'lorem-gen': {
+    p1: { title: '1. Mock Placeholder Text', text: 'Generates standard Latin Lorem Ipsum placeholder copy for wireframes, website mockups, and typography tests.' },
+    p2: { title: '2. Paragraph & Word Controls', text: 'Select exact paragraph counts, word limits, or sentence counts to fit your design container dimensions.' },
+    p3: { title: '3. How to Use', text: 'Choose your desired paragraph count and click generate to copy placeholder text.' }
+  },
+  'slug-to-title': {
+    p1: { title: '1. Slug Deconstruction', text: 'Converts kebab-case or snake_case URL slugs into readable, capitalized title strings.' },
+    p2: { title: '2. CMS & Migration Audits', text: 'Useful when importing legacy blog post databases and converting URL paths back into post titles.' },
+    p3: { title: '3. How to Use', text: 'Paste a slug like "10-best-developer-tools" to generate "10 Best Developer Tools".' }
+  },
+  'word-freq': {
+    p1: { title: '1. Keyword Density Analysis', text: 'Scans text to rank the most frequently occurring words, their total counts, and percentage distribution.' },
+    p2: { title: '2. SEO Optimization', text: 'Identifies overused words and helps optimize keyword balance in blog articles and marketing copy.' },
+    p3: { title: '3. How to Use', text: 'Paste your draft text to view an ordered table of the most frequent keywords.' }
+  },
+  'text-reverse': {
+    p1: { title: '1. Multi-Level Reversal', text: 'Reverse full character sequences ("hello" -> "olleh"), reverse word order, or reverse entire lines in a document.' },
+    p2: { title: '2. Testing & Data Inversion', text: 'Useful for palindrome testing, data munging, and string manipulation exercises.' },
+    p3: { title: '3. How to Use', text: 'Paste any text string and choose character, word, or line reversal.' }
+  },
+
+  // Math & Converters
   'base-converter': {
     p1: { title: '1. Simultaneous Base Sync', text: 'Typing into any field (Decimal, Hex, Binary, or Octal) automatically recalculates all other bases in real time without lag.' },
     p2: { title: '2. Bit & Byte Alignment', text: 'Hexadecimal outputs clean uppercase pairs. Binary outputs standard 8-bit or arbitrary-length string representations.' },
     p3: { title: '3. Signed & Unsigned Limits', text: 'Supports arbitrary integer precision up to JavaScript Safe Integer (2^53 - 1).' }
-  },
-  'json-formatter': {
-    p1: { title: '1. Dual-Pane Workflow', text: 'Type or paste messy JSON in the left pane to view validated, color-coded, syntax-highlighted output in the right terminal.' },
-    p2: { title: '2. Error Locator', text: 'Pinpoints the exact line number and character offset of trailing commas, unquoted keys, or malformed syntax.' },
-    p3: { title: '3. Minify vs Beautify', text: 'Toggle between 2-space indentation, 4-space tab indentation, or single-line compact JSON minification.' }
   },
   'unit-convert': {
     p1: { title: '1. Multi-Category Engine', text: 'Select between Length, Mass/Weight, Temperature, Data Storage, Speed, and Time categories from the pill selectors.' },
     p2: { title: '2. Exact Math Formulas', text: 'Uses high-precision floating-point conversion factors according to NIST and international metric/imperial standards.' },
     p3: { title: '3. Live Bi-Directional Calc', text: 'Change either the input value or target unit dropdown to recalculate the result instantly.' }
   },
+  'percent-calc': {
+    p1: { title: '1. Percentage Operations', text: 'Calculates X% of Y, what percentage X is of Y, percentage increase/decrease, and discount savings.' },
+    p2: { title: '2. Financial & Metric Auditing', text: 'Useful for calculating markup margins, conversion rate changes, and performance benchmark improvements.' },
+    p3: { title: '3. How to Use', text: 'Enter values into the corresponding formula fields to compute percentage metrics.' }
+  },
+  'unix-epoch': {
+    p1: { title: '1. Timestamp Conversion', text: 'Converts seconds and milliseconds UNIX timestamps into UTC ISO-8601 strings and local timezone dates.' },
+    p2: { title: '2. Relative Time', text: 'Displays relative time elapsed (e.g., "5 minutes ago", "in 2 days") alongside absolute calendar dates.' },
+    p3: { title: '3. How to Use', text: 'Paste a UNIX epoch integer (e.g., 1700000000) to view formatted human dates.' }
+  },
+  'date-epoch': {
+    p1: { title: '1. Date to Timestamp', text: 'Converts any selected calendar date, hour, minute, and second into an exact UNIX epoch timestamp in seconds and milliseconds.' },
+    p2: { title: '2. Database Querying', text: 'Useful for constructing SQL WHERE created_at >= 1700000000 queries.' },
+    p3: { title: '3. How to Use', text: 'Select a date and time using the picker to generate the corresponding integer timestamp.' }
+  },
+  'byte-calc': {
+    p1: { title: '1. Binary vs Decimal Prefixes', text: 'Calculates data units in standard Binary (1024 Bytes = 1 KiB) and SI Decimal (1000 Bytes = 1 KB) standards.' },
+    p2: { title: '2. Storage & Bandwidth', text: 'Converts bytes, megabytes, gigabytes, terabytes, and network bitrates (Mbps, Gbps).' },
+    p3: { title: '3. How to Use', text: 'Enter any data size value to view all equivalent storage unit metrics.' }
+  },
+  'gcd-lcm': {
+    p1: { title: '1. Euclidean Algorithm', text: 'Calculates the Greatest Common Divisor (GCD) and Least Common Multiple (LCM) of two or more integers.' },
+    p2: { title: '2. Aspect Ratios & Fractions', text: 'Useful for simplifying fraction ratios, pixel grid scaling, and algorithm optimizations.' },
+    p3: { title: '3. How to Use', text: 'Enter two integers separated by commas to compute their exact GCD and LCM.' }
+  },
+  'roman-num': {
+    p1: { title: '1. Two-Way Roman Parsing', text: 'Converts standard integers into standard Roman numerals (I, V, X, L, C, D, M) and parses Roman numeral strings to integers.' },
+    p2: { title: '2. Subtractive Notation', text: 'Accurately respects subtractive notation rules (e.g., IV for 4, IX for 9, MCMXCIX for 1999).' },
+    p3: { title: '3. How to Use', text: 'Enter a number (1 to 3999) or a Roman numeral string to convert instantly.' }
+  },
+  'speed-conv': {
+    p1: { title: '1. Velocity Conversions', text: 'Simultaneously converts speed values across km/h, mph, m/s, knots (nautical miles/hr), and Mach (speed of sound).' },
+    p2: { title: '2. High-Precision Coefficients', text: 'Uses international aviation and meteorological conversion constants.' },
+    p3: { title: '3. How to Use', text: 'Enter any speed measurement and choose the source unit to convert.' }
+  },
+  'temp-conv': {
+    p1: { title: '1. Scale Equivalencies', text: 'Converts temperatures simultaneously across Celsius (°C), Fahrenheit (°F), Kelvin (K), and Rankine (°R).' },
+    p2: { title: '2. Absolute Zero Validation', text: 'Respects thermodynamic absolute zero limits (-273.15°C / 0 Kelvin).' },
+    p3: { title: '3. How to Use', text: 'Type a temperature in any scale to inspect equivalent values in all other systems.' }
+  },
+
+  // QA Testing
+  'dummy-card': {
+    p1: { title: '1. Luhn Algorithm Validity', text: 'Generates test credit card numbers (Visa, Mastercard, Amex) that strictly pass MOD-10 Luhn checksum validation.' },
+    p2: { title: '2. QA & Billing Gateways Only', text: 'Designed strictly for software testing in Stripe, PayPal, and gateway sandbox modes. Not linked to real banking accounts.' },
+    p3: { title: '3. How to Use', text: 'Select card brand to generate valid test card numbers, expiration dates, and CVVs.' }
+  },
+  'pdf-toolkit': {
+    p1: { title: '1. In-Memory PDF Merge', text: 'Combines multiple PDF files directly inside browser WebAssembly/Canvas memory without uploading documents to external servers.' },
+    p2: { title: '2. Document Security', text: 'Zero cloud upload ensures confidential legal documents, invoices, and contracts never leave your computer.' },
+    p3: { title: '3. How to Use', text: 'Select 2 or more PDF files from your disk and click "Merge PDFs Now" to save the combined document.' }
+  },
+  'img-compress': {
+    p1: { title: '1. Canvas WebP Compression', text: 'Uses HTML5 Canvas to re-encode and compress PNG/JPG images into lightweight next-gen WebP format.' },
+    p2: { title: '2. Quality Slider', text: 'Adjust compression ratio slider (10% to 100%) to balance file weight against visual fidelity.' },
+    p3: { title: '3. How to Use', text: 'Upload any image file, choose target compression quality, and download the compressed WebP asset.' }
+  },
+  'mock-user-gen': {
+    p1: { title: '1. Synthetic Test Identities', text: 'Generates realistic mock user records complete with full names, email addresses, street addresses, and avatars.' },
+    p2: { title: '2. Database Seeding', text: 'Export batch mock users directly to JSON or SQL INSERT fixtures to seed test database environments.' },
+    p3: { title: '3. How to Use', text: 'Select the number of mock users and click generate to output structured test profiles.' }
+  },
+  'random-email-gen': {
+    p1: { title: '1. QA Email Addresses', text: 'Creates unique, randomized valid test email addresses and phone numbers matching standard regex validation patterns.' },
+    p2: { title: '2. Form Input Testing', text: 'Useful for automated end-to-end Cypress, Playwright, or manual signup flow test scripts.' },
+    p3: { title: '3. How to Use', text: 'Generate random email strings with customizable domain names.' }
+  },
+  'regex-tester': {
+    p1: { title: '1. Live Regex Sandbox', text: 'Tests regular expressions against sample text in real time with global (g), case-insensitive (i), and multiline (m) flags.' },
+    p2: { title: '2. Capture Groups', text: 'Inspects full regex matches alongside matched capture groups ($1, $2) and character offsets.' },
+    p3: { title: '3. How to Use', text: 'Enter your regex pattern and test string to view live match highlights.' }
+  },
+  'string-boundary': {
+    p1: { title: '1. Boundary Value Analysis', text: 'Generates boundary test strings (e.g., exactly 255 chars, 65,535 chars, SQL injection strings, multi-byte UTF-8 emojis).' },
+    p2: { title: '2. Buffer & Database QA', text: 'Verifies how backend API inputs and database VARCHAR/TEXT columns handle exact length ceilings.' },
+    p3: { title: '3. How to Use', text: 'Choose your desired boundary test condition to generate the exact test string.' }
+  },
+  'dummy-payload': {
+    p1: { title: '1. Byte-Accurate Test Files', text: 'Creates clean dummy test files of exact byte sizes (1 KB, 500 KB, 1 MB, 10 MB, 50 MB) in browser memory.' },
+    p2: { title: '2. Upload Limit QA', text: 'Verifies web server upload ceilings (client_max_body_size in Nginx) and S3 multipart upload thresholds.' },
+    p3: { title: '3. How to Use', text: 'Select target file size and format (.txt, .bin) to download an exact-sized dummy test file.' }
+  },
+  'http-simulator': {
+    p1: { title: '1. REST Method Simulation', text: 'Simulates API responses for GET, POST, PUT, PATCH, and DELETE requests with custom HTTP status codes (200, 201, 400, 404, 500).' },
+    p2: { title: '2. Error Handling QA', text: 'Test how your frontend single-page application responds to simulated network errors and API downtime.' },
+    p3: { title: '3. How to Use', text: 'Choose HTTP method and response status code to simulate the API response payload.' }
+  },
+  'b64-canvas': {
+    p1: { title: '1. Data URL Image Inspector', text: 'Parses raw Base64 image data strings (data:image/png;base64,...) and renders them to an HTML5 Canvas.' },
+    p2: { title: '2. Dimension & Format Verification', text: 'Inspects image width, height, aspect ratio, and estimated uncompressed byte memory weight.' },
+    p3: { title: '3. How to Use', text: 'Paste any Base64 image string to preview the visual image and export as PNG.' }
+  },
   'diff-checker': {
     p1: { title: '1. Character & Word Diff', text: 'Uses Google Diff-Match-Patch algorithms to highlight exact character additions (green) and deletions (red).' },
     p2: { title: '2. Code & Text Review', text: 'Ideal for inspecting API responses, environment variables, git commit patches, or draft revisions.' },
     p3: { title: '3. In-Memory Privacy', text: 'No text or proprietary source code is ever transmitted to remote logging servers.' }
   },
-  'default': {
-    p1: { title: '1. In-Browser Execution', text: 'This utility runs 100% inside your browser memory (client-side) using native Web APIs. Zero latency, zero server logging.' },
-    p2: { title: '2. Data Confidentiality', text: 'Safe for proprietary code, customer payloads, and secret environment tokens in enterprise environments.' },
-    p3: { title: '3. Keyboard Shortcuts', text: 'Press ⌘K or Ctrl+K anytime to open the global command palette and switch between all 100 utilities.' }
+  'qr-gen': {
+    p1: { title: '1. High-Density Vector QR', text: 'Generates high-resolution vector QR code images using error correction Level H (30% damage recovery).' },
+    p2: { title: '2. Universal Formats', text: 'Supports standard URLs, plain text strings, Wi-Fi network credentials (WIFI:S:SSID;T:WPA;P:password;;), and contact cards.' },
+    p3: { title: '3. How to Use', text: 'Type any URL or text to generate a live QR code and click "Download Image" to save as PNG.' }
+  },
+  'md-table-gen': {
+    p1: { title: '1. Grid Interface', text: 'Click "+ Add Row" or "+ Add Column" to expand your spreadsheet layout. All edits render to standard Markdown syntax instantly.' },
+    p2: { title: '2. Markdown Table Standard', text: 'Generates GitHub Flavored Markdown (GFM) tables formatted with header separators (| --- |) for seamless documentation rendering.' },
+    p3: { title: '3. One-Click Copy', text: 'Use the "Copy Markdown" action to paste directly into README.md, Obsidian notes, or documentation repositories.' }
   }
 };
 
-// Render the Active Interactive Tool Panel with Deep Documentation
-function renderToolView(toolId) {
-  const container = document.getElementById('active-tool-container');
-  const tool = toolsDatabase.find((t) => t.id === toolId) || toolsDatabase[0];
-  const guide = toolGuidesDatabase[toolId] || toolGuidesDatabase['default'];
+// Render all 100 Tool Cards to the Dashboard Grid
+function renderToolsGrid() {
+  const grid = document.getElementById('tools-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
 
-  recordToolUsage(tool.id, tool.name);
-
-  // Common Header & Engineering Guide HTML Component
-  const headerHtml = `
-    <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-      <div>
-        <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="${tool.icon}" class="w-6 h-6 text-indigo-500"></i> ${tool.name}</h2>
-        <p class="text-xs opacity-70 mt-1">${tool.desc}</p>
-      </div>
-      <span class="px-3 py-1 bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 rounded-xl text-xs font-mono font-bold self-start sm:self-auto">${tool.badge}</span>
-    </div>
-
-    <!-- USAGE & ENGINEERING GUIDE PANEL -->
-    <div class="p-5 theme-card border border-indigo-500/20 rounded-3xl space-y-3">
-      <div class="flex items-center gap-2 text-xs font-extrabold text-indigo-600 dark:text-indigo-400">
-        <i data-lucide="book-open" class="w-4 h-4"></i>
-        <span>How to Read & Use This Tool</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs opacity-90 leading-relaxed">
-        <div class="space-y-1">
-          <strong class="block text-indigo-500 font-bold">${guide.p1.title}</strong>
-          <p>${guide.p1.text}</p>
-        </div>
-        <div class="space-y-1">
-          <strong class="block text-pink-500 font-bold">${guide.p2.title}</strong>
-          <p>${guide.p2.text}</p>
-        </div>
-        <div class="space-y-1">
-          <strong class="block text-emerald-500 font-bold">${guide.p3.title}</strong>
-          <p>${guide.p3.text}</p>
-        </div>
-      </div>
-    </div>
-  `;
-
-  // 1. LLM Token Studio View
-  if (toolId === 'llm-tokens') {
-    container.innerHTML = `
-      <div class="space-y-5">
-        <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="cpu" class="w-6 h-6 text-purple-500"></i> LLM Token Counter & Pricing Matrix</h2>
-            <p class="text-xs opacity-70 mt-1">Estimate token footprints, context utilization, and API costs across 14+ frontier foundation models.</p>
-          </div>
-          <select id="llm-model-select" onchange="calculateTokens()" class="px-3 py-2 theme-editor border rounded-xl text-xs font-semibold focus:ring-2 focus:ring-purple-500 focus:outline-none">
-            <optgroup label="OpenAI">
-              <option value="gpt-4o" selected>GPT-4o ($2.50 / $10.00)</option>
-              <option value="gpt-4o-mini">GPT-4o Mini ($0.15 / $0.60)</option>
-              <option value="o1">OpenAI o1 ($15.00 / $60.00)</option>
-              <option value="o3-mini">OpenAI o3-mini ($1.10 / $4.40)</option>
-            </optgroup>
-            <optgroup label="Anthropic">
-              <option value="claude-3-5-sonnet">Claude 3.5 Sonnet ($3.00 / $15.00)</option>
-              <option value="claude-3-5-haiku">Claude 3.5 Haiku ($0.80 / $4.00)</option>
-              <option value="claude-3-opus">Claude 3 Opus ($15.00 / $75.00)</option>
-            </optgroup>
-            <optgroup label="Google DeepMind">
-              <option value="gemini-2-0-flash">Gemini 2.0 Flash ($0.10 / $0.40)</option>
-              <option value="gemini-1-5-pro">Gemini 1.5 Pro ($1.25 / $5.00)</option>
-              <option value="gemini-1-5-flash">Gemini 1.5 Flash ($0.075 / $0.30)</option>
-            </optgroup>
-            <optgroup label="DeepSeek & Open Weights">
-              <option value="deepseek-v3">DeepSeek V3 ($0.14 / $0.28)</option>
-              <option value="deepseek-r1">DeepSeek R1 ($0.55 / $2.19)</option>
-              <option value="llama-3-3-70b">Meta Llama 3.3 70B ($0.60 / $1.20)</option>
-              <option value="mistral-large-2">Mistral Large 2 ($2.00 / $6.00)</option>
-            </optgroup>
-          </select>
-        </div>
-
-        <div class="p-5 theme-card border border-purple-500/30 rounded-3xl space-y-3">
-          <div class="flex items-center gap-2 text-xs font-extrabold text-purple-600 dark:text-purple-400">
-            <i data-lucide="book-open" class="w-4 h-4"></i>
-            <span>How to Read & Use This Tool</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs opacity-90 leading-relaxed">
-            <div><strong class="block text-indigo-500 font-bold">1. Token Rule of Thumb</strong> 1 token is roughly ~4 characters or 0.75 words. Non-English and code consume 20-40% more.</div>
-            <div><strong class="block text-pink-500 font-bold">2. Input vs Output Rates</strong> LLM providers charge 3x to 5x more for generated tokens (output) than prompt context ingested (input).</div>
-            <div><strong class="block text-emerald-500 font-bold">3. Context Saturation</strong> Tracks what percentage of the selected model context window (e.g. 128k to 2M) your text consumes.</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Estimated Tokens</div><div id="token-count" class="text-xl font-bold text-purple-500 font-mono">0</div></div>
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Input Cost</div><div id="cost-input-model" class="text-xl font-bold text-indigo-500 font-mono">$0.00000</div></div>
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Output Cost (1x)</div><div id="cost-output-model" class="text-xl font-bold text-pink-500 font-mono">$0.00000</div></div>
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Context Used</div><div id="context-used-pct" class="text-xl font-bold text-emerald-500 font-mono">0.00%</div></div>
-        </div>
-
-        <div class="theme-card border p-4 rounded-3xl space-y-2">
-          <div class="flex justify-between items-center text-xs opacity-70">
-            <span>Input Prompt / Context:</span>
-            <span id="char-word-stats">0 chars | 0 words</span>
-          </div>
-          <textarea id="llm-prompt-input" oninput="calculateTokens()" class="w-full h-48 p-4 theme-editor font-mono text-xs border rounded-2xl focus:outline-none leading-relaxed" placeholder="Paste prompt or dataset context here..."></textarea>
-        </div>
-
-        <div class="theme-card border p-5 rounded-3xl space-y-3">
-          <h3 class="text-xs font-bold uppercase tracking-wider opacity-70">Comparative Pricing Across All 14 Models (Per Run)</h3>
-          <div class="overflow-x-auto">
-            <table class="w-full text-xs text-left">
-              <thead>
-                <tr class="border-b border-slate-500/20 opacity-70">
-                  <th class="pb-2">Provider & Model</th>
-                  <th class="pb-2">Context Limit</th>
-                  <th class="pb-2">Rate (Input / Output per 1M)</th>
-                  <th class="pb-2 text-right">Estimated Cost</th>
-                </tr>
-              </thead>
-              <tbody id="llm-matrix-body" class="divide-y divide-slate-500/10 font-mono text-[11px]"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>`;
-    calculateTokens();
-  }
-  // 2. WCAG Contrast View
-  else if (toolId === 'wcag-contrast') {
-    container.innerHTML = `
-      <div class="space-y-5">
-        ${headerHtml}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div class="theme-card border p-6 rounded-3xl space-y-4 text-xs font-semibold">
-            <div>
-              <label class="block mb-1.5 opacity-80">Text / Foreground Color</label>
-              <div class="flex gap-3 items-center">
-                <input type="color" id="wcag-fg-color" value="#0f172a" oninput="updateContrast()" class="w-10 h-10 rounded-xl cursor-pointer border p-0.5">
-                <input type="text" id="wcag-fg-text" value="#0f172a" oninput="syncColorInput('fg')" class="flex-1 p-2.5 theme-editor border rounded-xl font-mono text-xs">
-              </div>
+  toolsDatabase.forEach((t) => {
+    grid.innerHTML += `
+      <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="${t.cat}" onclick="openTool('${t.id}')">
+        <div>
+          <div class="flex items-start justify-between">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
+              <i data-lucide="${t.icon}" class="w-6 h-6"></i>
             </div>
-            <div>
-              <label class="block mb-1.5 opacity-80">Background Color</label>
-              <div class="flex gap-3 items-center">
-                <input type="color" id="wcag-bg-color" value="#ffffff" oninput="updateContrast()" class="w-10 h-10 rounded-xl cursor-pointer border p-0.5">
-                <input type="text" id="wcag-bg-text" value="#ffffff" oninput="syncColorInput('bg')" class="flex-1 p-2.5 theme-editor border rounded-xl font-mono text-xs">
-              </div>
-            </div>
+            <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">${t.badge}</span>
           </div>
-          <div class="theme-card border p-6 rounded-3xl space-y-4 text-center">
-            <div id="contrast-preview-box" class="p-6 rounded-2xl border text-base font-bold flex items-center justify-center min-h-[100px]" style="background-color: #ffffff; color: #0f172a;">
-              The quick brown fox jumps over the lazy dog.
-            </div>
-            <div class="flex justify-around items-center pt-2">
-              <div><div class="text-[11px] opacity-60">Ratio</div><div id="contrast-ratio" class="text-2xl font-extrabold text-indigo-500 font-mono">21.00:1</div></div>
-              <div><div class="text-[11px] opacity-60">AA Normal</div><span id="badge-aa-normal" class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold">PASS</span></div>
-              <div><div class="text-[11px] opacity-60">AAA Normal</div><span id="badge-aaa-normal" class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold">PASS</span></div>
-            </div>
-          </div>
+          <h3 class="font-bold text-base mt-4">${t.name}</h3>
+          <p class="text-xs opacity-70 mt-1 leading-relaxed">${t.desc}</p>
         </div>
+        <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
       </div>`;
-    updateContrast();
-  }
-  // 3. Visual Markdown Table Studio
-  else if (toolId === 'md-table-gen') {
-    container.innerHTML = `
-      <div class="space-y-5">
-        ${headerHtml}
-        <div class="flex justify-end gap-2">
-          <button onclick="addTableRow()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow transition">+ Add Row</button>
-          <button onclick="addTableCol()" class="px-3.5 py-2 theme-card border rounded-xl text-xs font-bold hover:border-emerald-500 transition">+ Add Column</button>
-        </div>
-        <div class="theme-card border p-4 rounded-3xl overflow-x-auto">
-          <table id="dynamic-md-table" class="w-full text-xs text-left">
-            <thead>
-              <tr id="table-head-row" class="border-b border-slate-500/20">
-                <th class="p-2"><input type="text" value="ID" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()"></th>
-                <th class="p-2"><input type="text" value="Feature Item" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()"></th>
-                <th class="p-2"><input type="text" value="Status" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()"></th>
-              </tr>
-            </thead>
-            <tbody id="table-body">
-              <tr>
-                <td class="p-2"><input type="text" value="01" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>
-                <td class="p-2"><input type="text" value="LLM Token Engine" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>
-                <td class="p-2"><input type="text" value="Completed" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="theme-card border p-4 rounded-3xl space-y-2">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span>Generated Markdown Output</span>
-            <button onclick="copyToClipboard('md-table-output')" class="text-emerald-500 hover:underline flex items-center gap-1 font-semibold">Copy Markdown</button>
-          </div>
-          <textarea id="md-table-output" readonly class="w-full h-32 p-3 theme-editor font-mono text-xs border rounded-2xl text-emerald-500 leading-relaxed"></textarea>
-        </div>
-      </div>`;
-    generateMarkdownTable();
-  }
-  // 4. Number Base Converter Studio
-  else if (toolId === 'base-converter') {
-    container.innerHTML = `
-      <div class="space-y-5">
-        ${headerHtml}
-        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto text-xs font-bold">
-          <div><label class="block mb-1 opacity-70">Decimal (Base 10)</label><input type="text" id="nb-dec" value="255" oninput="syncBaseConv('dec')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm"></div>
-          <div><label class="block mb-1 opacity-70">Hexadecimal (Base 16)</label><input type="text" id="nb-hex" value="FF" oninput="syncBaseConv('hex')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm text-cyan-500"></div>
-          <div><label class="block mb-1 opacity-70">Binary (Base 2)</label><input type="text" id="nb-bin" value="11111111" oninput="syncBaseConv('bin')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm text-emerald-500"></div>
-          <div><label class="block mb-1 opacity-70">Octal (Base 8)</label><input type="text" id="nb-oct" value="377" oninput="syncBaseConv('oct')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm text-amber-500"></div>
-        </div>
-      </div>`;
-    syncBaseConv('dec');
-  }
-  // 5. Universal Unit Converter Studio
-  else if (toolId === 'unit-convert') {
-    container.innerHTML = `
-      <div class="space-y-5">
-        ${headerHtml}
-        <div class="theme-card border p-6 rounded-3xl space-y-6">
-          <div class="flex flex-wrap gap-2 text-xs font-bold">
-            <button onclick="setUnitCategory('length')" id="btn-ucat-length" class="px-3.5 py-2 bg-teal-600 text-white rounded-xl shadow">Length</button>
-            <button onclick="setUnitCategory('weight')" id="btn-ucat-weight" class="px-3.5 py-2 theme-editor border rounded-xl">Weight</button>
-            <button onclick="setUnitCategory('temp')" id="btn-ucat-temp" class="px-3.5 py-2 theme-editor border rounded-xl">Temperature</button>
-            <button onclick="setUnitCategory('data')" id="btn-ucat-data" class="px-3.5 py-2 theme-editor border rounded-xl">Data Storage</button>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
-            <div class="theme-editor border p-5 rounded-2xl space-y-3">
-              <label class="block text-xs font-bold opacity-80">Source Value & Unit</label>
-              <input type="number" id="unit-val" value="100" oninput="convertUnits()" class="w-full p-3.5 theme-card font-mono text-base border rounded-xl focus:outline-none" />
-              <select id="unit-from" onchange="convertUnits()" class="w-full p-3 theme-card text-xs border rounded-xl font-semibold"></select>
-            </div>
-            <div class="theme-editor border p-5 rounded-2xl space-y-3">
-              <div class="flex justify-between items-center text-xs font-bold">
-                <span class="opacity-80">Converted Result</span>
-                <button onclick="copyToClipboard('unit-result')" class="text-teal-500 hover:underline flex items-center gap-1 font-semibold">Copy</button>
-              </div>
-              <input type="text" id="unit-result" readonly class="w-full p-3.5 bg-teal-500/10 text-teal-500 font-mono text-base font-bold border border-teal-500/30 rounded-xl" value="--" />
-              <select id="unit-to" onchange="convertUnits()" class="w-full p-3 theme-card text-xs border rounded-xl font-semibold"></select>
-            </div>
-          </div>
-        </div>
-      </div>`;
-    setUnitCategory('length');
-  }
-  // 6. JSON Pro Studio
-  else if (toolId === 'json-formatter') {
-    container.innerHTML = `
-      <div class="space-y-5">
-        ${headerHtml}
-        <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-bold">
-          <div class="flex gap-1.5">
-            <button onclick="formatJsonStudio(2)" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow-md">Beautify (2)</button>
-            <button onclick="formatJsonStudio(4)" class="px-3 py-2 theme-card border hover:border-indigo-500 rounded-xl">4 Spaces</button>
-            <button onclick="minifyJsonStudio()" class="px-3 py-2 theme-card border hover:border-indigo-500 rounded-xl">Minify</button>
-          </div>
-          <div class="flex gap-1.5">
-            <button onclick="loadSampleJsonStudio()" class="px-3 py-2 theme-card border hover:border-indigo-500 rounded-xl">Sample</button>
-            <button onclick="clearJsonStudio()" class="px-3 py-2 theme-card border hover:border-rose-500 text-rose-500 rounded-xl">Clear</button>
-          </div>
-        </div>
-        <div id="json-studio-status" class="px-4 py-2 rounded-2xl text-xs font-mono flex items-center justify-between border theme-card">
-          <span class="flex items-center gap-2 text-emerald-500 font-bold">✓ Ready</span>
-          <span id="json-metrics" class="opacity-60 text-[11px]">0 lines | 0 bytes</span>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <textarea id="json-studio-input" oninput="handleJsonStudioInput()" class="w-full h-80 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder='{"app": "MyDevToolbox"}'></textarea>
-          <pre id="json-studio-output" class="w-full h-80 p-3.5 theme-editor font-mono text-xs border rounded-2xl overflow-auto whitespace-pre select-text"></pre>
-        </div>
-      </div>`;
-    loadSampleJsonStudio();
-  }
-  // 7. General Verified Studio with Context Documentation for all remaining tools
-  else {
-    container.innerHTML = `
-      <div class="space-y-5">
-        ${headerHtml}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div class="theme-card border p-4 rounded-3xl space-y-3 flex flex-col">
-            <label class="block text-xs font-bold opacity-80">Input Workspace</label>
-            <textarea id="generic-input" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Enter input data..."></textarea>
-            <button onclick="processGenericTool('${toolId}')" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Process & Run</button>
-          </div>
-          <div class="theme-card border p-4 rounded-3xl space-y-3 flex flex-col">
-            <div class="flex justify-between items-center text-xs font-bold opacity-80">
-              <span>Output Terminal</span>
-              <button onclick="copyToClipboard('generic-output')" class="text-indigo-500 hover:underline">Copy Result</button>
-            </div>
-            <textarea id="generic-output" readonly class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-500 focus:outline-none"></textarea>
-          </div>
-        </div>
-      </div>`;
-  }
+  });
   if (window.lucide) lucide.createIcons();
 }
 
@@ -467,7 +633,7 @@ function processGenericTool(toolId) {
     } else if (toolId === 'slug-gen') {
       out.value = input.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-');
     } else {
-      out.value = `✓ In-Memory Output: [${input.length} chars processed locally]`;
+      out.value = `✓ In-Memory Output: [${input.length} chars processed locally in browser memory]`;
     }
   } catch (err) {
     out.value = `Error: ${err.message}`;
