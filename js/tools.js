@@ -113,7 +113,7 @@ const toolsDatabase = [
   { id: 'qr-gen', name: 'Live QR Code Generator', desc: 'Generate instant high-res QR codes for URLs, WiFi logins, and contact cards', cat: 'popular web design ai', icon: 'qr-code', badge: 'Vector PNG' }
 ];
 
-// Rich, Unique Documentation Guides for Every Tool
+// Rich, Tool-Specific Documentation Guides for Every Tool Category / Key Tool
 const toolGuidesDatabase = {
   'llm-tokens': {
     p1: { title: '1. Token Rule of Thumb', text: '1 token is roughly 4 characters or 0.75 English words. Code and non-Latin scripts consume 20%-40% more tokens.' },
@@ -144,6 +144,52 @@ const toolGuidesDatabase = {
     p1: { title: '1. 6 Categories', text: 'Convert Length, Mass/Weight, Temperature, Data Storage, Speed, and Time instantly.' },
     p2: { title: '2. NIST Standards', text: 'Utilizes high-precision metric and imperial floating-point conversion rates.' },
     p3: { title: '3. Bi-Directional', text: 'Modifying either source value or target unit recalculates results immediately.' }
+  },
+  // Category-tailored fallbacks so no tool shows generic placeholder text
+  'ai': {
+    p1: { title: '1. Prompt Engineering', text: 'Optimizes token efficiency and parameter weighting for frontier foundation models.' },
+    p2: { title: '2. Local Execution', text: 'All prompt strings and token estimations process entirely in your browser memory.' },
+    p3: { title: '3. API Cost Optimization', text: 'Use outputs to estimate production inference costs prior to deployment.' }
+  },
+  'data': {
+    p1: { title: '1. Payload Parsing', text: 'Transforms structured data formats between JSON, CSV, XML, and YAML effortlessly.' },
+    p2: { title: '2. Strict Validation', text: 'Detects structural discrepancies and schema errors instantaneously.' },
+    p3: { title: '3. Secure In-Memory', text: 'Your sensitive data payloads remain completely confidential in local memory.' }
+  },
+  'security': {
+    p1: { title: '1. Web Crypto API', text: 'Utilizes native browser cryptographic entropy sources for secure randomness.' },
+    p2: { title: '2. Zero Telemetry', text: 'Generated secrets, salts, and hashes are never transmitted over the network.' },
+    p3: { title: '3. Compliance Standards', text: 'Complies with RFC4122, SHA-256, and AES-GCM industry specifications.' }
+  },
+  'web': {
+    p1: { title: '1. Network Diagnostics', text: 'Inspects HTTP headers, URLs, status codes, and user-agent strings locally.' },
+    p2: { title: '2. Developer Snippets', text: 'Generates copyable cURL commands and fetch() syntax snippets.' },
+    p3: { title: '3. Instant Encoding', text: 'Sanitizes query parameters and percent-encodes URLs with zero latency.' }
+  },
+  'design': {
+    p1: { title: '1. Visual CSS Builders', text: 'Interactive sliders and pickers that instantly generate production CSS code.' },
+    p2: { title: '2. Real-Time Preview', text: 'Inspect visual style changes immediately as parameters are modified.' },
+    p3: { title: '3. Copy Ready', text: 'One-click copy exports valid CSS styling declarations to your clipboard.' }
+  },
+  'devops': {
+    p1: { title: '1. Cloud Infrastructure', text: 'Validates manifests, crontab schedules, permissions, and server configurations.' },
+    p2: { title: '2. Syntax Formatting', text: 'Beautifies indentation and flags common configuration errors.' },
+    p3: { title: '3. Offline Capable', text: 'Works completely offline in air-gapped engineering environments.' }
+  },
+  'text': {
+    p1: { title: '1. Text Transformation', text: 'Manipulates string formatting, case styles, markdown, and line arrays.' },
+    p2: { title: '2. Instant Metrics', text: 'Computes character counts, word density, and reading times in real time.' },
+    p3: { title: '3. Clean Output', text: 'Strips unwanted whitespace and normalizes raw text files instantly.' }
+  },
+  'math': {
+    p1: { title: '1. High Precision Math', text: 'Computes number bases, unit conversions, timestamps, and mathematical ratios.' },
+    p2: { title: '2. Bi-Directional Sync', text: 'Modifying any input field automatically synchronizes all corresponding values.' },
+    p3: { title: '3. Instant Calculations', text: 'Performs arithmetic and conversion computations at local CPU speeds.' }
+  },
+  'testing': {
+    p1: { title: '1. QA & Mock Generation', text: 'Generates valid test cards, mock profiles, dummy files, and regex sandboxes.' },
+    p2: { title: '2. Billing & Form Validation', text: 'Provides Luhn-valid test data for payment gateway and form validation QA.' },
+    p3: { title: '3. Client-Side Processing', text: 'Merges PDFs and compresses images locally inside browser canvas memory.' }
   },
   'default': {
     p1: { title: '1. In-Browser Sandbox', text: 'Runs 100% locally in browser memory via Web APIs. Zero server latency, zero data tracking.' },
@@ -177,13 +223,19 @@ function renderToolsGrid() {
   if (window.lucide) lucide.createIcons();
 }
 
-// Render the Active Tool View into #active-tool-container
+// Render the Active Tool View into #active-tool-container with intelligent fallback guide matching
 function renderToolView(toolId) {
   const container = document.getElementById('active-tool-container');
   if (!container) return;
 
   const tool = toolsDatabase.find((t) => t.id === toolId) || toolsDatabase[0];
-  const guide = toolGuidesDatabase[toolId] || toolGuidesDatabase['default'];
+  
+  // Find specific guide, or match by tool's category tag, or fallback to default
+  let guide = toolGuidesDatabase[toolId];
+  if (!guide) {
+    const firstCat = (tool.cat || '').split(' ')[0];
+    guide = toolGuidesDatabase[firstCat] || toolGuidesDatabase['default'];
+  }
 
   recordToolUsage(tool.id, tool.name);
 
