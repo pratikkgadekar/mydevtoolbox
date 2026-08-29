@@ -1,14 +1,58 @@
-// 1. LLM Token & Pricing Engine
+// 1. LLM Multi-Model Token & Pricing Matrix Engine
+const llmModelCatalog = {
+  'gpt-4o': { name: 'OpenAI GPT-4o', inPrice: 2.50, outPrice: 10.00, context: 128000 },
+  'gpt-4o-mini': { name: 'OpenAI GPT-4o Mini', inPrice: 0.15, outPrice: 0.60, context: 128000 },
+  'o1': { name: 'OpenAI o1', inPrice: 15.00, outPrice: 60.00, context: 200000 },
+  'o3-mini': { name: 'OpenAI o3-mini', inPrice: 1.10, outPrice: 4.40, context: 200000 },
+  'claude-3-5-sonnet': { name: 'Claude 3.5 Sonnet', inPrice: 3.00, outPrice: 15.00, context: 200000 },
+  'claude-3-5-haiku': { name: 'Claude 3.5 Haiku', inPrice: 0.80, outPrice: 4.00, context: 200000 },
+  'claude-3-opus': { name: 'Claude 3 Opus', inPrice: 15.00, outPrice: 75.00, context: 200000 },
+  'gemini-2-0-flash': { name: 'Gemini 2.0 Flash', inPrice: 0.10, outPrice: 0.40, context: 1048576 },
+  'gemini-1-5-pro': { name: 'Gemini 1.5 Pro', inPrice: 1.25, outPrice: 5.00, context: 2097152 },
+  'gemini-1-5-flash': { name: 'Gemini 1.5 Flash', inPrice: 0.075, outPrice: 0.30, context: 1048576 },
+  'deepseek-v3': { name: 'DeepSeek V3', inPrice: 0.14, outPrice: 0.28, context: 64000 },
+  'deepseek-r1': { name: 'DeepSeek R1', inPrice: 0.55, outPrice: 2.19, context: 64000 },
+  'llama-3-3-70b': { name: 'Meta Llama 3.3 70B', inPrice: 0.60, outPrice: 1.20, context: 128000 },
+  'mistral-large-2': { name: 'Mistral Large 2', inPrice: 2.00, outPrice: 6.00, context: 128000 }
+};
+
 function calculateTokens() {
   const text = document.getElementById('llm-prompt-input').value;
   const chars = text.length;
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
   const estTokens = Math.ceil(chars / 3.8);
-  document.getElementById('char-word-stats').innerText = `${chars} chars | ${words} words`;
+
+  document.getElementById('char-word-stats').innerText = `${chars.toLocaleString()} chars | ${words.toLocaleString()} words`;
   document.getElementById('token-count').innerText = estTokens.toLocaleString();
-  document.getElementById('cost-gpt4').innerText = `$${((estTokens / 1000000) * 5.0).toFixed(4)}`;
-  document.getElementById('cost-claude').innerText = `$${((estTokens / 1000000) * 3.0).toFixed(4)}`;
-  document.getElementById('cost-gemini').innerText = `$${((estTokens / 1000000) * 1.25).toFixed(4)}`;
+
+  const selectedKey = document.getElementById('llm-model-select').value;
+  const model = llmModelCatalog[selectedKey] || llmModelCatalog['gpt-4o'];
+
+  const inCost = (estTokens / 1000000) * model.inPrice;
+  const outCost = (estTokens / 1000000) * model.outPrice;
+  const ctxPct = ((estTokens / model.context) * 100).toFixed(2);
+
+  document.getElementById('cost-input-model').innerText = `$${inCost.toFixed(5)}`;
+  document.getElementById('cost-output-model').innerText = `$${outCost.toFixed(5)}`;
+  document.getElementById('context-used-pct').innerText = `${ctxPct}%`;
+
+  // Render comparative table
+  const tbody = document.getElementById('llm-matrix-body');
+  if (tbody) {
+    tbody.innerHTML = '';
+    Object.keys(llmModelCatalog).forEach((key) => {
+      const m = llmModelCatalog[key];
+      const cost = (estTokens / 1000000) * m.inPrice;
+      const isSelected = key === selectedKey;
+      tbody.innerHTML += `
+        <tr class="hover:bg-indigo-500/5 ${isSelected ? 'bg-purple-500/10 font-bold text-purple-600 dark:text-purple-400' : ''}">
+          <td class="py-2 flex items-center gap-1.5">${isSelected ? '👉 ' : ''}${m.name}</td>
+          <td class="py-2">${(m.context / 1000).toFixed(0)}k tokens</td>
+          <td class="py-2">$${m.inPrice.toFixed(2)} / $${m.outPrice.toFixed(2)}</td>
+          <td class="py-2 text-right">$${cost.toFixed(5)}</td>
+        </tr>`;
+    });
+  }
 }
 
 // 2. WCAG Contrast Calculator
