@@ -1,21 +1,19 @@
-// 1. LLM Token Estimator
+// 1. LLM Token & Pricing Engine
 function calculateTokens() {
   const text = document.getElementById('llm-prompt-input').value;
   const chars = text.length;
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
   const estTokens = Math.ceil(chars / 3.8);
-  
   document.getElementById('char-word-stats').innerText = `${chars} chars | ${words} words`;
   document.getElementById('token-count').innerText = estTokens.toLocaleString();
-  
   document.getElementById('cost-gpt4').innerText = `$${((estTokens / 1000000) * 5.0).toFixed(4)}`;
   document.getElementById('cost-claude').innerText = `$${((estTokens / 1000000) * 3.0).toFixed(4)}`;
   document.getElementById('cost-gemini').innerText = `$${((estTokens / 1000000) * 1.25).toFixed(4)}`;
 }
 
-// 2. WCAG Contrast Checker
+// 2. WCAG Contrast Calculator
 function hexToLuminance(hex) {
-  const rgb = hex.replace('#', '').match(/.{2}/g).map(x => {
+  const rgb = hex.replace('#', '').match(/.{2}/g).map((x) => {
     const c = parseInt(x, 16) / 255;
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
   });
@@ -27,17 +25,18 @@ function updateContrast() {
   const bg = document.getElementById('wcag-bg-color').value;
   document.getElementById('wcag-fg-text').value = fg;
   document.getElementById('wcag-bg-text').value = bg;
-  
+
   const box = document.getElementById('contrast-preview-box');
-  box.style.color = fg;
-  box.style.backgroundColor = bg;
+  if (box) {
+    box.style.color = fg;
+    box.style.backgroundColor = bg;
+  }
 
   const l1 = hexToLuminance(fg);
   const l2 = hexToLuminance(bg);
   const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
 
   document.getElementById('contrast-ratio').innerText = `${ratio.toFixed(2)}:1`;
-  
   const passAANormal = ratio >= 4.5;
   const passAAANormal = ratio >= 7.0;
 
@@ -58,7 +57,7 @@ function syncColorInput(type) {
   }
 }
 
-// 3. Visual Markdown Table Builder
+// 3. Markdown Table Generator
 function addTableRow() {
   const tbody = document.getElementById('table-body');
   const colCount = document.getElementById('table-head-row').children.length;
@@ -73,21 +72,20 @@ function addTableRow() {
 function addTableCol() {
   const headRow = document.getElementById('table-head-row');
   const th = document.createElement('th');
-  th.className = "p-2";
+  th.className = 'p-2';
   th.innerHTML = `<input type="text" value="Column" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()">`;
   headRow.appendChild(th);
-
-  document.querySelectorAll('#table-body tr').forEach(tr => {
+  document.querySelectorAll('#table-body tr').forEach((tr) => {
     tr.innerHTML += `<td class="p-2"><input type="text" value="Data" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>`;
   });
   generateMarkdownTable();
 }
 
 function generateMarkdownTable() {
-  const headers = Array.from(document.querySelectorAll('#table-head-row input')).map(i => i.value.trim());
+  const headers = Array.from(document.querySelectorAll('#table-head-row input')).map((i) => i.value.trim());
   let md = `| ${headers.join(' | ')} |\n| ${headers.map(() => '---').join(' | ')} |\n`;
-  document.querySelectorAll('#table-body tr').forEach(tr => {
-    const row = Array.from(tr.querySelectorAll('input')).map(i => i.value.trim());
+  document.querySelectorAll('#table-body tr').forEach((tr) => {
+    const row = Array.from(tr.querySelectorAll('input')).map((i) => i.value.trim());
     md += `| ${row.join(' | ')} |\n`;
   });
   document.getElementById('md-table-output').value = md;
@@ -102,7 +100,7 @@ function syncBaseConv(source) {
     if (source === 'hex') dec = parseInt(val, 16);
     if (source === 'bin') dec = parseInt(val, 2);
     if (source === 'oct') dec = parseInt(val, 8);
-  } catch(e){}
+  } catch (e) {}
 
   if (isNaN(dec)) return;
   if (source !== 'dec') document.getElementById('nb-dec').value = dec.toString(10);
@@ -111,7 +109,7 @@ function syncBaseConv(source) {
   if (source !== 'oct') document.getElementById('nb-oct').value = dec.toString(8);
 }
 
-// 5. JSON Studio
+// 5. JSON Studio & Validator
 function syntaxHighlightJson(jsonStr) {
   jsonStr = jsonStr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   return jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (m) {
@@ -129,7 +127,10 @@ function handleJsonStudioInput() {
   const output = document.getElementById('json-studio-output');
   const metrics = document.getElementById('json-metrics');
   metrics.innerText = `${val ? val.split('\n').length : 0} lines | ${new Blob([val]).size} bytes`;
-  if (!val) { output.innerHTML = '// Output...'; return; }
+  if (!val) {
+    output.innerHTML = '// Output...';
+    return;
+  }
   try {
     const parsed = JSON.parse(val);
     output.innerHTML = syntaxHighlightJson(JSON.stringify(parsed, null, 2));
@@ -142,25 +143,31 @@ function handleJsonStudioInput() {
 
 function formatJsonStudio(sp) {
   const el = document.getElementById('json-studio-input');
-  try { el.value = JSON.stringify(JSON.parse(el.value), null, sp); handleJsonStudioInput(); } catch(e){}
+  try {
+    el.value = JSON.stringify(JSON.parse(el.value), null, sp);
+    handleJsonStudioInput();
+  } catch (e) {}
 }
 
 function minifyJsonStudio() {
   const el = document.getElementById('json-studio-input');
-  try { el.value = JSON.stringify(JSON.parse(el.value)); handleJsonStudioInput(); } catch(e){}
+  try {
+    el.value = JSON.stringify(JSON.parse(el.value));
+    handleJsonStudioInput();
+  } catch (e) {}
 }
 
 function loadSampleJsonStudio() {
-  document.getElementById('json-studio-input').value = JSON.stringify({ app: "MyDevToolbox", privacy: "100% Client-Side", tools: 40 }, null, 2);
+  document.getElementById('json-studio-input').value = JSON.stringify({ app: 'MyDevToolbox', privacy: '100% Client-Side', tools: 120 }, null, 2);
   handleJsonStudioInput();
 }
 
-function clearJsonStudio() { 
-  document.getElementById('json-studio-input').value = ''; 
-  handleJsonStudioInput(); 
+function clearJsonStudio() {
+  document.getElementById('json-studio-input').value = '';
+  handleJsonStudioInput();
 }
 
-function jsonToTs(obj, interfaceName = "RootObject") {
+function jsonToTs(obj, interfaceName = 'RootObject') {
   let result = `export interface ${interfaceName} {\n`;
   for (const [key, value] of Object.entries(obj)) {
     let type = typeof value;
@@ -175,7 +182,11 @@ function jsonToTs(obj, interfaceName = "RootObject") {
 
 function convertJsonToTs() {
   const input = document.getElementById('json-ts-in').value.trim();
-  try { document.getElementById('json-ts-out').value = jsonToTs(JSON.parse(input)); } catch (e) { document.getElementById('json-ts-out').value = '// Invalid JSON'; }
+  try {
+    document.getElementById('json-ts-out').value = jsonToTs(JSON.parse(input));
+  } catch (e) {
+    document.getElementById('json-ts-out').value = '// Invalid JSON';
+  }
 }
 
 // 6. PDF Merger
@@ -185,31 +196,36 @@ function handlePdfUpload(e) {
   if (uploadedPdfFiles.length === 0) return;
   const listEl = document.getElementById('pdf-file-list');
   listEl.innerHTML = '';
-  uploadedPdfFiles.forEach(f => {
-    listEl.innerHTML += `<li class="p-2 theme-editor rounded-xl border flex justify-between"><span>📄 ${f.name}</span><span class="opacity-60">${(f.size/1024).toFixed(1)} KB</span></li>`;
+  uploadedPdfFiles.forEach((f) => {
+    listEl.innerHTML += `<li class="p-2 theme-editor rounded-xl border flex justify-between"><span>📄 ${f.name}</span><span class="opacity-60">${(f.size / 1024).toFixed(1)} KB</span></li>`;
   });
   document.getElementById('pdf-list-container').classList.remove('hidden');
 }
 
 async function executePdfMerge() {
-  if (uploadedPdfFiles.length < 2) { alert('Please select at least 2 PDF files.'); return; }
+  if (uploadedPdfFiles.length < 2) {
+    alert('Please select at least 2 PDF files.');
+    return;
+  }
   try {
     const mergedPdf = await PDFLib.PDFDocument.create();
     for (const file of uploadedPdfFiles) {
       const bytes = await file.arrayBuffer();
       const pdf = await PDFLib.PDFDocument.load(bytes);
       const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-      copiedPages.forEach(p => mergedPdf.addPage(p));
+      copiedPages.forEach((p) => mergedPdf.addPage(p));
     }
     const mergedPdfFile = await mergedPdf.save();
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([mergedPdfFile], { type: 'application/pdf' }));
     a.download = 'merged_document.pdf';
     a.click();
-  } catch (err) { alert('PDF Error: ' + err.message); }
+  } catch (err) {
+    alert('PDF Error: ' + err.message);
+  }
 }
 
-// 7. Diff Checker
+// 7. Diff Match Engine
 function runTextDiff() {
   const t1 = document.getElementById('diff-text-1').value;
   const t2 = document.getElementById('diff-text-2').value;
@@ -219,19 +235,19 @@ function runTextDiff() {
   const diffs = dmp.diff_main(t1, t2);
   dmp.diff_cleanupSemantic(diffs);
   let html = '';
-  diffs.forEach(part => {
+  diffs.forEach((part) => {
     const text = part[1].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     if (part[0] === 1) html += `<span class="diff-insert">${text}</span>`;
     else if (part[0] === -1) html += `<span class="diff-delete">${text}</span>`;
     else html += text;
   });
-  out.innerHTML = html || 'No differences.';
+  out.innerHTML = html || 'No differences found.';
 }
 
-// 8. Cryptographic Generators & Hashes
+// 8. Cryptographic Generators
 function generateUuids() {
   let list = [];
-  for (let i = 0; i < 5; i++) list.push(crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => (Math.random()*16|0).toString(16)));
+  for (let i = 0; i < 5; i++) list.push(crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => ((Math.random() * 16) | 0).toString(16)));
   document.getElementById('uuid-output').value = list.join('\n');
 }
 
@@ -250,23 +266,25 @@ function runBase64(mode) {
   try {
     if (mode === 'encode') document.getElementById('b64-output').value = btoa(unescape(encodeURIComponent(input)));
     else document.getElementById('b64-output').value = decodeURIComponent(escape(atob(input)));
-  } catch (err) { document.getElementById('b64-output').value = 'Error: Invalid base64.'; }
+  } catch (err) {
+    document.getElementById('b64-output').value = 'Error: Invalid base64.';
+  }
 }
 
 function generateQrCode() {
   const text = document.getElementById('qr-text').value.trim() || 'https://mydevtoolbox.in';
   const container = document.getElementById('qrcode-container');
   container.innerHTML = '';
-  new QRCode(container, { text: text, width: 220, height: 220, colorDark: "#0f172a", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
+  new QRCode(container, { text: text, width: 220, height: 220, colorDark: '#0f172a', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H });
 }
 
 function downloadQrCode() {
   const img = document.querySelector('#qrcode-container img');
-  if (img && img.src) { 
-    const a = document.createElement('a'); 
-    a.href = img.src; 
-    a.download = 'qrcode.png'; 
-    a.click(); 
+  if (img && img.src) {
+    const a = document.createElement('a');
+    a.href = img.src;
+    a.download = 'qrcode.png';
+    a.click();
   }
 }
 
@@ -274,7 +292,9 @@ async function computeHashes() {
   const str = document.getElementById('hash-input').value;
   const buf = new TextEncoder().encode(str);
   const h256 = await crypto.subtle.digest('SHA-256', buf);
-  document.getElementById('hash-sha256').value = Array.from(new Uint8Array(h256)).map(b => b.toString(16).padStart(2, '0')).join('');
+  document.getElementById('hash-sha256').value = Array.from(new Uint8Array(h256))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
 }
 
 function decodeJwt() {
@@ -291,23 +311,27 @@ function decodeJwt() {
 
 function generateDummyCard() {
   const brand = document.getElementById('card-type-select').value;
-  let prefix = brand === 'mastercard' ? '5425' : (brand === 'amex' ? '3782' : '4532');
+  let prefix = brand === 'mastercard' ? '5425' : brand === 'amex' ? '3782' : '4532';
   let num = prefix;
   const targetLen = brand === 'amex' ? 15 : 16;
   while (num.length < targetLen - 1) num += Math.floor(Math.random() * 10);
-
-  let sum = 0, alt = true;
+  let sum = 0,
+    alt = true;
   for (let i = num.length - 1; i >= 0; i--) {
     let n = parseInt(num.charAt(i), 10);
-    if (alt) { n *= 2; if (n > 9) n -= 9; }
-    sum += n; alt = !alt;
+    if (alt) {
+      n *= 2;
+      if (n > 9) n -= 9;
+    }
+    sum += n;
+    alt = !alt;
   }
   num += (10 - (sum % 10)) % 10;
   document.getElementById('dummy-card-num').innerText = num.match(/.{1,4}/g).join(' ');
-  document.getElementById('dummy-card-meta').innerText = `12/29 | ${Math.floor(Math.random()*899+100)}`;
+  document.getElementById('dummy-card-meta').innerText = `12/29 | ${Math.floor(Math.random() * 899 + 100)}`;
 }
 
-// 9. Text, Units & Media Utilities
+// 9. Text, Units & Media Engines
 function computeWordStats() {
   const text = document.getElementById('wc-input').value;
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
@@ -325,8 +349,8 @@ function convertCase(mode) {
   if (!val) return;
   if (mode === 'upper') el.value = val.toUpperCase();
   if (mode === 'lower') el.value = val.toLowerCase();
-  if (mode === 'title') el.value = val.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-  if (mode === 'camel') el.value = val.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) => +match === 0 ? "" : index === 0 ? match.toLowerCase() : match.toUpperCase()).replace(/\s+/g, '');
+  if (mode === 'title') el.value = val.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+  if (mode === 'camel') el.value = val.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) => (+match === 0 ? '' : index === 0 ? match.toLowerCase() : match.toUpperCase())).replace(/\s+/g, '');
   if (mode === 'snake') el.value = val.trim().toLowerCase().replace(/\s+/g, '_').replace(/[^\w]/g, '_');
   if (mode === 'kebab') el.value = val.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w]/g, '-');
 }
@@ -352,7 +376,7 @@ let currentUnitCat = 'length';
 
 function setUnitCategory(cat) {
   currentUnitCat = cat;
-  ['length', 'weight', 'temp', 'data'].forEach(c => {
+  ['length', 'weight', 'temp', 'data'].forEach((c) => {
     const btn = document.getElementById('btn-ucat-' + c);
     if (c === cat) btn.className = 'px-3.5 py-2 bg-teal-600 text-white rounded-xl shadow';
     else btn.className = 'px-3.5 py-2 theme-editor border rounded-xl';
@@ -366,30 +390,29 @@ function setUnitCategory(cat) {
   const uObj = unitCategories[cat].units;
   const keys = Object.keys(uObj);
   keys.forEach((k, idx) => {
-    fromSel.innerHTML += `<option value="${k}" ${idx===0?'selected':''}>${uObj[k]}</option>`;
-    toSel.innerHTML += `<option value="${k}" ${idx===1?'selected':''}>${uObj[k]}</option>`;
+    fromSel.innerHTML += `<option value="${k}" ${idx === 0 ? 'selected' : ''}>${uObj[k]}</option>`;
+    toSel.innerHTML += `<option value="${k}" ${idx === 1 ? 'selected' : ''}>${uObj[k]}</option>`;
   });
-
   convertUnits();
 }
 
 function convertUnits() {
   const val = parseFloat(document.getElementById('unit-val').value);
   const resEl = document.getElementById('unit-result');
-  if (isNaN(val)) { resEl.value = '0'; return; }
-
+  if (isNaN(val)) {
+    resEl.value = '0';
+    return;
+  }
   const from = document.getElementById('unit-from').value;
   const to = document.getElementById('unit-to').value;
 
   if (currentUnitCat === 'temp') {
     let inCelsius = val;
-    if (from === 'f') inCelsius = (val - 32) * (5/9);
+    if (from === 'f') inCelsius = (val - 32) * (5 / 9);
     if (from === 'k') inCelsius = val - 273.15;
-
     let finalVal = inCelsius;
-    if (to === 'f') finalVal = (inCelsius * (9/5)) + 32;
+    if (to === 'f') finalVal = inCelsius * (9 / 5) + 32;
     if (to === 'k') finalVal = inCelsius + 273.15;
-
     resEl.value = `${finalVal.toFixed(2)}`;
     return;
   }
@@ -405,9 +428,9 @@ function handleImageUpload(e) {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(event) {
+  reader.onload = function (event) {
     currentUploadedImg = new Image();
-    currentUploadedImg.onload = function() {
+    currentUploadedImg.onload = function () {
       document.getElementById('img-process-panel').classList.remove('hidden');
       processImage();
     };
@@ -419,9 +442,9 @@ function handleImageUpload(e) {
 function processImage() {
   if (!currentUploadedImg) return;
   const canvas = document.createElement('canvas');
-  canvas.width = currentUploadedImg.width; 
+  canvas.width = currentUploadedImg.width;
   canvas.height = currentUploadedImg.height;
-  const ctx = canvas.getContext('2d'); 
+  const ctx = canvas.getContext('2d');
   ctx.drawImage(currentUploadedImg, 0, 0);
   const dataUrl = canvas.toDataURL('image/webp', 0.8);
   document.getElementById('img-download-link').href = dataUrl;
@@ -450,13 +473,13 @@ function testRegex() {
     const re = new RegExp(p, f);
     const matches = document.getElementById('regex-string').value.match(re);
     document.getElementById('regex-matches').innerText = `Matches found: ${matches ? matches.length : 0}`;
-  } catch (e) { 
-    document.getElementById('regex-matches').innerText = 'Regex Syntax Error'; 
+  } catch (e) {
+    document.getElementById('regex-matches').innerText = 'Regex Syntax Error';
   }
 }
 
 function generateLorem(paras) {
-  const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+  const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
   let out = [];
   for (let i = 0; i < paras; i++) out.push(lorem);
   document.getElementById('lorem-output').value = out.join('\n\n');
@@ -464,12 +487,20 @@ function generateLorem(paras) {
 
 function generateSlug() {
   const val = document.getElementById('slug-input').value;
-  document.getElementById('slug-output').innerText = val.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '') || 'url-slug-preview';
+  document.getElementById('slug-output').innerText =
+    val
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'url-slug-preview';
 }
 
 function runUrlCodec(mode) {
   const val = document.getElementById('url-codec-input').value;
   try {
     document.getElementById('url-codec-output').value = mode === 'encode' ? encodeURIComponent(val) : decodeURIComponent(val);
-  } catch(e) { document.getElementById('url-codec-output').value = 'Codec error'; }
+  } catch (e) {
+    document.getElementById('url-codec-output').value = 'Codec error';
+  }
 }
