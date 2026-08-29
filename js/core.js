@@ -93,7 +93,7 @@ function renderRecentTools() {
   if (!list) return;
   list.innerHTML = '';
   recent.forEach((t) => {
-    list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-3 py-1 theme-card border text-[11px] font-semibold rounded-xl hover:border-indigo-500 transition">⚡ ${t.name}</button>`;
+    list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-3 py-1 theme-card border text-[11px] font-semibold rounded-lg hover:border-indigo-500 transition">⚡ ${t.name}</button>`;
   });
 }
 
@@ -324,7 +324,6 @@ async function submitToolRequest(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderToolsGrid(); // Populates static grid if needed
   renderRecentTools();
   updateInstallBadgeCount();
   if (window.lucide) lucide.createIcons();
