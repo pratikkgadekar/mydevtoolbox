@@ -59,6 +59,8 @@ setTheme(localStorage.getItem('mdt_theme') || 'light');
 function switchView(viewName) {
   const dashboard = document.getElementById('view-dashboard');
   const toolView = document.getElementById('view-tool');
+  if (!dashboard || !toolView) return;
+
   if (viewName === 'dashboard') {
     dashboard.classList.remove('hidden');
     toolView.classList.add('hidden');
@@ -88,6 +90,7 @@ function renderRecentTools() {
   }
   container.classList.remove('hidden');
   const list = document.getElementById('recent-tools-list');
+  if (!list) return;
   list.innerHTML = '';
   recent.forEach((t) => {
     list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-3 py-1 theme-card border text-[11px] font-semibold rounded-xl hover:border-indigo-500 transition">⚡ ${t.name}</button>`;
@@ -96,7 +99,9 @@ function renderRecentTools() {
 
 function openTool(toolId) {
   switchView('tool');
-  renderToolView(toolId);
+  if (typeof renderToolView === 'function') {
+    renderToolView(toolId);
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -105,8 +110,10 @@ let currentActiveCategory = 'all';
 
 function setCategoryFilter(cat) {
   currentActiveCategory = cat;
-  document.getElementById('tool-search').value = '';
-  document.getElementById('search-status-text').classList.add('hidden');
+  const searchInput = document.getElementById('tool-search');
+  const statusText = document.getElementById('search-status-text');
+  if (searchInput) searchInput.value = '';
+  if (statusText) statusText.classList.add('hidden');
 
   document.querySelectorAll('.cat-pill').forEach((btn) => {
     btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
@@ -124,8 +131,11 @@ function setCategoryFilter(cat) {
 }
 
 function filterTools() {
-  const q = document.getElementById('tool-search').value.trim().toLowerCase();
+  const searchInput = document.getElementById('tool-search');
   const statusText = document.getElementById('search-status-text');
+  if (!searchInput || !statusText) return;
+
+  const q = searchInput.value.trim().toLowerCase();
   let count = 0;
 
   document.querySelectorAll('.tool-card').forEach((card) => {
@@ -159,11 +169,15 @@ function handleMainSearchEnter() {
 // Spotlight Command Palette
 function toggleSpotlight() {
   const modal = document.getElementById('spotlight-modal');
+  if (!modal) return;
   modal.classList.toggle('hidden');
   if (!modal.classList.contains('hidden')) {
-    document.getElementById('spotlight-input').value = '';
+    const spotlightInput = document.getElementById('spotlight-input');
+    if (spotlightInput) {
+      spotlightInput.value = '';
+      spotlightInput.focus();
+    }
     handleSpotlightSearch();
-    document.getElementById('spotlight-input').focus();
   }
 }
 
@@ -172,15 +186,20 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     toggleSpotlight();
   }
-  if (e.key === 'Escape' && !document.getElementById('spotlight-modal').classList.contains('hidden')) {
+  const modal = document.getElementById('spotlight-modal');
+  if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
     toggleSpotlight();
   }
 });
 
 function handleSpotlightSearch() {
-  const q = (document.getElementById('spotlight-input').value || '').toLowerCase();
+  const spotlightInput = document.getElementById('spotlight-input');
   const container = document.getElementById('spotlight-results');
+  if (!spotlightInput || !container) return;
+
+  const q = spotlightInput.value.toLowerCase();
   container.innerHTML = '';
+  
   const matches = toolsDatabase.filter((t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
 
   matches.slice(0, 8).forEach((t) => {
@@ -196,32 +215,37 @@ function handleSpotlightSearch() {
 // Blobby Companion Logic
 function toggleCompanionDialog() {
   const dialog = document.getElementById('companion-dialog');
-  dialog.classList.toggle('hidden');
-  if (!dialog.classList.contains('hidden') && window.confetti) {
-    confetti({ particleCount: 20, spread: 50, origin: { y: 0.9, x: 0.9 } });
+  if (dialog) {
+    dialog.classList.toggle('hidden');
+    if (!dialog.classList.contains('hidden') && window.confetti) {
+      confetti({ particleCount: 20, spread: 50, origin: { y: 0.9, x: 0.9 } });
+    }
   }
 }
 
 async function fetchFreshJoke() {
   const msgBox = document.getElementById('blobby-msg');
-  document.getElementById('bubble-wrap-board').classList.add('hidden');
-  msgBox.innerText = 'Fetching a fresh joke...';
+  const bubbleBoard = document.getElementById('bubble-wrap-board');
+  if (bubbleBoard) bubbleBoard.classList.add('hidden');
+  if (msgBox) msgBox.innerText = 'Fetching a fresh joke...';
   try {
     const res = await fetch('https://v2.jokeapi.dev/joke/Any?safe-mode&type=single');
     const data = await res.json();
-    if (data && data.joke) msgBox.innerText = `"${data.joke}" 😂`;
+    if (data && data.joke && msgBox) msgBox.innerText = `"${data.joke}" 😂`;
     else {
       const res2 = await fetch('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
       const data2 = await res2.json();
-      msgBox.innerText = `"${data2.joke}" 🤣`;
+      if (msgBox) msgBox.innerText = `"${data2.joke}" 🤣`;
     }
   } catch (err) {
-    msgBox.innerText = '"Why do programmers prefer dark mode? Because light attracts bugs!" 🐛';
+    if (msgBox) msgBox.innerText = '"Why do programmers prefer dark mode? Because light attracts bugs!" 🐛';
   }
 }
 
 function toggleBubblePopper() {
   const board = document.getElementById('bubble-wrap-board');
+  const msgBox = document.getElementById('blobby-msg');
+  if (!board) return;
   board.classList.toggle('hidden');
   if (!board.classList.contains('hidden')) {
     board.innerHTML = '';
@@ -231,27 +255,32 @@ function toggleBubblePopper() {
       b.onclick = function () { this.classList.add('popped'); };
       board.appendChild(b);
     }
-    document.getElementById('blobby-msg').innerText = '🫧 Pop the calming bubbles to relieve stress!';
+    if (msgBox) msgBox.innerText = '🫧 Pop the calming bubbles to relieve stress!';
   }
 }
 
 function copyToClipboard(id) {
   const el = document.getElementById(id);
+  if (!el) return;
   navigator.clipboard.writeText(el.value || el.innerText);
   alert('Copied to clipboard!');
 }
 
 function toggleRequestModal() {
   const modal = document.getElementById('request-tool-modal');
-  modal.classList.toggle('hidden');
+  if (modal) modal.classList.toggle('hidden');
 }
 
 async function submitToolRequest(e) {
   e.preventDefault();
-  const toolName = document.getElementById('req-tool-name').value.trim();
-  const toolDetails = document.getElementById('req-tool-details').value.trim();
+  const nameEl = document.getElementById('req-tool-name');
+  const detailsEl = document.getElementById('req-tool-details');
   const btn = document.getElementById('btn-submit-request');
   const status = document.getElementById('request-status');
+  if (!nameEl || !btn || !status) return;
+
+  const toolName = nameEl.value.trim();
+  const toolDetails = detailsEl ? detailsEl.value.trim() : '';
 
   if (!toolName) return;
   btn.disabled = true;
@@ -272,7 +301,8 @@ async function submitToolRequest(e) {
     if (res.ok) {
       status.innerText = '✓ Thank you! Your tool request has been received.';
       status.classList.remove('hidden');
-      document.getElementById('request-tool-form').reset();
+      const form = document.getElementById('request-tool-form');
+      if (form) form.reset();
       setTimeout(() => {
         toggleRequestModal();
         status.classList.add('hidden');
@@ -294,7 +324,7 @@ async function submitToolRequest(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  renderToolsGrid();
   renderRecentTools();
   updateInstallBadgeCount();
+  if (window.lucide) lucide.createIcons();
 });
