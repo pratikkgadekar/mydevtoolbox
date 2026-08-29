@@ -6,16 +6,13 @@
   <title>MyDevToolbox — 100+ Offline & Privacy-First Developer Tools</title>
   <meta name="description" content="Free local-first developer suite: LLM token counters, WCAG accessibility, Markdown table builders, JSON studio, PDF mergers, QR generators, and crypto." />
   
-  <!-- Vector SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='50%25' stop-color='%238b5cf6'/%3E%3Cstop offset='100%25' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 6l2.2 4.8L23 13l-4.8 2.2L16 20l-2.2-4.8L9 13l4.8-2.2z' fill='%23ffffff'/%3E%3Ccircle cx='23' cy='23' r='2.5' fill='%23ffffff' opacity='0.85'/%3E%3C/svg%3E" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#4f46e5" />
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/906/906324.png" />
 
-  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2884422236657572" crossorigin="anonymous"></script>
 
-  <!-- External CDNs -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -23,7 +20,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/diff-match-patch/1.0.5/index.min.js"></script>
   
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -132,7 +128,7 @@
           <div id="recent-tools-list" class="flex flex-wrap justify-center items-center gap-1.5 no-scrollbar"></div>
         </div>
 
-        <!-- 10 Balanced Categories (Exact 10 Tools per Tab) -->
+        <!-- 10 Balanced Categories -->
         <div class="flex flex-wrap items-center justify-center gap-1.5 p-1.5 mt-6 rounded-2xl border theme-card max-w-5xl mx-auto text-xs font-semibold shadow-sm">
           <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All (100)</button>
           <button onclick="setCategoryFilter('popular')" data-pill="popular" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🔥 Popular (10)</button>
@@ -148,10 +144,8 @@
         </div>
       </div>
 
-      <!-- FULL STATIC 100-TOOL GRID -->
+      <!-- STATIC 100-TOOL GRID -->
       <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <!-- CATEGORY 1: AI, LLM & PROMPT (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai popular" onclick="openTool('llm-tokens')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="cpu" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">14+ Models</span></div><h3 class="font-bold text-base mt-4">LLM Token Counter & Pricing</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate approximate BPE tokens and query cost estimations for GPT-4o, Claude 3.5, Gemini, & DeepSeek.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -202,7 +196,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 2: JSON & DATA FORMATS (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data popular web" onclick="openTool('json-formatter')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="code-2" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Dual-Pane</span></div><h3 class="font-bold text-base mt-4">JSON Pro Studio</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Dual-pane syntax highlighting, beautifier, tree inspector, and live error locator.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -253,14 +246,13 @@
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 3: SECURITY & CRYPTOGRAPHY (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security popular data" onclick="openTool('uuid-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="key" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">RFC4122</span></div><h3 class="font-bold text-base mt-4">UUID v4 Batch Creator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate batch RFC4122 v4 unique identifiers via Web Crypto API.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security popular" onclick="openTool('pwd-gen')">
-          <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="shield-check" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Entropy</span></div><h3 class="font-bold text-base mt-4">Password & Token Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Create cryptographically secure passwords with custom lengths and symbols.</p></div>
+          <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="shield-check" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">Entropy</span></div><h3 class="font-bold text-base mt-4">Password & Token Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Create cryptographically secure passwords with custom lengths and symbols.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
@@ -304,7 +296,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 4: WEB, APIS & NETWORK (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web devops" onclick="openTool('http-codes')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="server" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Interactive</span></div><h3 class="font-bold text-base mt-4">HTTP Status Codes Inspector</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Searchable directory with code simulator, client/server causes, and snippets.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -355,7 +346,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 5: CSS & UI DESIGN (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design devops popular" onclick="openTool('box-shadow')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="layers" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">CSS Studio</span></div><h3 class="font-bold text-base mt-4">CSS Box-Shadow Studio</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Visual sliders for offsets, blur, and spread with instant CSS copy.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -406,7 +396,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 6: DEVOPS & CLOUD CONFIG (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops web popular" onclick="openTool('cron-builder')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="clock" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Crontab</span></div><h3 class="font-bold text-base mt-4">Cron Expression Explainer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Translate 5-part cron syntax into human-readable sentences with presets.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -457,7 +446,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 7: CONTENT, TEXT & MARKDOWN (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text popular" onclick="openTool('markdown-live')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="file-text" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Markdown</span></div><h3 class="font-bold text-base mt-4">Markdown Live Previewer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Live Markdown to styled HTML renderer with word count and stats.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -508,7 +496,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 8: MATH, UNITS & CONVERTERS (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math popular data devops" onclick="openTool('base-converter')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="binary" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Base 2-16</span></div><h3 class="font-bold text-base mt-4">Number Base Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Simultaneous live conversion across Decimal, Hexadecimal, Binary, and Octal.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -520,7 +507,7 @@
         </div>
 
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math" onclick="openTool('percent-calc')">
-          <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="percent" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Math</span></div><h3 class="font-bold text-base mt-4">Percentage Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate percentage increase, decrease, fraction ratios, and discounts.</p></div>
+          <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="percent" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">Math</span></div><h3 class="font-bold text-base mt-4">Percentage Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate percentage increase, decrease, fraction ratios, and discounts.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
@@ -559,7 +546,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 9: QA TESTING & MOCK DATA (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing security popular" onclick="openTool('dummy-card')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="credit-card" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Luhn Valid</span></div><h3 class="font-bold text-base mt-4">Dummy Test Card Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate Luhn-valid dummy credit card numbers strictly for billing QA.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -610,7 +596,6 @@
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- CATEGORY 10: POPULAR SHORTCUTS (Highlights) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="popular web text devops data" onclick="openTool('diff-checker')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="git-compare" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Git Diff</span></div><h3 class="font-bold text-base mt-4">Text & Code Diff Comparator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Visual comparison highlighting character additions and deletions side-by-side.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -620,7 +605,6 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="qr-code" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Vector PNG</span></div><h3 class="font-bold text-base mt-4">Live QR Code Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate instant high-res QR codes for URLs, WiFi logins, and contact cards.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
       </div>
 
       <!-- Architectural Feature Matrix -->
@@ -723,7 +707,6 @@
       </div>
     </div>
 
-    <!-- Blobby Trigger -->
     <div onclick="toggleCompanionDialog()" class="cursor-pointer group flex items-center gap-3 bg-white/95 dark:bg-slate-900/95 border-2 border-pink-300/60 dark:border-pink-500/40 rounded-full pl-4 pr-1.5 py-1.5 shadow-xl backdrop-blur-md transition-all hover:scale-105 active:scale-95">
       <span class="text-xs font-extrabold text-pink-600 dark:text-pink-400">Ask Blobby ✨</span>
       <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-orange-200 via-pink-400 to-indigo-400 p-1 flex items-center justify-center animate-pet shadow-inner">
