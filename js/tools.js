@@ -128,12 +128,12 @@ function getToolGuide(tool) {
   
   return {
     p1: { title: '1. Primary Purpose', text: `This tool is specifically designed to ${desc.toLowerCase()}. All calculations execute 100% locally in your browser memory.` },
-    p2: { title: '2. Input Instructions', text: `To use ${name}, enter your source text, file, or parameters into the interactive workspace below.` },
+    p2: { title: '2. Input Instructions', text: `To use ${name}, enter your source text, file, or parameters into the interactive workspace below. The interface provides real-time feedback.` },
     p3: { title: '3. Practical Example', text: `Example: Provide sample data to ${name} and click the action button to instantly copy the generated result terminal output.` }
   };
 }
 
-// Render the Active Tool View into #active-tool-container with unique instructions
+// Render the Active Tool View into #active-tool-container with exact tool-specific guidance matching
 function renderToolView(toolId) {
   const container = document.getElementById('active-tool-container');
   if (!container) return;
@@ -423,29 +423,4 @@ function syncColorInput(type) {
     if (colorInput) colorInput.value = textVal;
     updateContrast();
   }
-}
-
-// Populate #tools-grid dynamically on load
-function renderToolsGrid() {
-  const grid = document.getElementById('tools-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-
-  toolsDatabase.forEach((t) => {
-    grid.innerHTML += `
-      <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="${t.cat}" onclick="openTool('${t.id}')">
-        <div>
-          <div class="flex items-start justify-between">
-            <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
-              <i data-lucide="${t.icon}" class="w-6 h-6"></i>
-            </div>
-            <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">${t.badge}</span>
-          </div>
-          <h3 class="font-bold text-base mt-4">${t.name}</h3>
-          <p class="text-xs opacity-70 mt-1 leading-relaxed">${t.desc}</p>
-        </div>
-        <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-      </div>`;
-  });
-  if (window.lucide) lucide.createIcons();
 }
