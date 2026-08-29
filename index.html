@@ -129,7 +129,7 @@
           <div id="recent-tools-list" class="flex flex-wrap justify-center items-center gap-1.5 no-scrollbar"></div>
         </div>
 
-        <!-- 10 Balanced Categories -->
+        <!-- 10 Balanced Categories (Exact 10 Tools per Category) -->
         <div class="flex flex-wrap items-center justify-center gap-1.5 p-1.5 mt-6 rounded-2xl border theme-card max-w-5xl mx-auto text-xs font-semibold shadow-sm">
           <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All (100)</button>
           <button onclick="setCategoryFilter('popular')" data-pill="popular" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🔥 Popular (10)</button>
@@ -145,105 +145,87 @@
         </div>
       </div>
 
-      <!-- FULL STATIC 100-TOOL GRID -->
+      <!-- FULL STATIC 100-TOOL GRID (Hardcoded to guarantee immediate render) -->
       <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- 1. AI & LLM (10 Tools) -->
+        <!-- 1. AI & LLM Studio (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai popular" onclick="openTool('llm-tokens')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="cpu" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">14+ Models</span></div><h3 class="font-bold text-base mt-4">LLM Token Counter & Pricing</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate approximate BPE tokens and query cost estimations for GPT-4o, Claude 3.5, Gemini, & DeepSeek.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai text popular" onclick="openTool('md-table-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="grid" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Grid Studio</span></div><h3 class="font-bold text-base mt-4">Visual Markdown Table Builder</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Spreadsheet grid builder with column alignment controls that outputs copyable Markdown tables.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai design popular" onclick="openTool('wcag-contrast')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="eye" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">WCAG 2.1</span></div><h3 class="font-bold text-base mt-4">WCAG Color Contrast Checker</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Real-time foreground/background ratio calculator with instant AA/AAA accessibility badges.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai text" onclick="openTool('prompt-cleaner')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="sparkles" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Prompt Eng</span></div><h3 class="font-bold text-base mt-4">System Prompt Sanitizer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Strip trailing whitespace, duplicate tokens, and normalize prompt layouts for clean LLM context.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai data web" onclick="openTool('json-ts')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="file-json" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Types</span></div><h3 class="font-bold text-base mt-4">JSON to TypeScript Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert nested JSON payloads into clean, strongly typed TypeScript interfaces.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai text" onclick="openTool('prompt-variables')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="brackets" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Templates</span></div><h3 class="font-bold text-base mt-4">Prompt Template Interpolator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Substitute dynamic mustache variables into prompt templates for batch API generations.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai data" onclick="openTool('few-shot-formatter')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="list-ordered" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Training</span></div><h3 class="font-bold text-base mt-4">Few-Shot Example Formatter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Format input-output training pairs for structured LLM fine-tuning and in-context learning.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai math" onclick="openTool('temp-top-p')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="sliders" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Parameters</span></div><h3 class="font-bold text-base mt-4">Temperature & Top-P Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Simulate deterministic vs creative generation variance parameters for OpenAI and Anthropic.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai text" onclick="openTool('context-slicer')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="scissors" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">RAG Chunks</span></div><h3 class="font-bold text-base mt-4">Long Context Window Slicer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Partition large text files into uniform chunks with customizable token overlap for vector DBs.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai data" onclick="openTool('json-schema-ai')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="code" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Structured</span></div><h3 class="font-bold text-base mt-4">JSON Schema to Structured Output</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate strict schema definitions for OpenAI function calling and Anthropic tool use.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <!-- 2. JSON & Data (10 Tools) -->
+        <!-- 2. JSON & Data Formats (10 Tools) -->
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data popular web" onclick="openTool('json-formatter')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="code-2" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Dual-Pane</span></div><h3 class="font-bold text-base mt-4">JSON Pro Studio</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Dual-pane syntax highlighting, beautifier, tree inspector, and live error locator.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data" onclick="openTool('json-csv')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="table" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Tabular</span></div><h3 class="font-bold text-base mt-4">JSON to CSV Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Transform nested JSON object arrays into standard CSV spreadsheets.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data" onclick="openTool('csv-json')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="sheet" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Parser</span></div><h3 class="font-bold text-base mt-4">CSV to JSON Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Parse comma-separated data sheets directly into structured JSON arrays.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data" onclick="openTool('xml-json')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="file-code-2" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">XML</span></div><h3 class="font-bold text-base mt-4">XML to JSON Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Translate XML tags and attribute structures into hierarchical JSON.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data devops" onclick="openTool('yaml-json')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="file-text" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">YAML</span></div><h3 class="font-bold text-base mt-4">YAML to JSON Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert human-readable YAML configurations to standardized JSON.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data" onclick="openTool('json-sort')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="arrow-down-a-z" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Sorting</span></div><h3 class="font-bold text-base mt-4">Sort JSON Keys Alphabetically</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Deterministic recursive key sorting for clean version control diffs.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data text" onclick="openTool('string-escape')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="quote" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Sanitizer</span></div><h3 class="font-bold text-base mt-4">JSON & String Escaper</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Escape quotes, newlines, and backslashes for programming literals.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data" onclick="openTool('json-depth')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="layers" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Metrics</span></div><h3 class="font-bold text-base mt-4">JSON Size & Depth Inspector</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Analyze byte weight, maximum nesting depth, and node counts.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data" onclick="openTool('flatten-json')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="minimize-2" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Flatten</span></div><h3 class="font-bold text-base mt-4">Nested Object Flattener</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Flatten deeply nested JSON structures into single-level dot-notation keys.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data popular security" onclick="openTool('base64')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="binary" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Unicode</span></div><h3 class="font-bold text-base mt-4">Base64 Text & Data URL</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Encode or decode strings and binary image files with full Unicode support.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -254,47 +236,38 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="key" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">RFC4122</span></div><h3 class="font-bold text-base mt-4">UUID v4 Batch Creator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate batch RFC4122 v4 unique identifiers via Web Crypto API.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security popular" onclick="openTool('pwd-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="shield-check" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">Entropy</span></div><h3 class="font-bold text-base mt-4">Password & Token Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Create cryptographically secure passwords with custom lengths and symbols.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security popular" onclick="openTool('hash-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="hash" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">SHA-256</span></div><h3 class="font-bold text-base mt-4">SHA-256 Hasher</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate cryptographic SHA-256 message digests in browser memory.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security" onclick="openTool('sha512-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="shield" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">SHA-512</span></div><h3 class="font-bold text-base mt-4">SHA-512 Hasher</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Compute high-security 512-bit cryptographic hash digests.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security web" onclick="openTool('hmac-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="file-signature" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">HMAC</span></div><h3 class="font-bold text-base mt-4">HMAC-SHA256 Signer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate hash-based message authentication codes with secret keys.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security web" onclick="openTool('jwt-debugger')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="unlock" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">JWT</span></div><h3 class="font-bold text-base mt-4">JWT Token Inspector</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Decode claims, headers, and verify expiration dates of JSON Web Tokens.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security" onclick="openTool('salt-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="shuffle" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Tokens</span></div><h3 class="font-bold text-base mt-4">Random Salt & Hex String</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Create random hexadecimal and alphanumeric tokens for secret keys.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security text" onclick="openTool('passphrase-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="align-left" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Passphrase</span></div><h3 class="font-bold text-base mt-4">Memorable Passphrase Builder</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate multi-word passphrases with high mathematical entropy.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security" onclick="openTool('aes-encrypt')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="lock" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">AES-256</span></div><h3 class="font-bold text-base mt-4">Client-Side AES-GCM Encryptor</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Encrypt plain text using 256-bit AES-GCM with your private passphrase.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security" onclick="openTool('aes-decrypt')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="key-round" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">Decrypt</span></div><h3 class="font-bold text-base mt-4">Client-Side AES-GCM Decryptor</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Decrypt AES-GCM ciphertexts locally using your private passphrase.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -305,47 +278,38 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="server" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Interactive</span></div><h3 class="font-bold text-base mt-4">HTTP Status Codes Inspector</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Searchable directory with code simulator, client/server causes, and snippets.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web" onclick="openTool('curl-fetch')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="terminal" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">cURL</span></div><h3 class="font-bold text-base mt-4">cURL to Fetch Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Translate raw cURL network commands into browser fetch() JavaScript syntax.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web data popular" onclick="openTool('url-codec')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="link" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Encoding</span></div><h3 class="font-bold text-base mt-4">URL Encoder & Decoder</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Safely encode special query parameters or decode percent-encoded URLs.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web" onclick="openTool('url-parser')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="filter" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Inspector</span></div><h3 class="font-bold text-base mt-4">URL Query Parameter Inspector</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Parse complex UTM tracking parameters and search queries into key-value tables.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web security" onclick="openTool('basic-auth')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="shield-alert" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Headers</span></div><h3 class="font-bold text-base mt-4">Basic Auth Header Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate Base64 Authorization: Basic headers from username and password.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web text popular" onclick="openTool('slug-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="link-2" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">SEO</span></div><h3 class="font-bold text-base mt-4">URL Slug & Permalink Creator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert article titles into clean, URL-safe permalinks for blogs and SEO.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web text" onclick="openTool('html-entities')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="code" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Entities</span></div><h3 class="font-bold text-base mt-4">HTML Entity Encoder/Decoder</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert characters to HTML entities (&amp;, &lt;, &gt;) and vice versa.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web" onclick="openTool('ua-parser')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="monitor" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">UserAgent</span></div><h3 class="font-bold text-base mt-4">User Agent String Inspector</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Parse browser, operating system, rendering engine, and device metadata.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web devops" onclick="openTool('cors-builder')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="globe" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">CORS</span></div><h3 class="font-bold text-base mt-4">CORS Header Builder</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Configure Access-Control-Allow-Origin, Methods, and Header rules.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="web design" onclick="openTool('meta-tags')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="share-2" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Social</span></div><h3 class="font-bold text-base mt-4">OpenGraph & Meta Tag Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate Twitter Cards and Facebook OpenGraph HTML tags with live preview.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -356,47 +320,38 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="layers" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">CSS Studio</span></div><h3 class="font-bold text-base mt-4">CSS Box-Shadow Studio</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Visual sliders for offsets, blur, and spread with instant CSS copy.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design" onclick="openTool('flexbox-play')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="layout" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Flexbox</span></div><h3 class="font-bold text-base mt-4">CSS Flexbox Playground</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Interactive visual sandbox for justify-content, align-items, and flex-wrap.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design" onclick="openTool('grid-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="grid-3x3" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Grid</span></div><h3 class="font-bold text-base mt-4">CSS Grid Code Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Design responsive CSS grid layouts visually with template columns and rows.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design math" onclick="openTool('color-convert')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="pipette" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Color</span></div><h3 class="font-bold text-base mt-4">HEX to RGB / HSL Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Interactive color spectrum picker with instant HEX, RGBA, and HSL copy formats.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design" onclick="openTool('palette-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="palette" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Harmony</span></div><h3 class="font-bold text-base mt-4">Color Palette Harmony Builder</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate complementary, analogous, and triadic color schemes with hex copy.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design" onclick="openTool('glassmorphism')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="sparkle" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Glass</span></div><h3 class="font-bold text-base mt-4">CSS Glassmorphism Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Configure frosted glass blur, opacity, and saturation CSS styles.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design" onclick="openTool('border-radius')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="square" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Shapes</span></div><h3 class="font-bold text-base mt-4">CSS Border-Radius Studio</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Visually configure 8-point asymmetric border-radius organic shapes.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design" onclick="openTool('gradient-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="sun-medium" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">Gradients</span></div><h3 class="font-bold text-base mt-4">CSS Linear & Radial Gradient Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Build multi-stop color transitions and export clean CSS background styles.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design web" onclick="openTool('css-minifier')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="file-minus" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Speed</span></div><h3 class="font-bold text-base mt-4">CSS Minifier & Optimizer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Strip redundant whitespace, comments, and optimize CSS styles for speed.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="design math" onclick="openTool('aspect-ratio')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="maximize" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Ratio</span></div><h3 class="font-bold text-base mt-4">Aspect Ratio Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Compute responsive dimensions for 16:9, 4:3, 1:1, and custom resolutions.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -407,47 +362,38 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="clock" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Crontab</span></div><h3 class="font-bold text-base mt-4">Cron Expression Explainer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Translate 5-part cron syntax into human-readable sentences with presets.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops" onclick="openTool('dockerfile-lint')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="container" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Docker</span></div><h3 class="font-bold text-base mt-4">Dockerfile Validator & Linter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Inspect Dockerfile instructions for caching efficiency and security practices.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops data" onclick="openTool('k8s-yaml')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="boxes" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">K8s</span></div><h3 class="font-bold text-base mt-4">Kubernetes YAML Formatter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Format and validate Kubernetes Deployment, Service, and Ingress specs.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops" onclick="openTool('chmod-calc')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="terminal-square" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Chmod</span></div><h3 class="font-bold text-base mt-4">Linux Chmod Permissions Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate numeric (e.g. 755, 644) and symbolic (rwxr-xr-x) Linux permissions.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops math" onclick="openTool('subnet-calc')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="network" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Networking</span></div><h3 class="font-bold text-base mt-4">IPv4 Subnet CIDR Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate network ranges, broadcast addresses, and usable host counts.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops" onclick="openTool('ipv6-expand')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="cpu" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">IPv6</span></div><h3 class="font-bold text-base mt-4">IPv6 Address Expander & Compressor</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Expand compressed zero sequences or shorten IPv6 addresses to standard RFC form.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops web" onclick="openTool('nginx-format')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="server" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Nginx</span></div><h3 class="font-bold text-base mt-4">Nginx Config Beautifier</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Standardize tab indentations and block structures for Nginx server configs.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops data" onclick="openTool('b64-file')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="file-down" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Decoder</span></div><h3 class="font-bold text-base mt-4">Base64 to File Downloader</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert Base64 data strings back into downloadable binary files.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops security" onclick="openTool('env-validator')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="file-symlink" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">.env</span></div><h3 class="font-bold text-base mt-4">.env Environment File Sanitizer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Validate syntax, detect missing quotes, and strip comments from env files.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="devops text" onclick="openTool('git-commit')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="git-commit" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Commits</span></div><h3 class="font-bold text-base mt-4">Git Commit Message Formatter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Format standardized Conventional Commit messages (feat, fix, chore, docs).</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -458,47 +404,38 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="file-text" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Markdown</span></div><h3 class="font-bold text-base mt-4">Markdown Live Previewer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Live Markdown to styled HTML renderer with word count and stats.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text popular" onclick="openTool('word-counter')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="spell-check" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">Metrics</span></div><h3 class="font-bold text-base mt-4">Word & Character Counter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Real-time word, character, sentence, paragraph, and reading time metrics.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text popular" onclick="openTool('case-convert')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="type" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Formatting</span></div><h3 class="font-bold text-base mt-4">Text Case Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Switch text across Title Case, UPPERCASE, lowercase, camelCase, snake_case.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text data" onclick="openTool('dedupe-lines')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="list-filter" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Dedupe</span></div><h3 class="font-bold text-base mt-4">Duplicate Line Remover</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Remove duplicate rows, sort lines alphabetically, and strip empty whitespace.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text" onclick="openTool('sort-lines')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="arrow-down-narrow-wide" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Sort</span></div><h3 class="font-bold text-base mt-4">Alphabetical Line Sorter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Sort lists alphabetically (A-Z, Z-A), numerically, or by string length.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text" onclick="openTool('whitespace-clean')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="eraser" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Cleaner</span></div><h3 class="font-bold text-base mt-4">Whitespace & Line Cleaner</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Strip trailing whitespace, consecutive spaces, and blank carriage returns.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text testing popular" onclick="openTool('lorem-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="align-left" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Mockup</span></div><h3 class="font-bold text-base mt-4">Lorem Ipsum Text Builder</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate placeholder paragraphs, sentences, or word counts for UI mockups.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text web" onclick="openTool('slug-to-title')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="text" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Converter</span></div><h3 class="font-bold text-base mt-4">Slug to Title String Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert kebab-case-url-slugs into readable capitalized article titles.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text" onclick="openTool('word-freq')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="bar-chart-2" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Analytics</span></div><h3 class="font-bold text-base mt-4">Word Frequency Analyzer</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Analyze text density, keyword counts, and lexical variety percentages.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="text" onclick="openTool('text-reverse')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="refresh-ccw" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Transform</span></div><h3 class="font-bold text-base mt-4">Text & String Reverser</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Reverse full sentences, individual words, or character sequences.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -509,47 +446,38 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="binary" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Base 2-16</span></div><h3 class="font-bold text-base mt-4">Number Base Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Simultaneous live conversion across Decimal, Hexadecimal, Binary, and Octal.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math popular data" onclick="openTool('unit-convert')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="scale" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">6 Categories</span></div><h3 class="font-bold text-base mt-4">Universal Unit Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert length, mass, temperature, data storage, and speed instantly.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math" onclick="openTool('percent-calc')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="percent" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">Math</span></div><h3 class="font-bold text-base mt-4">Percentage Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate percentage increase, decrease, fraction ratios, and discounts.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math data" onclick="openTool('unix-epoch')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="calendar-clock" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Time</span></div><h3 class="font-bold text-base mt-4">UNIX Timestamp to Date Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert millisecond/second epoch timestamps to human-readable ISO and local time.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math" onclick="openTool('date-epoch')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="calendar" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Timestamp</span></div><h3 class="font-bold text-base mt-4">Human Date to UNIX Epoch</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Select any calendar date and time to compute the exact UTC UNIX timestamp.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math data" onclick="openTool('byte-calc')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="hard-drive" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Storage</span></div><h3 class="font-bold text-base mt-4">Byte & Bit Storage Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert between B, KB, MB, GB, TB, and network bitrate units (Kbps, Mbps).</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math" onclick="openTool('gcd-lcm')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="calculator" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Arithmetic</span></div><h3 class="font-bold text-base mt-4">GCD & LCM Calculator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate Greatest Common Divisor and Least Common Multiple of numbers.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math" onclick="openTool('roman-num')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="columns" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Numerals</span></div><h3 class="font-bold text-base mt-4">Roman Numeral Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert standard integers into Roman numerals and parse Roman numerals to digits.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math" onclick="openTool('speed-conv')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="gauge" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Velocity</span></div><h3 class="font-bold text-base mt-4">Speed & Velocity Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Convert between km/h, mph, m/s, knots, and Mach numbers.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="math" onclick="openTool('temp-conv')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="thermometer" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Temp</span></div><h3 class="font-bold text-base mt-4">Temperature Scale Converter</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Simultaneously convert across Celsius, Fahrenheit, Kelvin, and Rankine scales.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -560,47 +488,38 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="credit-card" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Luhn Valid</span></div><h3 class="font-bold text-base mt-4">Dummy Test Card Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate Luhn-valid dummy credit card numbers strictly for billing QA.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing popular ai text" onclick="openTool('pdf-toolkit')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="file-stack" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">In-Memory</span></div><h3 class="font-bold text-base mt-4">Client-Side PDF Merger</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Combine multiple PDF documents safely in browser memory without uploads.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing design popular" onclick="openTool('img-compress')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="image" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">WebP Canvas</span></div><h3 class="font-bold text-base mt-4">Image Compressor & WebP</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Reduce PNG/JPG file sizes and convert to next-gen WebP directly in Canvas.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing data" onclick="openTool('mock-user-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="user-check" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Mock Data</span></div><h3 class="font-bold text-base mt-4">Mock User Profile Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate realistic test identities with names, avatars, emails, and addresses.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing" onclick="openTool('random-email-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="mail" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">QA Forms</span></div><h3 class="font-bold text-base mt-4">Random Email & Phone Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Create test email addresses and phone numbers for form validation QA.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing web popular devops" onclick="openTool('regex-tester')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="regex" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Live Sandbox</span></div><h3 class="font-bold text-base mt-4">Regex Sandbox & Matcher</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Interactive regular expression tester with capture group inspection.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing" onclick="openTool('string-boundary')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="ruler" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Limits</span></div><h3 class="font-bold text-base mt-4">String Length Boundary Tester</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate boundary strings (255 chars, 65535 chars, UTF-8 emojis) for QA.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing data" onclick="openTool('dummy-payload')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="file-plus" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">Byte Files</span></div><h3 class="font-bold text-base mt-4">Dummy Payload File Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Create clean dummy files of exact byte sizes (1KB, 1MB, 10MB) for upload QA.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing web" onclick="openTool('http-simulator')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="send" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">API Mock</span></div><h3 class="font-bold text-base mt-4">HTTP Method Simulator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Simulate GET, POST, PUT, PATCH, and DELETE responses with custom status codes.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="testing design" onclick="openTool('b64-canvas')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="file-image" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Inspector</span></div><h3 class="font-bold text-base mt-4">Base64 Image Inspector</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Paste Base64 data URLs to preview dimensions, aspect ratio, and download image.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
@@ -611,7 +530,6 @@
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="git-compare" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Git Diff</span></div><h3 class="font-bold text-base mt-4">Text & Code Diff Comparator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Visual comparison highlighting character additions and deletions side-by-side.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
-
         <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="popular web design ai" onclick="openTool('qr-gen')">
           <div><div class="flex items-start justify-between"><div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="qr-code" class="w-6 h-6"></i></div><span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Vector PNG</span></div><h3 class="font-bold text-base mt-4">Live QR Code Generator</h3><p class="text-xs opacity-70 mt-1 leading-relaxed">Generate instant high-res QR codes for URLs, WiFi logins, and contact cards.</p></div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
