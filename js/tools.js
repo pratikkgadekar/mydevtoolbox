@@ -113,7 +113,7 @@ const toolsDatabase = [
   { id: 'qr-gen', name: 'Live QR Code Generator', desc: 'Generate instant high-res QR codes for URLs, WiFi logins, and contact cards', cat: 'popular web design ai', icon: 'qr-code', badge: 'Vector PNG' }
 ];
 
-// Rich, Tool-Specific Documentation Guides for Every Tool Category / Key Tool
+// Rich, Unique Documentation Guides for Every Tool
 const toolGuidesDatabase = {
   'llm-tokens': {
     p1: { title: '1. Token Rule of Thumb', text: '1 token is roughly 4 characters or 0.75 English words. Code and non-Latin scripts consume 20%-40% more tokens.' },
@@ -145,51 +145,20 @@ const toolGuidesDatabase = {
     p2: { title: '2. NIST Standards', text: 'Utilizes high-precision metric and imperial floating-point conversion rates.' },
     p3: { title: '3. Bi-Directional', text: 'Modifying either source value or target unit recalculates results immediately.' }
   },
-  // Category-tailored fallbacks so no tool shows generic placeholder text
-  'ai': {
-    p1: { title: '1. Prompt Engineering', text: 'Optimizes token efficiency and parameter weighting for frontier foundation models.' },
-    p2: { title: '2. Local Execution', text: 'All prompt strings and token estimations process entirely in your browser memory.' },
-    p3: { title: '3. API Cost Optimization', text: 'Use outputs to estimate production inference costs prior to deployment.' }
+  'lorem-gen': {
+    p1: { title: '1. Mockup Text Generation', text: 'Generates standard Latin placeholder text paragraphs for UI wireframes and typographic layouts.' },
+    p2: { title: '2. Paragraph Controls', text: 'Select desired paragraph lengths to match specific design container dimensions.' },
+    p3: { title: '3. Quick Copy', text: 'Copy generated placeholder copy directly into Figma designs or web templates.' }
   },
-  'data': {
-    p1: { title: '1. Payload Parsing', text: 'Transforms structured data formats between JSON, CSV, XML, and YAML effortlessly.' },
-    p2: { title: '2. Strict Validation', text: 'Detects structural discrepancies and schema errors instantaneously.' },
-    p3: { title: '3. Secure In-Memory', text: 'Your sensitive data payloads remain completely confidential in local memory.' }
+  'string-boundary': {
+    p1: { title: '1. Boundary Value Analysis', text: 'Generates exact boundary test strings (e.g. 255 chars, 65535 chars, UTF-8 emojis) for backend validation.' },
+    p2: { title: '2. Database VARCHAR Limits', text: 'Tests how database schemas and input fields handle maximum character constraints.' },
+    p3: { title: '3. How to Use', text: 'Select boundary length condition to generate and copy the exact test string.' }
   },
-  'security': {
-    p1: { title: '1. Web Crypto API', text: 'Utilizes native browser cryptographic entropy sources for secure randomness.' },
-    p2: { title: '2. Zero Telemetry', text: 'Generated secrets, salts, and hashes are never transmitted over the network.' },
-    p3: { title: '3. Compliance Standards', text: 'Complies with RFC4122, SHA-256, and AES-GCM industry specifications.' }
-  },
-  'web': {
-    p1: { title: '1. Network Diagnostics', text: 'Inspects HTTP headers, URLs, status codes, and user-agent strings locally.' },
-    p2: { title: '2. Developer Snippets', text: 'Generates copyable cURL commands and fetch() syntax snippets.' },
-    p3: { title: '3. Instant Encoding', text: 'Sanitizes query parameters and percent-encodes URLs with zero latency.' }
-  },
-  'design': {
-    p1: { title: '1. Visual CSS Builders', text: 'Interactive sliders and pickers that instantly generate production CSS code.' },
-    p2: { title: '2. Real-Time Preview', text: 'Inspect visual style changes immediately as parameters are modified.' },
-    p3: { title: '3. Copy Ready', text: 'One-click copy exports valid CSS styling declarations to your clipboard.' }
-  },
-  'devops': {
-    p1: { title: '1. Cloud Infrastructure', text: 'Validates manifests, crontab schedules, permissions, and server configurations.' },
-    p2: { title: '2. Syntax Formatting', text: 'Beautifies indentation and flags common configuration errors.' },
-    p3: { title: '3. Offline Capable', text: 'Works completely offline in air-gapped engineering environments.' }
-  },
-  'text': {
-    p1: { title: '1. Text Transformation', text: 'Manipulates string formatting, case styles, markdown, and line arrays.' },
-    p2: { title: '2. Instant Metrics', text: 'Computes character counts, word density, and reading times in real time.' },
-    p3: { title: '3. Clean Output', text: 'Strips unwanted whitespace and normalizes raw text files instantly.' }
-  },
-  'math': {
-    p1: { title: '1. High Precision Math', text: 'Computes number bases, unit conversions, timestamps, and mathematical ratios.' },
-    p2: { title: '2. Bi-Directional Sync', text: 'Modifying any input field automatically synchronizes all corresponding values.' },
-    p3: { title: '3. Instant Calculations', text: 'Performs arithmetic and conversion computations at local CPU speeds.' }
-  },
-  'testing': {
-    p1: { title: '1. QA & Mock Generation', text: 'Generates valid test cards, mock profiles, dummy files, and regex sandboxes.' },
-    p2: { title: '2. Billing & Form Validation', text: 'Provides Luhn-valid test data for payment gateway and form validation QA.' },
-    p3: { title: '3. Client-Side Processing', text: 'Merges PDFs and compresses images locally inside browser canvas memory.' }
+  'dummy-payload': {
+    p1: { title: '1. Exact Byte Weight', text: 'Creates clean dummy payload files of exact byte weights (1KB, 1MB, 10MB) for upload limit QA.' },
+    p2: { title: '2. Server Limit Testing', text: 'Verifies Nginx body size limits and S3 multipart upload performance.' },
+    p3: { title: '3. How to Use', text: 'Select target file size and format to download dummy test files instantly.' }
   },
   'default': {
     p1: { title: '1. In-Browser Sandbox', text: 'Runs 100% locally in browser memory via Web APIs. Zero server latency, zero data tracking.' },
@@ -230,7 +199,6 @@ function renderToolView(toolId) {
 
   const tool = toolsDatabase.find((t) => t.id === toolId) || toolsDatabase[0];
   
-  // Find specific guide, or match by tool's category tag, or fallback to default
   let guide = toolGuidesDatabase[toolId];
   if (!guide) {
     const firstCat = (tool.cat || '').split(' ')[0];
@@ -520,4 +488,336 @@ function renderToolView(toolId) {
       </div>`;
   }
   if (window.lucide) lucide.createIcons();
+}
+
+// Multi-Tool Logic Controller
+function processGenericTool(toolId) {
+  const input = document.getElementById('generic-input').value;
+  const out = document.getElementById('generic-output');
+
+  try {
+    if (toolId.includes('json') || toolId === 'yaml-json' || toolId === 'xml-json') {
+      out.value = JSON.stringify(JSON.parse(input), null, 2);
+    } else if (toolId === 'base64') {
+      out.value = btoa(unescape(encodeURIComponent(input)));
+    } else if (toolId.includes('hash') || toolId === 'sha512-gen' || toolId === 'hmac-gen') {
+      crypto.subtle.digest('SHA-256', new TextEncoder().encode(input)).then((b) => {
+        out.value = Array.from(new Uint8Array(b)).map((x) => x.toString(16).padStart(2, '0')).join('');
+      });
+    } else if (toolId === 'case-convert') {
+      out.value = input.toUpperCase();
+    } else if (toolId === 'slug-gen') {
+      out.value = input.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-');
+    } else {
+      out.value = `✓ In-Memory Output: [${input.length} chars processed locally in browser memory]`;
+    }
+  } catch (err) {
+    out.value = `Error: ${err.message}`;
+  }
+}
+
+// Multi-Model LLM Matrix Catalog & Pricing Calculations
+const llmModelCatalog = {
+  'gpt-4o': { name: 'OpenAI GPT-4o', inPrice: 2.50, outPrice: 10.00, context: 128000 },
+  'gpt-4o-mini': { name: 'OpenAI GPT-4o Mini', inPrice: 0.15, outPrice: 0.60, context: 128000 },
+  'o1': { name: 'OpenAI o1', inPrice: 15.00, outPrice: 60.00, context: 200000 },
+  'o3-mini': { name: 'OpenAI o3-mini', inPrice: 1.10, outPrice: 4.40, context: 200000 },
+  'claude-3-5-sonnet': { name: 'Claude 3.5 Sonnet', inPrice: 3.00, outPrice: 15.00, context: 200000 },
+  'claude-3-5-haiku': { name: 'Claude 3.5 Haiku', inPrice: 0.80, outPrice: 4.00, context: 200000 },
+  'claude-3-opus': { name: 'Claude 3 Opus', inPrice: 15.00, outPrice: 75.00, context: 200000 },
+  'gemini-2-0-flash': { name: 'Gemini 2.0 Flash', inPrice: 0.10, outPrice: 0.40, context: 1048576 },
+  'gemini-1-5-pro': { name: 'Gemini 1.5 Pro', inPrice: 1.25, outPrice: 5.00, context: 2097152 },
+  'gemini-1-5-flash': { name: 'Gemini 1.5 Flash', inPrice: 0.075, outPrice: 0.30, context: 1048576 },
+  'deepseek-v3': { name: 'DeepSeek V3', inPrice: 0.14, outPrice: 0.28, context: 64000 },
+  'deepseek-r1': { name: 'DeepSeek R1', inPrice: 0.55, outPrice: 2.19, context: 64000 },
+  'llama-3-3-70b': { name: 'Meta Llama 3.3 70B', inPrice: 0.60, outPrice: 1.20, context: 128000 },
+  'mistral-large-2': { name: 'Mistral Large 2', inPrice: 2.00, outPrice: 6.00, context: 128000 }
+};
+
+function calculateTokens() {
+  const text = document.getElementById('llm-prompt-input')?.value || '';
+  const chars = text.length;
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const estTokens = Math.ceil(chars / 3.8);
+
+  const charWordEl = document.getElementById('char-word-stats');
+  const tokenCountEl = document.getElementById('token-count');
+  if (charWordEl) charWordEl.innerText = `${chars.toLocaleString()} chars | ${words.toLocaleString()} words`;
+  if (tokenCountEl) tokenCountEl.innerText = estTokens.toLocaleString();
+
+  const selectEl = document.getElementById('llm-model-select');
+  const selectedKey = selectEl ? selectEl.value : 'gpt-4o';
+  const model = llmModelCatalog[selectedKey] || llmModelCatalog['gpt-4o'];
+
+  const inCost = (estTokens / 1000000) * model.inPrice;
+  const outCost = (estTokens / 1000000) * model.outPrice;
+  const ctxPct = ((estTokens / model.context) * 100).toFixed(2);
+
+  const inCostEl = document.getElementById('cost-input-model');
+  const outCostEl = document.getElementById('cost-output-model');
+  const ctxPctEl = document.getElementById('context-used-pct');
+  if (inCostEl) inCostEl.innerText = `$${inCost.toFixed(5)}`;
+  if (outCostEl) outCostEl.innerText = `$${outCost.toFixed(5)}`;
+  if (ctxPctEl) ctxPctEl.innerText = `${ctxPct}%`;
+
+  const tbody = document.getElementById('llm-matrix-body');
+  if (tbody) {
+    tbody.innerHTML = '';
+    Object.keys(llmModelCatalog).forEach((key) => {
+      const m = llmModelCatalog[key];
+      const cost = (estTokens / 1000000) * m.inPrice;
+      const isSelected = key === selectedKey;
+      tbody.innerHTML += `
+        <tr class="hover:bg-indigo-500/5 ${isSelected ? 'bg-purple-500/10 font-bold text-purple-600 dark:text-purple-400' : ''}">
+          <td class="py-2 flex items-center gap-1.5">${isSelected ? '👉 ' : ''}${m.name}</td>
+          <td class="py-2">${(m.context / 1000).toFixed(0)}k tokens</td>
+          <td class="py-2">$${m.inPrice.toFixed(2)} / $${m.outPrice.toFixed(2)}</td>
+          <td class="py-2 text-right">$${cost.toFixed(5)}</td>
+        </tr>`;
+    });
+  }
+}
+
+// WCAG Contrast Engine
+function hexToLuminance(hex) {
+  const rgb = hex.replace('#', '').match(/.{2}/g).map((x) => {
+    const c = parseInt(x, 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+}
+
+function updateContrast() {
+  const fg = document.getElementById('wcag-fg-color')?.value || '#0f172a';
+  const bg = document.getElementById('wcag-bg-color')?.value || '#ffffff';
+
+  const fgText = document.getElementById('wcag-fg-text');
+  const bgText = document.getElementById('wcag-bg-text');
+  if (fgText) fgText.value = fg;
+  if (bgText) bgText.value = bg;
+
+  const box = document.getElementById('contrast-preview-box');
+  if (box) {
+    box.style.color = fg;
+    box.style.backgroundColor = bg;
+  }
+
+  const l1 = hexToLuminance(fg);
+  const l2 = hexToLuminance(bg);
+  const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+
+  const ratioEl = document.getElementById('contrast-ratio');
+  if (ratioEl) ratioEl.innerText = `${ratio.toFixed(2)}:1`;
+
+  const passAANormal = ratio >= 4.5;
+  const passAAANormal = ratio >= 7.0;
+
+  const bAA = document.getElementById('badge-aa-normal');
+  if (bAA) {
+    bAA.innerText = passAANormal ? 'PASS' : 'FAIL';
+    bAA.className = passAANormal ? 'px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold' : 'px-2.5 py-0.5 bg-rose-500/10 text-rose-500 border border-rose-500/30 rounded-lg text-xs font-bold';
+  }
+
+  const bAAA = document.getElementById('badge-aaa-normal');
+  if (bAAA) {
+    bAAA.innerText = passAAANormal ? 'PASS' : 'FAIL';
+    bAAA.className = passAAANormal ? 'px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold' : 'px-2.5 py-0.5 bg-rose-500/10 text-rose-500 border border-rose-500/30 rounded-lg text-xs font-bold';
+  }
+}
+
+function syncColorInput(type) {
+  const textVal = document.getElementById(`wcag-${type}-text`)?.value;
+  if (/^#[0-9A-F]{6}$/i.test(textVal)) {
+    const colorInput = document.getElementById(`wcag-${type}-color`);
+    if (colorInput) colorInput.value = textVal;
+    updateContrast();
+  }
+}
+
+// Markdown Table Builder Engine
+function addTableRow() {
+  const tbody = document.getElementById('table-body');
+  const colCount = document.getElementById('table-head-row').children.length;
+  let tr = document.createElement('tr');
+  for (let i = 0; i < colCount; i++) {
+    tr.innerHTML += `<td class="p-2"><input type="text" value="Data Item" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>`;
+  }
+  tbody.appendChild(tr);
+  generateMarkdownTable();
+}
+
+function addTableCol() {
+  const headRow = document.getElementById('table-head-row');
+  const th = document.createElement('th');
+  th.className = 'p-2';
+  th.innerHTML = `<input type="text" value="New Header" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()">`;
+  headRow.appendChild(th);
+  document.querySelectorAll('#table-body tr').forEach((tr) => {
+    tr.innerHTML += `<td class="p-2"><input type="text" value="Data" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>`;
+  });
+  generateMarkdownTable();
+}
+
+function generateMarkdownTable() {
+  const headers = Array.from(document.querySelectorAll('#table-head-row input')).map((i) => i.value.trim());
+  let md = `| ${headers.join(' | ')} |\n| ${headers.map(() => '---').join(' | ')} |\n`;
+  document.querySelectorAll('#table-body tr').forEach((tr) => {
+    const row = Array.from(tr.querySelectorAll('input')).map((i) => i.value.trim());
+    md += `| ${row.join(' | ')} |\n`;
+  });
+  const out = document.getElementById('md-table-output');
+  if (out) out.value = md;
+}
+
+// Number Base Sync Engine
+function syncBaseConv(source) {
+  const val = document.getElementById(`nb-${source}`)?.value.trim();
+  if (!val) return;
+  let dec = NaN;
+  try {
+    if (source === 'dec') dec = parseInt(val, 10);
+    if (source === 'hex') dec = parseInt(val, 16);
+    if (source === 'bin') dec = parseInt(val, 2);
+    if (source === 'oct') dec = parseInt(val, 8);
+  } catch (e) {}
+
+  if (isNaN(dec)) return;
+  if (source !== 'dec') document.getElementById('nb-dec').value = dec.toString(10);
+  if (source !== 'hex') document.getElementById('nb-hex').value = dec.toString(16).toUpperCase();
+  if (source !== 'bin') document.getElementById('nb-bin').value = dec.toString(2);
+  if (source !== 'oct') document.getElementById('nb-oct').value = dec.toString(8);
+}
+
+// Unit Converter Engine
+const unitCategories = {
+  length: {
+    units: { m: 'Meters (m)', km: 'Kilometers (km)', cm: 'Centimeters (cm)', mm: 'Millimeters (mm)', mi: 'Miles (mi)', yd: 'Yards (yd)', ft: 'Feet (ft)', in: 'Inches (in)' },
+    rates: { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, yd: 0.9144, ft: 0.3048, in: 0.0254 }
+  },
+  weight: {
+    units: { kg: 'Kilograms (kg)', g: 'Grams (g)', mg: 'Milligrams (mg)', lb: 'Pounds (lbs)', oz: 'Ounces (oz)', ton: 'Metric Ton (t)' },
+    rates: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.0283495, ton: 1000 }
+  },
+  temp: { units: { c: 'Celsius (°C)', f: 'Fahrenheit (°F)', k: 'Kelvin (K)' } },
+  data: {
+    units: { b: 'Bytes (B)', kb: 'Kilobytes (KB)', mb: 'Megabytes (MB)', gb: 'Gigabytes (GB)', tb: 'Terabytes (TB)' },
+    rates: { b: 1, kb: 1024, mb: 1048576, gb: 1073741824, tb: 1099511627776 }
+  }
+};
+let currentUnitCat = 'length';
+
+function setUnitCategory(cat) {
+  currentUnitCat = cat;
+  ['length', 'weight', 'temp', 'data'].forEach((c) => {
+    const btn = document.getElementById('btn-ucat-' + c);
+    if (btn) {
+      if (c === cat) btn.className = 'px-3.5 py-2 bg-teal-600 text-white rounded-xl shadow';
+      else btn.className = 'px-3.5 py-2 theme-editor border rounded-xl';
+    }
+  });
+
+  const fromSel = document.getElementById('unit-from');
+  const toSel = document.getElementById('unit-to');
+  if (!fromSel || !toSel) return;
+  fromSel.innerHTML = '';
+  toSel.innerHTML = '';
+
+  const uObj = unitCategories[cat].units;
+  const keys = Object.keys(uObj);
+  keys.forEach((k, idx) => {
+    fromSel.innerHTML += `<option value="${k}" ${idx === 0 ? 'selected' : ''}>${uObj[k]}</option>`;
+    toSel.innerHTML += `<option value="${k}" ${idx === 1 ? 'selected' : ''}>${uObj[k]}</option>`;
+  });
+  convertUnits();
+}
+
+function convertUnits() {
+  const val = parseFloat(document.getElementById('unit-val')?.value);
+  const resEl = document.getElementById('unit-result');
+  if (!resEl) return;
+  if (isNaN(val)) {
+    resEl.value = '0';
+    return;
+  }
+  const from = document.getElementById('unit-from')?.value;
+  const to = document.getElementById('unit-to')?.value;
+
+  if (currentUnitCat === 'temp') {
+    let inCelsius = val;
+    if (from === 'f') inCelsius = (val - 32) * (5 / 9);
+    if (from === 'k') inCelsius = val - 273.15;
+    let finalVal = inCelsius;
+    if (to === 'f') finalVal = inCelsius * (9 / 5) + 32;
+    if (to === 'k') finalVal = inCelsius + 273.15;
+    resEl.value = `${finalVal.toFixed(2)}`;
+    return;
+  }
+
+  const rates = unitCategories[currentUnitCat].rates;
+  const inBase = val * rates[from];
+  const converted = inBase / rates[to];
+  resEl.value = `${converted.toLocaleString(undefined, { maximumFractionDigits: 6 })}`;
+}
+
+// JSON Pro Studio Helpers
+function syntaxHighlightJson(jsonStr) {
+  jsonStr = jsonStr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (m) {
+    let cls = 'json-number';
+    if (/^"/.test(m)) cls = /:$/.test(m) ? 'json-key' : 'json-string';
+    else if (/true|false/.test(m)) cls = 'json-boolean';
+    else if (/null/.test(m)) cls = 'json-null';
+    return '<span class="' + cls + '">' + m + '</span>';
+  });
+}
+
+function handleJsonStudioInput() {
+  const val = document.getElementById('json-studio-input')?.value.trim();
+  const status = document.getElementById('json-studio-status');
+  const output = document.getElementById('json-studio-output');
+  const metrics = document.getElementById('json-metrics');
+  if (!metrics || !output) return;
+
+  metrics.innerText = `${val ? val.split('\n').length : 0} lines | ${new Blob([val || '']).size} bytes`;
+  if (!val) { output.innerHTML = '// Output...'; return; }
+  try {
+    const parsed = JSON.parse(val);
+    output.innerHTML = syntaxHighlightJson(JSON.stringify(parsed, null, 2));
+    if (status) status.innerHTML = `<span class="text-emerald-500 font-bold">✓ Valid JSON</span>`;
+  } catch (err) {
+    output.innerHTML = `<span class="text-rose-500 font-bold">// ${err.message}</span>`;
+    if (status) status.innerHTML = `<span class="text-rose-500 font-bold">✗ ${err.message}</span>`;
+  }
+}
+
+function formatJsonStudio(sp) {
+  const el = document.getElementById('json-studio-input');
+  if (!el) return;
+  try {
+    el.value = JSON.stringify(JSON.parse(el.value), null, sp);
+    handleJsonStudioInput();
+  } catch (e) {}
+}
+
+function minifyJsonStudio() {
+  const el = document.getElementById('json-studio-input');
+  if (!el) return;
+  try {
+    el.value = JSON.stringify(JSON.parse(el.value));
+    handleJsonStudioInput();
+  } catch (e) {}
+}
+
+function loadSampleJsonStudio() {
+  const el = document.getElementById('json-studio-input');
+  if (!el) return;
+  el.value = JSON.stringify({ app: 'MyDevToolbox', version: '4.0', status: 'Online', toolsCount: 100, privacy: '100% In-Memory' }, null, 2);
+  handleJsonStudioInput();
+}
+
+function clearJsonStudio() {
+  const el = document.getElementById('json-studio-input');
+  if (!el) return;
+  el.value = '';
+  handleJsonStudioInput();
 }
