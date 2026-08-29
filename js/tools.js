@@ -1,6 +1,6 @@
-// js/tools.js
+// Complete 100-Tool Database Definition (10 Categories × 10 Tools = 100 Unique Tools)
 const toolsDatabase = [
-  // 1. AI & LLM Studio (10 Tools)
+  // 1. AI, LLM & Prompt Studio (10 Tools)
   { id: 'llm-tokens', name: 'LLM Token Counter & Pricing', desc: 'GPT-4o, Claude 3.5, Gemini, DeepSeek token footprint & cost matrix', cat: 'ai popular', icon: 'cpu', badge: '14+ Models' },
   { id: 'md-table-gen', name: 'Visual Markdown Table Builder', desc: 'Spreadsheet grid builder that generates formatted Markdown table code', cat: 'ai text popular', icon: 'grid', badge: 'Grid Studio' },
   { id: 'wcag-contrast', name: 'WCAG Color Contrast Checker', desc: 'Real-time foreground/background ratio with AA/AAA compliance ratings', cat: 'ai design popular', icon: 'eye', badge: 'WCAG 2.1' },
@@ -68,9 +68,9 @@ const toolsDatabase = [
   { id: 'subnet-calc', name: 'IPv4 Subnet CIDR Calculator', desc: 'Calculate network ranges, broadcast addresses, and usable host counts', cat: 'devops math', icon: 'network', badge: 'Networking' },
   { id: 'ipv6-expand', name: 'IPv6 Address Expander & Compressor', desc: 'Expand compressed zero sequences or shorten IPv6 addresses to standard RFC form', cat: 'devops', icon: 'cpu', badge: 'IPv6' },
   { id: 'nginx-format', name: 'Nginx Config Beautifier', desc: 'Standardize tab indentations and block structures for Nginx server configs', cat: 'devops web', icon: 'server', badge: 'Nginx' },
-  { id: 'b64-file', name: 'Base64 to File Downloader', desc: 'Convert Base64 data strings back into downloadable binary files', cat: 'devops data', icon: 'file-down', badge: 'Decoder' },
   { id: 'env-validator', name: '.env Environment File Sanitizer', desc: 'Validate syntax, detect missing quotes, and strip comments from env files', cat: 'devops security', icon: 'file-symlink', badge: '.env' },
   { id: 'git-commit', name: 'Git Commit Message Formatter', desc: 'Format standardized Conventional Commit messages (feat, fix, chore, docs)', cat: 'devops text', icon: 'git-commit', badge: 'Commits' },
+  { id: 'ports-lookup', name: 'Common TCP/UDP Port Directory', desc: 'Search well-known network ports (SSH 22, HTTP 80, HTTPS 443, Redis 6379)', cat: 'devops web', icon: 'hash', badge: 'Ports' },
 
   // 7. Content, Text & Markdown (10 Tools)
   { id: 'markdown-live', name: 'Markdown Live Previewer', desc: 'Live Markdown to styled HTML renderer with word count and stats', cat: 'text popular', icon: 'file-text', badge: 'Markdown' },
@@ -99,33 +99,41 @@ const toolsDatabase = [
   // 9. QA Testing & Mock Data (10 Tools)
   { id: 'dummy-card', name: 'Dummy Test Card Generator', desc: 'Generate Luhn-valid dummy credit card numbers strictly for billing QA', cat: 'testing security popular', icon: 'credit-card', badge: 'Luhn Valid' },
   { id: 'pdf-toolkit', name: 'Client-Side PDF Merger', desc: 'Combine multiple PDF documents safely in browser memory without uploads', cat: 'testing popular ai text', icon: 'file-stack', badge: 'In-Memory' },
-  { id: 'img-compress', name: 'Image Compressor & WebP', desc: 'Reduce PNG/JPG file sizes and convert to next-gen WebP directly in Canvas', cat: 'testing design popular', icon: 'image', badge: 'WebP Canvas' },
   { id: 'mock-user-gen', name: 'Mock User Profile Generator', desc: 'Generate realistic test identities with names, avatars, emails, and addresses', cat: 'testing data', icon: 'user-check', badge: 'Mock Data' },
   { id: 'random-email-gen', name: 'Random Email & Phone Generator', desc: 'Create test email addresses and phone numbers for form validation QA', cat: 'testing', icon: 'mail', badge: 'QA Forms' },
   { id: 'regex-tester', name: 'Regex Sandbox & Matcher', desc: 'Interactive regular expression tester with capture group inspection', cat: 'testing web popular devops', icon: 'regex', badge: 'Live Sandbox' },
   { id: 'string-boundary', name: 'String Length Boundary Tester', desc: 'Generate boundary strings (255 chars, 65535 chars, UTF-8 emojis) for QA', cat: 'testing', icon: 'ruler', badge: 'Limits' },
   { id: 'dummy-payload', name: 'Dummy Payload File Generator', desc: 'Create clean dummy files of exact byte sizes (1KB, 1MB, 10MB) for upload QA', cat: 'testing data', icon: 'file-plus', badge: 'Byte Files' },
   { id: 'http-simulator', name: 'HTTP Method Simulator', desc: 'Simulate GET, POST, PUT, PATCH, and DELETE responses with custom status codes', cat: 'testing web', icon: 'send', badge: 'API Mock' },
-  { id: 'b64-canvas', name: 'Base64 Image Inspector', desc: 'Paste Base64 data URLs to preview dimensions, aspect ratio, and download image', cat: 'testing design', icon: 'file-image', badge: 'Inspector' },
+  { id: 'diff-checker', name: 'Text & Code Diff Comparator', desc: 'Visual comparison highlighting character additions and deletions side-by-side', cat: 'testing popular web', icon: 'git-compare', badge: 'Git Diff' },
+  { id: 'qr-gen', name: 'Live QR Code Generator', desc: 'Generate instant high-res QR codes for URLs, WiFi logins, and contact cards', cat: 'testing web design ai', icon: 'qr-code', badge: 'Vector PNG' },
 
-  // 10. Top Popular Shortcuts (10 Tools)
-  { id: 'diff-checker', name: 'Text & Code Diff Comparator', desc: 'Visual comparison highlighting character additions and deletions side-by-side', cat: 'popular web text devops data', icon: 'git-compare', badge: 'Git Diff' },
-  { id: 'qr-gen', name: 'Live QR Code Generator', desc: 'Generate instant high-res QR codes for URLs, WiFi logins, and contact cards', cat: 'popular web design ai', icon: 'qr-code', badge: 'Vector PNG' }
+  // 10. File, Image & Media Utilities (10 Tools)
+  { id: 'img-compress', name: 'Image Compressor & WebP', desc: 'Reduce PNG/JPG file sizes and convert to next-gen WebP directly in Canvas', cat: 'media design popular', icon: 'image', badge: 'WebP Canvas' },
+  { id: 'b64-canvas', name: 'Base64 Image Inspector', desc: 'Paste Base64 data URLs to preview dimensions, aspect ratio, and download image', cat: 'media design', icon: 'file-image', badge: 'Inspector' },
+  { id: 'b64-file', name: 'Base64 to File Downloader', desc: 'Convert Base64 data strings back into downloadable binary files', cat: 'media devops data', icon: 'file-down', badge: 'Decoder' },
+  { id: 'svg-optimizer', name: 'SVG Code Optimizer & Cleaner', desc: 'Strip XML metadata, empty groups, and comments to optimize SVG vector code', cat: 'media design', icon: 'feather', badge: 'SVG' },
+  { id: 'ico-generator', name: 'Favicon Dimension Sizer', desc: 'Resize and export raster graphics into standard 16x16, 32x32, and 512x512 assets', cat: 'media design', icon: 'app-window', badge: 'Favicon' },
+  { id: 'audio-tone', name: 'DTMF Audio Tone Generator', desc: 'Synthesize custom frequency sine-wave audio tones using Web Audio API', cat: 'media math', icon: 'volume-2', badge: 'Audio' },
+  { id: 'color-extractor', name: 'Image Dominant Color Extractor', desc: 'Upload images to extract primary hex color swatches and color palettes', cat: 'media design', icon: 'droplet', badge: 'Swatches' },
+  { id: 'qr-scanner-mock', name: 'Camera QR Code Reader Simulator', desc: 'Simulate decoding QR code image payloads and data URI payloads locally', cat: 'media web', icon: 'scan', badge: 'Scanner' },
+  { id: 'markdown-pdf', name: 'Markdown Printable Export', desc: 'Render Markdown notes into clean, printable document layouts with pagination', cat: 'media text', icon: 'printer', badge: 'Print' },
+  { id: 'code-snippet-card', name: 'Code Snippet Card Studio', desc: 'Design stylized image cards for code snippets with gradient backgrounds', cat: 'media design', icon: 'camera', badge: 'Cards' }
 ];
 
-// 100% Unique, Dynamic Guide Generator based on Tool ID & Metadata
+// Automated, Robust Dynamic Guide Generator for every single tool
 function getToolGuide(tool) {
   const name = tool.name;
   const desc = tool.desc;
   
   return {
-    p1: { title: '1. Primary Purpose', text: `Designed to ${desc.toLowerCase()}. All operations execute locally in your browser memory without server uploads.` },
-    p2: { title: '2. Input Requirements', text: `Provide valid input data corresponding to ${name}. Ensure strings or formats comply with standard developer specifications.` },
-    p3: { title: '3. Practical Example', text: `Example: Use ${name} to instantly process your input and copy the resulting output terminal data to your clipboard.` }
+    p1: { title: '1. Primary Purpose', text: `This tool is engineered to ${desc.toLowerCase()}. All operations execute 100% locally in your browser memory for absolute data privacy.` },
+    p2: { title: '2. Input Instructions', text: `To use ${name}, input your required parameters or raw source text into the workspace below. The interface provides real-time feedback.` },
+    p3: { title: '3. Practical Example', text: `Example: Enter your target payload into ${name} and click process to instantly copy clean output data to your clipboard.` }
   };
 }
 
-// Render the Active Tool View into #active-tool-container with 100% unique guides per tool
+// Render the Active Tool View into #active-tool-container with exact tool-specific guidance matching
 function renderToolView(toolId) {
   const container = document.getElementById('active-tool-container');
   if (!container) return;
