@@ -1,10 +1,11 @@
-// js/core.js
+// Register PWA Service Worker for Offline Execution
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((err) => console.log('SW registration error:', err));
   });
 }
 
+// Native PWA Install Prompt Listener
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
@@ -40,6 +41,7 @@ function triggerPwaInstall() {
   }
 }
 
+// 3-Way Theme Manager
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('mdt_theme', theme);
@@ -53,6 +55,7 @@ function setTheme(theme) {
 }
 setTheme(localStorage.getItem('mdt_theme') || 'light');
 
+// View Controller & History Tracker
 function switchView(viewName) {
   const dashboard = document.getElementById('view-dashboard');
   const toolView = document.getElementById('view-tool');
@@ -102,6 +105,7 @@ function openTool(toolId) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// Category Filter Engine
 let currentActiveCategory = 'all';
 
 function setCategoryFilter(cat) {
@@ -162,6 +166,7 @@ function handleMainSearchEnter() {
   if (visible.length === 1) visible[0].click();
 }
 
+// Spotlight Command Palette
 function toggleSpotlight() {
   const modal = document.getElementById('spotlight-modal');
   if (!modal) return;
@@ -207,6 +212,7 @@ function handleSpotlightSearch() {
   if (window.lucide) lucide.createIcons();
 }
 
+// Blobby Companion Logic
 function toggleCompanionDialog() {
   const dialog = document.getElementById('companion-dialog');
   if (dialog) {
