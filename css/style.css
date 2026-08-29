@@ -1,7 +1,3 @@
-/* ==========================================================================
-   Modern Developer Glassmorphism & UI System
-   ========================================================================== */
-
 :root[data-theme="light"] {
   --bg-main: #f8fafc;
   --bg-card: rgba(255, 255, 255, 0.9);
@@ -49,7 +45,6 @@ body {
   background-attachment: fixed;
 }
 
-/* Glassmorphism Cards */
 .theme-card {
   background-color: var(--bg-card);
   border-color: var(--border-color);
@@ -76,27 +71,18 @@ body {
   box-shadow: 0 0 0 3px var(--border-glow);
 }
 
-/* Hide Scrollbar Utility */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Syntax Highlighting */
 .json-key { color: #f43f5e; font-weight: 600; }
 .json-string { color: #10b981; }
 .json-number { color: #f59e0b; }
 .json-boolean { color: #8b5cf6; font-weight: 600; }
 .json-null { color: #64748b; font-style: italic; }
 
-/* Visual Diff Highlights */
 .diff-insert { background-color: rgba(16, 185, 129, 0.2); color: #10b981; border-radius: 4px; padding: 2px 4px; }
 .diff-delete { background-color: rgba(244, 63, 94, 0.2); color: #f43f5e; text-decoration: line-through; border-radius: 4px; padding: 2px 4px; }
 
-/* Animated Kawaii Physics */
 @keyframes pet-bounce {
   0%, 100% { transform: scale(1, 1) translateY(0); }
   30% { transform: scale(1.1, 0.9) translateY(2px); }
@@ -111,7 +97,6 @@ body {
 }
 .eye-blink-smooth { animation: eye-blink-smooth 3.6s infinite; transform-origin: center; }
 
-/* Zen Bubble Wrap Popper */
 .bubble-wrap-dot {
   width: 32px;
   height: 32px;
