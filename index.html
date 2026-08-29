@@ -57,26 +57,26 @@
       </div>
 
       <div class="flex items-center space-x-2.5">
-        <button onclick="toggleRequestModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-500 border border-indigo-500/20 text-xs font-bold transition">
+        <button onclick="toggleRequestModal()" title="Submit a request for a new developer tool" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-500 border border-indigo-500/20 text-xs font-bold transition">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
           <span>Request Tool</span>
         </button>
 
-        <button onclick="triggerPwaInstall()" id="btn-pwa-install" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
+        <button onclick="triggerPwaInstall()" id="btn-pwa-install" title="Install MyDevToolbox as a Progressive Web App (PWA) to run standalone and work 100% offline without internet connection." class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
           <i data-lucide="laptop" class="w-3.5 h-3.5"></i>
           <span>Install Offline</span>
           <span id="install-counter-badge" class="ml-1 px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-mono font-bold shadow-sm">1.2k+</span>
         </button>
 
-        <button onclick="toggleSpotlight()" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl border theme-card text-xs opacity-70 hover:opacity-100 transition">
+        <button onclick="toggleSpotlight()" title="Open Command Palette (⌘K / Ctrl+K)" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl border theme-card text-xs opacity-70 hover:opacity-100 transition">
           <i data-lucide="command" class="w-3.5 h-3.5"></i>
           <kbd class="px-1.5 py-0.5 bg-slate-500/10 border rounded text-[10px] font-mono">⌘K</kbd>
         </button>
 
         <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
-          <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
-          <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
-          <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Dark"><i data-lucide="moon" class="w-4 h-4"></i></button>
+          <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Switch to Light Theme"><i data-lucide="sun" class="w-4 h-4"></i></button>
+          <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Switch to Midnight Dim Theme"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
+          <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Switch to Dark Theme"><i data-lucide="moon" class="w-4 h-4"></i></button>
         </div>
       </div>
     </div>
@@ -281,7 +281,9 @@
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>© 2026 <strong>mydevtoolbox.in</strong>. 100% In-Browser Privacy-First Developer Tools.</div>
       <div class="flex space-x-5 font-semibold">
-        <button onclick="toggleRequestModal()" class="hover:text-indigo-500 transition">Request New Tool</button>
+        <button onclick="toggleRequestModal()" class="px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-500 border border-indigo-500/20 font-bold transition flex items-center gap-1.5">
+          <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Request New Tool
+        </button>
       </div>
     </div>
   </footer>
