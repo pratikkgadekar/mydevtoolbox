@@ -91,7 +91,7 @@ function renderRecentTools() {
   const list = document.getElementById('recent-tools-list');
   list.innerHTML = '';
   recent.forEach((t) => {
-    list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-2.5 py-1 theme-card border text-[11px] font-semibold rounded-lg hover:border-indigo-500 transition whitespace-nowrap">⚡ ${t.name}</button>`;
+    list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-3 py-1 theme-card border text-[11px] font-semibold rounded-xl hover:border-indigo-500 transition">⚡ ${t.name}</button>`;
   });
 }
 
@@ -116,35 +116,10 @@ function openTool(toolId) {
   if (toolId === 'pwd-gen') generatePassword();
   if (toolId === 'qr-gen') generateQrCode();
   if (toolId === 'regex-tester') testRegex();
-  if (toolId === 'unit-convert') setUnitCategory('length');
-  if (toolId === 'hash-gen') computeHashes();
-  if (toolId === 'dummy-card') generateDummyCard();
-  if (toolId === 'box-shadow') updateShadow();
-  if (toolId === 'cron-builder') explainCron();
 }
 
-// Category Filtering Engine with Dropdown Integration
+// Category Filtering Engine with Clean Pill States
 let currentActiveCategory = 'all';
-
-function toggleMoreCategoriesDropdown() {
-  const dd = document.getElementById('dropdown-more-categories');
-  dd.classList.toggle('hidden');
-}
-
-// Close dropdown when clicking outside
-window.addEventListener('click', (e) => {
-  const btn = document.getElementById('btn-more-categories');
-  const dd = document.getElementById('dropdown-more-categories');
-  if (btn && dd && !btn.contains(e.target) && !dd.contains(e.target)) {
-    dd.classList.add('hidden');
-  }
-});
-
-function selectDropdownCategory(catKey, catLabel) {
-  document.getElementById('more-cat-label').innerText = catLabel;
-  document.getElementById('dropdown-more-categories').classList.add('hidden');
-  setCategoryFilter(catKey);
-}
 
 function setCategoryFilter(cat) {
   currentActiveCategory = cat;
@@ -294,7 +269,7 @@ function copyToClipboard(id) {
   alert('Copied to clipboard!');
 }
 
-// Request Tool Modal
+// Request Tool Modal Controls
 function toggleRequestModal() {
   const modal = document.getElementById('request-tool-modal');
   modal.classList.toggle('hidden');
