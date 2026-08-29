@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyDevToolbox — Fast, Free & Privacy-First Browser Utilities</title>
-  <meta name="description" content="Free 100% client-side web toolbox: PDF merger, JSON studio, QR generator, image compressor, code diff, regex, and cryptographic tools." />
+  <title>MyDevToolbox — Fast, Free & Privacy-First Developer Utilities</title>
+  <meta name="description" content="Free 100% client-side developer toolkit: LLM Token Counter, WCAG Contrast, Markdown Table Builder, JSON studio, PDF merger, QR code, and crypto tools." />
   
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2884422236657572" crossorigin="anonymous"></script>
 
@@ -120,99 +120,38 @@
       transform: scale(0.85);
       cursor: default;
     }
-
-    /* Dropdown hover behavior */
-    .nav-dropdown:hover .nav-menu {
-      display: block;
-      opacity: 1;
-      visibility: visible;
-    }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col font-sans antialiased relative selection:bg-indigo-500 selection:text-white">
 
   <header class="border-b theme-card sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="h-16 flex items-center justify-between">
-        
-        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
-          </div>
-          <div>
-            <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
-            <span class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">100% Client-Side</span>
-          </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchView('dashboard')">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
         </div>
-
-        <nav class="hidden md:flex items-center space-x-1 text-xs font-bold">
-          
-          <div class="relative nav-dropdown py-4">
-            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
-              <span>Everyday Utilities</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
-            </button>
-            <div class="nav-menu hidden absolute left-0 top-12 w-56 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
-              <a onclick="openTool('pdf-toolkit')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">📄 PDF Merger</a>
-              <a onclick="openTool('qr-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">📱 QR Code Generator</a>
-              <a onclick="openTool('img-compress')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🖼️ Image Compressor</a>
-              <a onclick="openTool('case-convert')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔤 Text Case Converter</a>
-              <a onclick="openTool('unit-convert')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">⚖️ Metric Converter</a>
-              <a onclick="openTool('word-counter')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">📝 Word Counter</a>
-            </div>
-          </div>
-
-          <div class="relative nav-dropdown py-4">
-            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
-              <span>JSON & Data</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
-            </button>
-            <div class="nav-menu hidden absolute left-0 top-12 w-56 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
-              <a onclick="openTool('json-formatter')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">⚡ JSON Pro Studio</a>
-              <a onclick="openTool('json-ts')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔷 JSON to TypeScript</a>
-              <a onclick="openTool('base64')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔢 Base64 Encode/Decode</a>
-              <a onclick="openTool('url-codec')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔗 URL Encoder/Decoder</a>
-            </div>
-          </div>
-
-          <div class="relative nav-dropdown py-4">
-            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
-              <span>Security & Generators</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
-            </button>
-            <div class="nav-menu hidden absolute left-0 top-12 w-56 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
-              <a onclick="openTool('uuid-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔑 UUID v4 Batch Creator</a>
-              <a onclick="openTool('pwd-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🛡️ Strong Password Generator</a>
-              <a onclick="openTool('dummy-card')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">💳 Dummy Test Card Generator</a>
-              <a onclick="openTool('hash-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">#️⃣ SHA-256 Hasher</a>
-              <a onclick="openTool('slug-gen')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🏷️ URL Slug Creator</a>
-            </div>
-          </div>
-
-          <div class="relative nav-dropdown py-4">
-            <button class="px-3 py-1.5 rounded-xl hover:bg-slate-500/10 flex items-center gap-1 transition">
-              <span>Developer & Web</span> <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-60"></i>
-            </button>
-            <div class="nav-menu hidden absolute right-0 top-12 w-60 p-2 rounded-2xl theme-card border shadow-xl transition-all z-50">
-              <a onclick="openTool('diff-checker')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔄 Code Diff Comparator</a>
-              <a onclick="openTool('jwt-debugger')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔓 JWT Token Inspector</a>
-              <a onclick="openTool('cron-builder')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">⏰ Cron Expression Explainer</a>
-              <a onclick="openTool('box-shadow')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🎨 CSS Box-Shadow Studio</a>
-              <a onclick="openTool('regex-tester')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🔍 Regex Sandbox & Matcher</a>
-              <a onclick="openTool('http-codes')" class="block px-3 py-2 rounded-xl hover:bg-indigo-500/10 hover:text-indigo-500 cursor-pointer">🌐 HTTP Status Codes Inspector</a>
-            </div>
-          </div>
-
-        </nav>
-
-        <div class="flex items-center space-x-3">
-          <button onclick="switchView('dashboard')" class="text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">Dashboard</button>
-
-          <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
-            <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
-            <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
-            <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Dark"><i data-lucide="moon" class="w-4 h-4"></i></button>
-          </div>
+        <div>
+          <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
+          <span class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">100% Client-Side</span>
         </div>
+      </div>
 
+      <div class="flex items-center space-x-3">
+        <button onclick="toggleSpotlight()" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl border theme-card text-xs opacity-70 hover:opacity-100 transition">
+          <i data-lucide="command" class="w-3.5 h-3.5"></i>
+          <span>Command Palette</span>
+          <kbd class="px-1.5 py-0.5 bg-slate-500/10 border rounded text-[10px] font-mono">⌘K</kbd>
+        </button>
+
+        <button onclick="switchView('dashboard')" class="text-xs font-bold px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">Dashboard</button>
+
+        <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
+          <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
+          <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
+          <button onclick="setTheme('dark')" id="btn-theme-dark" class="p-1.5 rounded-xl transition" title="Dark"><i data-lucide="moon" class="w-4 h-4"></i></button>
+        </div>
       </div>
     </div>
   </header>
@@ -231,10 +170,10 @@
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 100% In-Browser • Zero Tracking • Zero Latency
         </div>
         <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-          Every Web Tool You Need, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">In One Place</span>.
+          Every Developer Tool, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">In One Tab</span>.
         </h1>
         <p class="mt-2 text-sm sm:text-base opacity-70">
-          Fast, free micro-utilities running purely in your browser memory.
+          Fast, client-side developer utilities running purely in your browser memory.
         </p>
 
         <div class="mt-6 relative max-w-xl mx-auto flex items-center">
@@ -244,12 +183,10 @@
             id="tool-search" 
             oninput="filterTools()" 
             onkeydown="if(event.key === 'Enter') handleMainSearchEnter()" 
-            placeholder="Search any tool (e.g. JSON, PDF, QR, Diff, Hash, Case, Password, UUID, Unit)..." 
+            placeholder="Search tools (e.g., Tokens, Contrast, Table, JSON, Diff, Base64)..." 
             class="w-full pl-12 pr-24 py-3.5 theme-editor border rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-md transition"
           />
-          <button 
-            onclick="filterTools()" 
-            class="absolute right-2 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">
+          <button onclick="filterTools()" class="absolute right-2 px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">
             Search
           </button>
         </div>
@@ -258,149 +195,65 @@
 
         <div class="flex flex-wrap items-center justify-center gap-2 mt-5 text-xs">
           <button onclick="setCategoryFilter('all')" class="cat-pill active px-4 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All Tools</button>
-          <button onclick="setCategoryFilter('popular')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">🔥 Most Popular (12)</button>
-          <button onclick="setCategoryFilter('general')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Everyday Utilities (12)</button>
-          <button onclick="setCategoryFilter('format')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">JSON & Data Studio (12)</button>
-          <button onclick="setCategoryFilter('generator')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Security & Generators (12)</button>
-          <button onclick="setCategoryFilter('dev')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Developer & Web (12)</button>
+          <button onclick="setCategoryFilter('popular')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">🔥 Most Popular</button>
+          <button onclick="setCategoryFilter('ai-design')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">AI & Design Tools</button>
+          <button onclick="setCategoryFilter('data')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Data & Converters</button>
+          <button onclick="setCategoryFilter('security')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Security & Crypto</button>
+          <button onclick="setCategoryFilter('dev')" class="cat-pill px-4 py-1.5 rounded-xl theme-card font-semibold border hover:border-indigo-500 transition">Developer & Web</button>
         </div>
       </div>
 
       <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('pdf-toolkit')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai-design popular" onclick="openTool('llm-tokens')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="file-stack" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Top Ranked</span>
+              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="cpu" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">AI / LLM</span>
             </div>
-            <h3 class="font-bold text-base mt-4">Client-Side PDF Merger</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Combine multiple PDF documents together without uploading files to any external server.</p>
+            <h3 class="font-bold text-base mt-4">LLM Token Counter & Pricing</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate approximate BPE tokens and query cost estimations for GPT-4o, Claude 3.5, and Gemini 1.5.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+          <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('qr-gen')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai-design popular" onclick="openTool('wcag-contrast')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="qr-code" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Universal</span>
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="eye" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Accessibility</span>
             </div>
-            <h3 class="font-bold text-base mt-4">Live QR Code Generator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate instant high-res QR codes for URLs, WiFi logins, contact cards, and text.</p>
+            <h3 class="font-bold text-base mt-4">WCAG Color Contrast Checker</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Real-time foreground/background ratio calculator with instant AA/AAA accessibility badges.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai-design data" onclick="openTool('md-table-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="grid" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Productivity</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Visual Markdown Table Builder</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Spreadsheet grid builder with column alignment controls that outputs copyable Markdown tables.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('img-compress')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev data" onclick="openTool('base-converter')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="image" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Top Used</span>
+              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="binary" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Math</span>
             </div>
-            <h3 class="font-bold text-base mt-4">Image Compressor & WebP</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Reduce PNG/JPG file sizes and convert to next-gen WebP directly in browser Canvas.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('case-convert')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="type" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Writing</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Text Case Converter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Switch text between Title Case, UPPERCASE, lowercase, camelCase, snake_case, & kebab-case.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('unit-convert')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="scale" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Daily</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Metric & Unit Converter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Instant conversion between Metric and Imperial lengths, weights, temperatures, and data bytes.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general" onclick="openTool('markdown-live')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="file-text" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">Content</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Markdown Live Preview</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Live Markdown to formatted HTML previewer with real-time word and character statistics.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general popular" onclick="openTool('word-counter')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="spell-check" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">Writers</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Word & Character Counter</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Real-time word, character, sentence, paragraph, and reading time estimation metrics.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general dev" onclick="openTool('aspect-ratio')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="maximize" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">Design</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Aspect Ratio Calculator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Compute dimensions for 16:9, 4:3, 1:1, and custom responsive resolutions.</p>
+            <h3 class="font-bold text-base mt-4">Number Base Converter</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Live simultaneous conversion between Decimal, Hexadecimal, Binary, and Octal formats.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general generator" onclick="openTool('lorem-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="align-left" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Mockup</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Lorem Ipsum Text Builder</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate paragraphs, sentences, or word counts of placeholder filler text.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general format dev" onclick="openTool('url-codec')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="link" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Web</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">URL Encoder & Decoder</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Safely encode special query parameters or decode percent-encoded URLs.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general generator popular" onclick="openTool('dummy-card')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="credit-card" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Testing</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Dummy Test Card Generator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate valid dummy payment card numbers for software QA and billing testing.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="general format popular" onclick="openTool('json-formatter')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data popular" onclick="openTool('json-formatter')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="code-2" class="w-6 h-6"></i></div>
@@ -412,79 +265,19 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format dev popular" onclick="openTool('json-ts')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai-design popular" onclick="openTool('pdf-toolkit')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="file-json" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">TypeScript</span>
+              <div class="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-500"><i data-lucide="file-stack" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Document</span>
             </div>
-            <h3 class="font-bold text-base mt-4">JSON to TypeScript</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Turn nested JSON payloads into clean, strongly-typed TypeScript definitions.</p>
+            <h3 class="font-bold text-base mt-4">Client-Side PDF Merger</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Combine multiple PDF documents safely in browser memory without sending data to servers.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+          <div class="mt-4 flex items-center text-xs font-bold text-rose-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="format popular dev" onclick="openTool('base64')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="binary" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Binary</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Base64 Text & Data URL</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Encode or decode strings and binary image files with full Unicode support.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular format" onclick="openTool('uuid-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="key" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Security</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">UUID v4 Batch Creator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate batch RFC4122 v4 unique identifiers via Web Crypto API.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular" onclick="openTool('pwd-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Safety</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">Password & Token Generator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Create cryptographically secure passwords with custom lengths and symbols.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator format dev" onclick="openTool('hash-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="hash" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Crypto</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">SHA-256 Hasher</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate cryptographic SHA-256 message digests instantly in browser memory.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="generator popular format dev" onclick="openTool('slug-gen')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-500"><i data-lucide="link-2" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-violet-500/10 text-violet-500 border border-violet-500/20 px-2.5 py-0.5 rounded-full">SEO</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">URL Slug & Permalink Creator</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Convert article titles into clean, URL-safe permalinks for blogs and websites.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-violet-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev popular format" onclick="openTool('diff-checker')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev popular" onclick="openTool('diff-checker')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500"><i data-lucide="git-compare" class="w-6 h-6"></i></div>
@@ -496,64 +289,64 @@
           <div class="mt-4 flex items-center text-xs font-bold text-indigo-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev generator format" onclick="openTool('jwt-debugger')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="ai-design popular" onclick="openTool('qr-gen')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500"><i data-lucide="unlock" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-pink-500/10 text-pink-500 border border-pink-500/20 px-2.5 py-0.5 rounded-full">Auth</span>
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="qr-code" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Universal</span>
             </div>
-            <h3 class="font-bold text-base mt-4">JWT Token Inspector</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Decode JWT header and payload claims with live expiration status.</p>
+            <h3 class="font-bold text-base mt-4">Live QR Code Generator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate instant high-res QR codes for URLs, WiFi logins, contact cards, and text.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-pink-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+          <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev generator" onclick="openTool('cron-builder')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="data popular" onclick="openTool('base64')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500"><i data-lucide="clock" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">DevOps</span>
+              <div class="w-12 h-12 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-500"><i data-lucide="binary" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-teal-500/10 text-teal-500 border border-teal-500/20 px-2.5 py-0.5 rounded-full">Encoding</span>
             </div>
-            <h3 class="font-bold text-base mt-4">Cron Expression Explainer</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Translate 5-part cron syntax into human sentences with presets.</p>
+            <h3 class="font-bold text-base mt-4">Base64 Text & Data URL</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Encode or decode strings and binary image files with full Unicode support.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+          <div class="mt-4 flex items-center text-xs font-bold text-teal-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev generator" onclick="openTool('box-shadow')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security popular" onclick="openTool('uuid-gen')">
           <div>
             <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500"><i data-lucide="layers" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 px-2.5 py-0.5 rounded-full">CSS</span>
+              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500"><i data-lucide="key" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full">Security</span>
             </div>
-            <h3 class="font-bold text-base mt-4">CSS Box-Shadow Studio</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Visual sliders for offsets, blur, and spread with instant CSS copy.</p>
+            <h3 class="font-bold text-base mt-4">UUID v4 Batch Creator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Generate batch RFC4122 v4 unique identifiers via Web Crypto API.</p>
           </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-cyan-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+          <div class="mt-4 flex items-center text-xs font-bold text-blue-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev format" onclick="openTool('regex-tester')">
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="security popular" onclick="openTool('pwd-gen')">
+          <div>
+            <div class="flex items-start justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Safety</span>
+            </div>
+            <h3 class="font-bold text-base mt-4">Password & Token Generator</h3>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Create cryptographically secure passwords with custom lengths and symbols.</p>
+          </div>
+          <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
+        </div>
+
+        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev popular" onclick="openTool('regex-tester')">
           <div>
             <div class="flex items-start justify-between">
               <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500"><i data-lucide="regex" class="w-6 h-6"></i></div>
               <span class="text-[11px] font-bold uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Regex</span>
             </div>
             <h3 class="font-bold text-base mt-4">Regex Sandbox & Matcher</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Test regular expressions against test strings with flag controls.</p>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Interactive regular expression tester with live capture group inspect.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-amber-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
-        </div>
-
-        <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" data-cat="dev format generator" onclick="openTool('http-codes')">
-          <div>
-            <div class="flex items-start justify-between">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500"><i data-lucide="server" class="w-6 h-6"></i></div>
-              <span class="text-[11px] font-bold uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Interactive</span>
-            </div>
-            <h3 class="font-bold text-base mt-4">HTTP Status Codes Inspector</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Searchable directory with code simulator, client/server causes, and code snippets.</p>
-          </div>
-          <div class="mt-4 flex items-center text-xs font-bold text-emerald-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
 
       </div>
@@ -567,100 +360,130 @@
         <span class="text-xs px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full font-mono font-bold">100% In-Browser</span>
       </div>
 
-      <div id="tool-unit-convert" class="tool-view-panel hidden space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-500/20 pb-4">
-          <div>
-            <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="scale" class="w-6 h-6 text-teal-500"></i> Universal Metric & Unit Converter</h2>
-            <p class="text-xs opacity-70 mt-1">Convert length, mass, temperature, data storage, and speed with exact instant precision.</p>
-          </div>
-          <span class="text-xs font-mono px-3 py-1 bg-teal-500/10 text-teal-500 border border-teal-500/20 rounded-xl font-bold">⚡ Zero Latency</span>
+      <div id="tool-llm-tokens" class="tool-view-panel hidden space-y-5">
+        <div class="border-b border-slate-500/20 pb-4">
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="cpu" class="w-6 h-6 text-purple-500"></i> LLM Token Counter & Pricing Estimator</h2>
+          <p class="text-xs opacity-70 mt-1">Estimate token footprints and inference API costs across frontier AI foundation models.</p>
         </div>
 
-        <div class="theme-card border p-6 rounded-3xl space-y-6">
-          <div class="flex flex-wrap gap-2 text-xs font-bold">
-            <button onclick="setUnitCategory('length')" id="btn-ucat-length" class="px-3.5 py-2 bg-teal-600 text-white rounded-xl shadow">Length</button>
-            <button onclick="setUnitCategory('weight')" id="btn-ucat-weight" class="px-3.5 py-2 theme-editor border rounded-xl">Weight</button>
-            <button onclick="setUnitCategory('temp')" id="btn-ucat-temp" class="px-3.5 py-2 theme-editor border rounded-xl">Temperature</button>
-            <button onclick="setUnitCategory('data')" id="btn-ucat-data" class="px-3.5 py-2 theme-editor border rounded-xl">Data Storage</button>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Estimated Tokens</div><div id="token-count" class="text-xl font-bold text-purple-500">0</div></div>
+          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">GPT-4o Cost</div><div id="cost-gpt4" class="text-xl font-bold text-indigo-500">$0.000</div></div>
+          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Claude 3.5 Sonnet</div><div id="cost-claude" class="text-xl font-bold text-pink-500">$0.000</div></div>
+          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Gemini 1.5 Pro</div><div id="cost-gemini" class="text-xl font-bold text-emerald-500">$0.000</div></div>
+        </div>
+
+        <div class="theme-card border p-4 rounded-3xl space-y-2">
+          <div class="flex justify-between items-center text-xs opacity-70">
+            <span>Input Prompt / Context:</span>
+            <span id="char-word-stats">0 chars | 0 words</span>
+          </div>
+          <textarea id="llm-prompt-input" oninput="calculateTokens()" class="w-full h-64 p-4 theme-editor font-mono text-xs border rounded-2xl focus:outline-none leading-relaxed" placeholder="Paste your system prompt, dataset rows, or query context here..."></textarea>
+        </div>
+      </div>
+
+      <div id="tool-wcag-contrast" class="tool-view-panel hidden space-y-5">
+        <div class="border-b border-slate-500/20 pb-4">
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="eye" class="w-6 h-6 text-amber-500"></i> WCAG Color Contrast & Accessibility Checker</h2>
+          <p class="text-xs opacity-70 mt-1">Check contrast ratio compliance for Web Content Accessibility Guidelines (WCAG 2.1).</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="theme-card border p-6 rounded-3xl space-y-4 text-xs font-semibold">
+            <div>
+              <label class="block mb-1.5 opacity-80">Text / Foreground Color</label>
+              <div class="flex gap-3 items-center">
+                <input type="color" id="wcag-fg-color" value="#0f172a" oninput="updateContrast()" class="w-10 h-10 rounded-xl cursor-pointer border p-0.5">
+                <input type="text" id="wcag-fg-text" value="#0f172a" oninput="syncColorInput('fg')" class="flex-1 p-2.5 theme-editor border rounded-xl font-mono text-xs">
+              </div>
+            </div>
+            <div>
+              <label class="block mb-1.5 opacity-80">Background Color</label>
+              <div class="flex gap-3 items-center">
+                <input type="color" id="wcag-bg-color" value="#ffffff" oninput="updateContrast()" class="w-10 h-10 rounded-xl cursor-pointer border p-0.5">
+                <input type="text" id="wcag-bg-text" value="#ffffff" oninput="syncColorInput('bg')" class="flex-1 p-2.5 theme-editor border rounded-xl font-mono text-xs">
+              </div>
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-center">
-            <div class="theme-editor border p-5 rounded-2xl space-y-3">
-              <label class="block text-xs font-bold opacity-80">Source Value & Unit</label>
-              <input type="number" id="unit-val" value="100" oninput="convertUnits()" class="w-full p-3.5 theme-card font-mono text-base border rounded-xl focus:ring-2 focus:ring-teal-500 focus:outline-none" />
-              <select id="unit-from" onchange="convertUnits()" class="w-full p-3 theme-card text-xs border rounded-xl font-semibold"></select>
+          <div class="theme-card border p-6 rounded-3xl space-y-4 text-center">
+            <div id="contrast-preview-box" class="p-6 rounded-2xl border transition-all text-base font-bold flex items-center justify-center min-h-[100px]" style="background-color: #ffffff; color: #0f172a;">
+              The quick brown fox jumps over the lazy dog.
             </div>
-
-            <div class="theme-editor border p-5 rounded-2xl space-y-3">
-              <div class="flex justify-between items-center text-xs font-bold">
-                <span class="opacity-80">Converted Result</span>
-                <button onclick="copyToClipboard('unit-result')" class="text-teal-500 hover:underline flex items-center gap-1 font-semibold">
-                  <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
-                </button>
-              </div>
-              <input type="text" id="unit-result" readonly class="w-full p-3.5 bg-teal-500/10 text-teal-500 font-mono text-base font-bold border border-teal-500/30 rounded-xl" value="--" />
-              <select id="unit-to" onchange="convertUnits()" class="w-full p-3 theme-card text-xs border rounded-xl font-semibold"></select>
+            <div class="flex justify-around items-center pt-2">
+              <div><div class="text-[11px] opacity-60">Ratio</div><div id="contrast-ratio" class="text-2xl font-extrabold text-indigo-500">21.00:1</div></div>
+              <div><div class="text-[11px] opacity-60">AA Normal</div><span id="badge-aa-normal" class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold">PASS</span></div>
+              <div><div class="text-[11px] opacity-60">AAA Normal</div><span id="badge-aaa-normal" class="px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold">PASS</span></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="tool-pdf-toolkit" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-stack" class="w-6 h-6 text-rose-500"></i> Client-Side PDF Merger</h2>
-          <p class="text-xs opacity-70 mt-1">Merge multiple PDF files directly inside your browser memory without uploading anywhere.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="border-2 border-dashed border-slate-400/40 rounded-2xl p-8 text-center cursor-pointer hover:border-rose-500 transition" onclick="document.getElementById('pdf-file-input').click()">
-            <input type="file" id="pdf-file-input" accept="application/pdf" multiple class="hidden" onchange="handlePdfUpload(event)" />
-            <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-rose-500 mb-2"></i>
-            <div class="text-sm font-bold">Click to Select 2 or More PDF Files</div>
+      <div id="tool-md-table-gen" class="tool-view-panel hidden space-y-5">
+        <div class="border-b border-slate-500/20 pb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="grid" class="w-6 h-6 text-emerald-500"></i> Visual Markdown Table Generator</h2>
+            <p class="text-xs opacity-70 mt-1">Build dynamic spreadsheet grids and export standardized Markdown syntax.</p>
           </div>
-          <div id="pdf-list-container" class="hidden space-y-3">
-            <ul id="pdf-file-list" class="space-y-2 text-xs font-mono"></ul>
-            <button onclick="executePdfMerge()" id="btn-merge-pdf" class="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-2xl shadow-md flex items-center justify-center gap-2">
-              <i data-lucide="combine" class="w-4 h-4"></i> Merge PDFs Now
+          <div class="flex gap-2">
+            <button onclick="addTableRow()" class="px-3 py-1.5 bg-emerald-600 text-white rounded-xl text-xs font-bold shadow">+ Add Row</button>
+            <button onclick="addTableCol()" class="px-3 py-1.5 theme-card border rounded-xl text-xs font-bold">+ Add Column</button>
+          </div>
+        </div>
+
+        <div class="theme-card border p-4 rounded-3xl overflow-x-auto">
+          <table id="dynamic-md-table" class="w-full text-xs text-left">
+            <thead>
+              <tr id="table-head-row" class="border-b border-slate-500/20">
+                <th class="p-2"><input type="text" value="ID" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()"></th>
+                <th class="p-2"><input type="text" value="Item Name" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()"></th>
+                <th class="p-2"><input type="text" value="Status" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()"></th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <tr>
+                <td class="p-2"><input type="text" value="01" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>
+                <td class="p-2"><input type="text" value="Payment API Gateway" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>
+                <td class="p-2"><input type="text" value="Active" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="theme-card border p-4 rounded-3xl space-y-2">
+          <div class="flex justify-between items-center text-xs font-bold opacity-80">
+            <span>Generated Markdown Output</span>
+            <button onclick="copyToClipboard('md-table-output')" class="text-emerald-500 hover:underline flex items-center gap-1 font-semibold">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy Markdown
             </button>
           </div>
+          <textarea id="md-table-output" readonly class="w-full h-32 p-3 theme-editor font-mono text-xs border rounded-2xl text-emerald-500 leading-relaxed"></textarea>
         </div>
       </div>
 
-      <div id="tool-dummy-card" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6 text-amber-500"></i> Dummy Test Card Generator</h2>
-          <p class="text-xs opacity-70 mt-1">Generate valid dummy payment card numbers strictly for software development and payment gateway testing.</p>
+      <div id="tool-base-converter" class="tool-view-panel hidden space-y-5">
+        <div class="border-b border-slate-500/20 pb-4">
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="binary" class="w-6 h-6 text-cyan-500"></i> Number Base Converter</h2>
+          <p class="text-xs opacity-70 mt-1">Real-time simultaneous conversion between Decimal, Hex, Binary, and Octal formats.</p>
         </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto">
+
+        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto text-xs font-bold">
           <div>
-            <label class="block text-xs font-bold mb-1 opacity-80">Card Brand / Type</label>
-            <select id="card-type-select" class="w-full p-2.5 theme-editor border rounded-xl text-xs">
-              <option value="visa">Visa (Starts with 4)</option>
-              <option value="mastercard">Mastercard (Starts with 5)</option>
-              <option value="amex">American Express (Starts with 37)</option>
-            </select>
+            <label class="block mb-1 opacity-70">Decimal (Base 10)</label>
+            <input type="text" id="nb-dec" value="255" oninput="syncBaseConv('dec')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm">
           </div>
-          <button onclick="generateDummyCard()" class="w-full py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl text-xs shadow transition">Generate Test Card</button>
-          <div class="p-4 theme-editor border rounded-2xl space-y-2">
-            <div class="flex justify-between items-center text-xs">
-              <span class="opacity-60">Card Number:</span>
-              <span id="dummy-card-num" class="font-mono font-bold text-amber-500 text-sm">---- ---- ---- ----</span>
-            </div>
-            <div class="flex justify-between items-center text-xs">
-              <span class="opacity-60">Exp & CVV:</span>
-              <span id="dummy-card-meta" class="font-mono font-semibold">12/29 | 888</span>
-            </div>
+          <div>
+            <label class="block mb-1 opacity-70">Hexadecimal (Base 16)</label>
+            <input type="text" id="nb-hex" value="FF" oninput="syncBaseConv('hex')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm text-cyan-500">
           </div>
-        </div>
-      </div>
-
-      <div id="tool-uuid-gen" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="key" class="w-6 h-6 text-blue-500"></i> UUID v4 Batch Creator</h2>
-          <p class="text-xs opacity-70 mt-1">Generate cryptographically secure random version-4 UUID identifiers.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <button onclick="generateUuids()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow transition">Generate 5 New UUIDs</button>
-          <textarea id="uuid-output" readonly class="w-full h-40 p-3 theme-editor font-mono text-xs border rounded-2xl"></textarea>
+          <div>
+            <label class="block mb-1 opacity-70">Binary (Base 2)</label>
+            <input type="text" id="nb-bin" value="11111111" oninput="syncBaseConv('bin')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm text-emerald-500">
+          </div>
+          <div>
+            <label class="block mb-1 opacity-70">Octal (Base 8)</label>
+            <input type="text" id="nb-oct" value="377" oninput="syncBaseConv('oct')" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm text-amber-500">
+          </div>
         </div>
       </div>
 
@@ -692,72 +515,23 @@
         </div>
       </div>
 
-      <div id="tool-qr-gen" class="tool-view-panel hidden space-y-4">
+      <div id="tool-pdf-toolkit" class="tool-view-panel hidden space-y-4">
         <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="qr-code" class="w-6 h-6 text-emerald-500"></i> Live QR Code Generator</h2>
-          <p class="text-xs opacity-70 mt-1">Generate high resolution QR images instantly for URLs and text.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div class="theme-card border p-6 rounded-3xl space-y-4">
-            <label class="block text-xs font-bold opacity-80 mb-1">Enter URL or Text</label>
-            <input type="text" id="qr-text" oninput="generateQrCode()" value="https://mydevtoolbox.in" class="w-full px-4 py-3 theme-editor font-sans text-sm border rounded-2xl" />
-          </div>
-          <div class="flex flex-col items-center justify-center p-8 theme-card border rounded-3xl space-y-4">
-            <div id="qrcode-container" class="p-4 bg-white rounded-2xl shadow-md"></div>
-            <button onclick="downloadQrCode()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl">Download Image</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="tool-img-compress" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="image" class="w-6 h-6 text-pink-500"></i> Image Compressor & WebP Converter</h2>
-          <p class="text-xs opacity-70 mt-1">Compress PNG/JPEG files and convert to WebP in browser Canvas.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-5">
-          <div class="border-2 border-dashed border-slate-400/40 rounded-2xl p-8 text-center cursor-pointer" onclick="document.getElementById('img-file-input').click()">
-            <input type="file" id="img-file-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)" />
-            <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-pink-500 mb-2"></i>
-            <div class="text-sm font-bold">Click or Drag Image Here</div>
-          </div>
-          <div id="img-process-panel" class="hidden space-y-4">
-            <input type="range" min="10" max="100" value="80" id="img-qual" oninput="processImage()" class="w-full accent-pink-500">
-            <a id="img-download-link" class="px-5 py-2.5 bg-pink-600 text-white font-bold rounded-xl flex items-center justify-center cursor-pointer">Download Result</a>
-          </div>
-        </div>
-      </div>
-
-      <div id="tool-case-convert" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="type" class="w-6 h-6 text-amber-500"></i> Text Case Converter</h2>
-          <p class="text-xs opacity-70 mt-1">Switch text case format across Title Case, UPPERCASE, lowercase, and camelCase.</p>
-        </div>
-        <div class="space-y-4 theme-card border p-6 rounded-3xl">
-          <textarea id="case-input" class="w-full h-40 p-4 theme-editor font-sans text-sm border rounded-2xl" placeholder="Type text here..."></textarea>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="convertCase('upper')" class="px-4 py-2 theme-card border rounded-xl text-xs font-bold">UPPERCASE</button>
-            <button onclick="convertCase('lower')" class="px-4 py-2 theme-card border rounded-xl text-xs font-bold">lowercase</button>
-            <button onclick="convertCase('title')" class="px-4 py-2 theme-card border rounded-xl text-xs font-bold">Title Case</button>
-            <button onclick="convertCase('camel')" class="px-4 py-2 theme-card border rounded-xl text-xs font-bold">camelCase</button>
-            <button onclick="convertCase('snake')" class="px-4 py-2 theme-card border rounded-xl text-xs font-bold">snake_case</button>
-            <button onclick="convertCase('kebab')" class="px-4 py-2 theme-card border rounded-xl text-xs font-bold">kebab-case</button>
-          </div>
-        </div>
-      </div>
-
-      <div id="tool-word-counter" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="spell-check" class="w-6 h-6 text-violet-500"></i> Word & Character Counter</h2>
-          <p class="text-xs opacity-70 mt-1">Real-time writing statistics, word counts, and estimated reading time.</p>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-stack" class="w-6 h-6 text-rose-500"></i> Client-Side PDF Merger</h2>
+          <p class="text-xs opacity-70 mt-1">Merge multiple PDF files directly inside your browser memory.</p>
         </div>
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div class="p-3 theme-editor border rounded-2xl"><div class="text-xs opacity-60">Words</div><div id="wc-words" class="text-xl font-bold text-violet-500">0</div></div>
-            <div class="p-3 theme-editor border rounded-2xl"><div class="text-xs opacity-60">Characters</div><div id="wc-chars" class="text-xl font-bold text-indigo-500">0</div></div>
-            <div class="p-3 theme-editor border rounded-2xl"><div class="text-xs opacity-60">Sentences</div><div id="wc-sentences" class="text-xl font-bold text-emerald-500">0</div></div>
-            <div class="p-3 theme-editor border rounded-2xl"><div class="text-xs opacity-60">Read Time</div><div id="wc-readtime" class="text-xl font-bold text-pink-500">0m</div></div>
+          <div class="border-2 border-dashed border-slate-400/40 rounded-2xl p-8 text-center cursor-pointer hover:border-rose-500 transition" onclick="document.getElementById('pdf-file-input').click()">
+            <input type="file" id="pdf-file-input" accept="application/pdf" multiple class="hidden" onchange="handlePdfUpload(event)" />
+            <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-rose-500 mb-2"></i>
+            <div class="text-sm font-bold">Click to Select 2 or More PDF Files</div>
           </div>
-          <textarea id="wc-input" oninput="computeWordStats()" class="w-full h-64 p-4 theme-editor font-sans text-sm border rounded-2xl focus:outline-none" placeholder="Type or paste your article text here..."></textarea>
+          <div id="pdf-list-container" class="hidden space-y-3">
+            <ul id="pdf-file-list" class="space-y-2 text-xs font-mono"></ul>
+            <button onclick="executePdfMerge()" id="btn-merge-pdf" class="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-2xl shadow-md flex items-center justify-center gap-2">
+              <i data-lucide="combine" class="w-4 h-4"></i> Merge PDFs Now
+            </button>
+          </div>
         </div>
       </div>
 
@@ -779,26 +553,20 @@
         </div>
       </div>
 
-      <div id="tool-json-ts" class="tool-view-panel hidden space-y-4">
+      <div id="tool-qr-gen" class="tool-view-panel hidden space-y-4">
         <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-json" class="w-6 h-6 text-indigo-500"></i> JSON to TypeScript Converter</h2>
-          <p class="text-xs opacity-70 mt-1">Convert JSON objects to typed TypeScript interfaces.</p>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="qr-code" class="w-6 h-6 text-emerald-500"></i> Live QR Code Generator</h2>
+          <p class="text-xs opacity-70 mt-1">Generate high resolution QR images instantly for URLs and text.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <textarea id="json-ts-in" oninput="convertJsonToTs()" class="w-full h-80 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder='{"userId": 1, "name": "Alex"}'></textarea>
-          <textarea id="json-ts-out" readonly class="w-full h-80 p-3 theme-editor font-mono text-xs border rounded-2xl text-indigo-400"></textarea>
-        </div>
-      </div>
-
-      <div id="tool-pwd-gen" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="shield-check" class="w-6 h-6 text-emerald-500"></i> Strong Password & Token Generator</h2>
-          <p class="text-xs opacity-70 mt-1">Generate high entropy random passwords with symbols and digits.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto">
-          <div class="flex justify-between text-xs font-bold"><span>Length: <span id="pwd-len-val">16</span></span><input type="range" min="8" max="64" value="16" id="pwd-len" oninput="document.getElementById('pwd-len-val').innerText=this.value; generatePassword();" class="w-40"></div>
-          <button onclick="generatePassword()" class="w-full py-2.5 bg-emerald-600 text-white font-bold rounded-xl">Generate New Password</button>
-          <input type="text" id="pwd-output" readonly class="w-full p-3 theme-editor font-mono text-emerald-500 font-bold text-center border rounded-2xl" />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="theme-card border p-6 rounded-3xl space-y-4">
+            <label class="block text-xs font-bold opacity-80 mb-1">Enter URL or Text</label>
+            <input type="text" id="qr-text" oninput="generateQrCode()" value="https://mydevtoolbox.in" class="w-full px-4 py-3 theme-editor font-sans text-sm border rounded-2xl" />
+          </div>
+          <div class="flex flex-col items-center justify-center p-8 theme-card border rounded-3xl space-y-4">
+            <div id="qrcode-container" class="p-4 bg-white rounded-2xl shadow-md"></div>
+            <button onclick="downloadQrCode()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl">Download Image</button>
+          </div>
         </div>
       </div>
 
@@ -817,194 +585,43 @@
         </div>
       </div>
 
-      <div id="tool-cron-builder" class="tool-view-panel hidden space-y-4">
+      <div id="tool-uuid-gen" class="tool-view-panel hidden space-y-4">
         <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="clock" class="w-6 h-6 text-purple-500"></i> Cron Expression Explainer</h2>
-          <p class="text-xs opacity-70 mt-1">Decode standard 5-part cron syntax into plain English.</p>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="key" class="w-6 h-6 text-blue-500"></i> UUID v4 Batch Creator</h2>
+          <p class="text-xs opacity-70 mt-1">Generate cryptographically secure random version-4 UUID identifiers.</p>
         </div>
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <input type="text" id="cron-input" oninput="explainCron()" value="*/15 * * * *" class="w-full px-4 py-3 theme-editor font-mono text-sm border rounded-2xl" />
-          <div id="cron-result" class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl font-bold text-emerald-500">Runs every 15 minutes.</div>
+          <button onclick="generateUuids()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow transition">Generate 5 New UUIDs</button>
+          <textarea id="uuid-output" readonly class="w-full h-40 p-3 theme-editor font-mono text-xs border rounded-2xl"></textarea>
         </div>
       </div>
 
-      <div id="tool-box-shadow" class="tool-view-panel hidden space-y-4">
+      <div id="tool-pwd-gen" class="tool-view-panel hidden space-y-4">
         <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="layers" class="w-6 h-6 text-cyan-500"></i> CSS Box Shadow Studio</h2>
-          <p class="text-xs opacity-70 mt-1">Visually design and export CSS box-shadow declarations.</p>
+          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="shield-check" class="w-6 h-6 text-emerald-500"></i> Strong Password & Token Generator</h2>
+          <p class="text-xs opacity-70 mt-1">Generate high entropy random passwords with symbols and digits.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div class="space-y-4 theme-card border p-6 rounded-3xl text-xs font-semibold">
-            <input type="range" min="-50" max="50" value="0" id="bs-x" oninput="updateShadow()" class="w-full accent-indigo-600">
-            <input type="range" min="-50" max="50" value="12" id="bs-y" oninput="updateShadow()" class="w-full accent-indigo-600">
-            <input type="range" min="0" max="100" value="28" id="bs-blur" oninput="updateShadow()" class="w-full accent-indigo-600">
-            <input type="range" min="-25" max="50" value="-6" id="bs-spread" oninput="updateShadow()" class="w-full accent-indigo-600">
-          </div>
-          <div class="flex flex-col items-center justify-center p-8 theme-card border rounded-3xl">
-            <div id="shadow-box" class="w-36 h-36 bg-gradient-to-tr from-indigo-500 to-pink-500 rounded-3xl"></div>
-            <code id="shadow-code" class="mt-6 px-4 py-2 theme-editor border rounded-xl text-[11px] font-mono font-bold text-indigo-500">box-shadow: 0px 12px 28px -6px rgba(0,0,0,0.2);</code>
-          </div>
+        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto">
+          <div class="flex justify-between text-xs font-bold"><span>Length: <span id="pwd-len-val">16</span></span><input type="range" min="8" max="64" value="16" id="pwd-len" oninput="document.getElementById('pwd-len-val').innerText=this.value; generatePassword();" class="w-40"></div>
+          <button onclick="generatePassword()" class="w-full py-2.5 bg-emerald-600 text-white font-bold rounded-xl">Generate New Password</button>
+          <input type="text" id="pwd-output" readonly class="w-full p-3 theme-editor font-mono text-emerald-500 font-bold text-center border rounded-2xl" />
         </div>
       </div>
 
       <div id="tool-regex-tester" class="tool-view-panel hidden space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-500/20 pb-4">
+        <div class="flex justify-between items-center border-b border-slate-500/20 pb-4">
           <div>
             <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="regex" class="w-6 h-6 text-amber-500"></i> Regex Sandbox & Matcher</h2>
             <p class="text-xs opacity-70 mt-1">Interactive regular expression tester with live capture group inspect.</p>
           </div>
-          <div class="flex gap-2">
-            <button onclick="setRegexPreset('email')" class="px-2.5 py-1 theme-card border text-[11px] font-bold rounded-lg hover:border-amber-500">Email</button>
-            <button onclick="setRegexPreset('url')" class="px-2.5 py-1 theme-card border text-[11px] font-bold rounded-lg hover:border-amber-500">URL</button>
-            <button onclick="setRegexPreset('ip')" class="px-2.5 py-1 theme-card border text-[11px] font-bold rounded-lg hover:border-amber-500">IP</button>
-          </div>
         </div>
         <div class="theme-card border p-6 rounded-3xl space-y-4">
           <div class="flex gap-2">
-            <input type="text" id="regex-pattern" oninput="testRegex()" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" class="flex-1 p-3 theme-editor font-mono text-xs border rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+            <input type="text" id="regex-pattern" oninput="testRegex()" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" class="flex-1 p-3 theme-editor font-mono text-xs border rounded-xl focus:outline-none" />
             <input type="text" id="regex-flags" oninput="testRegex()" value="g" class="w-20 p-3 theme-editor font-mono text-xs border rounded-xl text-center" />
           </div>
-          <textarea id="regex-string" oninput="testRegex()" class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="Test string: Contact support@mydevtoolbox.in or user.admin@domain.co.uk"></textarea>
+          <textarea id="regex-string" oninput="testRegex()" class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="Test string: Contact support@mydevtoolbox.in"></textarea>
           <div id="regex-matches" class="p-3 theme-editor border rounded-xl font-mono text-xs text-emerald-500 font-bold">Matches found: 0</div>
-        </div>
-      </div>
-
-      <div id="tool-http-codes" class="tool-view-panel hidden space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-500/20 pb-4">
-          <div>
-            <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="server" class="w-6 h-6 text-emerald-500"></i> HTTP Status Codes Inspector</h2>
-            <p class="text-xs opacity-70 mt-1">Deep explanation, typical causes, and developer test scripts for HTTP response codes.</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <div class="theme-card border p-4 rounded-3xl space-y-3">
-            <input type="text" id="http-search" oninput="searchHttpCodes()" placeholder="Search code (200, 404, 500, Unauthorized)..." class="w-full p-3 theme-editor text-xs border rounded-xl" />
-            <div id="http-list" class="space-y-1.5 max-h-[380px] overflow-y-auto font-mono text-xs"></div>
-          </div>
-
-          <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-4 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-3">
-                <span id="http-detail-badge" class="px-3 py-1 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-xl font-mono font-bold text-lg">200 OK</span>
-                <span id="http-detail-class" class="text-xs opacity-60 uppercase font-bold">2xx Success Class</span>
-              </div>
-              <p id="http-detail-desc" class="text-xs opacity-90 leading-relaxed mt-3">The HTTP 200 OK status code indicates that the request has succeeded. In a REST API, a 200 payload returns the requested resource representation in JSON/HTML.</p>
-            </div>
-
-            <div class="space-y-2">
-              <span class="text-xs font-bold opacity-80">cURL & Fetch Example:</span>
-              <pre id="http-detail-code" class="p-3 theme-editor border rounded-xl font-mono text-[11px] text-indigo-400 overflow-auto">fetch('/api/resource').then(res => console.log(res.status)); // Returns 200</pre>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="tool-hash-gen" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="hash" class="w-6 h-6 text-amber-500"></i> Cryptographic Hash Generator</h2>
-          <p class="text-xs opacity-70 mt-1">Compute SHA-256 and SHA-512 digests in client-side Web Crypto API.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <textarea id="hash-input" oninput="computeHashes()" class="w-full h-28 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="Text to hash..."></textarea>
-          <div class="space-y-2">
-            <span class="text-xs font-bold opacity-70">SHA-256 Digest:</span>
-            <input type="text" id="hash-sha256" readonly class="w-full p-2.5 theme-editor font-mono text-xs rounded-xl border select-all" />
-          </div>
-        </div>
-      </div>
-
-      <div id="tool-jwt-debugger" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="unlock" class="w-6 h-6 text-pink-500"></i> JWT Token Inspector</h2>
-          <p class="text-xs opacity-70 mt-1">Decode claims and verify expiration dates of JSON Web Tokens.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <textarea id="jwt-input" oninput="decodeJwt()" class="w-full h-32 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="Paste eyJhbGciOi..."></textarea>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <pre id="jwt-header-out" class="p-3 theme-editor border rounded-xl font-mono text-xs overflow-auto">{}</pre>
-            <pre id="jwt-payload-out" class="p-3 theme-editor border rounded-xl font-mono text-xs overflow-auto">{}</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="tool-markdown-live" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="file-text" class="w-6 h-6 text-indigo-500"></i> Markdown Live Preview</h2>
-          <p class="text-xs opacity-70 mt-1">Format markdown text into styled HTML elements in realtime.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <textarea id="md-input" oninput="parseMarkdownLive()" class="w-full h-80 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="# Hello Developer"></textarea>
-          <div id="md-preview" class="w-full h-80 p-4 theme-editor border rounded-2xl overflow-auto text-xs prose"></div>
-        </div>
-      </div>
-
-      <div id="tool-aspect-ratio" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="maximize" class="w-6 h-6 text-cyan-500"></i> Aspect Ratio Calculator</h2>
-          <p class="text-xs opacity-70 mt-1">Calculate width and height proportions for images, videos, and UI elements.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto">
-          <div class="grid grid-cols-2 gap-4 text-xs font-bold">
-            <div>
-              <label class="block mb-1">Ratio (W : H)</label>
-              <div class="flex gap-2">
-                <input type="number" id="ar-w-ratio" value="16" oninput="calcAspectRatio('w')" class="w-full p-2.5 theme-editor border rounded-xl text-center">
-                <input type="number" id="ar-h-ratio" value="9" oninput="calcAspectRatio('w')" class="w-full p-2.5 theme-editor border rounded-xl text-center">
-              </div>
-            </div>
-            <div>
-              <label class="block mb-1">Target Dimension</label>
-              <div class="flex gap-2">
-                <input type="number" id="ar-w-val" value="1920" oninput="calcAspectRatio('w')" class="w-full p-2.5 theme-editor border rounded-xl text-center" placeholder="W">
-                <input type="number" id="ar-h-val" value="1080" oninput="calcAspectRatio('h')" class="w-full p-2.5 theme-editor border rounded-xl text-center" placeholder="H">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="tool-lorem-gen" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="align-left" class="w-6 h-6 text-amber-500"></i> Lorem Ipsum Text Builder</h2>
-          <p class="text-xs opacity-70 mt-1">Generate placeholder text blocks for design wireframes.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="flex gap-2">
-            <button onclick="generateLorem(1)" class="px-4 py-2 theme-editor border rounded-xl text-xs font-bold">1 Paragraph</button>
-            <button onclick="generateLorem(3)" class="px-4 py-2 theme-editor border rounded-xl text-xs font-bold">3 Paragraphs</button>
-            <button onclick="generateLorem(5)" class="px-4 py-2 theme-editor border rounded-xl text-xs font-bold">5 Paragraphs</button>
-          </div>
-          <textarea id="lorem-output" readonly class="w-full h-64 p-4 theme-editor text-xs border rounded-2xl leading-relaxed"></textarea>
-        </div>
-      </div>
-
-      <div id="tool-url-codec" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="link" class="w-6 h-6 text-blue-500"></i> URL Encoder & Decoder</h2>
-          <p class="text-xs opacity-70 mt-1">Encode or decode query string characters into safe percent-encoding formats.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <textarea id="url-codec-input" class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl" placeholder="https://example.com/search?q=hello world & dev=1"></textarea>
-          <div class="flex gap-2">
-            <button onclick="runUrlCodec('encode')" class="px-4 py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl shadow">Encode URL</button>
-            <button onclick="runUrlCodec('decode')" class="px-4 py-2 theme-editor border text-xs font-bold rounded-xl">Decode URL</button>
-          </div>
-          <textarea id="url-codec-output" readonly class="w-full h-36 p-3 theme-editor font-mono text-xs border rounded-2xl"></textarea>
-        </div>
-      </div>
-
-      <div id="tool-slug-gen" class="tool-view-panel hidden space-y-4">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="link-2" class="w-6 h-6 text-violet-500"></i> URL Slug & Permalink Creator</h2>
-          <p class="text-xs opacity-70 mt-1">Convert text and titles into clean URL-friendly web permalinks.</p>
-        </div>
-        <div class="theme-card border p-6 rounded-3xl space-y-4 max-w-xl mx-auto">
-          <input type="text" id="slug-input" oninput="generateSlug()" class="w-full p-3.5 theme-editor border rounded-xl text-sm" placeholder="Enter title (e.g. 10 Fast Ways to Optimize Code!)">
-          <div class="p-3.5 bg-violet-500/10 text-violet-500 border border-violet-500/30 rounded-xl font-mono text-xs font-bold flex justify-between items-center">
-            <span id="slug-output">url-slug-preview-will-appear-here</span>
-            <button onclick="copyToClipboard('slug-output')" class="text-violet-500 hover:underline"><i data-lucide="copy" class="w-4 h-4"></i></button>
-          </div>
         </div>
       </div>
 
@@ -1017,8 +634,18 @@
     </div>
   </div>
 
-  <div id="companion-container" class="fixed z-50 bottom-4 right-6 flex flex-col items-end select-none transition-all duration-1000 ease-out">
-    
+  <div id="spotlight-modal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-24 p-4">
+    <div class="theme-card border rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden animate-in fade-in duration-150">
+      <div class="p-4 border-b border-slate-500/20 flex items-center gap-3">
+        <i data-lucide="search" class="w-5 h-5 text-indigo-500"></i>
+        <input type="text" id="spotlight-input" oninput="handleSpotlightSearch()" placeholder="Type a tool name (Tokens, JSON, Contrast, Diff, Base64)..." class="w-full bg-transparent border-none outline-none text-sm font-semibold">
+        <button onclick="toggleSpotlight()" class="text-xs opacity-50 hover:opacity-100 font-mono">ESC</button>
+      </div>
+      <div id="spotlight-results" class="max-h-72 overflow-y-auto p-2 space-y-1 text-xs font-semibold"></div>
+    </div>
+  </div>
+
+  <div id="companion-container" class="fixed z-40 bottom-4 right-6 flex flex-col items-end select-none transition-all duration-1000 ease-out">
     <div id="companion-dialog" class="hidden w-80 sm:w-96 theme-card border border-pink-400/30 shadow-2xl rounded-3xl p-5 text-xs space-y-4 mb-2">
       <div class="flex items-center justify-between border-b border-slate-500/20 pb-2.5">
         <span class="font-extrabold text-pink-500 flex items-center gap-1.5">
@@ -1027,41 +654,14 @@
         <button onclick="toggleCompanionDialog()" class="opacity-50 hover:opacity-100 font-bold text-base leading-none">&times;</button>
       </div>
 
-      <div class="space-y-1.5">
-        <label class="block text-[11px] font-bold opacity-80">Ask Blobby or Jump to Tool:</label>
-        <div class="relative">
-          <input 
-            type="text" 
-            id="blobby-search-input" 
-            onkeydown="if(event.key==='Enter') executeBlobbySearch()"
-            placeholder="e.g. metric converter, merge pdf, make qr, test card..." 
-            class="w-full pl-8 pr-16 py-2.5 theme-editor border rounded-xl text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none shadow-sm"
-          />
-          <i data-lucide="sparkles" class="w-4 h-4 absolute left-2.5 top-2.5 text-pink-500"></i>
-          <button onclick="executeBlobbySearch()" class="absolute right-1.5 top-1.5 px-2.5 py-1 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-lg text-[10px] transition">
-            Go
-          </button>
-        </div>
-        <p id="blobby-search-feedback" class="text-[10px] text-pink-500 font-semibold hidden"></p>
-      </div>
-
-      <div class="space-y-3 pt-2 border-t border-slate-500/20">
+      <div class="space-y-3 pt-1">
         <div id="zen-content-box" class="p-3.5 rounded-2xl theme-editor border border-indigo-500/20 min-h-[70px] flex items-center justify-center text-center">
-          <p id="blobby-msg" class="leading-relaxed opacity-90 font-medium">Click a button below for a fresh laugh, daily fortune, or relaxing bubble pops!</p>
+          <p id="blobby-msg" class="leading-relaxed opacity-90 font-medium">Click for a fresh joke or relaxing bubble pops!</p>
         </div>
-
         <div id="bubble-wrap-board" class="hidden p-3 theme-editor border rounded-2xl grid grid-cols-6 gap-2 justify-items-center"></div>
-
-        <div class="grid grid-cols-3 gap-2 pt-1">
-          <button onclick="fetchFreshJoke()" class="py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
-            😂 Jokes
-          </button>
-          <button onclick="openFortuneCookie()" class="py-2 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
-            🥠 Fortune
-          </button>
-          <button onclick="toggleBubblePopper()" class="py-2 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-sm transition text-center text-[11px]">
-            🫧 Pop ASMR
-          </button>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button onclick="fetchFreshJoke()" class="py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-sm text-[11px]">😂 Fresh Joke</button>
+          <button onclick="toggleBubblePopper()" class="py-2 bg-pink-600 hover:bg-pink-500 text-white font-bold rounded-xl shadow-sm text-[11px]">🫧 Pop ASMR</button>
         </div>
       </div>
     </div>
@@ -1099,33 +699,10 @@
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>© 2026 <strong>mydevtoolbox.in</strong>. All tools run 100% locally in your browser memory.</div>
       <div class="flex space-x-5 font-semibold">
-        <button onclick="toggleModal('privacy-modal')" class="hover:text-indigo-500 transition">Privacy Policy</button>
-        <button onclick="toggleModal('terms-modal')" class="hover:text-indigo-500 transition">Terms of Service</button>
         <a href="mailto:contact@mydevtoolbox.in" class="hover:text-indigo-500 transition">Contact</a>
       </div>
     </div>
   </footer>
-
-  <div id="privacy-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="theme-card border rounded-3xl max-w-lg w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto text-xs">
-      <div class="flex justify-between items-center border-b border-slate-500/20 pb-3">
-        <h3 class="text-base font-bold">Privacy Policy</h3>
-        <button onclick="toggleModal('privacy-modal')" class="font-bold text-base">&times;</button>
-      </div>
-      <p>At <strong>MyDevToolbox.in</strong>, privacy is guaranteed. All utilities execute in-memory inside your browser.</p>
-      <p><strong>Zero Data Retention:</strong> PDF files, passwords, cryptographic inputs, and text never leave your machine.</p>
-    </div>
-  </div>
-
-  <div id="terms-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="theme-card border rounded-3xl max-w-lg w-full p-6 space-y-4 max-h-[85vh] overflow-y-auto text-xs">
-      <div class="flex justify-between items-center border-b border-slate-500/20 pb-3">
-        <h3 class="text-base font-bold">Terms of Service</h3>
-        <button onclick="toggleModal('terms-modal')" class="font-bold text-base">&times;</button>
-      </div>
-      <p>All utilities are provided "as is", without warranty of any kind.</p>
-    </div>
-  </div>
 
   <script>
     lucide.createIcons();
@@ -1140,10 +717,9 @@
         else btn.className = "p-1.5 rounded-xl opacity-60 hover:opacity-100 transition";
       });
     }
-    const savedTheme = localStorage.getItem('mdt_theme') || 'light';
-    setTheme(savedTheme);
+    setTheme(localStorage.getItem('mdt_theme') || 'light');
 
-    // 2. NAVIGATION
+    // 2. VIEW ROUTER
     function switchView(viewName) {
       const dashboard = document.getElementById('view-dashboard');
       const toolView = document.getElementById('view-tool');
@@ -1165,215 +741,250 @@
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+      if (toolId === 'llm-tokens') calculateTokens();
+      if (toolId === 'wcag-contrast') updateContrast();
+      if (toolId === 'md-table-gen') generateMarkdownTable();
+      if (toolId === 'base-converter') syncBaseConv('dec');
       if (toolId === 'json-formatter' && !document.getElementById('json-studio-input').value) loadSampleJsonStudio();
       if (toolId === 'uuid-gen') generateUuids();
       if (toolId === 'pwd-gen') generatePassword();
-      if (toolId === 'box-shadow') updateShadow();
-      if (toolId === 'cron-builder') explainCron();
       if (toolId === 'qr-gen') generateQrCode();
-      if (toolId === 'http-codes') searchHttpCodes();
-      if (toolId === 'word-counter') computeWordStats();
-      if (toolId === 'dummy-card') generateDummyCard();
-      if (toolId === 'unit-convert') setUnitCategory('length');
-      if (toolId === 'hash-gen') computeHashes();
-      if (toolId === 'lorem-gen' && !document.getElementById('lorem-output').value) generateLorem(3);
       if (toolId === 'regex-tester') testRegex();
     }
 
-    // 3. FAST SEARCH & CATEGORY FILTERING
+    // 3. SEARCH & CATEGORY FILTERING
     let currentActiveCategory = 'all';
-
     function filterTools() {
       const q = document.getElementById('tool-search').value.trim().toLowerCase();
       const statusText = document.getElementById('search-status-text');
-      let visibleCount = 0;
-
+      let count = 0;
       document.querySelectorAll('.tool-card').forEach(card => {
         const text = card.innerText.toLowerCase();
-        const itemCats = card.getAttribute('data-cat') || '';
-        
-        const matchesQuery = !q || text.includes(q);
-        const matchesCat = q ? true : (currentActiveCategory === 'all' || itemCats.includes(currentActiveCategory));
-
-        if (matchesQuery && matchesCat) {
-          card.style.display = 'flex';
-          visibleCount++;
-        } else {
-          card.style.display = 'none';
-        }
+        const cats = card.getAttribute('data-cat') || '';
+        const matchQ = !q || text.includes(q);
+        const matchC = q ? true : (currentActiveCategory === 'all' || cats.includes(currentActiveCategory));
+        if (matchQ && matchC) { card.style.display = 'flex'; count++; }
+        else { card.style.display = 'none'; }
       });
-
-      if (q) {
-        statusText.innerText = `Showing ${visibleCount} tool(s) for "${q}"`;
-        statusText.classList.remove('hidden');
-      } else {
-        statusText.classList.add('hidden');
-      }
+      if (q) { statusText.innerText = `Showing ${count} tool(s) for "${q}"`; statusText.classList.remove('hidden'); }
+      else { statusText.classList.add('hidden'); }
     }
 
     function handleMainSearchEnter() {
       filterTools();
-      const q = document.getElementById('tool-search').value.trim().toLowerCase();
-      if (!q) return;
-
-      const visibleCards = Array.from(document.querySelectorAll('.tool-card')).filter(c => c.style.display === 'flex');
-      if (visibleCards.length === 1) {
-        visibleCards[0].click();
-      }
+      const visible = Array.from(document.querySelectorAll('.tool-card')).filter(c => c.style.display === 'flex');
+      if (visible.length === 1) visible[0].click();
     }
 
     function setCategoryFilter(cat) {
       currentActiveCategory = cat;
       document.getElementById('tool-search').value = '';
       document.getElementById('search-status-text').classList.add('hidden');
-
       document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md'));
       event.target.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
-
       document.querySelectorAll('.tool-card').forEach(card => {
-        const itemCats = card.getAttribute('data-cat') || '';
-        card.style.display = (cat === 'all' || itemCats.includes(cat)) ? 'flex' : 'none';
+        const cats = card.getAttribute('data-cat') || '';
+        card.style.display = (cat === 'all' || cats.includes(cat)) ? 'flex' : 'none';
       });
     }
 
-    // 4. UNIT CONVERTER ENGINE
-    const unitCategories = {
-      length: {
-        units: { m: 'Meters (m)', km: 'Kilometers (km)', cm: 'Centimeters (cm)', mm: 'Millimeters (mm)', mi: 'Miles (mi)', yd: 'Yards (yd)', ft: 'Feet (ft)', in: 'Inches (in)' },
-        rates: { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, yd: 0.9144, ft: 0.3048, in: 0.0254 }
-      },
-      weight: {
-        units: { kg: 'Kilograms (kg)', g: 'Grams (g)', mg: 'Milligrams (mg)', lb: 'Pounds (lbs)', oz: 'Ounces (oz)', ton: 'Metric Ton (t)' },
-        rates: { kg: 1, g: 0.001, mg: 0.000001, lb: 0.45359237, oz: 0.0283495, ton: 1000 }
-      },
-      temp: {
-        units: { c: 'Celsius (°C)', f: 'Fahrenheit (°F)', k: 'Kelvin (K)' }
-      },
-      data: {
-        units: { b: 'Bytes (B)', kb: 'Kilobytes (KB)', mb: 'Megabytes (MB)', gb: 'Gigabytes (GB)', tb: 'Terabytes (TB)' },
-        rates: { b: 1, kb: 1024, mb: 1048576, gb: 1073741824, tb: 1099511627776 }
+    // 4. SPOTLIGHT MODAL (CMD+K)
+    function toggleSpotlight() {
+      const modal = document.getElementById('spotlight-modal');
+      modal.classList.toggle('hidden');
+      if (!modal.classList.contains('hidden')) {
+        document.getElementById('spotlight-input').value = '';
+        handleSpotlightSearch();
+        document.getElementById('spotlight-input').focus();
       }
-    };
-    let currentUnitCat = 'length';
-
-    function setUnitCategory(cat) {
-      currentUnitCat = cat;
-      ['length', 'weight', 'temp', 'data'].forEach(c => {
-        const btn = document.getElementById('btn-ucat-' + c);
-        if (c === cat) btn.className = 'px-3.5 py-2 bg-teal-600 text-white rounded-xl shadow';
-        else btn.className = 'px-3.5 py-2 theme-editor border rounded-xl';
-      });
-
-      const fromSel = document.getElementById('unit-from');
-      const toSel = document.getElementById('unit-to');
-      fromSel.innerHTML = '';
-      toSel.innerHTML = '';
-
-      const uObj = unitCategories[cat].units;
-      const keys = Object.keys(uObj);
-      keys.forEach((k, idx) => {
-        fromSel.innerHTML += `<option value="${k}" ${idx===0?'selected':''}>${uObj[k]}</option>`;
-        toSel.innerHTML += `<option value="${k}" ${idx===1?'selected':''}>${uObj[k]}</option>`;
-      });
-
-      convertUnits();
     }
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); toggleSpotlight(); }
+      if (e.key === 'Escape' && !document.getElementById('spotlight-modal').classList.contains('hidden')) toggleSpotlight();
+    });
 
-    function convertUnits() {
-      const val = parseFloat(document.getElementById('unit-val').value);
-      const resEl = document.getElementById('unit-result');
-      if (isNaN(val)) { resEl.value = '0'; return; }
-
-      const from = document.getElementById('unit-from').value;
-      const to = document.getElementById('unit-to').value;
-
-      if (currentUnitCat === 'temp') {
-        let inCelsius = val;
-        if (from === 'f') inCelsius = (val - 32) * (5/9);
-        if (from === 'k') inCelsius = val - 273.15;
-
-        let finalVal = inCelsius;
-        if (to === 'f') finalVal = (inCelsius * (9/5)) + 32;
-        if (to === 'k') finalVal = inCelsius + 273.15;
-
-        resEl.value = `${finalVal.toFixed(2)}`;
-        return;
-      }
-
-      const rates = unitCategories[currentUnitCat].rates;
-      const inBase = val * rates[from];
-      const converted = inBase / rates[to];
-      resEl.value = `${converted.toLocaleString(undefined, { maximumFractionDigits: 6 })}`;
-    }
-
-    // 5. BLOBBY ASSISTANT SEARCH & ROUTER
-    const specificToolActions = [
-      { id: 'unit-convert', triggers: ['metric', 'unit convert', 'converter', 'convert km', 'convert kg', 'temperature', 'celsius to fahrenheit', 'bytes'] },
-      { id: 'pdf-toolkit', triggers: ['merge pdf', 'combine pdf', 'pdf merger', 'split pdf', 'pdf joiner'] },
-      { id: 'qr-gen', triggers: ['make qr', 'generate qr', 'wifi qr', 'qr generator', 'create qr'] },
-      { id: 'img-compress', triggers: ['compress image', 'reduce image', 'webp converter', 'shrink photo', 'photo compress'] },
-      { id: 'case-convert', triggers: ['uppercase', 'lowercase', 'title case', 'camelcase', 'snake case', 'kebab case', 'capitalize text'] },
-      { id: 'word-counter', triggers: ['word count', 'character count', 'reading time', 'count words', 'char counter'] },
-      { id: 'diff-checker', triggers: ['diff checker', 'compare text', 'code diff', 'git diff', 'compare code'] },
-      { id: 'json-formatter', triggers: ['json formatter', 'format json', 'json studio', 'validate json', 'beautify json', 'minify json', 'json validator'] },
-      { id: 'json-ts', triggers: ['json to ts', 'json to typescript', 'ts interface', 'json type generator'] },
-      { id: 'jwt-debugger', triggers: ['jwt debugger', 'decode jwt', 'jwt inspector', 'verify jwt', 'token decoder'] },
-      { id: 'uuid-gen', triggers: ['generate uuid', 'create uuid', 'v4 uuid', 'guid generator', 'random uuid'] },
-      { id: 'pwd-gen', triggers: ['generate password', 'strong password', 'password creator', 'make password', 'random token'] },
-      { id: 'cron-builder', triggers: ['cron builder', 'cron explainer', 'explain cron', 'crontab generator'] },
-      { id: 'regex-tester', triggers: ['regex tester', 'regex sandbox', 'test regex', 'regex matcher'] },
-      { id: 'box-shadow', triggers: ['box shadow', 'shadow generator', 'css shadow', 'shadow studio'] },
-      { id: 'http-codes', triggers: ['http status', 'http codes', 'status codes', '404 error', '500 error'] },
-      { id: 'base64', triggers: ['encode base64', 'decode base64', 'base64 converter'] },
-      { id: 'dummy-card', triggers: ['dummy card', 'test card', 'test credit card', 'card generator'] }
+    const toolsDirectory = [
+      { id: 'llm-tokens', name: 'LLM Token Counter & Pricing', desc: 'GPT-4o, Claude 3.5, Gemini 1.5 calculations' },
+      { id: 'wcag-contrast', name: 'WCAG Color Contrast Checker', desc: 'Accessibility AA/AAA ratio calculator' },
+      { id: 'md-table-gen', name: 'Visual Markdown Table Builder', desc: 'Grid spreadsheet to Markdown' },
+      { id: 'base-converter', name: 'Number Base Converter', desc: 'Dec, Hex, Bin, Oct simultaneous converter' },
+      { id: 'json-formatter', name: 'JSON Pro Studio', desc: 'Syntax highlighting & formatting' },
+      { id: 'pdf-toolkit', name: 'Client-Side PDF Merger', desc: 'Combine multiple PDF documents' },
+      { id: 'diff-checker', name: 'Text & Code Diff Comparator', desc: 'Side-by-side change highlighter' },
+      { id: 'qr-gen', name: 'Live QR Code Generator', desc: 'High-res QR for URLs and Wi-Fi' },
+      { id: 'base64', name: 'Base64 Text & Data URL', desc: 'Client-side encoder/decoder' },
+      { id: 'uuid-gen', name: 'UUID v4 Batch Creator', desc: 'Cryptographically secure IDs' },
+      { id: 'pwd-gen', name: 'Strong Password Generator', desc: 'High entropy password tokens' },
+      { id: 'regex-tester', name: 'Regex Sandbox & Matcher', desc: 'Live regular expression tester' }
     ];
 
-    function executeBlobbySearch() {
-      const rawQuery = document.getElementById('blobby-search-input').value.trim();
-      const query = rawQuery.toLowerCase();
-      const feedback = document.getElementById('blobby-search-feedback');
-      if (!query) return;
-
-      let directMatchToolId = null;
-      for (const item of specificToolActions) {
-        if (item.triggers.some(t => query.includes(t) || t === query)) {
-          directMatchToolId = item.id;
-          break;
-        }
-      }
-
-      if (directMatchToolId) {
-        feedback.innerText = `✨ Found! Opening tool...`;
-        feedback.classList.remove('hidden');
-        setTimeout(() => {
-          openTool(directMatchToolId);
-          toggleCompanionDialog();
-        }, 300);
-        return;
-      }
-
-      document.getElementById('tool-search').value = rawQuery;
-      switchView('dashboard');
-      filterTools();
-      toggleCompanionDialog();
+    function handleSpotlightSearch() {
+      const q = (document.getElementById('spotlight-input').value || '').toLowerCase();
+      const container = document.getElementById('spotlight-results');
+      container.innerHTML = '';
+      toolsDirectory.filter(t => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q)).forEach(t => {
+        container.innerHTML += `
+          <div onclick="openTool('${t.id}'); toggleSpotlight();" class="p-2.5 rounded-xl hover:bg-indigo-500/10 cursor-pointer flex justify-between items-center transition">
+            <div><span class="text-indigo-500 font-bold">${t.name}</span><div class="text-[11px] opacity-60">${t.desc}</div></div>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-50"></i>
+          </div>`;
+      });
+      lucide.createIcons();
     }
 
-    // 6. ALL TOOL ENGINES
-    function computeWordStats() {
-      const text = document.getElementById('wc-input').value;
-      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    // 5. TOOL LOGIC: LLM TOKEN COUNTER
+    function calculateTokens() {
+      const text = document.getElementById('llm-prompt-input').value;
       const chars = text.length;
-      const sentences = text.trim() ? (text.match(/[\w|\)][.?!]+(\s|$)/g) || []).length : 0;
-      document.getElementById('wc-words').innerText = words;
-      document.getElementById('wc-chars').innerText = chars;
-      document.getElementById('wc-sentences').innerText = sentences;
-      document.getElementById('wc-readtime').innerText = `${Math.ceil(words / 200)}m`;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const estTokens = Math.ceil(chars / 3.8); // Standard heuristic approximation for BPE tokenizer
+      document.getElementById('char-word-stats').innerText = `${chars} chars | ${words} words`;
+      document.getElementById('token-count').innerText = estTokens.toLocaleString();
+      
+      // Pricing estimates (per 1K tokens)
+      document.getElementById('cost-gpt4').innerText = `$${((estTokens / 1000000) * 5.0).toFixed(4)}`;
+      document.getElementById('cost-claude').innerText = `$${((estTokens / 1000000) * 3.0).toFixed(4)}`;
+      document.getElementById('cost-gemini').innerText = `$${((estTokens / 1000000) * 1.25).toFixed(4)}`;
     }
+
+    // 6. TOOL LOGIC: WCAG CONTRAST
+    function hexToLuminance(hex) {
+      const rgb = hex.replace('#', '').match(/.{2}/g).map(x => {
+        const c = parseInt(x, 16) / 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+    }
+    function updateContrast() {
+      const fg = document.getElementById('wcag-fg-color').value;
+      const bg = document.getElementById('wcag-bg-color').value;
+      document.getElementById('wcag-fg-text').value = fg;
+      document.getElementById('wcag-bg-text').value = bg;
+      
+      const box = document.getElementById('contrast-preview-box');
+      box.style.color = fg;
+      box.style.backgroundColor = bg;
+
+      const l1 = hexToLuminance(fg);
+      const l2 = hexToLuminance(bg);
+      const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+
+      document.getElementById('contrast-ratio').innerText = `${ratio.toFixed(2)}:1`;
+      
+      const passAANormal = ratio >= 4.5;
+      const passAAANormal = ratio >= 7.0;
+
+      const bAA = document.getElementById('badge-aa-normal');
+      bAA.innerText = passAANormal ? 'PASS' : 'FAIL';
+      bAA.className = passAANormal ? 'px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold' : 'px-2.5 py-0.5 bg-rose-500/10 text-rose-500 border border-rose-500/30 rounded-lg text-xs font-bold';
+
+      const bAAA = document.getElementById('badge-aaa-normal');
+      bAAA.innerText = passAAANormal ? 'PASS' : 'FAIL';
+      bAAA.className = passAAANormal ? 'px-2.5 py-0.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 rounded-lg text-xs font-bold' : 'px-2.5 py-0.5 bg-rose-500/10 text-rose-500 border border-rose-500/30 rounded-lg text-xs font-bold';
+    }
+    function syncColorInput(type) {
+      const textVal = document.getElementById(`wcag-${type}-text`).value;
+      if (/^#[0-9A-F]{6}$/i.test(textVal)) {
+        document.getElementById(`wcag-${type}-color`).value = textVal;
+        updateContrast();
+      }
+    }
+
+    // 7. TOOL LOGIC: MARKDOWN TABLE BUILDER
+    function addTableRow() {
+      const tbody = document.getElementById('table-body');
+      const colCount = document.getElementById('table-head-row').children.length;
+      let tr = document.createElement('tr');
+      for (let i = 0; i < colCount; i++) {
+        tr.innerHTML += `<td class="p-2"><input type="text" value="New Item" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>`;
+      }
+      tbody.appendChild(tr);
+      generateMarkdownTable();
+    }
+    function addTableCol() {
+      const headRow = document.getElementById('table-head-row');
+      const th = document.createElement('th');
+      th.className = "p-2";
+      th.innerHTML = `<input type="text" value="Column" class="w-full p-2 theme-editor border rounded-lg font-bold" oninput="generateMarkdownTable()">`;
+      headRow.appendChild(th);
+
+      document.querySelectorAll('#table-body tr').forEach(tr => {
+        tr.innerHTML += `<td class="p-2"><input type="text" value="Data" class="w-full p-2 theme-editor border rounded-lg" oninput="generateMarkdownTable()"></td>`;
+      });
+      generateMarkdownTable();
+    }
+    function generateMarkdownTable() {
+      const headers = Array.from(document.querySelectorAll('#table-head-row input')).map(i => i.value.trim());
+      let md = `| ${headers.join(' | ')} |\n| ${headers.map(() => '---').join(' | ')} |\n`;
+      document.querySelectorAll('#table-body tr').forEach(tr => {
+        const row = Array.from(tr.querySelectorAll('input')).map(i => i.value.trim());
+        md += `| ${row.join(' | ')} |\n`;
+      });
+      document.getElementById('md-table-output').value = md;
+    }
+
+    // 8. TOOL LOGIC: NUMBER BASE CONVERTER
+    function syncBaseConv(source) {
+      const val = document.getElementById(`nb-${source}`).value.trim();
+      let dec = NaN;
+      try {
+        if (source === 'dec') dec = parseInt(val, 10);
+        if (source === 'hex') dec = parseInt(val, 16);
+        if (source === 'bin') dec = parseInt(val, 2);
+        if (source === 'oct') dec = parseInt(val, 8);
+      } catch(e){}
+
+      if (isNaN(dec)) return;
+      if (source !== 'dec') document.getElementById('nb-dec').value = dec.toString(10);
+      if (source !== 'hex') document.getElementById('nb-hex').value = dec.toString(16).toUpperCase();
+      if (source !== 'bin') document.getElementById('nb-bin').value = dec.toString(2);
+      if (source !== 'oct') document.getElementById('nb-oct').value = dec.toString(8);
+    }
+
+    // 9. OTHER ENGINES: JSON, PDF, DIFF, QR, PASSWORDS, REGEX
+    function syntaxHighlightJson(jsonStr) {
+      jsonStr = jsonStr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (m) {
+        let cls = 'json-number';
+        if (/^"/.test(m)) cls = /:$/.test(m) ? 'json-key' : 'json-string';
+        else if (/true|false/.test(m)) cls = 'json-boolean';
+        else if (/null/.test(m)) cls = 'json-null';
+        return '<span class="' + cls + '">' + m + '</span>';
+      });
+    }
+    function handleJsonStudioInput() {
+      const val = document.getElementById('json-studio-input').value.trim();
+      const status = document.getElementById('json-studio-status');
+      const output = document.getElementById('json-studio-output');
+      const metrics = document.getElementById('json-metrics');
+      metrics.innerText = `${val ? val.split('\n').length : 0} lines | ${new Blob([val]).size} bytes`;
+      if (!val) { output.innerHTML = '// Output...'; return; }
+      try {
+        const parsed = JSON.parse(val);
+        output.innerHTML = syntaxHighlightJson(JSON.stringify(parsed, null, 2));
+        status.innerHTML = `<span class="text-emerald-500 font-bold">✓ Valid JSON</span>`;
+      } catch (err) {
+        output.innerHTML = `<span class="text-rose-500 font-bold">// ${err.message}</span>`;
+        status.innerHTML = `<span class="text-rose-500 font-bold">✗ ${err.message}</span>`;
+      }
+    }
+    function formatJsonStudio(sp) {
+      const el = document.getElementById('json-studio-input');
+      try { el.value = JSON.stringify(JSON.parse(el.value), null, sp); handleJsonStudioInput(); } catch(e){}
+    }
+    function minifyJsonStudio() {
+      const el = document.getElementById('json-studio-input');
+      try { el.value = JSON.stringify(JSON.parse(el.value)); handleJsonStudioInput(); } catch(e){}
+    }
+    function loadSampleJsonStudio() {
+      document.getElementById('json-studio-input').value = JSON.stringify({ app: "MyDevToolbox", privacy: "100% Client-Side", tools: 12 }, null, 2);
+      handleJsonStudioInput();
+    }
+    function clearJsonStudio() { document.getElementById('json-studio-input').value = ''; handleJsonStudioInput(); }
 
     let uploadedPdfFiles = [];
     function handlePdfUpload(e) {
       uploadedPdfFiles = Array.from(e.target.files);
-      if (uploadedPdfFiles.length === 0) return;
       const listEl = document.getElementById('pdf-file-list');
       listEl.innerHTML = '';
       uploadedPdfFiles.forEach(f => {
@@ -1381,7 +992,6 @@
       });
       document.getElementById('pdf-list-container').classList.remove('hidden');
     }
-
     async function executePdfMerge() {
       if (uploadedPdfFiles.length < 2) { alert('Please select at least 2 PDF files.'); return; }
       try {
@@ -1393,9 +1003,8 @@
           copiedPages.forEach(p => mergedPdf.addPage(p));
         }
         const mergedPdfFile = await mergedPdf.save();
-        const blob = new Blob([mergedPdfFile], { type: 'application/pdf' });
         const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
+        a.href = URL.createObjectURL(new Blob([mergedPdfFile], { type: 'application/pdf' }));
         a.download = 'merged_document.pdf';
         a.click();
       } catch (err) { alert('PDF Error: ' + err.message); }
@@ -1419,112 +1028,11 @@
       out.innerHTML = html || 'No differences.';
     }
 
-    function syntaxHighlightJson(jsonStr) {
-      jsonStr = jsonStr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        let cls = 'json-number';
-        if (/^"/.test(match)) cls = /:$/.test(match) ? 'json-key' : 'json-string';
-        else if (/true|false/.test(match)) cls = 'json-boolean';
-        else if (/null/.test(match)) cls = 'json-null';
-        return '<span class="' + cls + '">' + match + '</span>';
-      });
-    }
-
-    function handleJsonStudioInput() {
-      const val = document.getElementById('json-studio-input').value.trim();
-      const status = document.getElementById('json-studio-status');
-      const output = document.getElementById('json-studio-output');
-      const metrics = document.getElementById('json-metrics');
-      metrics.innerText = `${val ? val.split('\n').length : 0} lines \vert{} ${new Blob([val]).size} bytes`;
-      if (!val) { output.innerHTML = '// Output...'; return; }
-      try {
-        const parsed = JSON.parse(val);
-        output.innerHTML = syntaxHighlightJson(JSON.stringify(parsed, null, 2));
-        status.innerHTML = `<span class="text-emerald-500 font-bold">✓ Valid JSON</span>`;
-      } catch (err) {
-        output.innerHTML = `<span class="text-rose-500 font-bold">// ${err.message}</span>`;
-        status.innerHTML = `<span class="text-rose-500 font-bold">✗ ${err.message}</span>`;
-      }
-    }
-    function formatJsonStudio(sp = 2) {
-      const el = document.getElementById('json-studio-input');
-      try { el.value = JSON.stringify(JSON.parse(el.value), null, sp); handleJsonStudioInput(); } catch(e){}
-    }
-    function minifyJsonStudio() {
-      const el = document.getElementById('json-studio-input');
-      try { el.value = JSON.stringify(JSON.parse(el.value)); handleJsonStudioInput(); } catch(e){}
-    }
-    function loadSampleJsonStudio() {
-      document.getElementById('json-studio-input').value = JSON.stringify({ app: "MyDevToolbox", version: "4.0", status: "Active", tools: 24 }, null, 2);
-      handleJsonStudioInput();
-    }
-    function clearJsonStudio() { document.getElementById('json-studio-input').value = ''; handleJsonStudioInput(); }
-
-    function jsonToTs(obj, interfaceName = "RootObject") {
-      let result = `export interface ${interfaceName} {\n`;
-      for (const [key, value] of Object.entries(obj)) {
-        let type = typeof value;
-        if (value === null) type = 'any';
-        else if (Array.isArray(value)) type = value.length > 0 ? `${typeof value[0]}[]` : 'any[]';
-        else if (type === 'object') type = 'Record<string, any>';
-        result += `  ${key}:${type};\n`;
-      }
-      result += '}';
-      return result;
-    }
-    function convertJsonToTs() {
-      const input = document.getElementById('json-ts-in').value.trim();
-      try { document.getElementById('json-ts-out').value = jsonToTs(JSON.parse(input)); } catch (e) { document.getElementById('json-ts-out').value = '// Invalid JSON'; }
-    }
-
-    function generateDummyCard() {
-      const brand = document.getElementById('card-type-select').value;
-      let prefix = brand === 'mastercard' ? '5425' : (brand === 'amex' ? '3782' : '4532');
-      let num = prefix;
-      const targetLen = brand === 'amex' ? 15 : 16;
-      while (num.length < targetLen - 1) num += Math.floor(Math.random() * 10);
-
-      let sum = 0, alt = true;
-      for (let i = num.length - 1; i >= 0; i--) {
-        let n = parseInt(num.charAt(i), 10);
-        if (alt) { n *= 2; if (n > 9) n -= 9; }
-        sum += n; alt = !alt;
-      }
-      num += (10 - (sum % 10)) % 10;
-      document.getElementById('dummy-card-num').innerText = num.match(/.{1,4}/g).join(' ');
-      document.getElementById('dummy-card-meta').innerText = `12/29 | ${Math.floor(Math.random()*899+100)}`;
-    }
-
-    let qrcodeObj = null;
-    function generateQrCode() {
-      const text = document.getElementById('qr-text').value.trim() || 'https://mydevtoolbox.in';
-      const container = document.getElementById('qrcode-container');
-      container.innerHTML = '';
-      qrcodeObj = new QRCode(container, { text: text, width: 220, height: 220, colorDark: "#0f172a", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
-    }
-    function downloadQrCode() {
-      const img = document.querySelector('#qrcode-container img');
-      if (img && img.src) { const a = document.createElement('a'); a.href = img.src; a.download = 'qrcode.png'; a.click(); }
-    }
-
-    function convertCase(mode) {
-      const el = document.getElementById('case-input');
-      const val = el.value;
-      if (!val) return;
-      if (mode === 'upper') el.value = val.toUpperCase();
-      if (mode === 'lower') el.value = val.toLowerCase();
-      if (mode === 'title') el.value = val.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-      if (mode === 'camel') el.value = val.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) => +match === 0 ? "" : index === 0 ? match.toLowerCase() : match.toUpperCase()).replace(/\s+/g, '');
-      if (mode === 'snake') el.value = val.trim().toLowerCase().replace(/\s+/g, '_').replace(/[^\w]/g, '_');
-      if (mode === 'kebab') el.value = val.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w]/g, '-');
-    }
-
     function generateUuids() {
       let list = [];
       for (let i = 0; i < 5; i++) list.push(crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => (Math.random()*16|0).toString(16)));
       document.getElementById('uuid-output').value = list.join('\n');
     }
-
     function generatePassword() {
       const len = parseInt(document.getElementById('pwd-len').value) || 16;
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|';
@@ -1534,271 +1042,77 @@
       for (let i = 0; i < len; i++) pwd += chars[array[i] % chars.length];
       document.getElementById('pwd-output').value = pwd;
     }
-
     function runBase64(mode) {
       const input = document.getElementById('b64-input').value;
       try {
         if (mode === 'encode') document.getElementById('b64-output').value = btoa(unescape(encodeURIComponent(input)));
         else document.getElementById('b64-output').value = decodeURIComponent(escape(atob(input)));
-      } catch (err) { document.getElementById('b64-output').value = 'Error: Invalid base64 characters.'; }
+      } catch (err) { document.getElementById('b64-output').value = 'Error: Invalid base64.'; }
     }
-
-    function explainCron() {
-      const expr = document.getElementById('cron-input').value.trim();
-      document.getElementById('cron-result').innerText = `Scheduled interval: [Expression: ${expr}]`;
+    function generateQrCode() {
+      const text = document.getElementById('qr-text').value.trim() || 'https://mydevtoolbox.in';
+      const container = document.getElementById('qrcode-container');
+      container.innerHTML = '';
+      new QRCode(container, { text: text, width: 220, height: 220, colorDark: "#0f172a", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
     }
-
-    function updateShadow() {
-      const x = document.getElementById('bs-x').value;
-      const y = document.getElementById('bs-y').value;
-      const blur = document.getElementById('bs-blur').value;
-      const spread = document.getElementById('bs-spread').value;
-      const shadow = `${x}px${y}px ${blur}px${spread}px rgba(0, 0, 0, 0.25)`;
-      document.getElementById('shadow-box').style.boxShadow = shadow;
-      document.getElementById('shadow-code').innerText = `box-shadow: ${shadow};`;
+    function downloadQrCode() {
+      const img = document.querySelector('#qrcode-container img');
+      if (img && img.src) { const a = document.createElement('a'); a.href = img.src; a.download = 'qrcode.png'; a.click(); }
     }
-
-    function setRegexPreset(type) {
-      const pat = document.getElementById('regex-pattern');
-      const str = document.getElementById('regex-string');
-      if (type === 'email') {
-        pat.value = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}';
-        str.value = 'Contact support@mydevtoolbox.in or user.admin@domain.co.uk';
-      } else if (type === 'url') {
-        pat.value = 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)';
-        str.value = 'Check our site at https://mydevtoolbox.in or http://localhost:3000';
-      } else if (type === 'ip') {
-        pat.value = '\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b';
-        str.value = 'Server hosts: 192.168.1.1, 10.0.0.1, 127.0.0.1';
-      }
-      testRegex();
-    }
-
     function testRegex() {
       try {
         const p = document.getElementById('regex-pattern').value;
         const f = document.getElementById('regex-flags').value;
         const re = new RegExp(p, f);
-        const text = document.getElementById('regex-string').value;
-        const matches = text.match(re);
-        document.getElementById('regex-matches').innerText = `Matches found: ${matches ? matches.length : 0} -> [${matches ? matches.slice(0, 4).join(', ') : 'None'}]`;
-      } catch (e) { document.getElementById('regex-matches').innerText = 'Regex Syntax Error: ' + e.message; }
+        const matches = document.getElementById('regex-string').value.match(re);
+        document.getElementById('regex-matches').innerText = `Matches found: ${matches ? matches.length : 0}`;
+      } catch (e) { document.getElementById('regex-matches').innerText = 'Regex Syntax Error'; }
     }
-
-    const httpCodesData = [
-      { c: 200, m: "OK", class: "2xx Success", desc: "Standard response for successful HTTP requests. The payload contains the requested resource.", curl: "fetch('/api/user').then(res => console.log(res.status)); // 200" },
-      { c: 201, m: "Created", class: "2xx Success", desc: "The request has succeeded and a new resource has been created as a result.", curl: "fetch('/api/user', {method:'POST'}).then(r => r.status); // 201" },
-      { c: 204, m: "No Content", class: "2xx Success", desc: "The server successfully processed the request and is not returning any content.", curl: "fetch('/api/item/1', {method:'DELETE'}); // 204" },
-      { c: 301, m: "Moved Permanently", class: "3xx Redirection", desc: "This and all future requests should be directed to the given URI.", curl: "curl -I https://example.com // 301 Moved" },
-      { c: 304, m: "Not Modified", class: "3xx Redirection", desc: "Indicates that the resource has not been modified since the version specified by the request headers.", curl: "If-None-Match: 'etag-hash' -> 304" },
-      { c: 400, m: "Bad Request", class: "4xx Client Error", desc: "The server cannot process the request due to an apparent client error (e.g., malformed syntax).", curl: "fetch('/api', {body: 'malformed_json'}); // 400" },
-      { c: 401, m: "Unauthorized", class: "4xx Client Error", desc: "Authentication is required and has failed or has not yet been provided.", curl: "Authorization: Bearer <missing_token> -> 401" },
-      { c: 403, m: "Forbidden", class: "4xx Client Error", desc: "The request contained valid data and was understood by the server, but the server is refusing action.", curl: "User lacks permission to access admin endpoint -> 403" },
-      { c: 404, m: "Not Found", class: "4xx Client Error", desc: "The requested resource could not be found but may be available in the future.", curl: "fetch('/api/non-existent-endpoint'); // 404" },
-      { c: 429, m: "Too Many Requests", class: "4xx Client Error", desc: "The user has sent too many requests in a given amount of time (rate limiting).", curl: "Rate limit exceeded (e.g. 100 req/min) -> 429" },
-      { c: 500, m: "Internal Server Error", class: "5xx Server Error", desc: "A generic error message, given when an unexpected condition was encountered.", curl: "Unhandled exception in server backend handler -> 500" },
-      { c: 502, m: "Bad Gateway", class: "5xx Server Error", desc: "The server was acting as a gateway or proxy and received an invalid response from the upstream server.", curl: "Nginx unable to reach Node.js upstream port -> 502" },
-      { c: 503, m: "Service Unavailable", class: "5xx Server Error", desc: "The server cannot handle the request (because it is overloaded or down for maintenance).", curl: "Server maintenance mode active -> 503" }
-    ];
-
-    function searchHttpCodes() {
-      const q = (document.getElementById('http-search').value || '').toLowerCase();
-      const list = document.getElementById('http-list');
-      list.innerHTML = '';
-      httpCodesData.filter(i => (i.c + ' ' + i.m + ' ' + i.class).toLowerCase().includes(q)).forEach(i => {
-        list.innerHTML += `<div onclick="selectHttpCode(${i.c})" class="p-2 theme-editor border rounded-xl flex justify-between cursor-pointer hover:border-emerald-500 transition"><strong class="text-emerald-500">${i.c}</strong> <span class="opacity-80">${i.m}</span></div>`;
-      });
-    }
-
-    function selectHttpCode(code) {
-      const item = httpCodesData.find(i => i.c === code);
-      if (!item) return;
-      document.getElementById('http-detail-badge').innerText = `${item.c}${item.m}`;
-      document.getElementById('http-detail-class').innerText = item.class;
-      document.getElementById('http-detail-desc').innerText = item.desc;
-      document.getElementById('http-detail-code').innerText = item.curl;
-    }
-
-    async function computeHashes() {
-      const str = document.getElementById('hash-input').value;
-      const buf = new TextEncoder().encode(str);
-      const h256 = await crypto.subtle.digest('SHA-256', buf);
-      document.getElementById('hash-sha256').value = Array.from(new Uint8Array(h256)).map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    function decodeJwt() {
-      const jwt = document.getElementById('jwt-input').value.trim();
-      try {
-        const parts = jwt.split('.');
-        document.getElementById('jwt-header-out').innerText = JSON.stringify(JSON.parse(atob(parts[0])), null, 2);
-        document.getElementById('jwt-payload-out').innerText = JSON.stringify(JSON.parse(atob(parts[1])), null, 2);
-      } catch (e) {
-        document.getElementById('jwt-header-out').innerText = '// Invalid Token';
-        document.getElementById('jwt-payload-out').innerText = '// ' + e.message;
-      }
-    }
-
-    function parseMarkdownLive() {
-      const val = document.getElementById('md-input').value;
-      let html = val
-        .replace(/^### (.*$)/gim, '<h3 class="text-sm font-bold mt-2">$1</h3>')
-        .replace(/^## (.*$)/gim, '<h2 class="text-base font-bold mt-3">$1</h2>')
-        .replace(/^# (.*$)/gim, '<h1 class="text-lg font-bold mt-4">$1</h1>')
-        .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-        .replace(/\*(.*)\*/gim, '<em>$1</em>')
-        .replace(/\n$/gim, '<br />');
-      document.getElementById('md-preview').innerHTML = html || 'Preview appears here...';
-    }
-
-    function calcAspectRatio(changed) {
-      const wR = parseFloat(document.getElementById('ar-w-ratio').value) || 16;
-      const hR = parseFloat(document.getElementById('ar-h-ratio').value) || 9;
-      if (changed === 'w') {
-        const wVal = parseFloat(document.getElementById('ar-w-val').value) || 0;
-        document.getElementById('ar-h-val').value = Math.round((wVal * hR) / wR);
-      } else {
-        const hVal = parseFloat(document.getElementById('ar-h-val').value) || 0;
-        document.getElementById('ar-w-val').value = Math.round((hVal * wR) / hR);
-      }
-    }
-
-    function generateLorem(paras) {
-      const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
-      let out = [];
-      for (let i = 0; i < paras; i++) out.push(lorem);
-      document.getElementById('lorem-output').value = out.join('\n\n');
-    }
-
-    function runUrlCodec(mode) {
-      const val = document.getElementById('url-codec-input').value;
-      try {
-        document.getElementById('url-codec-output').value = mode === 'encode' ? encodeURIComponent(val) : decodeURIComponent(val);
-      } catch(e) { document.getElementById('url-codec-output').value = 'Codec error'; }
-    }
-
-    function generateSlug() {
-      const val = document.getElementById('slug-input').value;
-      document.getElementById('slug-output').innerText = val.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '') || 'url-slug-preview';
-    }
-
-    let currentUploadedImg = null;
-    function handleImageUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        currentUploadedImg = new Image();
-        currentUploadedImg.onload = function() {
-          document.getElementById('img-process-panel').classList.remove('hidden');
-          processImage();
-        };
-        currentUploadedImg.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-    function processImage() {
-      if (!currentUploadedImg) return;
-      const canvas = document.createElement('canvas');
-      canvas.width = currentUploadedImg.width; canvas.height = currentUploadedImg.height;
-      const ctx = canvas.getContext('2d'); ctx.drawImage(currentUploadedImg, 0, 0);
-      const dataUrl = canvas.toDataURL('image/webp', 0.8);
-      document.getElementById('img-download-link').href = dataUrl;
-      document.getElementById('img-download-link').download = 'compressed.webp';
-    }
-
-    function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('hidden'); }
     function copyToClipboard(id) { 
       const el = document.getElementById(id);
       navigator.clipboard.writeText(el.value || el.innerText); 
       alert('Copied to clipboard!'); 
     }
 
-    // 7. BLOBBY'S ZEN LOUNGE (10,000+ JOKES, FORTUNES & ASMR BUBBLE WRAP)
+    // 10. BLOBBY COMPANION & JOKES
     function toggleCompanionDialog() { 
       const dialog = document.getElementById('companion-dialog');
-      const isOpening = dialog.classList.contains('hidden');
       dialog.classList.toggle('hidden');
-      if (!isOpening) {
-        document.getElementById('blobby-search-input').value = '';
-        document.getElementById('blobby-search-feedback').classList.add('hidden');
-      } else {
-        if (window.confetti) confetti({ particleCount: 20, spread: 50, origin: { y: 0.9, x: 0.9 } });
+      if (!dialog.classList.contains('hidden') && window.confetti) {
+        confetti({ particleCount: 20, spread: 50, origin: { y: 0.9, x: 0.9 } });
       }
     }
-
     async function fetchFreshJoke() {
       const msgBox = document.getElementById('blobby-msg');
       document.getElementById('bubble-wrap-board').classList.add('hidden');
-      msgBox.parentElement.classList.remove('hidden');
       msgBox.innerText = "Fetching a fresh joke from the universe...";
-
       try {
         const res = await fetch('https://v2.jokeapi.dev/joke/Any?safe-mode&type=single');
         const data = await res.json();
-        if (data && data.joke) {
-          msgBox.innerText = `"${data.joke}" 😂`;
-        } else {
+        if (data && data.joke) msgBox.innerText = `"${data.joke}" 😂`;
+        else {
           const res2 = await fetch('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
           const data2 = await res2.json();
           msgBox.innerText = `"${data2.joke}" 🤣`;
         }
       } catch (err) {
-        const offlineJokes = [
-          "I told my suitcase there will be no vacation this year. Now I'm dealing with emotional baggage.",
-          "Why do we tell actors to 'break a leg'? Because every play has a cast!",
-          "Parallel lines have so much in common. It’s a shame they’ll never meet.",
-          "My wife told me to stop impersonating a flamingo. I had to put my foot down."
-        ];
-        msgBox.innerText = `"${offlineJokes[Math.floor(Math.random() * offlineJokes.length)]}" 😄`;
+        msgBox.innerText = '"Why do programmers prefer dark mode? Because light attracts bugs!" 🐛';
       }
-      if (window.confetti) confetti({ particleCount: 15, spread: 45, origin: { y: 0.85, x: 0.85 } });
     }
-
-    function openFortuneCookie() {
-      const fortunes = [
-        "🥠 A fresh breeze will bring unexpected luck to your next project.",
-        "🥠 Great minds discuss ideas; your idea today will inspire someone tomorrow.",
-        "🥠 Trust the timing of your journey—breakthroughs happen in quiet moments.",
-        "🥠 A pleasant surprise awaits you in the next few hours.",
-        "🥠 Simplicity is the ultimate sophistication. Keep building!"
-      ];
-      document.getElementById('bubble-wrap-board').classList.add('hidden');
-      document.getElementById('blobby-msg').parentElement.classList.remove('hidden');
-      document.getElementById('blobby-msg').innerText = fortunes[Math.floor(Math.random() * fortunes.length)];
-      if (window.confetti) confetti({ particleCount: 25, spread: 60, origin: { y: 0.85, x: 0.85 } });
-    }
-
     function toggleBubblePopper() {
       const board = document.getElementById('bubble-wrap-board');
-      const isHidden = board.classList.contains('hidden');
-      if (isHidden) {
+      board.classList.toggle('hidden');
+      if (!board.classList.contains('hidden')) {
         board.innerHTML = '';
         for (let i = 0; i < 18; i++) {
-          const bubble = document.createElement('div');
-          bubble.className = 'bubble-wrap-dot';
-          bubble.onclick = function() {
-            if (!this.classList.contains('popped')) {
-              this.classList.add('popped');
-              if (window.navigator && window.navigator.vibrate) window.navigator.vibrate(15);
-            }
-          };
-          board.appendChild(bubble);
+          const b = document.createElement('div');
+          b.className = 'bubble-wrap-dot';
+          b.onclick = function() { this.classList.add('popped'); };
+          board.appendChild(b);
         }
-        board.classList.remove('hidden');
         document.getElementById('blobby-msg').innerText = "🫧 Pop the calming bubbles to relieve stress!";
-      } else {
-        board.classList.add('hidden');
       }
     }
-
-    function wanderBlobby() {
-      const container = document.getElementById('companion-container');
-      const dialog = document.getElementById('companion-dialog');
-      if (!dialog.classList.contains('hidden')) return;
-      const offset = Math.floor(Math.random() * 30) - 15;
-      container.style.transform = `translateX(${offset}px)`;
-    }
-    setInterval(wanderBlobby, 12000);
   </script>
 </body>
 </html>
