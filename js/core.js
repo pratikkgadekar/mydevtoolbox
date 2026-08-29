@@ -1,4 +1,4 @@
-// Register PWA Service Worker for 100% Offline Capability
+// Register PWA Service Worker for Offline Execution
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((err) => console.log('SW registration error:', err));
@@ -91,7 +91,7 @@ function renderRecentTools() {
   const list = document.getElementById('recent-tools-list');
   list.innerHTML = '';
   recent.forEach((t) => {
-    list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-2.5 py-1 theme-card border text-[11px] font-semibold rounded-lg hover:border-indigo-500 transition">⚡ ${t.name}</button>`;
+    list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-2.5 py-1 theme-card border text-[11px] font-semibold rounded-lg hover:border-indigo-500 transition whitespace-nowrap">⚡ ${t.name}</button>`;
   });
 }
 
@@ -123,20 +123,51 @@ function openTool(toolId) {
   if (toolId === 'cron-builder') explainCron();
 }
 
-// Real-Time Pill Counts Synchronization
-function updateCategoryPillCounts() {
-  const cards = Array.from(document.querySelectorAll('.tool-card'));
-  const categories = ['popular', 'ai', 'data', 'security', 'web', 'design', 'devops', 'text', 'math', 'testing'];
+// Category Filtering Engine with Dropdown Integration
+let currentActiveCategory = 'all';
 
-  categories.forEach((cat) => {
-    const matchCount = cards.filter((c) => (c.getAttribute('data-cat') || '').includes(cat)).length;
-    const pill = document.querySelector(`.cat-pill[data-pill="${cat}"] .pill-count`);
-    if (pill) pill.innerText = `(${matchCount})`;
+function toggleMoreCategoriesDropdown() {
+  const dd = document.getElementById('dropdown-more-categories');
+  dd.classList.toggle('hidden');
+}
+
+// Close dropdown when clicking outside
+window.addEventListener('click', (e) => {
+  const btn = document.getElementById('btn-more-categories');
+  const dd = document.getElementById('dropdown-more-categories');
+  if (btn && dd && !btn.contains(e.target) && !dd.contains(e.target)) {
+    dd.classList.add('hidden');
+  }
+});
+
+function selectDropdownCategory(catKey, catLabel) {
+  document.getElementById('more-cat-label').innerText = catLabel;
+  document.getElementById('dropdown-more-categories').classList.add('hidden');
+  setCategoryFilter(catKey);
+}
+
+function setCategoryFilter(cat) {
+  currentActiveCategory = cat;
+  document.getElementById('tool-search').value = '';
+  document.getElementById('search-status-text').classList.add('hidden');
+
+  // Deactivate all pills
+  document.querySelectorAll('.cat-pill').forEach((btn) => {
+    btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+  });
+
+  const activePill = document.querySelector(`.cat-pill[data-pill="${cat}"]`);
+  if (activePill) {
+    activePill.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+  }
+
+  // Filter Cards
+  document.querySelectorAll('.tool-card').forEach((card) => {
+    const cats = card.getAttribute('data-cat') || '';
+    card.style.display = cat === 'all' || cats.includes(cat) ? 'flex' : 'none';
   });
 }
 
-// Category Filtering Engine
-let currentActiveCategory = 'all';
 function filterTools() {
   const q = document.getElementById('tool-search').value.trim().toLowerCase();
   const statusText = document.getElementById('search-status-text');
@@ -170,21 +201,7 @@ function handleMainSearchEnter() {
   if (visible.length === 1) visible[0].click();
 }
 
-function setCategoryFilter(cat) {
-  currentActiveCategory = cat;
-  document.getElementById('tool-search').value = '';
-  document.getElementById('search-status-text').classList.add('hidden');
-
-  document.querySelectorAll('.cat-pill').forEach((btn) => btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md'));
-  if (event && event.target) event.target.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
-
-  document.querySelectorAll('.tool-card').forEach((card) => {
-    const cats = card.getAttribute('data-cat') || '';
-    card.style.display = cat === 'all' || cats.includes(cat) ? 'flex' : 'none';
-  });
-}
-
-// Spotlight Command Palette
+// Spotlight Command Palette (⌘K)
 function toggleSpotlight() {
   const modal = document.getElementById('spotlight-modal');
   modal.classList.toggle('hidden');
@@ -277,7 +294,7 @@ function copyToClipboard(id) {
   alert('Copied to clipboard!');
 }
 
-// Request Tool Modal Controls
+// Request Tool Modal
 function toggleRequestModal() {
   const modal = document.getElementById('request-tool-modal');
   modal.classList.toggle('hidden');
@@ -334,7 +351,6 @@ async function submitToolRequest(e) {
 
 document.addEventListener('DOMContentLoaded', () => {
   renderRecentTools();
-  updateCategoryPillCounts();
   updateInstallBadgeCount();
   if (window.lucide) lucide.createIcons();
 });
