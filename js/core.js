@@ -14,7 +14,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   if (installBtn) installBtn.classList.remove('hidden');
 });
 
-// Update & Track Live Offline Installations Count
 function updateInstallBadgeCount() {
   let count = parseInt(localStorage.getItem('mdt_install_count') || '1240');
   const badge = document.getElementById('install-counter-badge');
@@ -32,13 +31,13 @@ function triggerPwaInstall() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        if (window.confetti) confetti({ particleCount: 35, spread: 60, origin: { y: 0.1 } });
+      if (choiceResult.outcome === 'accepted' && window.confetti) {
+        confetti({ particleCount: 35, spread: 60, origin: { y: 0.1 } });
       }
       deferredPrompt = null;
     });
   } else {
-    alert('💡 To install MyDevToolbox:\n\n• On Chrome/Edge (Desktop): Click the install icon (⊕) on the right side of your browser address bar.\n• On Safari (Mac/iOS): Click Share → "Add to Dock" or "Add to Home Screen".\n\nRuns standalone and works 100% offline.');
+    alert('💡 To install MyDevToolbox:\n\n• On Chrome/Edge (Desktop): Click the install icon (⊕) on the right side of the address bar.\n• On Safari (Mac/iOS): Click Share → "Add to Dock" or "Add to Home Screen".\n\nRuns standalone and works 100% offline.');
   }
 }
 
@@ -97,28 +96,11 @@ function renderRecentTools() {
 
 function openTool(toolId) {
   switchView('tool');
-  document.querySelectorAll('.tool-view-panel').forEach((el) => el.classList.add('hidden'));
-  const target = document.getElementById('tool-' + toolId);
-  if (target) {
-    target.classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    const cardEl = document.querySelector(`.tool-card[onclick*="${toolId}"] h3`);
-    if (cardEl) recordToolUsage(toolId, cardEl.innerText);
-  }
-
-  // Engine Initializers
-  if (toolId === 'llm-tokens') calculateTokens();
-  if (toolId === 'wcag-contrast') updateContrast();
-  if (toolId === 'md-table-gen') generateMarkdownTable();
-  if (toolId === 'base-converter') syncBaseConv('dec');
-  if (toolId === 'json-formatter' && !document.getElementById('json-studio-input').value) loadSampleJsonStudio();
-  if (toolId === 'uuid-gen') generateUuids();
-  if (toolId === 'pwd-gen') generatePassword();
-  if (toolId === 'qr-gen') generateQrCode();
-  if (toolId === 'regex-tester') testRegex();
+  renderToolView(toolId);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Category Filtering Engine with Clean Pill States
+// Category Filter Engine
 let currentActiveCategory = 'all';
 
 function setCategoryFilter(cat) {
@@ -126,7 +108,6 @@ function setCategoryFilter(cat) {
   document.getElementById('tool-search').value = '';
   document.getElementById('search-status-text').classList.add('hidden');
 
-  // Deactivate all pills
   document.querySelectorAll('.cat-pill').forEach((btn) => {
     btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
   });
@@ -136,7 +117,6 @@ function setCategoryFilter(cat) {
     activePill.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
   }
 
-  // Filter Cards
   document.querySelectorAll('.tool-card').forEach((card) => {
     const cats = card.getAttribute('data-cat') || '';
     card.style.display = cat === 'all' || cats.includes(cat) ? 'flex' : 'none';
@@ -176,7 +156,7 @@ function handleMainSearchEnter() {
   if (visible.length === 1) visible[0].click();
 }
 
-// Spotlight Command Palette (⌘K)
+// Spotlight Command Palette
 function toggleSpotlight() {
   const modal = document.getElementById('spotlight-modal');
   modal.classList.toggle('hidden');
@@ -201,18 +181,12 @@ function handleSpotlightSearch() {
   const q = (document.getElementById('spotlight-input').value || '').toLowerCase();
   const container = document.getElementById('spotlight-results');
   container.innerHTML = '';
-  const cards = Array.from(document.querySelectorAll('.tool-card'));
-  const matches = cards.filter((c) => c.innerText.toLowerCase().includes(q));
+  const matches = toolsDatabase.filter((t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
 
-  matches.slice(0, 8).forEach((card) => {
-    const title = card.querySelector('h3').innerText;
-    const desc = card.querySelector('p').innerText;
-    const clickAttr = card.getAttribute('onclick');
-    const toolId = clickAttr.match(/'([^']+)'/)[1];
-
+  matches.slice(0, 8).forEach((t) => {
     container.innerHTML += `
-      <div onclick="openTool('${toolId}'); toggleSpotlight();" class="p-2.5 rounded-xl hover:bg-indigo-500/10 cursor-pointer flex justify-between items-center transition">
-        <div><span class="text-indigo-500 font-bold">${title}</span><div class="text-[11px] opacity-60">${desc}</div></div>
+      <div onclick="openTool('${t.id}'); toggleSpotlight();" class="p-2.5 rounded-xl hover:bg-indigo-500/10 cursor-pointer flex justify-between items-center transition">
+        <div><span class="text-indigo-500 font-bold">${t.name}</span><div class="text-[11px] opacity-60">${t.desc}</div></div>
         <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-50"></i>
       </div>`;
   });
@@ -254,9 +228,7 @@ function toggleBubblePopper() {
     for (let i = 0; i < 18; i++) {
       const b = document.createElement('div');
       b.className = 'bubble-wrap-dot';
-      b.onclick = function () {
-        this.classList.add('popped');
-      };
+      b.onclick = function () { this.classList.add('popped'); };
       board.appendChild(b);
     }
     document.getElementById('blobby-msg').innerText = '🫧 Pop the calming bubbles to relieve stress!';
@@ -269,13 +241,11 @@ function copyToClipboard(id) {
   alert('Copied to clipboard!');
 }
 
-// Request Tool Modal Controls
 function toggleRequestModal() {
   const modal = document.getElementById('request-tool-modal');
   modal.classList.toggle('hidden');
 }
 
-// Formspree Background Submission
 async function submitToolRequest(e) {
   e.preventDefault();
   const toolName = document.getElementById('req-tool-name').value.trim();
@@ -284,7 +254,6 @@ async function submitToolRequest(e) {
   const status = document.getElementById('request-status');
 
   if (!toolName) return;
-
   btn.disabled = true;
   btn.innerHTML = 'Sending...';
 
@@ -325,7 +294,7 @@ async function submitToolRequest(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  renderToolsGrid();
   renderRecentTools();
   updateInstallBadgeCount();
-  if (window.lucide) lucide.createIcons();
 });
