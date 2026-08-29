@@ -1,4 +1,4 @@
-// Register PWA Service Worker for 100% Offline Capability
+// Register PWA Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch((err) => console.log('SW registration error:', err));
@@ -25,11 +25,11 @@ function triggerPwaInstall() {
       deferredPrompt = null;
     });
   } else {
-    alert('App is already installed or your browser supports installing directly via the browser address bar icon (+).');
+    alert('💡 To install MyDevToolbox:\n\n• On Chrome/Edge: Click the install icon (⊕) in the browser address bar.\n• On Safari: Click Share → "Add to Dock" or "Add to Home Screen".\n\nRuns standalone and works 100% offline.');
   }
 }
 
-// Theme Engine
+// 3-Way Theme Manager
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('mdt_theme', theme);
@@ -108,8 +108,18 @@ function openTool(toolId) {
   if (toolId === 'dummy-card') generateDummyCard();
   if (toolId === 'box-shadow') updateShadow();
   if (toolId === 'cron-builder') explainCron();
-  if (toolId === 'color-contrast') updateContrast();
-  if (toolId === 'lorem-gen' && !document.getElementById('lorem-output').value) generateLorem(3);
+}
+
+// Real-Time Pill Counts Synchronization
+function updateCategoryPillCounts() {
+  const cards = Array.from(document.querySelectorAll('.tool-card'));
+  const categories = ['popular', 'ai', 'data', 'security', 'web', 'design', 'devops', 'text', 'math', 'testing'];
+
+  categories.forEach((cat) => {
+    const matchCount = cards.filter((c) => (c.getAttribute('data-cat') || '').includes(cat)).length;
+    const pill = document.querySelector(`.cat-pill[data-pill="${cat}"] .pill-count`);
+    if (pill) pill.innerText = `(${matchCount})`;
+  });
 }
 
 // Category Filtering Engine
@@ -260,13 +270,15 @@ function toggleRequestModal() {
   modal.classList.toggle('hidden');
 }
 
-// Background Form Submission via Formspree Endpoint (sends to droidtechh.apps@gmail.com)
+// Formspree Background Submission
 async function submitToolRequest(e) {
   e.preventDefault();
-  const toolName = document.getElementById('req-tool-name').value;
-  const toolDetails = document.getElementById('req-tool-details').value;
+  const toolName = document.getElementById('req-tool-name').value.trim();
+  const toolDetails = document.getElementById('req-tool-details').value.trim();
   const btn = document.getElementById('btn-submit-request');
   const status = document.getElementById('request-status');
+
+  if (!toolName) return;
 
   btn.disabled = true;
   btn.innerHTML = 'Sending...';
@@ -307,29 +319,8 @@ async function submitToolRequest(e) {
   }
 }
 
-// Live Offline Downloads Counter
-function updateOfflineDownloadsUI() {
-  let count = parseInt(localStorage.getItem('mdt_offline_downloads') || '142');
-  const badge = document.getElementById('offline-downloads-count');
-  if (badge) badge.innerText = count;
-}
-
-function downloadOfflineSuite() {
-  let count = parseInt(localStorage.getItem('mdt_offline_downloads') || '142');
-  count++;
-  localStorage.setItem('mdt_offline_downloads', count);
-  updateOfflineDownloadsUI();
-
-  const docHtml = document.documentElement.outerHTML;
-  const blob = new Blob([docHtml], { type: 'text/html' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'MyDevToolbox_Portable.html';
-  a.click();
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   renderRecentTools();
-  updateOfflineDownloadsUI();
+  updateCategoryPillCounts();
   if (window.lucide) lucide.createIcons();
 });
