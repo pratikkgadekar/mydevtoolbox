@@ -60,21 +60,26 @@
       </div>
 
       <div class="flex items-center space-x-2.5">
+        <!-- Request Tool Button -->
         <button onclick="toggleRequestModal()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-500 border border-indigo-500/20 text-xs font-bold transition">
           <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
           <span>Request Tool</span>
         </button>
 
-        <button onclick="triggerPwaInstall()" id="btn-pwa-install" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition">
+        <!-- Install / Offline Button with Visible Counter Badge -->
+        <button onclick="triggerPwaInstall()" id="btn-pwa-install" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
           <i data-lucide="laptop" class="w-3.5 h-3.5"></i>
-          <span>Install App</span>
+          <span>Install Offline</span>
+          <span id="install-counter-badge" class="ml-1 px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-mono font-bold shadow-sm">1.2k+</span>
         </button>
 
+        <!-- Command Palette -->
         <button onclick="toggleSpotlight()" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl border theme-card text-xs opacity-70 hover:opacity-100 transition">
           <i data-lucide="command" class="w-3.5 h-3.5"></i>
           <kbd class="px-1.5 py-0.5 bg-slate-500/10 border rounded text-[10px] font-mono">⌘K</kbd>
         </button>
 
+        <!-- 3-Way Theme Switcher -->
         <div class="flex items-center p-1 rounded-2xl border theme-card gap-1 text-xs">
           <button onclick="setTheme('light')" id="btn-theme-light" class="p-1.5 rounded-xl transition" title="Light"><i data-lucide="sun" class="w-4 h-4"></i></button>
           <button onclick="setTheme('dim')" id="btn-theme-dim" class="p-1.5 rounded-xl transition" title="Midnight"><i data-lucide="moon-star" class="w-4 h-4"></i></button>
@@ -96,8 +101,6 @@
 
     <!-- DASHBOARD VIEW -->
     <div id="view-dashboard">
-      
-      <!-- HERO HEADER -->
       <div class="text-center max-w-3xl mx-auto mb-8 pt-2">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 text-xs font-bold mb-3">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 100% In-Browser • In-Memory Processing • Zero Server Uploads
@@ -106,7 +109,7 @@
           Every Developer Tool, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">In One Tab</span>.
         </h1>
         <p class="mt-2 text-sm sm:text-base opacity-70">
-          Professional, client-side utility suite for engineering, formatting, AI prompting, and security analysis.
+          Over 100+ client-side developer utilities organized across 10 modules. Instant execution with zero server uploads.
         </p>
 
         <!-- Search Bar -->
@@ -150,7 +153,7 @@
               <span class="text-[11px] font-bold uppercase bg-purple-500/10 text-purple-500 border border-purple-500/20 px-2.5 py-0.5 rounded-full">AI / LLM</span>
             </div>
             <h3 class="font-bold text-base mt-4">LLM Token Counter & Pricing</h3>
-            <p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate approximate BPE tokens and query cost estimations for GPT-4o, Claude 3.5, and Gemini 1.5.</p>
+            <p class="text-xs opacity-70 mt-1 leading-relaxed">Calculate approximate BPE tokens and query cost estimations for GPT-4o, Claude 3.5, Gemini, & DeepSeek.</p>
           </div>
           <div class="mt-4 flex items-center text-xs font-bold text-purple-500">Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i></div>
         </div>
@@ -455,35 +458,9 @@
         </div>
 
       </div>
-
-      <!-- PLATFORM ARCHITECTURE & PRIVACY GUARANTEE SECTION -->
-      <section class="mt-16 border-t border-slate-500/20 pt-12">
-        <div class="text-center max-w-2xl mx-auto mb-8">
-          <h2 class="text-2xl font-extrabold tracking-tight">Enterprise Architecture, Local Execution</h2>
-          <p class="text-xs opacity-70 mt-1">Engineered for developers who handle proprietary payloads, tokens, and credentials.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-6 theme-card border rounded-3xl space-y-2.5">
-            <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
-            <h3 class="text-sm font-bold">100% In-Memory Sandbox</h3>
-            <p class="text-xs opacity-70 leading-relaxed">Files, PDF bytes, cryptographic keys, and JSON payloads execute solely in browser memory via native Web APIs.</p>
-          </div>
-          <div class="p-6 theme-card border rounded-3xl space-y-2.5">
-            <div class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold"><i data-lucide="zap" class="w-5 h-5"></i></div>
-            <h3 class="text-sm font-bold">Sub-Millisecond Speed</h3>
-            <p class="text-xs opacity-70 leading-relaxed">Zero round-trip latency. Conversions and parsing operations happen at local CPU speed without network dependency.</p>
-          </div>
-          <div class="p-6 theme-card border rounded-3xl space-y-2.5">
-            <div class="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold"><i data-lucide="hard-drive-download" class="w-5 h-5"></i></div>
-            <h3 class="text-sm font-bold">Progressive Web App</h3>
-            <p class="text-xs opacity-70 leading-relaxed">Installable natively to your desktop dock or home screen. Works reliably offline during flights or air-gapped environments.</p>
-          </div>
-        </div>
-      </section>
-
     </div>
 
-    <!-- VIEW 2: ACTIVE TOOL VIEW WITH USER GUIDE PANELS -->
+    <!-- VIEW 2: ACTIVE TOOL VIEW WITH DOCUMENTATION PANELS -->
     <div id="view-tool" class="hidden">
       <div class="flex items-center justify-between pb-6 border-b border-slate-500/20 mb-6">
         <button onclick="switchView('dashboard')" class="flex items-center text-xs font-bold theme-card px-4 py-2.5 rounded-2xl border hover:border-indigo-500 transition">
@@ -494,30 +471,86 @@
 
       <!-- TOOL 1: LLM TOKENS -->
       <div id="tool-llm-tokens" class="tool-view-panel hidden space-y-5">
-        <div class="border-b border-slate-500/20 pb-4">
-          <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="cpu" class="w-6 h-6 text-purple-500"></i> LLM Token Counter & Pricing Estimator</h2>
-          <p class="text-xs opacity-70 mt-1">Estimate token footprints and inference API costs across frontier AI foundation models.</p>
+        <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-2xl font-bold flex items-center gap-2"><i data-lucide="cpu" class="w-6 h-6 text-purple-500"></i> LLM Token Counter & Pricing Matrix</h2>
+            <p class="text-xs opacity-70 mt-1">Estimate token footprints, context utilization, and API costs across 14+ frontier foundation models.</p>
+          </div>
+          <!-- Model Selector Dropdown -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold opacity-70">Focus Model:</span>
+            <select id="llm-model-select" onchange="calculateTokens()" class="px-3 py-2 theme-editor border rounded-xl text-xs font-semibold focus:ring-2 focus:ring-purple-500 focus:outline-none">
+              <optgroup label="OpenAI">
+                <option value="gpt-4o" selected>GPT-4o ($2.50 / $10.00)</option>
+                <option value="gpt-4o-mini">GPT-4o Mini ($0.15 / $0.60)</option>
+                <option value="o1">OpenAI o1 ($15.00 / $60.00)</option>
+                <option value="o3-mini">OpenAI o3-mini ($1.10 / $4.40)</option>
+              </optgroup>
+              <optgroup label="Anthropic">
+                <option value="claude-3-5-sonnet">Claude 3.5 Sonnet ($3.00 / $15.00)</option>
+                <option value="claude-3-5-haiku">Claude 3.5 Haiku ($0.80 / $4.00)</option>
+                <option value="claude-3-opus">Claude 3 Opus ($15.00 / $75.00)</option>
+              </optgroup>
+              <optgroup label="Google DeepMind">
+                <option value="gemini-2-0-flash">Gemini 2.0 Flash ($0.10 / $0.40)</option>
+                <option value="gemini-1-5-pro">Gemini 1.5 Pro ($1.25 / $5.00)</option>
+                <option value="gemini-1-5-flash">Gemini 1.5 Flash ($0.075 / $0.30)</option>
+              </optgroup>
+              <optgroup label="DeepSeek & Open Weights">
+                <option value="deepseek-v3">DeepSeek V3 ($0.14 / $0.28)</option>
+                <option value="deepseek-r1">DeepSeek R1 ($0.55 / $2.19)</option>
+                <option value="llama-3-3-70b">Meta Llama 3.3 70B ($0.60 / $1.20)</option>
+                <option value="mistral-large-2">Mistral Large 2 ($2.00 / $6.00)</option>
+              </optgroup>
+            </select>
+          </div>
         </div>
         
-        <div class="p-4 theme-card border border-purple-500/30 rounded-2xl flex items-start gap-3 text-xs opacity-90">
-          <i data-lucide="lightbulb" class="w-5 h-5 text-purple-500 flex-shrink-0 mt-0.5"></i>
-          <div>
-            <span class="font-bold">Engineering Guide:</span> In English, 1 token is approximately ~4 characters or 0.75 words. Use this calculator to optimize system prompt sizes and estimate query expenses before API execution.
+        <!-- Live Selected Model Metrics Strip -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="p-3.5 theme-card border rounded-2xl">
+            <div class="text-[11px] opacity-60">Estimated Tokens</div>
+            <div id="token-count" class="text-xl font-bold text-purple-500 font-mono">0</div>
+          </div>
+          <div class="p-3.5 theme-card border rounded-2xl">
+            <div class="text-[11px] opacity-60">Input / Prompt Cost</div>
+            <div id="cost-input-model" class="text-xl font-bold text-indigo-500 font-mono">$0.00000</div>
+          </div>
+          <div class="p-3.5 theme-card border rounded-2xl">
+            <div class="text-[11px] opacity-60">Output / Gen Cost (1x)</div>
+            <div id="cost-output-model" class="text-xl font-bold text-pink-500 font-mono">$0.00000</div>
+          </div>
+          <div class="p-3.5 theme-card border rounded-2xl">
+            <div class="text-[11px] opacity-60">Context Window Used</div>
+            <div id="context-used-pct" class="text-xl font-bold text-emerald-500 font-mono">0.00%</div>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Estimated Tokens</div><div id="token-count" class="text-xl font-bold text-purple-500">0</div></div>
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">GPT-4o Cost</div><div id="cost-gpt4" class="text-xl font-bold text-indigo-500">$0.000</div></div>
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Claude 3.5 Sonnet</div><div id="cost-claude" class="text-xl font-bold text-pink-500">$0.000</div></div>
-          <div class="p-3.5 theme-card border rounded-2xl"><div class="text-[11px] opacity-60">Gemini 1.5 Pro</div><div id="cost-gemini" class="text-xl font-bold text-emerald-500">$0.000</div></div>
-        </div>
+        <!-- Input Context Workspace -->
         <div class="theme-card border p-4 rounded-3xl space-y-2">
           <div class="flex justify-between items-center text-xs opacity-70">
             <span>Input Prompt / Context:</span>
             <span id="char-word-stats">0 chars | 0 words</span>
           </div>
-          <textarea id="llm-prompt-input" oninput="calculateTokens()" class="w-full h-64 p-4 theme-editor font-mono text-xs border rounded-2xl focus:outline-none leading-relaxed" placeholder="Paste your system prompt, dataset rows, or query context here..."></textarea>
+          <textarea id="llm-prompt-input" oninput="calculateTokens()" class="w-full h-48 p-4 theme-editor font-mono text-xs border rounded-2xl focus:outline-none leading-relaxed" placeholder="Paste your system prompt, dataset rows, or query context here..."></textarea>
+        </div>
+
+        <!-- Full Multi-Model Comparison Table -->
+        <div class="theme-card border p-5 rounded-3xl space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider opacity-70">Comparative Pricing Across All Models (Per Run)</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead>
+                <tr class="border-b border-slate-500/20 opacity-70">
+                  <th class="pb-2">Provider & Model</th>
+                  <th class="pb-2">Context Limit</th>
+                  <th class="pb-2">Rate (Input / Output per 1M)</th>
+                  <th class="pb-2 text-right">Estimated Cost</th>
+                </tr>
+              </thead>
+              <tbody id="llm-matrix-body" class="divide-y divide-slate-500/10 font-mono text-[11px]"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
