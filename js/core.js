@@ -64,6 +64,7 @@ function switchView(viewName) {
   if (viewName === 'dashboard') {
     dashboard.classList.remove('hidden');
     toolView.classList.add('hidden');
+    window.history.pushState(null, '', window.location.pathname);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     dashboard.classList.add('hidden');
@@ -99,6 +100,7 @@ function renderRecentTools() {
 
 function openTool(toolId) {
   switchView('tool');
+  window.location.hash = `#/tools/${toolId}`;
   if (typeof renderToolView === 'function') {
     renderToolView(toolId);
   }
@@ -107,6 +109,27 @@ function openTool(toolId) {
 
 // Category Filter Engine
 let currentActiveCategory = 'all';
+
+function updateCategoryCounts() {
+  if (typeof toolsDatabase === 'undefined') return;
+
+  document.querySelectorAll('.cat-pill').forEach(pill => {
+    const cat = pill.getAttribute('data-pill');
+    if (!cat) return;
+    const count = cat === 'all' 
+      ? toolsDatabase.length 
+      : toolsDatabase.filter(t => t.cat === cat).length;
+    
+    // Replace text while preserving icon/name
+    const label = pill.innerText.split('(')[0].trim();
+    pill.innerText = `${label} (${count})`;
+  });
+
+  const counterBadge = document.querySelector('header span.text-\\[10px\\]');
+  if (counterBadge) {
+    counterBadge.innerText = `${toolsDatabase.length}+ Offline Utilities`;
+  }
+}
 
 function setCategoryFilter(cat) {
   currentActiveCategory = cat;
@@ -195,21 +218,35 @@ window.addEventListener('keydown', (e) => {
 function handleSpotlightSearch() {
   const spotlightInput = document.getElementById('spotlight-input');
   const container = document.getElementById('spotlight-results');
-  if (!spotlightInput || !container) return;
+  if (!spotlightInput || !container || typeof toolsDatabase === 'undefined') return;
 
   const q = spotlightInput.value.toLowerCase();
   container.innerHTML = '';
   
   const matches = toolsDatabase.filter((t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
 
-  matches.slice(0, 8).forEach((t) => {
+  matches.slice(0, 10).forEach((t) => {
     container.innerHTML += `
       <div onclick="openTool('${t.id}'); toggleSpotlight();" class="p-2.5 rounded-xl hover:bg-indigo-500/10 cursor-pointer flex justify-between items-center transition">
-        <div><span class="text-indigo-500 font-bold">${t.name}</span><div class="text-[11px] opacity-60">${t.desc}</div></div>
+        <div>
+          <span class="text-indigo-500 font-bold">${t.name}</span>
+          <div class="text-[11px] opacity-60">${t.desc}</div>
+        </div>
         <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-50"></i>
       </div>`;
   });
   if (window.lucide) lucide.createIcons();
+}
+
+// Deep Link Hash Routing
+function checkUrlHash() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#/tools/')) {
+    const toolId = hash.replace('#/tools/', '').trim();
+    if (typeof toolsDatabase !== 'undefined' && toolsDatabase.some(t => t.id === toolId)) {
+      openTool(toolId);
+    }
+  }
 }
 
 // Blobby Companion Logic
@@ -323,9 +360,15 @@ async function submitToolRequest(e) {
   }
 }
 
+// Initialization Sequence
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof renderToolsGrid === 'function') renderToolsGrid();
+  if (typeof renderToolsGrid === 'function') {
+    renderToolsGrid();
+  }
+  updateCategoryCounts();
   renderRecentTools();
   updateInstallBadgeCount();
+  checkUrlHash();
+  window.addEventListener('hashchange', checkUrlHash);
   if (window.lucide) lucide.createIcons();
 });
