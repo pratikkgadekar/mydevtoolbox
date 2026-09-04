@@ -1,4 +1,8 @@
 /* css/style.css */
+
+/* -------------------------------------------------------------------------- */
+/* THEMES CONFIGURATION                                                      */
+/* -------------------------------------------------------------------------- */
 :root[data-theme="light"] {
   --bg-main: #f8fafc;
   --bg-card: rgba(255, 255, 255, 0.9);
@@ -10,6 +14,8 @@
   --text-muted: #64748b;
   --accent: #4f46e5;
   --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04);
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #94a3b8;
 }
 
 :root[data-theme="dim"] {
@@ -23,8 +29,11 @@
   --text-muted: #94a3b8;
   --accent: #6366f1;
   --card-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.5);
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #475569;
 }
 
+:root,
 :root[data-theme="dark"] {
   --bg-main: #030712;
   --bg-card: rgba(15, 23, 42, 0.85);
@@ -36,8 +45,13 @@
   --text-muted: #64748b;
   --accent: #818cf8;
   --card-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.7);
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #475569;
 }
 
+/* -------------------------------------------------------------------------- */
+/* GLOBAL BODY & BACKGROUND                                                  */
+/* -------------------------------------------------------------------------- */
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
@@ -46,6 +60,9 @@ body {
   background-attachment: fixed;
 }
 
+/* -------------------------------------------------------------------------- */
+/* TOOL CARDS & EDITORS                                                       */
+/* -------------------------------------------------------------------------- */
 .theme-card {
   background-color: var(--bg-card);
   border-color: var(--border-color);
@@ -72,15 +89,29 @@ body {
   box-shadow: 0 0 0 3px var(--border-glow);
 }
 
+/* -------------------------------------------------------------------------- */
+/* SCROLLBAR UTILITIES                                                        */
+/* -------------------------------------------------------------------------- */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+/* -------------------------------------------------------------------------- */
+/* JSON SYNTAX HIGHLIGHTING                                                   */
+/* -------------------------------------------------------------------------- */
 .json-key { color: #f43f5e; font-weight: 600; }
 .json-string { color: #10b981; }
 .json-number { color: #f59e0b; }
 .json-boolean { color: #8b5cf6; font-weight: 600; }
 .json-null { color: #64748b; font-style: italic; }
 
+/* -------------------------------------------------------------------------- */
+/* INTERACTIVE & SPECIAL UTILITY ANIMATIONS                                   */
+/* -------------------------------------------------------------------------- */
 @keyframes pet-bounce {
   0%, 100% { transform: scale(1, 1) translateY(0); }
   30% { transform: scale(1.1, 0.9) translateY(2px); }
@@ -109,4 +140,21 @@ body {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
   transform: scale(0.85);
   cursor: default;
+}
+
+/* -------------------------------------------------------------------------- */
+/* DYNAMIC TOOL MODAL & WORKSPACE TRANSITIONS                                 */
+/* -------------------------------------------------------------------------- */
+#tool-modal { 
+  transition: opacity 0.2s ease-out; 
+}
+#tool-modal > div { 
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+#tool-modal.hidden { 
+  opacity: 0; 
+  pointer-events: none; 
+}
+#tool-modal.hidden > div { 
+  transform: translateY(20px) scale(0.98); 
 }
