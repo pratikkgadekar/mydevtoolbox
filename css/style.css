@@ -80,9 +80,6 @@ body {
 .json-boolean { color: #8b5cf6; font-weight: 600; }
 .json-null { color: #64748b; font-style: italic; }
 
-.diff-insert { background-color: rgba(16, 185, 129, 0.2); color: #10b981; border-radius: 4px; padding: 2px 4px; }
-.diff-delete { background-color: rgba(244, 63, 94, 0.2); color: #f43f5e; text-decoration: line-through; border-radius: 4px; padding: 2px 4px; }
-
 @keyframes pet-bounce {
   0%, 100% { transform: scale(1, 1) translateY(0); }
   30% { transform: scale(1.1, 0.9) translateY(2px); }
