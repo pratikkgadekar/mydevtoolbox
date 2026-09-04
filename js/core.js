@@ -1,11 +1,16 @@
-// Register PWA Service Worker for Offline Execution
+/* js/core.js - Application Controller, State Management & Event Handlers */
+
+// ---------------------------------------------------------------------------
+// 1. Progressive Web App (PWA) & Service Worker Registration
+// ---------------------------------------------------------------------------
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch((err) => console.log('SW registration error:', err));
+    navigator.serviceWorker
+      .register('./sw.js')
+      .catch((err) => console.log('SW registration error:', err));
   });
 }
 
-// Native PWA Install Prompt Listener
 let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
@@ -23,8 +28,7 @@ function updateInstallBadgeCount() {
 }
 
 function triggerPwaInstall() {
-  let count = parseInt(localStorage.getItem('mdt_install_count') || '1240');
-  count++;
+  let count = parseInt(localStorage.getItem('mdt_install_count') || '1240') + 1;
   localStorage.setItem('mdt_install_count', count);
   updateInstallBadgeCount();
 
@@ -37,25 +41,37 @@ function triggerPwaInstall() {
       deferredPrompt = null;
     });
   } else {
-    alert('💡 To install MyDevToolbox:\n\n• On Chrome/Edge (Desktop): Click the install icon (⊕) on the right side of the address bar.\n• On Safari (Mac/iOS): Click Share → "Add to Dock" or "Add to Home Screen".\n\nRuns standalone and works 100% offline.');
+    alert(
+      '💡 To install MyDevToolbox:\n\n' +
+      '• Desktop (Chrome/Edge): Click the install icon (⊕) on the right side of the address bar.\n' +
+      '• Safari (Mac/iOS): Click Share → "Add to Dock" or "Add to Home Screen".\n\n' +
+      'Runs standalone and executes 100% offline.'
+    );
   }
 }
 
-// 3-Way Theme Manager
+// ---------------------------------------------------------------------------
+// 2. Triple-Theme Manager (Light, Dim, Dark)
+// ---------------------------------------------------------------------------
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('mdt_theme', theme);
   ['light', 'dim', 'dark'].forEach((t) => {
     const btn = document.getElementById('btn-theme-' + t);
     if (btn) {
-      if (t === theme) btn.className = 'p-1.5 rounded-xl bg-indigo-600 text-white shadow-sm transition';
-      else btn.className = 'p-1.5 rounded-xl opacity-60 hover:opacity-100 transition';
+      if (t === theme) {
+        btn.className = 'p-1.5 rounded-xl bg-indigo-600 text-white shadow-sm transition';
+      } else {
+        btn.className = 'p-1.5 rounded-xl opacity-60 hover:opacity-100 transition';
+      }
     }
   });
 }
 setTheme(localStorage.getItem('mdt_theme') || 'light');
 
-// View Controller & History Tracker
+// ---------------------------------------------------------------------------
+// 3. View Switcher & Recent Tools Tracker
+// ---------------------------------------------------------------------------
 function switchView(viewName) {
   const dashboard = document.getElementById('view-dashboard');
   const toolView = document.getElementById('view-tool');
@@ -107,25 +123,26 @@ function openTool(toolId) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Category Filter Engine
+// ---------------------------------------------------------------------------
+// 4. Category Counting & Multi-Filter Engine
+// ---------------------------------------------------------------------------
 let currentActiveCategory = 'all';
 
 function updateCategoryCounts() {
   if (typeof toolsDatabase === 'undefined') return;
 
-  document.querySelectorAll('.cat-pill').forEach(pill => {
+  document.querySelectorAll('.cat-pill').forEach((pill) => {
     const cat = pill.getAttribute('data-pill');
     if (!cat) return;
-    const count = cat === 'all' 
-      ? toolsDatabase.length 
-      : toolsDatabase.filter(t => t.cat === cat).length;
-    
-    // Replace text while preserving icon/name
+    const count = cat === 'all'
+      ? toolsDatabase.length
+      : toolsDatabase.filter((t) => t.cat === cat).length;
+
     const label = pill.innerText.split('(')[0].trim();
     pill.innerText = `${label} (${count})`;
   });
 
-  const counterBadge = document.querySelector('header span.text-\\[10px\\]');
+  const counterBadge = document.getElementById('navbar-tool-count');
   if (counterBadge) {
     counterBadge.innerText = `${toolsDatabase.length}+ Offline Utilities`;
   }
@@ -149,7 +166,7 @@ function setCategoryFilter(cat) {
 
   document.querySelectorAll('.tool-card').forEach((card) => {
     const cats = card.getAttribute('data-cat') || '';
-    card.style.display = cat === 'all' || cats.includes(cat) ? 'flex' : 'none';
+    card.style.display = (cat === 'all' || cats.includes(cat)) ? 'flex' : 'none';
   });
 }
 
@@ -165,7 +182,7 @@ function filterTools() {
     const text = card.innerText.toLowerCase();
     const cats = card.getAttribute('data-cat') || '';
     const matchQ = !q || text.includes(q);
-    const matchC = q ? true : currentActiveCategory === 'all' || cats.includes(currentActiveCategory);
+    const matchC = q ? true : (currentActiveCategory === 'all' || cats.includes(currentActiveCategory));
 
     if (matchQ && matchC) {
       card.style.display = 'flex';
@@ -185,11 +202,15 @@ function filterTools() {
 
 function handleMainSearchEnter() {
   filterTools();
-  const visible = Array.from(document.querySelectorAll('.tool-card')).filter((c) => c.style.display === 'flex');
+  const visible = Array.from(document.querySelectorAll('.tool-card')).filter(
+    (c) => c.style.display === 'flex'
+  );
   if (visible.length === 1) visible[0].click();
 }
 
-// Spotlight Command Palette
+// ---------------------------------------------------------------------------
+// 5. Spotlight Command Palette (⌘K / Ctrl+K)
+// ---------------------------------------------------------------------------
 function toggleSpotlight() {
   const modal = document.getElementById('spotlight-modal');
   if (!modal) return;
@@ -220,10 +241,12 @@ function handleSpotlightSearch() {
   const container = document.getElementById('spotlight-results');
   if (!spotlightInput || !container || typeof toolsDatabase === 'undefined') return;
 
-  const q = spotlightInput.value.toLowerCase();
+  const q = spotlightInput.value.toLowerCase().trim();
   container.innerHTML = '';
-  
-  const matches = toolsDatabase.filter((t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
+
+  const matches = toolsDatabase.filter(
+    (t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q)
+  );
 
   matches.slice(0, 10).forEach((t) => {
     container.innerHTML += `
@@ -238,18 +261,22 @@ function handleSpotlightSearch() {
   if (window.lucide) lucide.createIcons();
 }
 
-// Deep Link Hash Routing
+// ---------------------------------------------------------------------------
+// 6. Deep Linking URL Hash Router (#/tools/[id])
+// ---------------------------------------------------------------------------
 function checkUrlHash() {
   const hash = window.location.hash;
   if (hash.startsWith('#/tools/')) {
     const toolId = hash.replace('#/tools/', '').trim();
-    if (typeof toolsDatabase !== 'undefined' && toolsDatabase.some(t => t.id === toolId)) {
+    if (typeof toolsDatabase !== 'undefined' && toolsDatabase.some((t) => t.id === toolId)) {
       openTool(toolId);
     }
   }
 }
 
-// Blobby Companion Logic
+// ---------------------------------------------------------------------------
+// 7. Blobby Companion & ASMR Stress Reliever
+// ---------------------------------------------------------------------------
 function toggleCompanionDialog() {
   const dialog = document.getElementById('companion-dialog');
   if (dialog) {
@@ -268,14 +295,19 @@ async function fetchFreshJoke() {
   try {
     const res = await fetch('https://v2.jokeapi.dev/joke/Any?safe-mode&type=single');
     const data = await res.json();
-    if (data && data.joke && msgBox) msgBox.innerText = `"${data.joke}" 😂`;
-    else {
-      const res2 = await fetch('https://icanhazdadjoke.com/', { headers: { Accept: 'application/json' } });
+    if (data && data.joke && msgBox) {
+      msgBox.innerText = `"${data.joke}" 😂`;
+    } else {
+      const res2 = await fetch('https://icanhazdadjoke.com/', {
+        headers: { Accept: 'application/json' }
+      });
       const data2 = await res2.json();
       if (msgBox) msgBox.innerText = `"${data2.joke}" 🤣`;
     }
   } catch (err) {
-    if (msgBox) msgBox.innerText = '"Why do programmers prefer dark mode? Because light attracts bugs!" 🐛';
+    if (msgBox) {
+      msgBox.innerText = '"Why do programmers prefer dark mode? Because light attracts bugs!" 🐛';
+    }
   }
 }
 
@@ -289,13 +321,18 @@ function toggleBubblePopper() {
     for (let i = 0; i < 18; i++) {
       const b = document.createElement('div');
       b.className = 'bubble-wrap-dot';
-      b.onclick = function () { this.classList.add('popped'); };
+      b.onclick = function () {
+        this.classList.add('popped');
+      };
       board.appendChild(b);
     }
     if (msgBox) msgBox.innerText = '🫧 Pop the calming bubbles to relieve stress!';
   }
 }
 
+// ---------------------------------------------------------------------------
+// 8. Clipboard Helper & Tool Request Submission
+// ---------------------------------------------------------------------------
 function copyToClipboard(id) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -360,7 +397,9 @@ async function submitToolRequest(e) {
   }
 }
 
-// Initialization Sequence
+// ---------------------------------------------------------------------------
+// 9. Application Bootstrap
+// ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof renderToolsGrid === 'function') {
     renderToolsGrid();
