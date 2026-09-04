@@ -1,8 +1,8 @@
-/* js/tools.js - Complete Real Utilities Catalog (Original 100 + 300+ Production Utilities) */
+/* js/tools.js - Exact 500 Real Utilities (10 Categories × 50 Tools) */
 
 const toolsDatabase = [
   // ============================================================================
-  // 1. AI, LLM & PROMPT STUDIO
+  // 1. AI, LLM & PROMPT ENGINEERING (Tools 1 to 50)
   // ============================================================================
   { id: 'llm-tokens', name: 'LLM Token Counter & Pricing', desc: 'GPT-4o, Claude 3.5, Gemini, DeepSeek token footprint & cost matrix', cat: 'ai', icon: 'cpu', badge: '14+ Models' },
   { id: 'md-table-gen', name: 'Visual Markdown Table Builder', desc: 'Spreadsheet grid builder that generates formatted Markdown table code', cat: 'ai', icon: 'grid', badge: 'Grid Studio' },
@@ -24,9 +24,39 @@ const toolsDatabase = [
   { id: 'prompt-fuzzer', name: 'System Prompt Leaking Fuzzer', desc: 'Generate adversarial test prompts to evaluate system prompt boundary security', cat: 'ai', icon: 'shield-alert', badge: 'Red Team' },
   { id: 'token-cost-estimator', name: 'Batch Inference Cost Estimator', desc: 'Calculate batch processing costs across million-token tiers for major frontier models', cat: 'ai', icon: 'calculator', badge: 'Pricing' },
   { id: 'regex-prompt-filter', name: 'AI Output Hallucination Filter', desc: 'Extract clean markdown and JSON codeblocks from raw assistant responses', cat: 'ai', icon: 'filter', badge: 'Parsing' },
+  { id: 'cosine-similarity', name: 'Vector Cosine Similarity Calculator', desc: 'Calculate the mathematical cosine distance between two floating-point vectors', cat: 'ai', icon: 'maximize-2', badge: 'Math' },
+  { id: 'claude-xml-builder', name: 'Anthropic Claude XML Tag Formatter', desc: 'Format prompt context with <context>, <instructions>, and <examples> XML tags', cat: 'ai', icon: 'code', badge: 'Claude' },
+  { id: 'bpe-tokenizer-sim', name: 'BPE Byte-Pair Tokenizer Visualizer', desc: 'Simulate subword byte-pair token splits and boundaries on pasted strings', cat: 'ai', icon: 'scissors', badge: 'Tokens' },
+  { id: 'llama-prompt-builder', name: 'Llama 3 Instruct Header Formatter', desc: 'Wrap raw inputs in <|start_header_id|> and <|end_header_id|> header tokens', cat: 'ai', icon: 'terminal', badge: 'Llama 3' },
+  { id: 'negative-prompt-gen', name: 'Diffusion Negative Prompt Formatter', desc: 'Format quality-enhancing negative prompts for Midjourney and Stable Diffusion', cat: 'ai', icon: 'ban', badge: 'Diffusion' },
+  { id: 'rag-rerank-scorer', name: 'RAG Re-ranking Score Normalizer', desc: 'Normalize Cross-Encoder and BM25 relevance scores to 0-1 probability ranges', cat: 'ai', icon: 'bar-chart', badge: 'Rerank' },
+  { id: 'json-function-gen', name: 'OpenAI Function Call Schema Builder', desc: 'Build JSON schemas with strict property types for OpenAI tools integration', cat: 'ai', icon: 'file-json', badge: 'Functions' },
+  { id: 'guardrail-regex', name: 'Prompt Injection Pattern Matcher', desc: 'Detect ignore previous instructions and jailbreak patterns with regex', cat: 'ai', icon: 'shield-check', badge: 'Guardrails' },
+  { id: 'prompt-diff-tester', name: 'Prompt Version A/B Diff Inspector', desc: 'Visually compare character additions and semantic changes between prompt versions', cat: 'ai', icon: 'git-compare', badge: 'A/B Test' },
+  { id: 'multimodal-token-calc', name: 'Vision Model Image Token Calculator', desc: 'Calculate token weights for images based on resolution tiles and patch grids', cat: 'ai', icon: 'image', badge: 'Vision' },
+  { id: 'speech-token-calc', name: 'Audio Speech Token & Duration Sizer', desc: 'Estimate Whisper token consumption and API transcription cost per audio minute', cat: 'ai', icon: 'mic', badge: 'Whisper' },
+  { id: 'system-prompt-compress', name: 'System Prompt Lexical Compressor', desc: 'Remove redundant adverbs and articles to reduce prompt token footprint', cat: 'ai', icon: 'minimize-2', badge: 'Optimizer' },
+  { id: 'ai-persona-builder', name: 'Agent Persona Definition Formatter', desc: 'Structure agent role, constraints, tone, and knowledge boundaries into templates', cat: 'ai', icon: 'user', badge: 'Agents' },
+  { id: 'rag-triplet-builder', name: 'Knowledge Graph Triplet Extractor', desc: 'Format subject-predicate-object semantic triplets for graph vector stores', cat: 'ai', icon: 'share-2', badge: 'Graph RAG' },
+  { id: 'synthetic-qa-gen', name: 'Synthetic Q&A Dataset Builder', desc: 'Structure multi-turn conversational evaluation pairs for benchmark testing', cat: 'ai', icon: 'help-circle', badge: 'Eval' },
+  { id: 'groundedness-checker', name: 'Context Groundedness Citation Checker', desc: 'Check whether assistant claims match verifiable sentence quotes in retrieved text', cat: 'ai', icon: 'check-square', badge: 'Citation' },
+  { id: 'llm-latency-budget', name: 'TTFT & Streaming Latency Calculator', desc: 'Calculate Time-To-First-Token (TTFT) and token generation speed per second', cat: 'ai', icon: 'activity', badge: 'Latency' },
+  { id: 'prompt-variable-clean', name: 'Unused Prompt Variable Detector', desc: 'Highlight declared {{variables}} in prompt templates that lack input bindings', cat: 'ai', icon: 'alert-circle', badge: 'Templates' },
+  { id: 'tool-call-log-parser', name: 'LLM Tool Execution Log Parser', desc: 'Extract and format nested JSON arguments and tool call outputs from agent logs', cat: 'ai', icon: 'file-text', badge: 'Debugging' },
+  { id: 'prefix-caching-calc', name: 'KV Cache Prefix Savings Calculator', desc: 'Calculate discount savings on cached prompt tokens for Anthropic and OpenAI', cat: 'ai', icon: 'database', badge: 'Cache' },
+  { id: 'context-window-fit', name: 'Context Window Overflow Verifier', desc: 'Check if system prompt + retrieved RAG docs + history fit safe context boundaries', cat: 'ai', icon: 'box', badge: 'Limits' },
+  { id: 'agent-scratchpad', name: 'ReAct Scratchpad Log Formatter', desc: 'Format Thought, Action, Action Input, and Observation logs for ReAct agents', cat: 'ai', icon: 'book', badge: 'ReAct' },
+  { id: 'pydantic-ai-gen', name: 'Pydantic Output Parser Generator', desc: 'Generate typed schema models for LangChain and LlamaIndex structured outputs', cat: 'ai', icon: 'code-2', badge: 'LangChain' },
+  { id: 'prompt-deduplicator', name: 'Sentence De-duplication Cleaner', desc: 'Remove repetitive instructions from concatenated multi-agent prompts', cat: 'ai', icon: 'list-filter', badge: 'Cleaner' },
+  { id: 'embedding-norm-calc', name: 'L2 Euclidean Vector Normalizer', desc: 'Calculate vector magnitude and normalize floats to unit length ($||v||=1$)', cat: 'ai', icon: 'trending-up', badge: 'Vector' },
+  { id: 'json-markdown-strip', name: 'Markdown Code Block JSON Extractor', desc: 'Strip leading ```json and trailing ``` markers from raw LLM responses', cat: 'ai', icon: 'code', badge: 'JSON' },
+  { id: 'hallucination-word-count', name: 'Response Density Word Analyzer', desc: 'Calculate lexical richness and unique token ratio in LLM generation samples', cat: 'ai', icon: 'bar-chart-2', badge: 'Metrics' },
+  { id: 'gemini-safety-calc', name: 'Gemini Harm Category Thresholds', desc: 'Format safety rating filter thresholds for Google GenAI SDK calls', cat: 'ai', icon: 'shield', badge: 'Gemini' },
+  { id: 'multiturn-history-trim', name: 'Chat History Sliding Window Trimmer', desc: 'Trim oldest conversation turns while preserving the foundational system prompt', cat: 'ai', icon: 'clock', badge: 'Chat' },
+  { id: 'token-to-word-calc', name: 'BPE Token to Word Equivalence Sizer', desc: 'Convert between token counts and word/page lengths across 8 languages', cat: 'ai', icon: 'type', badge: 'Estimation' },
 
   // ============================================================================
-  // 2. JSON & DATA FORMATS
+  // 2. JSON & DATA CONVERSIONS (Tools 51 to 100)
   // ============================================================================
   { id: 'json-formatter', name: 'JSON Pro Studio', desc: 'Dual-pane syntax highlighting, beautifier, tree inspector, and validator', cat: 'data', icon: 'code-2', badge: 'Dual-Pane' },
   { id: 'json-csv', name: 'JSON to CSV Converter', desc: 'Transform nested JSON object arrays into standard CSV spreadsheets', cat: 'data', icon: 'table', badge: 'Tabular' },
@@ -63,9 +93,24 @@ const toolsDatabase = [
   { id: 'properties-to-json', name: 'Java .properties to JSON', desc: 'Convert key=value Java configuration files into nested hierarchical JSON', cat: 'data', icon: 'settings', badge: '.properties' },
   { id: 'ini-to-json', name: 'INI Configuration to JSON', desc: 'Convert standard sectioned INI files into structured JSON objects', cat: 'data', icon: 'file-cog', badge: 'INI' },
   { id: 'json-diff-keys', name: 'JSON Structural Diff Inspector', desc: 'Compare two JSON objects to highlight missing, added, and altered key paths', cat: 'data', icon: 'git-compare', badge: 'Diff' },
+  { id: 'bson-to-json', name: 'BSON ObjectId & Types Sanitizer', desc: 'Sanitize MongoDB $oid, $date, and $numberLong types into plain JSON', cat: 'data', icon: 'database', badge: 'MongoDB' },
+  { id: 'json-key-case', name: 'JSON Key Case Transformer', desc: 'Recursively convert object keys between camelCase, snake_case, and kebab-case', cat: 'data', icon: 'type', badge: 'Keys' },
+  { id: 'csv-transpose', name: 'CSV Column & Row Transposer', desc: 'Invert spreadsheet matrix axes by swapping columns into rows and rows into columns', cat: 'data', icon: 'refresh-ccw', badge: 'Pivot' },
+  { id: 'json-array-distinct', name: 'JSON Array Object Deduplicator', desc: 'Deduplicate arrays of JSON records by specific key fields or hashes', cat: 'data', icon: 'filter', badge: 'Dedupe' },
+  { id: 'json-mask-pii', name: 'JSON Sensitive PII Redactor', desc: 'Mask credit cards, phone numbers, and emails inside nested JSON logs', cat: 'data', icon: 'eye-off', badge: 'Privacy' },
+  { id: 'xml-to-yaml', name: 'XML to YAML Configuration Converter', desc: 'Translate XML trees directly into indented YAML without intermediate files', cat: 'data', icon: 'file-text', badge: 'XML/YAML' },
+  { id: 'csv-delimiter-swap', name: 'CSV Delimiter Transformer', desc: 'Convert CSV delimiters between commas, semicolons, tabs, and pipes (|)', cat: 'data', icon: 'columns', badge: 'Delimiter' },
+  { id: 'json-filter-query', name: 'JSON Predicate Array Filter', desc: 'Filter arrays of JSON objects by key conditions (age > 21, status == active)', cat: 'data', icon: 'filter', badge: 'Filter' },
+  { id: 'json-schema-to-mock', name: 'JSON Schema to Mock Generator', desc: 'Generate conforming sample JSON instances based on JSON Schema definitions', cat: 'data', icon: 'file-plus', badge: 'Mock' },
+  { id: 'url-form-to-json', name: 'x-www-form-urlencoded to JSON', desc: 'Convert URL form body payloads (a=1&b=2) into JSON key-value objects', cat: 'data', icon: 'link', badge: 'Form Data' },
+  { id: 'json-to-html-table', name: 'JSON Array to HTML Table Maker', desc: 'Convert arrays of records into copyable styled HTML <table> code', cat: 'data', icon: 'layout', badge: 'HTML' },
+  { id: 'json-null-stripper', name: 'JSON Null & Empty Field Stripper', desc: 'Recursively prune null, undefined, and empty string properties from JSON', cat: 'data', icon: 'trash-2', badge: 'Prune' },
+  { id: 'hex-dump-to-json', name: 'Hex Dump to Binary Byte Array', desc: 'Parse space-separated hex dumps (48 65 6c 6c 6f) into integer byte arrays', cat: 'data', icon: 'binary', badge: 'Hex' },
+  { id: 'json-type-inference', name: 'JSON Schema Type Extractor', desc: 'Infer draft-07 JSON schemas from sample JSON payloads with enum detection', cat: 'data', icon: 'file-check', badge: 'Schema' },
+  { id: 'json-merge-patch', name: 'RFC 7396 JSON Merge Patch Applier', desc: 'Apply RFC 7396 merge patch delta documents to target JSON data trees', cat: 'data', icon: 'git-merge', badge: 'RFC 7396' },
 
   // ============================================================================
-  // 3. SECURITY & CRYPTOGRAPHY
+  // 3. SECURITY & CRYPTOGRAPHY (Tools 101 to 150)
   // ============================================================================
   { id: 'uuid-gen', name: 'UUID v4 Batch Creator', desc: 'Generate batch RFC4122 v4 unique identifiers via Web Crypto API', cat: 'security', icon: 'key', badge: 'RFC4122' },
   { id: 'pwd-gen', name: 'Password & Token Generator', desc: 'Create cryptographically secure passwords with custom lengths and symbols', cat: 'security', icon: 'shield-check', badge: 'Entropy' },
@@ -97,9 +142,29 @@ const toolsDatabase = [
   { id: 'bearer-header', name: 'Bearer Token Header Formatter', desc: 'Format Authorization: Bearer <token> HTTP request headers safely', cat: 'security', icon: 'key', badge: 'Auth' },
   { id: 'url-safe-token', name: 'URL-Safe Cryptographic Nonce Generator', desc: 'Generate high-entropy random bytes formatted for query strings, OAuth states, and CSRF nonces', cat: 'security', icon: 'shield-check', badge: 'Nonce' },
   { id: 'api-key-masker', name: 'API Key Secret Masker & Redactor', desc: 'Mask private API keys, leaving only the last 4 characters visible for safe log publishing', cat: 'security', icon: 'eye-off', badge: 'Sanitizer' },
+  { id: 'bcrypt-cost-calc', name: 'Bcrypt Cost Factor Latency Sizer', desc: 'Calculate server hash duration based on cost factor work exponents (10 to 14)', cat: 'security', icon: 'cpu', badge: 'Bcrypt' },
+  { id: 'pem-cert-decoder', name: 'X.509 Certificate PEM Inspector', desc: 'Decode base64 PEM certificates to view Issuer, Subject, Validity dates, and Serial', cat: 'security', icon: 'file-check', badge: 'X.509' },
+  { id: 'rsa-keypair-gen', name: 'RSA-OAEP Keypair Generator', desc: 'Generate 2048-bit and 4096-bit public and private keys via WebCrypto API', cat: 'security', icon: 'key', badge: 'WebCrypto' },
+  { id: 'sha3-256-hasher', name: 'SHA3-256 (Keccak) Message Hasher', desc: 'Calculate sponge-construction SHA-3 cryptographic digests in browser memory', cat: 'security', icon: 'hash', badge: 'SHA-3' },
+  { id: 'ripemd160-hasher', name: 'RIPEMD-160 Cryptographic Hasher', desc: 'Calculate 160-bit RIPEMD hash digests for Bitcoin address verification', cat: 'security', icon: 'shield', badge: 'RIPEMD' },
+  { id: 'password-strength', name: 'Password Common Dictionary Fuzzer', desc: 'Evaluate passwords against the top 10,000 common passwords and pattern leaks', cat: 'security', icon: 'alert-triangle', badge: 'Strength' },
+  { id: 'argon2-param-calc', name: 'Argon2id Memory Cost Sizer', desc: 'Calculate time, memory (KiB), and parallelism parameters for Argon2 password hashing', cat: 'security', icon: 'sliders', badge: 'Argon2' },
+  { id: 'file-hash-verify', name: 'File Checksum Integrity Matcher', desc: 'Drag-and-drop a file and compare its hash against expected release signatures', cat: 'security', icon: 'check-circle', badge: 'Verify' },
+  { id: 'base64url-codec', name: 'Base64URL Safe Converter', desc: 'Convert standard Base64 to URL-safe Base64 by substituting + with - and / with _', cat: 'security', icon: 'link', badge: 'RFC 7515' },
+  { id: 'xor-cipher-tool', name: 'XOR Stream Cipher Sandbox', desc: 'Perform bitwise XOR encryption and decryption on text strings with repeating keys', cat: 'security', icon: 'refresh-ccw', badge: 'XOR' },
+  { id: 'csr-config-builder', name: 'OpenSSL CSR Config Generator', desc: 'Generate openssl.cnf configurations with Subject Alternative Names (SAN)', cat: 'security', icon: 'file-text', badge: 'OpenSSL' },
+  { id: 'public-key-fingerprint', name: 'Public Key SHA-256 Fingerprinter', desc: 'Derive base64 and hex colon-separated fingerprints from raw public keys', cat: 'security', icon: 'fingerprint', badge: 'Key ID' },
+  { id: 'jwt-claim-builder', name: 'JWT Payload Claims Assembler', desc: 'Assemble exp, iat, iss, and custom claims into formatted JWT payloads', cat: 'security', icon: 'file-plus', badge: 'JWT Gen' },
+  { id: 'ssl-expiry-countdown', name: 'SSL Certificate Expiry Calculator', desc: 'Calculate exact days remaining before SSL/TLS certificates require renewal', cat: 'security', icon: 'calendar', badge: 'SSL' },
+  { id: 'subtle-crypto-benchmark', name: 'WebCrypto Hasher Benchmarker', desc: 'Benchmark hashing throughput (MB/sec) on your browser hardware', cat: 'security', icon: 'zap', badge: 'Benchmark' },
+  { id: 'cookie-header-fuzzer', name: 'Session Token Masker & Fuzzer', desc: 'Inspect session tokens to check length, character set randomness, and entropy', cat: 'security', icon: 'shield', badge: 'Session' },
+  { id: 'pgp-message-formatter', name: 'PGP Armored Message Sizer', desc: 'Inspect PGP Armor headers, block types, and CRC checksum boundaries', cat: 'security', icon: 'mail', badge: 'PGP' },
+  { id: 'html-script-sanitizer', name: 'XSS String Payload Neutralizer', desc: 'Neutralize JavaScript event handlers and script injection strings into safe literals', cat: 'security', icon: 'shield-alert', badge: 'Anti-XSS' },
+  { id: 'ssh-keygen-command', name: 'ssh-keygen Command Generator', desc: 'Generate commands for Ed25519 and RSA keys with custom comments and rounds', cat: 'security', icon: 'terminal', badge: 'SSH Gen' },
+  { id: 'content-disposition-safe', name: 'Safe Filename Content-Disposition', desc: 'Sanitize download filenames to prevent directory traversal and header injection', cat: 'security', icon: 'download', badge: 'Headers' },
 
   // ============================================================================
-  // 4. WEB, APIS & NETWORKING
+  // 4. WEB, APIS & NETWORKING (Tools 151 to 200)
   // ============================================================================
   { id: 'http-codes', name: 'HTTP Status Codes Inspector', desc: 'Searchable directory with code simulator, client/server causes, and snippets', cat: 'web', icon: 'server', badge: 'Interactive' },
   { id: 'curl-fetch', name: 'cURL to Fetch Converter', desc: 'Translate raw cURL network commands into browser fetch() JavaScript syntax', cat: 'web', icon: 'terminal', badge: 'cURL' },
@@ -131,9 +196,29 @@ const toolsDatabase = [
   { id: 'http-etag-gen', name: 'HTTP ETag Checksum Generator', desc: 'Generate entity tag validator strings from content payloads for conditional caching', cat: 'web', icon: 'hash', badge: 'ETag' },
   { id: 'canonical-tag-gen', name: 'Canonical URL HTML Tag Generator', desc: 'Generate rel=canonical meta tags to resolve duplicate content indexing in SEO', cat: 'web', icon: 'link', badge: 'SEO' },
   { id: 'rate-limit-calc', name: 'Rate Limit Response Headers Simulator', desc: 'Format standard X-RateLimit-Limit, Remaining, and Reset header envelopes', cat: 'web', icon: 'activity', badge: 'Rate Limit' },
+  { id: 'websocket-url-validator', name: 'WebSocket URL (ws/wss) Validator', desc: 'Validate WebSocket URLs and test query parameters and protocols', cat: 'web', icon: 'radio', badge: 'WebSocket' },
+  { id: 'accept-header-parser', name: 'Accept Header Quality Weight Sorter', desc: 'Parse Accept header priorities (text/html;q=0.9, application/json;q=0.8)', cat: 'web', icon: 'list', badge: 'Accept' },
+  { id: 'referrer-policy-gen', name: 'Referrer-Policy Header Builder', desc: 'Configure strict-origin-when-cross-origin and no-referrer header directives', cat: 'web', icon: 'shield', badge: 'Privacy' },
+  { id: 'permissions-policy-builder', name: 'Permissions-Policy Header Generator', desc: 'Control browser hardware permissions (camera, microphone, geolocation) via headers', cat: 'web', icon: 'lock', badge: 'Permissions' },
+  { id: 'dns-record-formatter', name: 'DNS Zone Record Builder', desc: 'Format standard A, AAAA, CNAME, MX, TXT, and PTR records for BIND zone files', cat: 'web', icon: 'server', badge: 'DNS' },
+  { id: 'spf-record-validator', name: 'SPF Email Record Builder', desc: 'Build and validate v=spf1 records with ip4, include, and ~all mechanisms', cat: 'web', icon: 'mail', badge: 'SPF' },
+  { id: 'dmarc-policy-maker', name: 'DMARC Email Policy Record Generator', desc: 'Configure v=DMARC1 records with rua reporting and p=reject policy enforcement', cat: 'web', icon: 'shield-check', badge: 'DMARC' },
+  { id: 'pagination-header-gen', name: 'RFC 5988 Link Header Pagination Builder', desc: 'Generate Link: <url>; rel="next", rel="last" HTTP headers for REST APIs', cat: 'web', icon: 'arrow-right', badge: 'RFC 5988' },
+  { id: 'webhook-verifier', name: 'Webhook Signature Header Formatter', desc: 'Generate standard X-Hub-Signature-256 headers from webhook payload bodies', cat: 'web', icon: 'send', badge: 'Webhook' },
+  { id: 'graphql-url-parser', name: 'GraphQL Query URL String Extractor', desc: 'Extract clean query and variables from encoded GET request query strings', cat: 'web', icon: 'share-2', badge: 'GraphQL' },
+  { id: 'oauth-url-builder', name: 'OAuth 2.0 Authorization URL Builder', desc: 'Assemble client_id, redirect_uri, scope, and response_type into login URLs', cat: 'web', icon: 'key', badge: 'OAuth' },
+  { id: 'ip-lookup-simulator', name: 'IPv4/IPv6 IP Address Classifier', desc: 'Check if an IP address belongs to Private, Loopback, Link-Local, or Public ranges', cat: 'web', icon: 'network', badge: 'IP Class' },
+  { id: 'curl-to-csharp', name: 'cURL to C# RestSharp / HttpClient', desc: 'Convert raw cURL terminal commands into modern C# RestClient code', cat: 'web', icon: 'code-2', badge: 'C#' },
+  { id: 'curl-to-rust', name: 'cURL to Rust reqwest Code Converter', desc: 'Generate asynchronous Rust reqwest::Client request blocks from cURL strings', cat: 'web', icon: 'cpu', badge: 'Rust' },
+  { id: 'http-method-matrix', name: 'HTTP Method Idempotency Matrix', desc: 'Reference RFC 9110 safety, idempotency, and caching matrix across HTTP verbs', cat: 'web', icon: 'help-circle', badge: 'RFC 9110' },
+  { id: 'cookie-header-parser', name: 'Cookie HTTP Header String Parser', desc: 'Parse Cookie: a=1; b=2; session=xyz header strings into structured JSON', cat: 'web', icon: 'file-text', badge: 'Cookies' },
+  { id: 'set-cookie-builder', name: 'Set-Cookie Header Directive Builder', desc: 'Generate Set-Cookie headers with Secure, HttpOnly, SameSite=Strict, and Max-Age', cat: 'web', icon: 'shield-check', badge: 'Cookies' },
+  { id: 'cors-preflight-eval', name: 'CORS Preflight (OPTIONS) Tester', desc: 'Simulate Access-Control-Request-Method and verify preflight responses', cat: 'web', icon: 'globe', badge: 'CORS' },
+  { id: 'security-txt-gen', name: 'security.txt Vulnerability File Maker', desc: 'Generate RFC 9116 security.txt files with Contact, Encryption, and Canonical tags', cat: 'web', icon: 'shield', badge: 'RFC 9116' },
+  { id: 'ads-txt-validator', name: 'Google ads.txt / app-ads.txt Generator', desc: 'Format authorized digital sellers listings (google.com, pub-id, DIRECT, f08c47fec0942fa0)', cat: 'web', icon: 'dollar-sign', badge: 'ads.txt' },
 
   // ============================================================================
-  // 5. CSS & UI DESIGN
+  // 5. CSS & UI DESIGN (Tools 201 to 250)
   // ============================================================================
   { id: 'box-shadow', name: 'CSS Box-Shadow Studio', desc: 'Visual sliders for offsets, blur, and spread with instant CSS copy', cat: 'design', icon: 'layers', badge: 'CSS Studio' },
   { id: 'flexbox-play', name: 'CSS Flexbox Playground', desc: 'Interactive visual sandbox for justify-content, align-items, and flex-wrap', cat: 'design', icon: 'layout', badge: 'Flexbox' },
@@ -155,9 +240,39 @@ const toolsDatabase = [
   { id: 'color-shades-gen', name: 'Monochromatic Color Shades & Tints', desc: 'Generate 10-step light-to-dark color scales (50 to 900) for UI design systems', cat: 'design', icon: 'palette', badge: 'Shades' },
   { id: 'svg-data-uri-gen', name: 'SVG to CSS Background Data URI', desc: 'Encode raw SVG vector code into safe inline background-image: url("data:image...") styles', cat: 'design', icon: 'image', badge: 'Data URI' },
   { id: 'css-filters-sandbox', name: 'CSS Filter Playground', desc: 'Interactively adjust blur, brightness, contrast, grayscale, and invert filters', cat: 'design', icon: 'sliders', badge: 'Filters' },
+  { id: 'css-animation-keyframes', name: 'CSS Keyframe Animation Studio', desc: 'Build 0% to 100% keyframe transitions with pulse, bounce, and fade presets', cat: 'design', icon: 'play', badge: 'Keyframes' },
+  { id: 'cubic-bezier-tester', name: 'Cubic-Bezier Easing Inspector', desc: 'Visual cubic-bezier(x1, y1, x2, y2) timing curve generator for smooth transitions', cat: 'design', icon: 'activity', badge: 'Easing' },
+  { id: 'css-specificity-calc', name: 'CSS Selector Specificity Calculator', desc: 'Calculate (Inline, IDs, Classes, Elements) specificity scores for CSS rules', cat: 'design', icon: 'award', badge: 'Specificity' },
+  { id: 'color-cmyk-converter', name: 'RGB & HEX to CMYK Print Converter', desc: 'Convert screen colors to Cyan, Magenta, Yellow, and Key/Black print values', cat: 'design', icon: 'printer', badge: 'CMYK' },
+  { id: 'tailwind-hex-lookup', name: 'Tailwind CSS Color Palette Lookup', desc: 'Search official Tailwind CSS v3 & v4 hex colors by name (slate-800, indigo-600)', cat: 'design', icon: 'search', badge: 'Tailwind' },
+  { id: 'css-var-scaffold', name: 'CSS Custom Property (:root) Scaffolder', desc: 'Generate CSS variable design tokens for typography, spacing, and colors', cat: 'design', icon: 'file-text', badge: 'Variables' },
+  { id: 'font-pair-tester', name: 'Heading & Body Font Pair Tester', desc: 'Preview Google Fonts combinations side-by-side with adjustable scale ratios', cat: 'design', icon: 'type', badge: 'Typography' },
+  { id: 'css-columns-builder', name: 'CSS Multi-Column Layout Maker', desc: 'Configure column-count, column-gap, and column-rule for print-style text columns', cat: 'design', icon: 'columns', badge: 'Columns' },
+  { id: 'css-backdrop-filter', name: 'Backdrop Filter Blur & Saturate', desc: 'Generate iOS-style backdrop-filter blur backgrounds for navigation modals', cat: 'design', icon: 'sparkles', badge: 'Backdrop' },
+  { id: 'golden-ratio-type', name: 'Golden Ratio Typography Scale Calculator', desc: 'Calculate modular typographic scales based on the 1.618 golden ratio multiplier', cat: 'design', icon: 'trending-up', badge: 'Scale' },
+  { id: 'css-cursor-directory', name: 'CSS Cursor Property Directory', desc: 'Interactive preview of all CSS cursor states (pointer, grab, crosshair, not-allowed)', cat: 'design', icon: 'mouse-pointer', badge: 'Cursor' },
+  { id: 'z-index-scale-manager', name: 'CSS z-index Elevation Scale Builder', desc: 'Map organized z-index scales (dropdown 1000, modal 2000, toast 3000)', cat: 'design', icon: 'layers', badge: 'z-index' },
+  { id: 'css-ribbon-builder', name: 'Corner Badge & Ribbon CSS Generator', desc: 'Generate pure CSS corner banner ribbons for e-commerce product cards', cat: 'design', icon: 'bookmark', badge: 'Ribbon' },
+  { id: 'color-blindness-sim', name: 'Color Blindness Accessibility Simulator', desc: 'Simulate Protanopia, Deuteranopia, and Tritanopia color blindness on hex colors', cat: 'design', icon: 'eye', badge: 'A11y' },
+  { id: 'css-media-query-gen', name: 'Responsive Breakpoint Media Queries', desc: 'Generate standard media queries for Mobile (640px), Tablet (768px), and Laptop (1024px)', cat: 'design', icon: 'smartphone', badge: 'Responsive' },
+  { id: 'css-calc-validator', name: 'CSS calc() Expression Evaluator', desc: 'Test and validate CSS calc(100% - 32px) expressions with mixed units', cat: 'design', icon: 'calculator', badge: 'calc()' },
+  { id: 'web-safe-font-stacks', name: 'Web-Safe Font Stacks Directory', desc: 'Copy fallback font stacks for Arial, Helvetica, Georgia, Times, and Courier', cat: 'design', icon: 'type', badge: 'Fonts' },
+  { id: 'css-mask-generator', name: 'CSS Mask Image & Clipping Studio', desc: 'Generate CSS mask-image gradient fade-out styles for scrollable overflow boxes', cat: 'design', icon: 'eye-off', badge: 'Masking' },
+  { id: 'svg-icon-color-tint', name: 'CSS Filter Hex to Filter Converter', desc: 'Convert target hex colors into exact CSS filter: invert(...) approximations', cat: 'design', icon: 'filter', badge: 'Filter Gen' },
+  { id: 'button-hover-builder', name: 'Interactive Button Hover Micro-Transitions', desc: 'Design scale, translateY, and shadow elevation hover micro-interactions', cat: 'design', icon: 'square', badge: 'Buttons' },
+  { id: 'css-perspective-3d', name: 'CSS 3D Transform & Perspective Studio', desc: 'Visually rotate cards along rotateX, rotateY, and perspective planes', cat: 'design', icon: 'box', badge: '3D' },
+  { id: 'screen-mockup-frame', name: 'Browser Window UI Mockup Frame Maker', desc: 'Wrap screenshot images in dark-mode browser chrome window headers', cat: 'design', icon: 'layout', badge: 'Mockup' },
+  { id: 'css-reset-scaffold', name: 'Modern CSS Reset Snippet Generator', desc: 'Generate clean CSS resets (box-sizing, margin 0, smooth scrolling defaults)', cat: 'design', icon: 'file-text', badge: 'Reset' },
+  { id: 'color-name-finder', name: 'Hex Color Nearest Named Color Finder', desc: 'Match any raw hex color code to its nearest official CSS named color name', cat: 'design', icon: 'tag', badge: 'Color Names' },
+  { id: 'css-focus-visible-gen', name: 'Accessible Focus Ring Styler', desc: 'Generate high-contrast :focus-visible outlines compliant with accessibility standards', cat: 'design', icon: 'check-square', badge: 'A11y Focus' },
+  { id: 'badge-pill-builder', name: 'UI Badge & Pill Element Generator', desc: 'Design badge pills with status colors, pulse dots, and copyable Tailwind code', cat: 'design', icon: 'tag', badge: 'Badges' },
+  { id: 'css-table-styler', name: 'Zebra Stripe Data Table Styler', desc: 'Generate alternating row colors and hover state CSS for HTML data tables', cat: 'design', icon: 'grid', badge: 'Tables' },
+  { id: 'glassmorphism-card', name: 'Frosted Glass Modal Card Studio', desc: 'Design layered translucent modal cards with border gradients and blurs', cat: 'design', icon: 'sparkles', badge: 'Modal UI' },
+  { id: 'css-tooltip-maker', name: 'Pure CSS Data-Tooltip Generator', desc: 'Generate hover tooltips using [data-tooltip]::before and ::after pseudo-elements', cat: 'design', icon: 'message-circle', badge: 'Tooltips' },
+  { id: 'letter-spacing-calc', name: 'Tracking & Letter Spacing Converter', desc: 'Convert Photoshop/Figma tracking values (-20, 50) into CSS em/px letter-spacing', cat: 'design', icon: 'type', badge: 'Spacing' },
 
   // ============================================================================
-  // 6. DEVOPS, CLOUD & LINUX
+  // 6. DEVOPS, CLOUD & LINUX (Tools 251 to 300)
   // ============================================================================
   { id: 'cron-builder', name: 'Cron Expression Explainer', desc: 'Translate 5-part cron syntax into human-readable sentences with presets', cat: 'devops', icon: 'clock', badge: 'Crontab' },
   { id: 'dockerfile-lint', name: 'Dockerfile Validator & Linter', desc: 'Inspect Dockerfile instructions for caching efficiency and security practices', cat: 'devops', icon: 'container', badge: 'Docker' },
@@ -187,9 +302,31 @@ const toolsDatabase = [
   { id: 'bandwidth-time-calc', name: 'File Download Time Calculator', desc: 'Calculate exact transfer durations across Mbps/Gbps connections for gigabyte files', cat: 'devops', icon: 'download', badge: 'Transfer' },
   { id: 'ping-overhead-calc', name: 'Ping Packet Overhead & MTU Calculator', desc: 'Calculate packet fragmentation and IP/ICMP byte overhead for standard 1500 MTUs', cat: 'devops', icon: 'activity', badge: 'MTU' },
   { id: 's3-policy-gen', name: 'AWS S3 Bucket Policy JSON Builder', desc: 'Generate read-only, public-read, or restricted VPC bucket policies for Amazon S3', cat: 'devops', icon: 'shield', badge: 'AWS S3' },
+  { id: 'iam-assume-role-gen', name: 'AWS IAM Trust Policy Generator', desc: 'Generate AssumeRolePolicyDocument JSON for EC2, Lambda, and ECS task roles', cat: 'devops', icon: 'key', badge: 'AWS IAM' },
+  { id: 'prometheus-alert-gen', name: 'Prometheus AlertRule YAML Builder', desc: 'Format alert rules with for: durations, severity labels, and PromQL threshold expressions', cat: 'devops', icon: 'alert-triangle', badge: 'Prometheus' },
+  { id: 'terraform-var-gen', name: 'Terraform Variable Block Scaffolder', desc: 'Generate variable "name" { type = string, default = ... } blocks from JSON keys', cat: 'devops', icon: 'code', badge: 'Terraform' },
+  { id: 'procfile-generator', name: 'PaaS Procfile Declarator', desc: 'Generate web:, worker:, and release: process declarations for Heroku and Railway', cat: 'devops', icon: 'file', badge: 'Procfile' },
+  { id: 'rsync-flag-assembler', name: 'Rsync CLI Command Flag Builder', desc: 'Assemble safe rsync commands with -avzP, --exclude, and --delete dry-run flags', cat: 'devops', icon: 'refresh-cw', badge: 'Rsync' },
+  { id: 'syslog-facility-calc', name: 'Syslog RFC 5424 Priority Calculator', desc: 'Calculate Priority = (Facility * 8) + Severity values for syslog log forwarding', cat: 'devops', icon: 'list', badge: 'Syslog' },
+  { id: 'fail2ban-regex-gen', name: 'Fail2ban Filter failregex Generator', desc: 'Create regex filter patterns to match failed SSH and authentication attempts in logs', cat: 'devops', icon: 'shield-alert', badge: 'Fail2ban' },
+  { id: 'ansible-inventory-conv', name: 'Ansible Inventory INI to YAML', desc: 'Convert legacy INI-formatted Ansible inventory host files into structured YAML', cat: 'devops', icon: 'file-text', badge: 'Ansible' },
+  { id: 'linux-load-avg-calc', name: 'Linux CPU Core Load Capacity Sizer', desc: 'Calculate percentage CPU saturation based on 1-min load average and total cores', cat: 'devops', icon: 'cpu', badge: 'Linux Load' },
+  { id: 'coreos-cloud-init-gen', name: 'Cloud-Init YAML User-Data Builder', desc: 'Configure SSH keys, user accounts, and initial shell runcmds for cloud VM boots', cat: 'devops', icon: 'server', badge: 'Cloud-Init' },
+  { id: 'docker-prune-cmd-gen', name: 'Docker Cleanup Command Builder', desc: 'Assemble selective docker system prune commands for dangling images and volumes', cat: 'devops', icon: 'trash-2', badge: 'Docker' },
+  { id: 'traefik-router-gen', name: 'Traefik v2/v3 Dynamic Config Builder', desc: 'Generate Traefik HTTP routers and middlewares for Docker container labels', cat: 'devops', icon: 'git-merge', badge: 'Traefik' },
+  { id: 'dnsmasq-conf-builder', name: 'Dnsmasq Local Resolver Config Maker', desc: 'Build address=/domain/127.0.0.1 redirect rules for local DNS development', cat: 'devops', icon: 'network', badge: 'Dnsmasq' },
+  { id: 'squid-proxy-acl-gen', name: 'Squid Proxy ACL Rule Generator', desc: 'Format acl and http_access allow/deny rule blocks for web proxy gateways', cat: 'devops', icon: 'shield', badge: 'Squid' },
+  { id: 'logrotate-conf-maker', name: 'Linux logrotate.d File Builder', desc: 'Configure weekly rotation, compress, delaycompress, and maxsize log policies', cat: 'devops', icon: 'rotate-cw', badge: 'Logrotate' },
+  { id: 'ufw-firewall-cmd-gen', name: 'Ubuntu UFW Firewall Rule Builder', desc: 'Generate ufw allow from <ip> to any port <port> firewall rules', cat: 'devops', icon: 'shield-check', badge: 'UFW' },
+  { id: 'iptables-rule-builder', name: 'Linux iptables NAT & Port Forwarder', desc: 'Generate iptables -t nat -A PREROUTING port forwarding and masquerade rules', cat: 'devops', icon: 'terminal', badge: 'iptables' },
+  { id: 'wireguard-peer-conf', name: 'WireGuard VPN Peer Config Builder', desc: 'Build [Interface] and [Peer] ini configurations with private/public key pairs', cat: 'devops', icon: 'shield', badge: 'WireGuard' },
+  { id: 'ip-vlan-tag-calc', name: '802.1Q VLAN Tag & ID Directory', desc: 'Check standard 12-bit VLAN ID ranges (1 to 4094) and priority code points', cat: 'devops', icon: 'tag', badge: 'VLAN' },
+  { id: 'system-ram-budget', name: 'JVM / Node Memory Cap Sizer', desc: 'Calculate optimal -Xmx heap sizes and container cgroup memory boundaries', cat: 'devops', icon: 'cpu', badge: 'Memory' },
+  { id: 'git-squash-helper', name: 'Git Interactive Rebase Command Helper', desc: 'Generate git rebase -i HEAD~N command sequences with squash and fixup hints', cat: 'devops', icon: 'git-merge', badge: 'Git' },
+  { id: 'helm-chart-yaml-scaffold', name: 'Helm Chart.yaml Metadata Builder', desc: 'Build standardized Chart.yaml definitions with version, appVersion, and dependencies', cat: 'devops', icon: 'file-text', badge: 'Helm' },
 
   // ============================================================================
-  // 7. CONTENT, TEXT & MARKDOWN
+  // 7. CONTENT, TEXT & MARKDOWN (Tools 301 to 350)
   // ============================================================================
   { id: 'markdown-live', name: 'Markdown Live Previewer', desc: 'Live Markdown to styled HTML renderer with word count and stats', cat: 'text', icon: 'file-text', badge: 'Markdown' },
   { id: 'word-counter', name: 'Word & Character Counter', desc: 'Real-time word, character, sentence, paragraph, and reading time metrics', cat: 'text', icon: 'spell-check', badge: 'Metrics' },
@@ -211,9 +348,39 @@ const toolsDatabase = [
   { id: 'flesch-kincaid', name: 'Flesch-Kincaid Readability Calculator', desc: 'Calculate reading ease score and grade level difficulty for technical documentation', cat: 'text', icon: 'book-open', badge: 'Readability' },
   { id: 'strip-html-tags', name: 'HTML Tag Stripper & Plain Text Extractor', desc: 'Remove all HTML markup, scripts, and styles, leaving pure plain text content', cat: 'text', icon: 'trash-2', badge: 'Cleaner' },
   { id: 'zero-width-detector', name: 'Zero-Width Invisible Character Detector', desc: 'Detect and remove hidden Unicode zero-width spaces that break code parsing', cat: 'text', icon: 'eye-off', badge: 'Sanitizer' },
+  { id: 'diff-inline-checker', name: 'Inline Character-by-Character Diff', desc: 'Highlight micro text changes, typo fixes, and punctuation diffs inline', cat: 'text', icon: 'git-commit', badge: 'Diff' },
+  { id: 'palindrome-checker', name: 'Palindrome Phrase & Sentence Verifier', desc: 'Check if alphanumeric character sequences read identically forwards and backwards', cat: 'text', icon: 'refresh-cw', badge: 'Palindrome' },
+  { id: 'string-truncator', name: 'Word-Boundary Smart String Truncator', desc: 'Truncate paragraphs to max characters without chopping words in half', cat: 'text', icon: 'scissors', badge: 'Truncate' },
+  { id: 'comma-to-newline', name: 'Comma to Newline & List Transposer', desc: 'Convert comma-delimited strings into vertical lists or newline lists to commas', cat: 'text', icon: 'list', badge: 'Delimit' },
+  { id: 'extract-hex-colors', name: 'Extract Hex Color Codes from CSS', desc: 'Scan CSS and text blocks to extract unique 3, 6, and 8-digit #hex color codes', cat: 'text', icon: 'pipette', badge: 'Extract' },
+  { id: 'nato-phonetic-gen', name: 'NATO Phonetic Alphabet Speller', desc: 'Convert text (Alpha, Bravo, Charlie) for clear spelling over voice phone calls', cat: 'text', icon: 'mic', badge: 'Phonetic' },
+  { id: 'morse-code-codec', name: 'Morse Code Encoder & Decoder', desc: 'Translate text into dots and dashes (. ---) and decode Morse back into letters', cat: 'text', icon: 'radio', badge: 'Morse' },
+  { id: 'bbcode-to-html', name: 'BBCode to HTML Markup Converter', desc: 'Convert forum BBCode tags ([b], [url], [quote]) into clean semantic HTML5', cat: 'text', icon: 'code', badge: 'BBCode' },
+  { id: 'markdown-checklist-calc', name: 'Markdown Checklist Progress Tracker', desc: 'Calculate percentage completion from - [x] done and - [ ] todo markdown checkboxes', cat: 'text', icon: 'check-square', badge: 'Checklist' },
+  { id: 'binary-to-text', name: 'Binary (01) to ASCII Text Converter', desc: 'Convert 8-bit space-separated binary byte streams into readable English text', cat: 'text', icon: 'binary', badge: 'Binary' },
+  { id: 'text-to-binary', name: 'Text to 8-Bit Binary Representation', desc: 'Encode ASCII and UTF-8 strings into binary byte representations', cat: 'text', icon: 'binary', badge: 'Binary' },
+  { id: 'leetspeak-generator', name: 'LeetSpeak (1337) Text Generator', desc: 'Transform standard text into hacker leetspeak with customizable letter substitutions', cat: 'text', icon: 'terminal', badge: '1337' },
+  { id: 'upside-down-text', name: 'Upside-Down Unicode Text Flipper', desc: 'Flip text upside down using Unicode phonetic and mathematical turned characters', cat: 'text', icon: 'rotate-cw', badge: 'Unicode' },
+  { id: 'zalgo-glitch-text', name: 'Zalgo Glitched Text Generator', desc: 'Add combining diacritical marks to text to produce spooky matrix glitch effects', cat: 'text', icon: 'zap', badge: 'Zalgo' },
+  { id: 'speaking-time-calc', name: 'Public Speaking Time Estimator', desc: 'Estimate verbal presentation time based on standard 130-150 words per minute rates', cat: 'text', icon: 'volume-2', badge: 'Speech' },
+  { id: 'char-occurrence-calc', name: 'Character Frequency Heatmap Analyzer', desc: 'Calculate individual character occurrences and percentage density in a document', cat: 'text', icon: 'bar-chart', badge: 'Frequency' },
+  { id: 'remove-accent-marks', name: 'Diacritic & Accent Mark Stripper', desc: 'Strip accents and normalize characters (é -> e, ü -> u, ñ -> n) for search indexing', cat: 'text', icon: 'type', badge: 'Normalize' },
+  { id: 'column-text-aligner', name: 'Monospace Table Text Column Aligner', desc: 'Align uneven plain text columns by padding spaces to match maximum column width', cat: 'text', icon: 'align-justify', badge: 'Align' },
+  { id: 'c-string-literal-gen', name: 'C/C++ Multi-Line String Literal Maker', desc: 'Format raw multi-line strings into quoted escaped C-string literals with \\n', cat: 'text', icon: 'code', badge: 'C/C++' },
+  { id: 'tab-to-spaces-conv', name: 'Tabs to Spaces & Spaces to Tabs', desc: 'Convert between tab characters and 2-space or 4-space indentations consistently', cat: 'text', icon: 'sliders', badge: 'Indent' },
+  { id: 'sentence-counter', name: 'Sentence & Average Sentence Length Sizer', desc: 'Count total sentences and calculate average words per sentence to improve clarity', cat: 'text', icon: 'book', badge: 'Sentences' },
+  { id: 'text-scramble-fuzzer', name: 'Random Word Scrambler & Anonymizer', desc: 'Shuffle inner letters of words or substitute nouns with random filler for anonymization', cat: 'text', icon: 'shuffle', badge: 'Scramble' },
+  { id: 'markdown-link-extractor', name: 'Markdown Link & Reference Extractor', desc: 'Extract [anchor text](url) pairings from markdown files into tabular lists', cat: 'text', icon: 'link', badge: 'Links' },
+  { id: 'title-case-ap-style', name: 'AP & Chicago Style Headline Capitalizer', desc: 'Capitalize article headlines according to official AP Stylebook capitalization rules', cat: 'text', icon: 'type', badge: 'AP Style' },
+  { id: 'repeated-words-finder', name: 'Consecutive Duplicate Word Detector', desc: 'Identify and highlight accidental repeated duplicate words ("the the", "in in")', cat: 'text', icon: 'alert-triangle', badge: 'Proofread' },
+  { id: 'regex-replace-all', name: 'Client-Side RegEx Replace Studio', desc: 'Run global regex substitutions with capture group back-references ($1, $2)', cat: 'text', icon: 'search', badge: 'Replace' },
+  { id: 'text-wrap-width', name: 'Hard Word Wrap at Column Width', desc: 'Hard-wrap paragraphs at 80 characters or custom widths for terminal and email readability', cat: 'text', icon: 'align-left', badge: 'Wrap' },
+  { id: 'base64-text-wrap', name: 'Base64 76-Character MIME Line Wrapper', desc: 'Split long continuous Base64 text streams into standard 76-char RFC 2045 lines', cat: 'text', icon: 'align-justify', badge: 'MIME' },
+  { id: 'text-mask-emails', name: 'Email Address Privacy Masker', desc: 'Mask email user handles (j***@example.com) for public display and GDPR compliance', cat: 'text', icon: 'eye-off', badge: 'GDPR' },
+  { id: 'emoji-stripper', name: 'Unicode Emoji Character Stripper', desc: 'Strip all emojis and surrogate pair symbols from text to ensure ASCII compatibility', cat: 'text', icon: 'smile', badge: 'Clean' },
 
   // ============================================================================
-  // 8. MATH, TIME & CONVERTERS
+  // 8. MATH, TIME & FINANCIAL (Tools 351 to 400)
   // ============================================================================
   { id: 'base-converter', name: 'Number Base Converter', desc: 'Simultaneous live conversion across Decimal, Hexadecimal, Binary, and Octal', cat: 'math', icon: 'binary', badge: 'Base 2-16' },
   { id: 'unit-convert', name: 'Universal Unit Converter', desc: 'Convert length, mass, temperature, data storage, and speed instantly', cat: 'math', icon: 'scale', badge: '6 Categories' },
@@ -237,9 +404,37 @@ const toolsDatabase = [
   { id: 'cagr-calc', name: 'CAGR (Annual Growth Rate) Calculator', desc: 'Calculate Compound Annual Growth Rate for business revenue and portfolio investments', cat: 'math', icon: 'bar-chart', badge: 'CAGR' },
   { id: 'fuel-trip-calc', name: 'Trip Fuel & Cost Estimator', desc: 'Estimate total fuel volume and currency expenses based on distance and mileage', cat: 'math', icon: 'navigation', badge: 'Travel' },
   { id: 'scientific-notation', name: 'Scientific Notation Converter', desc: 'Convert numbers to scientific exponential notation (1.23e+8) and vice versa', cat: 'math', icon: 'hash', badge: 'Scientific' },
+  { id: 'rule-of-72-calc', name: 'Rule of 72 Doubling Time Calculator', desc: 'Estimate how many years it takes for an investment to double at a given interest rate', cat: 'math', icon: 'clock', badge: 'Rule of 72' },
+  { id: 'simple-interest-calc', name: 'Simple Interest & Payoff Calculator', desc: 'Calculate basic non-compounding interest ($I = P \\times r \\times t$) on loans', cat: 'math', icon: 'dollar-sign', badge: 'Interest' },
+  { id: 'tip-bill-splitter', name: 'Restaurant Tip & Group Bill Splitter', desc: 'Calculate tip percentages and split total restaurant checks evenly among party guests', cat: 'math', icon: 'users', badge: 'Bill Split' },
+  { id: 'fraction-reducer', name: 'Fraction Simplifier & Reducer', desc: 'Simplify complex fractions to lowest terms and convert to decimal equivalents', cat: 'math', icon: 'divide', badge: 'Fractions' },
+  { id: 'prime-factor-calc', name: 'Prime Number Factorization Calculator', desc: 'Test if an integer is prime and view its complete prime factor breakdown tree', cat: 'math', icon: 'hash', badge: 'Primes' },
+  { id: 'quadratic-solver', name: 'Quadratic Equation ($ax^2+bx+c$) Solver', desc: 'Calculate real and complex roots for standard algebraic quadratic formulas', cat: 'math', icon: 'help-circle', badge: 'Algebra' },
+  { id: 'statistics-mean-median', name: 'Mean, Median, Mode & Range Calculator', desc: 'Calculate central tendency statistics from comma-delimited numeric datasets', cat: 'math', icon: 'bar-chart-2', badge: 'Statistics' },
+  { id: 'std-dev-calc', name: 'Standard Deviation & Variance Calculator', desc: 'Calculate population and sample variance ($s^2$) and standard deviation ($\\sigma$)', cat: 'math', icon: 'activity', badge: 'Variance' },
+  { id: 'random-num-range', name: 'Cryptographic Random Integer Picker', desc: 'Generate uniform random numbers within custom min/max integer boundaries', cat: 'math', icon: 'shuffle', badge: 'Random' },
+  { id: 'ratio-scaler-calc', name: 'Aspect Ratio & Proportion Scaler', desc: 'Solve proportional ratios ($A:B = C:D$) to scale dimensions maintaining proportions', cat: 'math', icon: 'maximize', badge: 'Ratios' },
+  { id: 'bmi-calc-metric', name: 'Body Mass Index (BMI) Calculator', desc: 'Calculate BMI and healthy weight categories using metric or imperial inputs', cat: 'math', icon: 'heart', badge: 'BMI' },
+  { id: 'bmr-calorie-calc', name: 'Basal Metabolic Rate (BMR) Calculator', desc: 'Calculate baseline daily caloric burn using the Mifflin-St Jeor formula', cat: 'math', icon: 'activity', badge: 'Calorie' },
+  { id: 'kwh-appliance-calc', name: 'Electricity Appliance Cost Calculator', desc: 'Calculate electricity running costs (kWh) from appliance wattage and hours', cat: 'math', icon: 'zap', badge: 'Energy' },
+  { id: 'iso-week-number', name: 'ISO 8601 Week Number & Day Finder', desc: 'Determine the exact ISO week number (W01 to W53) and day of year for any date', cat: 'math', icon: 'calendar', badge: 'ISO 8601' },
+  { id: 'relative-time-human', name: 'Relative Time Humanizer ("3 hours ago")', desc: 'Convert timestamps into relative English strings ("just now", "yesterday")', cat: 'math', icon: 'clock', badge: 'Humanize' },
+  { id: 'stopwatch-lap-timer', name: 'Browser Millisecond Stopwatch & Lap Timer', desc: 'High-precision in-browser stopwatch with split lap recording capabilities', cat: 'math', icon: 'watch', badge: 'Timer' },
+  { id: 'pomodoro-timer', name: 'Pomodoro 25/5 Work Interval Timer', desc: 'Classic 25-minute focus session and 5-minute break timer with audio notifications', cat: 'math', icon: 'clock', badge: 'Pomodoro' },
+  { id: 'epoch-nanoseconds', name: 'Nanosecond & Microsecond Timestamp Sizer', desc: 'Parse 16-digit (micro) and 19-digit (nano) Unix timestamps into human dates', cat: 'math', icon: 'calendar', badge: 'Nanoseconds' },
+  { id: 'leap-year-checker', name: 'Leap Year Century Verifier', desc: 'Verify if calendar years satisfy the Gregorian 400-year leap year rule', cat: 'math', icon: 'calendar-check', badge: 'Calendar' },
+  { id: 'military-time-conv', name: '24-Hour Military Time Converter', desc: 'Convert 12-hour AM/PM time into 24-hour military notation (17:30) and vice versa', cat: 'math', icon: 'clock', badge: '24-Hour' },
+  { id: 'inflation-impact-calc', name: 'Historical Inflation Impact Estimator', desc: 'Calculate how annual inflation rates erode monetary purchasing power over decades', cat: 'math', icon: 'trending-down', badge: 'Inflation' },
+  { id: 'billable-hours-calc', name: 'Freelance Billable Time & Rate Multiplier', desc: 'Sum project time cards (hours:minutes) and multiply by hourly billing rates', cat: 'math', icon: 'dollar-sign', badge: 'Billing' },
+  { id: 'salary-to-hourly', name: 'Annual Salary to Hourly Wage Equivalent', desc: 'Convert annual gross pay into weekly, daily, and hourly wage rates (based on 2080 hrs)', cat: 'math', icon: 'dollar-sign', badge: 'Salary' },
+  { id: 'binary-bitwise-ops', name: 'Bitwise AND, OR, XOR, NOT Calculator', desc: 'Perform bitwise logical operations on two integers and view binary bit registers', cat: 'math', icon: 'binary', badge: 'Bitwise' },
+  { id: 'permutations-comb-calc', name: 'Permutations ($nPr$) & Combinations ($nCr$)', desc: 'Calculate mathematical permutations and combinations for probability sets', cat: 'math', icon: 'shuffle', badge: 'Probability' },
+  { id: 'discount-savings-calc', name: 'Sale Discount & Savings Calculator', desc: 'Calculate final checkout prices after applying percentage discounts and coupons', cat: 'math', icon: 'tag', badge: 'Savings' },
+  { id: 'unit-price-comparator', name: 'Price-per-Unit Comparison Tool', desc: 'Compare multi-pack grocery sizes to find the lowest price per ounce, gram, or liter', cat: 'math', icon: 'shopping-cart', badge: 'Best Value' },
+  { id: 'year-progress-bar', name: 'Current Year Percentage Completion Bar', desc: 'Calculate what percentage of the current calendar year has elapsed down to seconds', cat: 'math', icon: 'clock', badge: 'Year Progress' },
 
   // ============================================================================
-  // 9. QA TESTING & MOCK DATA
+  // 9. QA AUTOMATION, LOCATORS & MOCKS (Tools 401 to 450)
   // ============================================================================
   { id: 'dummy-card', name: 'Dummy Test Card Generator', desc: 'Generate Luhn-valid dummy credit card numbers strictly for billing QA', cat: 'testing', icon: 'credit-card', badge: 'Luhn Valid' },
   { id: 'pdf-toolkit', name: 'Client-Side PDF Merger', desc: 'Combine multiple PDF documents safely in browser memory without uploads', cat: 'testing', icon: 'file-stack', badge: 'In-Memory' },
@@ -267,9 +462,33 @@ const toolsDatabase = [
   { id: 'random-ip-fixture', name: 'Random IP Address Fixture Generator', desc: 'Generate batches of RFC-compliant IPv4 and IPv6 test fixtures in public and private CIDRs', cat: 'testing', icon: 'network', badge: 'IP Fixtures' },
   { id: 'cookie-attribute-qa', name: 'Cookie Security Attributes Checker', desc: 'Inspect Set-Cookie headers for SameSite, Secure, and HttpOnly security flags', cat: 'testing', icon: 'shield-check', badge: 'Cookies' },
   { id: 'response-time-sla', name: 'Response Time SLA Calculator', desc: 'Calculate 90th, 95th, and 99th percentile response latencies from performance test logs', cat: 'testing', icon: 'trending-up', badge: 'SLA Percentiles' },
+  { id: 'decision-table-truth', name: 'Decision Table 2^N Matrix Generator', desc: 'Generate exhaustive boolean truth tables for complex multi-conditional business rules', cat: 'testing', icon: 'table', badge: 'Truth Table' },
+  { id: 'state-transition-planner', name: 'State Machine Path Coverage Planner', desc: 'Map states and trigger events into node-link traversal checklists for E2E tests', cat: 'testing', icon: 'git-fork', badge: 'FSM Coverage' },
+  { id: 'pairwise-orthogonal-array', name: 'All-Pairs / Orthogonal Array Matrix', desc: 'Reduce combinatorial test explosion using pairwise orthogonal testing arrays', cat: 'testing', icon: 'grid', badge: 'Pairwise' },
+  { id: 'defect-severity-priority', name: 'Defect Severity vs Priority Advisor', desc: 'Standardize bug triaging based on user impact vs business urgency matrix', cat: 'testing', icon: 'alert-triangle', badge: 'Bug Triage' },
+  { id: 'dummy-indian-pan', name: 'Dummy Indian PAN Format Validator', desc: 'Validate 10-character alphanumeric PAN formats (5 letters, 4 digits, 1 letter) for testing', cat: 'testing', icon: 'file-text', badge: 'PAN QA' },
+  { id: 'dummy-us-ssn-gen', name: 'Dummy US SSN Sandbox Validator', desc: 'Verify 9-digit US Social Security Number syntax and exclusion ranges (000, 666, 900+)', cat: 'testing', icon: 'shield', badge: 'SSN QA' },
+  { id: 'sql-injection-fuzz-list', name: 'SQLi Fuzzing Payload Test Bed', desc: 'Generate standard single-quote and boolean SQL injection probe strings for form security', cat: 'testing', icon: 'shield-alert', badge: 'Sec QA' },
+  { id: 'xss-probe-string-gen', name: 'XSS Sanitization Polyglot Test Bed', desc: 'Test input fields with harmless <img src=x onerror=alert()> probe strings', cat: 'testing', icon: 'code', badge: 'XSS QA' },
+  { id: 'mobile-viewport-matrix', name: 'Mobile Viewport CSS Resolution Matrix', desc: 'Inspect screen widths and DPRs for modern iPhone, Pixel, and Galaxy device profiles', cat: 'testing', icon: 'smartphone', badge: 'Viewports' },
+  { id: 'test-pass-rate-calc', name: 'Automated Test Suite Pass Rate Sizer', desc: 'Calculate pass/fail percentages, flake ratios, and execution duration trends', cat: 'testing', icon: 'check-circle', badge: 'Metrics' },
+  { id: 'broken-link-status-filter', name: 'HTTP Status Error Code Classifier', desc: 'Categorize lists of returned HTTP status codes into 2xx Success, 4xx Client, and 5xx Server', cat: 'testing', icon: 'filter', badge: 'HTTP Logs' },
+  { id: 'shadow-dom-path-finder', name: 'Shadow DOM Selector Path Helper', desc: 'Format >>> and shadowRoot traversal selector paths for web components automation', cat: 'testing', icon: 'search', badge: 'Shadow DOM' },
+  { id: 'relative-xpath-builder', name: 'Relative XPath Axis Statement Builder', desc: 'Construct preceding-sibling and following-sibling XPath statements safely', cat: 'testing', icon: 'code', badge: 'XPath Axis' },
+  { id: 'robot-framework-keywords', name: 'Robot Framework Keyword Formatter', desc: 'Format test cases into pipe-delimited or 4-space separated Robot Framework tables', cat: 'testing', icon: 'cpu', badge: 'Robot' },
+  { id: 'api-schema-diff', name: 'REST API Payload Schema Diff Inspector', desc: 'Detect breaking contract changes (missing keys, altered types) between API versions', cat: 'testing', icon: 'git-compare', badge: 'Contract' },
+  { id: 'luhn-algorithm-verify', name: 'Luhn Checksum Formula Validator', desc: 'Calculate the modulo-10 Luhn check digit for identity numbers and loyalty barcodes', cat: 'testing', icon: 'check', badge: 'Modulo 10' },
+  { id: 'form-input-stress-text', name: 'Form Input Extreme Stress Characters', desc: 'Generate multi-byte CJK, Arabic RTL, and mathematical symbols to test text encodings', cat: 'testing', icon: 'globe', badge: 'UTF-8 QA' },
+  { id: 'http-mock-envelope-maker', name: 'REST API Standard Error Envelope Maker', desc: 'Generate standardized { status, error: { code, message, details } } response bodies', cat: 'testing', icon: 'file-json', badge: 'Error Mock' },
+  { id: 'qa-test-case-markdown', name: 'Markdown Test Case Template Generator', desc: 'Generate structured test cases with Preconditions, Steps, Expected, and Actual results', cat: 'testing', icon: 'file-text', badge: 'Test Case' },
+  { id: 'mock-user-agent-headers', name: 'Device User-Agent Spoofing Directory', desc: 'Copy authentic User-Agent strings for Googlebot, iOS Safari, and Android Chrome', cat: 'testing', icon: 'monitor', badge: 'User-Agent' },
+  { id: 'graphql-mock-response', name: 'GraphQL Mock { data, errors } Generator', desc: 'Wrap raw JSON entities into standard GraphQL { data: { ... } } response envelopes', cat: 'testing', icon: 'share-2', badge: 'GraphQL' },
+  { id: 'flaky-test-score-calc', name: 'Flaky Test Severity Score Calculator', desc: 'Calculate flakiness frequency weights based on run history and retry pass counts', cat: 'testing', icon: 'alert-circle', badge: 'Flaky QA' },
+  { id: 'load-test-rps-sizer', name: 'Virtual Users (VU) to Target RPS Sizer', desc: 'Calculate required virtual users based on target requests/sec and average page latency', cat: 'testing', icon: 'users', badge: 'Load Test' },
+  { id: 'app-permission-matrix', name: 'Role-Based Access Control (RBAC) Matrix', desc: 'Map User, Admin, and Guest roles against CRUD operation permission grids', cat: 'testing', icon: 'lock', badge: 'RBAC' },
 
   // ============================================================================
-  // 10. FILE, IMAGE & MEDIA UTILITIES
+  // 10. FILE, IMAGE & MEDIA UTILITIES (Tools 451 to 500)
   // ============================================================================
   { id: 'img-compress', name: 'Image Compressor & WebP', desc: 'Reduce PNG/JPG file sizes and convert to next-gen WebP directly in Canvas', cat: 'media', icon: 'image', badge: 'WebP Canvas' },
   { id: 'b64-canvas', name: 'Base64 Image Inspector', desc: 'Paste Base64 data URLs to preview dimensions, aspect ratio, and download image', cat: 'media', icon: 'file-image', badge: 'Inspector' },
@@ -288,7 +507,39 @@ const toolsDatabase = [
   { id: 'color-tint-canvas', name: 'Image Monochromatic Tint Filter', desc: 'Apply custom color overlays and tints to uploaded images in browser memory', cat: 'media', icon: 'palette', badge: 'Image Filter' },
   { id: 'file-checksum-hasher', name: 'Drag-and-Drop File Hash Checksum', desc: 'Compute SHA-256 and MD5 checksum digests of any local file without uploading', cat: 'media', icon: 'check-square', badge: 'Checksum' },
   { id: 'screen-dpi-checker', name: 'Screen DPI & Device Pixel Ratio Inspector', desc: 'Inspect screen color depth, viewport dimensions, and window.devicePixelRatio', cat: 'media', icon: 'monitor', badge: 'Screen' },
-  { id: 'keycode-inspector', name: 'Keyboard Event & KeyCode Inspector', desc: 'Test key presses to view event.key, event.code, and event.which properties live', cat: 'media', icon: 'keyboard', badge: 'Events' }
+  { id: 'keycode-inspector', name: 'Keyboard Event & KeyCode Inspector', desc: 'Test key presses to view event.key, event.code, and event.which properties live', cat: 'media', icon: 'keyboard', badge: 'Events' },
+  { id: 'exif-metadata-viewer', name: 'EXIF Metadata & Camera Tag Inspector', desc: 'Read camera model, focal length, ISO, and GPS location tags from uploaded photos', cat: 'media', icon: 'camera', badge: 'EXIF' },
+  { id: 'exif-metadata-stripper', name: '1-Click Privacy EXIF Metadata Stripper', desc: 'Strip GPS geolocation and camera serial tags from photos before online sharing', cat: 'media', icon: 'shield', badge: 'Privacy' },
+  { id: 'image-to-base64', name: 'Image File to Base64 Data URI', desc: 'Upload PNG/JPG images and copy clean data:image/png;base64,... code strings', cat: 'media', icon: 'file-image', badge: 'Base64' },
+  { id: 'barcode-generator', name: 'Barcode CODE128 & EAN-13 Generator', desc: 'Generate printable vector barcodes for inventory tracking and retail products', cat: 'media', icon: 'align-justify', badge: 'Barcode' },
+  { id: 'dead-pixel-tester', name: 'Monitor Dead Pixel Color Test Bed', desc: 'Cycle full-screen solid red, green, blue, black, and white to reveal stuck pixels', cat: 'media', icon: 'monitor', badge: 'Display' },
+  { id: 'webcam-snapshot-tester', name: 'Webcam Hardware Frame Grabber', desc: 'Capture camera snapshots and verify local video permissions without external servers', cat: 'media', icon: 'video', badge: 'Webcam' },
+  { id: 'mic-decibel-meter', name: 'Microphone Decibel (dB) Audio Meter', desc: 'Monitor ambient room noise and microphone input volume levels in real time', cat: 'media', icon: 'mic', badge: 'Audio' },
+  { id: 'speech-synthesis-test', name: 'Web Speech Synthesis Voice Simulator', desc: 'Test browser text-to-speech voices with adjustable pitch, rate, and volume', cat: 'media', icon: 'volume-2', badge: 'Voice' },
+  { id: 'speech-recognition-test', name: 'Web Speech-to-Text Dictation Sandbox', desc: 'Live speech transcription testing microphone speech recognition accuracy', cat: 'media', icon: 'mic-off', badge: 'Dictation' },
+  { id: 'gamepad-tester', name: 'Gamepad & Controller Event Tester', desc: 'Test analog sticks, triggers, and buttons for connected USB and Bluetooth controllers', cat: 'media', icon: 'play', badge: 'Gamepad' },
+  { id: 'mouse-click-accuracy', name: 'Mouse Click & Double-Click Latency Tester', desc: 'Measure click response latency (ms) and test mouse button double-click triggers', cat: 'media', icon: 'mouse-pointer', badge: 'Mouse' },
+  { id: 'vibration-api-tester', name: 'Mobile Vibration API Pattern Tester', desc: 'Trigger custom vibration pulse patterns ([200, 100, 200]) on supported smartphones', cat: 'media', icon: 'smartphone', badge: 'Haptics' },
+  { id: 'battery-status-inspector', name: 'Battery Level & Charging Status Inspector', desc: 'Inspect battery charge percentage and discharging time via navigator.getBattery()', cat: 'media', icon: 'battery-charging', badge: 'Battery' },
+  { id: 'network-info-inspector', name: 'Network Connection & Effective Speed Sizer', desc: 'Inspect downlink speeds (Mbps) and effective network types (4g/wifi) via navigator.connection', cat: 'media', icon: 'wifi', badge: 'Network' },
+  { id: 'geolocation-coord-finder', name: 'Browser Geolocation Lat/Long Inspector', desc: 'Inspect GPS latitude, longitude, and accuracy radius via the HTML5 Geolocation API', cat: 'media', icon: 'map-pin', badge: 'GPS' },
+  { id: 'clipboard-history-sandbox', name: 'Clipboard Reader API Permissions Sandbox', desc: 'Test reading and writing rich text and images via navigator.clipboard', cat: 'media', icon: 'clipboard', badge: 'Clipboard' },
+  { id: 'drag-drop-mime-checker', name: 'Drag-and-Drop File MIME & Size Inspector', desc: 'Drop any file to inspect exact byte size, file extension, and OS MIME type', cat: 'media', icon: 'file', badge: 'File Info' },
+  { id: 'image-aspect-crop-calc', name: 'Image Aspect Ratio Crop Dimension Sizer', desc: 'Calculate exact pixel dimensions to crop images to 16:9, 4:3, or 1:1 without distortion', cat: 'media', icon: 'scissors', badge: 'Crop' },
+  { id: 'video-thumbnail-extractor', name: 'Client-Side Video Thumbnail Grabber', desc: 'Capture frame thumbnails from local MP4/WebM videos at specific timestamps', cat: 'media', icon: 'film', badge: 'Video' },
+  { id: 'audio-wave-synth', name: 'Sine & Square Wave Audio Synthesizer', desc: 'Synthesize custom 440Hz A-tone and variable audio frequencies using WebAudio', cat: 'media', icon: 'music', badge: 'Synthesizer' },
+  { id: 'svg-path-bounding-box', name: 'SVG Path Visualizer & Bounding Sizer', desc: 'Paste raw <path d="..."> vector code to preview outlines and bounding box boxes', cat: 'media', icon: 'code', badge: 'SVG Path' },
+  { id: 'monospace-font-checker', name: 'Monospace Font Pitch Alignment Tester', desc: 'Verify if installed monospace fonts render characters with equal horizontal widths', cat: 'media', icon: 'type', badge: 'Monospace' },
+  { id: 'pdf-page-rotator', name: 'Client-Side PDF Page Rotator', desc: 'Rotate landscape and portrait PDF pages (90°, 180°, 270°) locally in browser memory', cat: 'media', icon: 'rotate-cw', badge: 'pdf-lib' },
+  { id: 'image-to-pdf-converter', name: 'Image to PDF Document Generator', desc: 'Combine JPEG and PNG images into a clean, downloadable PDF file locally', cat: 'media', icon: 'file-text', badge: 'PDF' },
+  { id: 'qr-wifi-network-gen', name: 'WiFi Network Login QR Code Builder', desc: 'Generate QR codes to instantly connect phones to WPA/WPA2 WiFi networks', cat: 'media', icon: 'wifi', badge: 'WiFi QR' },
+  { id: 'vcard-qr-gen', name: 'Contact vCard Address Book QR Maker', desc: 'Generate QR codes encoding contact cards (vCard 3.0) with phone, email, and name', cat: 'media', icon: 'user-plus', badge: 'vCard' },
+  { id: 'fullscreen-resolution-test', name: 'Fullscreen Display Resolution Inspector', desc: 'Inspect physical screen dimensions, color depth, and window inner/outer sizes', cat: 'media', icon: 'maximize-2', badge: 'Display' },
+  { id: 'image-grayscale-converter', name: 'Client-Side Grayscale Image Filter', desc: 'Convert full-color photographs into classic black-and-white images using Canvas', cat: 'media', icon: 'image', badge: 'Grayscale' },
+  { id: 'svg-circle-progress-gen', name: 'SVG Circular Progress Ring Generator', desc: 'Generate stroke-dasharray and stroke-dashoffset CSS for SVG progress meters', cat: 'media', icon: 'loader', badge: 'SVG' },
+  { id: 'audio-bpm-tap-tempo', name: 'Tap Tempo (BPM) Music Metronome', desc: 'Tap any key along with a song beat to calculate musical Beats Per Minute (BPM)', cat: 'media', icon: 'activity', badge: 'BPM' },
+  { id: 'pdf-page-counter', name: 'Instant PDF Page Count Reader', desc: 'Inspect total page count and document metadata from PDF files in memory', cat: 'media', icon: 'book-open', badge: 'PDF Info' },
+  { id: 'favicon-ico-exporter', name: 'Favicon Multi-Size Asset Exporter', desc: 'Generate responsive favicon assets (16x16, 32x32, 48x48) from uploaded icons', cat: 'media', icon: 'app-window', badge: 'Favicon' }
 ];
 
 // Tailwind-safe category color classes
@@ -305,7 +556,7 @@ const categoryStyles = {
   media: { bg: 'bg-violet-500/10', border: 'border-violet-500/20', text: 'text-violet-500' }
 };
 
-// Render All Cards into #tools-grid
+// Render All 500 Cards into #tools-grid
 function renderToolsGrid() {
   const grid = document.getElementById('tools-grid');
   if (!grid) return;
@@ -579,7 +830,7 @@ function processGenericTool(toolId) {
   }
 }
 
-// LLM Matrix Pricing Calculations
+// Multi-Model LLM Matrix Catalog & Pricing Calculations
 const llmModelCatalog = {
   'gpt-4o': { name: 'OpenAI GPT-4o', inPrice: 2.50, outPrice: 10.00, context: 128000 },
   'gpt-4o-mini': { name: 'OpenAI GPT-4o Mini', inPrice: 0.15, outPrice: 0.60, context: 128000 },
