@@ -1,9 +1,10 @@
-/* css/style.css */
+/* css/style.css - Production Developer Toolbox Stylesheet */
 
 /* -------------------------------------------------------------------------- */
-/* THEMES CONFIGURATION                                                      */
+/* THEMES CONFIGURATION                                                       */
 /* -------------------------------------------------------------------------- */
 :root[data-theme="light"] {
+  color-scheme: light;
   --bg-main: #f8fafc;
   --bg-card: rgba(255, 255, 255, 0.9);
   --bg-card-hover: rgba(255, 255, 255, 1);
@@ -19,6 +20,7 @@
 }
 
 :root[data-theme="dim"] {
+  color-scheme: dark;
   --bg-main: #0b0f19;
   --bg-card: rgba(18, 24, 38, 0.9);
   --bg-card-hover: rgba(24, 32, 50, 0.98);
@@ -35,6 +37,7 @@
 
 :root,
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --bg-main: #030712;
   --bg-card: rgba(15, 23, 42, 0.9);
   --bg-card-hover: rgba(30, 41, 59, 0.98);
@@ -50,7 +53,7 @@
 }
 
 /* -------------------------------------------------------------------------- */
-/* GLOBAL BODY & BACKGROUND                                                  */
+/* GLOBAL BODY & BACKGROUND                                                   */
 /* -------------------------------------------------------------------------- */
 body {
   background-color: var(--bg-main);
@@ -88,12 +91,41 @@ section[id^="anchor-"] {
   background-color: var(--bg-editor);
   border-color: var(--border-color);
   color: var(--text-main);
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.theme-editor:focus {
+.theme-editor:focus,
+.theme-editor:focus-within {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--border-glow);
+}
+
+/* -------------------------------------------------------------------------- */
+/* DEDICATED TOOL COMPONENT GRIDS                                             */
+/* -------------------------------------------------------------------------- */
+/* 25-column matrix for 24-hour visual timezone scheduler */
+.grid-cols-25 {
+  display: grid;
+  grid-template-columns: 140px repeat(24, minmax(28px, 1fr));
+}
+
+/* Drag-and-drop file upload target states */
+.dropzone-active {
+  border-color: var(--accent) !important;
+  background-color: rgba(99, 102, 241, 0.08) !important;
+}
+
+/* Range input cross-browser improvements */
+input[type="range"] {
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  transition: transform 0.1s ease;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.15);
 }
 
 /* -------------------------------------------------------------------------- */
