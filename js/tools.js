@@ -1,12 +1,10 @@
-/* js/tools.js - Complete 500 Unique Developer Utilities (50 Real Tools per Category) */
+/* js/tools.js - Complete 500 Unique Developer Utilities Catalog */
 
 (function initDatabase() {
   const c = { ai: 'ai', testing: 'testing', data: 'data', sec: 'security', web: 'web', ui: 'design', ops: 'devops', txt: 'text', num: 'math', med: 'media' };
 
-  window.toolsDatabase = [
-    // -------------------------------------------------------------------------
-    // 1. AI, LLM & PROMPT ENGINEERING (50 Unique Tools)
-    // -------------------------------------------------------------------------
+  const rawList = [
+    // 1. AI, LLM & PROMPTING (50 Tools)
     ['llm-tokens', 'LLM Token Counter & Pricing', 'Estimate BPE tokens and query costs for GPT-4o, Claude 3.5, Gemini, and DeepSeek', c.ai, 'cpu', '14+ Models'],
     ['md-table-gen', 'Visual Markdown Table Builder', 'Spreadsheet grid builder that generates formatted copyable Markdown table syntax', c.ai, 'grid', 'Grid Studio'],
     ['wcag-contrast', 'WCAG Color Contrast Checker', 'Real-time foreground/background ratio calculator with instant AA/AAA accessibility ratings', c.ai, 'eye', 'WCAG 2.1'],
@@ -58,9 +56,7 @@
     ['multiturn-history-trim', 'Chat History Sliding Window Trimmer', 'Trim oldest conversation turns while preserving the foundational system prompt', c.ai, 'clock', 'Chat'],
     ['token-to-word-calc', 'BPE Token to Word Equivalence Sizer', 'Convert between token counts and word/page lengths across 8 languages', c.ai, 'type', 'Estimation'],
 
-    // -------------------------------------------------------------------------
-    // 2. QA, TEST AUTOMATION & SCRAPING (50 Unique Tools)
-    // -------------------------------------------------------------------------
+    // 2. QA, TEST AUTOMATION & SCRAPING (50 Tools)
     ['dummy-card', 'Dummy Test Card Generator', 'Generate Luhn-valid dummy credit card numbers strictly for billing QA', c.testing, 'credit-card', 'Luhn Valid'],
     ['pdf-toolkit', 'Client-Side PDF Merger', 'Combine multiple PDF documents safely in browser memory without uploads', c.testing, 'file-stack', 'In-Memory'],
     ['mock-user-gen', 'Mock User Profile Generator', 'Generate realistic test identities with names, avatars, emails, and addresses', c.testing, 'user-check', 'Mock Data'],
@@ -112,9 +108,7 @@
     ['load-test-rps-sizer', 'Virtual Users to Target RPS Sizer', 'Calculate required virtual users based on target requests/sec and average latency', c.testing, 'users', 'Load Test'],
     ['app-permission-matrix', 'Role-Based Access Control (RBAC) Matrix', 'Map User, Admin, and Guest roles against CRUD operation permission grids', c.testing, 'lock', 'RBAC'],
 
-    // -------------------------------------------------------------------------
-    // 3. JSON, CSV, XML & DATA FORMATS (50 Unique Tools)
-    // -------------------------------------------------------------------------
+    // 3. JSON, CSV, XML & DATA FORMATS (50 Tools)
     ['json-formatter', 'JSON Pro Studio', 'Dual-pane syntax highlighting, beautifier, tree inspector, and validator', c.data, 'code-2', 'Dual-Pane'],
     ['json-csv', 'JSON to CSV Converter', 'Transform nested JSON object arrays into standard CSV spreadsheets', c.data, 'table', 'Tabular'],
     ['csv-json', 'CSV to JSON Converter', 'Parse comma-separated data sheets directly into structured JSON arrays', c.data, 'sheet', 'Parser'],
