@@ -20,8 +20,8 @@
 
 :root[data-theme="dim"] {
   --bg-main: #0b0f19;
-  --bg-card: rgba(18, 24, 38, 0.85);
-  --bg-card-hover: rgba(24, 32, 50, 0.95);
+  --bg-card: rgba(18, 24, 38, 0.9);
+  --bg-card-hover: rgba(24, 32, 50, 0.98);
   --bg-editor: #080c14;
   --border-color: #1e293b;
   --border-glow: rgba(99, 102, 241, 0.25);
@@ -36,13 +36,13 @@
 :root,
 :root[data-theme="dark"] {
   --bg-main: #030712;
-  --bg-card: rgba(15, 23, 42, 0.85);
-  --bg-card-hover: rgba(30, 41, 59, 0.95);
+  --bg-card: rgba(15, 23, 42, 0.9);
+  --bg-card-hover: rgba(30, 41, 59, 0.98);
   --bg-editor: #020617;
   --border-color: #1e293b;
   --border-glow: rgba(129, 140, 248, 0.25);
   --text-main: #f8fafc;
-  --text-muted: #64748b;
+  --text-muted: #94a3b8;
   --accent: #818cf8;
   --card-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.7);
   --scrollbar-thumb: #334155;
@@ -60,7 +60,6 @@ body {
   background-attachment: fixed;
 }
 
-/* Smooth Scrolling & Anchor Offsets */
 html {
   scroll-behavior: smooth;
 }
@@ -83,7 +82,6 @@ section[id^="anchor-"] {
 
 .theme-card:hover {
   background-color: var(--bg-card-hover);
-  border-color: var(--accent);
 }
 
 .theme-editor {
