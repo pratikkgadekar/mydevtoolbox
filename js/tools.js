@@ -376,7 +376,9 @@ function renderToolView(toolId) {
   const tool = window.toolsDatabase.find(t => t.id === toolId) || window.toolsDatabase[0];
   const guide = getToolGuide(tool);
 
-  recordToolUsage(tool.id, tool.name);
+  if (typeof recordToolUsage === 'function') {
+    recordToolUsage(tool.id, tool.name);
+  }
 
   const headerHtml = `
     <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
