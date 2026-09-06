@@ -1,4 +1,4 @@
-/* js/core.js - Controller with Merged A-Z Grouping, Sticky Jump Bar & Compact Toggle */
+/* js/core.js - Controller with Multi-Color Theme Mapping, High-Contrast Text & Merged A-Z Jump Navigation */
 
 // ---------------------------------------------------------------------------
 // 1. View Density & A-Z Navigation State
@@ -8,7 +8,83 @@ let currentActiveCategory = 'all';
 let currentSearchQuery = '';
 
 // ---------------------------------------------------------------------------
-// 2. Service Worker & PWA Install
+// 2. High-Contrast, Multi-Color Category Themes (No More Mono-Purple)
+// ---------------------------------------------------------------------------
+const categoryStyles = {
+  ai: {
+    bg: 'bg-gradient-to-br from-purple-500/15 to-indigo-500/10',
+    border: 'border-purple-500/30',
+    text: 'text-purple-400',
+    badge: 'bg-purple-500/10 text-purple-300 border-purple-500/30',
+    hoverBorder: 'hover:border-purple-500/60'
+  },
+  testing: {
+    bg: 'bg-gradient-to-br from-emerald-500/15 to-teal-500/10',
+    border: 'border-emerald-500/30',
+    text: 'text-emerald-400',
+    badge: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30',
+    hoverBorder: 'hover:border-emerald-500/60'
+  },
+  data: {
+    bg: 'bg-gradient-to-br from-teal-500/15 to-cyan-500/10',
+    border: 'border-teal-500/30',
+    text: 'text-teal-400',
+    badge: 'bg-teal-500/10 text-teal-300 border-teal-500/30',
+    hoverBorder: 'hover:border-teal-500/60'
+  },
+  security: {
+    bg: 'bg-gradient-to-br from-amber-500/15 to-orange-500/10',
+    border: 'border-amber-500/30',
+    text: 'text-amber-400',
+    badge: 'bg-amber-500/10 text-amber-300 border-amber-500/30',
+    hoverBorder: 'hover:border-amber-500/60'
+  },
+  web: {
+    bg: 'bg-gradient-to-br from-sky-500/15 to-blue-500/10',
+    border: 'border-sky-500/30',
+    text: 'text-sky-400',
+    badge: 'bg-sky-500/10 text-sky-300 border-sky-500/30',
+    hoverBorder: 'hover:border-sky-500/60'
+  },
+  design: {
+    bg: 'bg-gradient-to-br from-violet-500/15 to-fuchsia-500/10',
+    border: 'border-violet-500/30',
+    text: 'text-violet-400',
+    badge: 'bg-violet-500/10 text-violet-300 border-violet-500/30',
+    hoverBorder: 'hover:border-violet-500/60'
+  },
+  devops: {
+    bg: 'bg-gradient-to-br from-cyan-500/15 to-blue-500/10',
+    border: 'border-cyan-500/30',
+    text: 'text-cyan-400',
+    badge: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30',
+    hoverBorder: 'hover:border-cyan-500/60'
+  },
+  text: {
+    bg: 'bg-gradient-to-br from-rose-500/15 to-pink-500/10',
+    border: 'border-rose-500/30',
+    text: 'text-rose-400',
+    badge: 'bg-rose-500/10 text-rose-300 border-rose-500/30',
+    hoverBorder: 'hover:border-rose-500/60'
+  },
+  math: {
+    bg: 'bg-gradient-to-br from-indigo-500/15 to-blue-500/10',
+    border: 'border-indigo-500/30',
+    text: 'text-indigo-400',
+    badge: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30',
+    hoverBorder: 'hover:border-indigo-500/60'
+  },
+  media: {
+    bg: 'bg-gradient-to-br from-pink-500/15 to-rose-500/10',
+    border: 'border-pink-500/30',
+    text: 'text-pink-400',
+    badge: 'bg-pink-500/10 text-pink-300 border-pink-500/30',
+    hoverBorder: 'hover:border-pink-500/60'
+  }
+};
+
+// ---------------------------------------------------------------------------
+// 3. Service Worker & PWA Install
 // ---------------------------------------------------------------------------
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -57,7 +133,7 @@ function triggerPwaInstall() {
 }
 
 // ---------------------------------------------------------------------------
-// 3. Theme Manager
+// 4. Theme Manager
 // ---------------------------------------------------------------------------
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
@@ -73,10 +149,10 @@ function setTheme(theme) {
     }
   });
 }
-setTheme(localStorage.getItem('mdt_theme') || 'light');
+setTheme(localStorage.getItem('mdt_theme') || 'dark');
 
 // ---------------------------------------------------------------------------
-// 4. View Mode Density Toggle (Card Grid vs Compact List)
+// 5. View Mode Density Toggle (Card Grid vs Compact List)
 // ---------------------------------------------------------------------------
 function setViewDensity(density) {
   viewDensity = density;
@@ -101,7 +177,7 @@ function setViewDensity(density) {
 }
 
 // ---------------------------------------------------------------------------
-// 5. Sticky A-Z Jump Navigation Bar
+// 6. Sticky A-Z Jump Navigation Bar
 // ---------------------------------------------------------------------------
 function renderAlphabetJumpBar(availableLetters = []) {
   const container = document.getElementById('az-jump-container');
@@ -118,8 +194,8 @@ function renderAlphabetJumpBar(availableLetters = []) {
   bar.innerHTML = allLetters.map((char) => {
     const hasTools = availableLetters.includes(char);
     const classes = hasTools
-      ? 'px-2 py-1 rounded-lg border theme-card hover:border-indigo-500 hover:text-indigo-500 font-bold transition'
-      : 'px-2 py-1 rounded-lg border theme-card opacity-30 cursor-not-allowed';
+      ? 'px-2.5 py-1 rounded-lg border theme-card hover:border-indigo-500 hover:text-indigo-400 font-bold transition cursor-pointer shadow-sm'
+      : 'px-2.5 py-1 rounded-lg border theme-card opacity-25 cursor-not-allowed';
     
     return `<button 
       onclick="${hasTools ? `jumpToLetter('${char}')` : 'return false;'}" 
@@ -137,66 +213,65 @@ function jumpToLetter(letter) {
 }
 
 // ---------------------------------------------------------------------------
-// 6. Unified Tool Card Rendering Engine
+// 7. Single Card HTML Generator with Multi-Color Icons & Contrast
 // ---------------------------------------------------------------------------
 function renderSingleCard(tool) {
   const s = categoryStyles[tool.cat] || categoryStyles.ai;
 
   if (viewDensity === 'compact') {
-    // Dense 3-column / 4-column compact row (70% less vertical space)
+    // Dense 3-column list row: 70% space savings
     return `
       <div 
-        class="tool-card theme-card border p-3 rounded-2xl cursor-pointer hover:border-indigo-500 transition flex items-center justify-between gap-3 group" 
+        class="tool-card theme-card border p-3 rounded-2xl cursor-pointer ${s.hoverBorder} transition-all duration-150 flex items-center justify-between gap-3 group" 
         data-cat="${tool.cat}" 
         onclick="openTool('${tool.id}')">
         <div class="flex items-center gap-3 min-w-0">
-          <div class="w-8 h-8 rounded-xl ${s.bg} border ${s.border} flex-shrink-0 flex items-center justify-center ${s.text}">
+          <div class="w-9 h-9 rounded-xl ${s.bg} border ${s.border} flex-shrink-0 flex items-center justify-center ${s.text} shadow-sm">
             <i data-lucide="${tool.icon}" class="w-4 h-4"></i>
           </div>
           <div class="truncate">
-            <h4 class="font-bold text-xs truncate text-slate-900 dark:text-slate-100 group-hover:text-indigo-500 transition-colors">${tool.name}</h4>
-            <span class="text-[10px] opacity-60">${tool.badge}</span>
+            <h4 class="font-bold text-xs truncate group-hover:text-indigo-400 transition-colors" style="color: var(--text-main);">${tool.name}</h4>
+            <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded ${s.badge}">${tool.badge}</span>
           </div>
         </div>
-        <i data-lucide="chevron-right" class="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition flex-shrink-0"></i>
+        <i data-lucide="chevron-right" class="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition flex-shrink-0 ${s.text}"></i>
       </div>
     `;
   }
 
-  // Visual card grid layout with operational descriptions
+  // Visual card grid layout with rich styling and bright contrast
   return `
     <div 
-      class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" 
+      class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1 ${s.hoverBorder} flex flex-col justify-between" 
       data-cat="${tool.cat}" 
       onclick="openTool('${tool.id}')">
       <div>
-        <div class="flex items-start justify-between">
-          <div class="w-12 h-12 rounded-2xl ${s.bg} border ${s.border} flex items-center justify-center ${s.text}">
+        <div class="flex items-start justify-between gap-2">
+          <div class="w-12 h-12 rounded-2xl ${s.bg} border ${s.border} flex items-center justify-center ${s.text} shadow-inner">
             <i data-lucide="${tool.icon}" class="w-6 h-6"></i>
           </div>
-          <span class="text-[11px] font-bold uppercase ${s.bg} ${s.text} border ${s.border} px-2.5 py-0.5 rounded-full">
+          <span class="text-[10px] font-bold uppercase border px-2.5 py-1 rounded-full font-mono ${s.badge}">
             ${tool.badge}
           </span>
         </div>
-        <h3 class="font-bold text-base mt-4 text-slate-900 dark:text-slate-100">${tool.name}</h3>
-        <p class="text-xs opacity-70 mt-1 leading-relaxed">${tool.desc}</p>
+        <h3 class="font-bold text-base mt-4 tracking-tight leading-snug" style="color: var(--text-main);">${tool.name}</h3>
+        <p class="text-xs opacity-75 mt-1.5 leading-relaxed">${tool.desc}</p>
       </div>
-      <div class="mt-4 flex items-center text-xs font-bold ${s.text}">
-        Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
+      <div class="mt-5 pt-3 border-t border-slate-700/40 flex items-center text-xs font-bold ${s.text}">
+        Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1.5"></i>
       </div>
     </div>
   `;
 }
 
 // ---------------------------------------------------------------------------
-// 7. Render Tools Grid with Alphabetical Anchors
+// 8. Render Tools Grid with Alphabetical Anchors
 // ---------------------------------------------------------------------------
 function renderToolsGrid() {
   const grid = document.getElementById('tools-grid');
   const emptyState = document.getElementById('no-tools-found');
   if (!grid || typeof toolsDatabase === 'undefined') return;
 
-  // Filter tools by category and search query
   const filtered = toolsDatabase.filter((tool) => {
     const matchCat = currentActiveCategory === 'all' || tool.cat === currentActiveCategory;
     const matchQuery = !currentSearchQuery ||
@@ -219,7 +294,7 @@ function renderToolsGrid() {
     ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'
     : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
 
-  // If 'All' is selected and no search filter, display grouped under sticky letter anchors
+  // If 'All' is selected and no search query, display grouped under sticky letter anchors
   if (currentActiveCategory === 'all' && !currentSearchQuery) {
     const sorted = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
     const grouped = {};
@@ -257,7 +332,7 @@ function renderToolsGrid() {
 }
 
 // ---------------------------------------------------------------------------
-// 8. Category & Search Filtering
+// 9. Category & Search Filtering
 // ---------------------------------------------------------------------------
 function setCategoryFilter(cat) {
   currentActiveCategory = cat;
@@ -324,7 +399,7 @@ function updateCategoryCounts() {
 }
 
 // ---------------------------------------------------------------------------
-// 9. View Switcher & Recents
+// 10. View Switcher & Recents
 // ---------------------------------------------------------------------------
 function switchView(viewName) {
   const dashboard = document.getElementById('view-dashboard');
@@ -377,7 +452,7 @@ function openTool(toolId) {
 }
 
 // ---------------------------------------------------------------------------
-// 10. Modals, Companion & Routing
+// 11. Modals, Companion & Routing
 // ---------------------------------------------------------------------------
 function copyToClipboard(id) {
   const el = document.getElementById(id);
@@ -521,7 +596,7 @@ function checkUrlHash() {
 }
 
 // ---------------------------------------------------------------------------
-// 11. App Initialization
+// 12. App Initialization
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
   setViewDensity(viewDensity);
