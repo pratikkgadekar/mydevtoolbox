@@ -1,5 +1,5 @@
-/* sw.js - Service Worker Cache v90 */
-const CACHE_NAME = 'mdt-cache-v90';
+/* sw.js - Service Worker Cache v130 (Force Invalidation) */
+const CACHE_NAME = 'mdt-cache-v130';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
