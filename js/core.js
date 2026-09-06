@@ -1,4 +1,4 @@
-/* js/core.js - Controller & Grid Synchronization Engine */
+/* js/core.js - Controller & Dynamic Filter Synchronization */
 
 let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
