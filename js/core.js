@@ -1,4 +1,4 @@
-/* js/core.js - Controller with Real-Time Dynamic Counting & Accurate UI Sync */
+/* js/core.js - Dynamic Counter Synchronization & Grid Controller */
 
 let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
@@ -77,6 +77,50 @@ const categoryStyles = {
   }
 };
 
+// ---------------------------------------------------------------------------
+// Dynamic Category & Counter Sync
+// ---------------------------------------------------------------------------
+function updateCategoryCounts() {
+  const db = window.toolsDatabase || [];
+  const totalCount = db.length;
+
+  // 1. Update Top Navbar Badge
+  const navbarBadge = document.getElementById('navbar-tool-count');
+  if (navbarBadge) {
+    navbarBadge.innerText = `${totalCount} Offline Utilities`;
+  }
+
+  // 2. Update Search Bar Placeholder
+  const searchInput = document.getElementById('tool-search');
+  if (searchInput) {
+    searchInput.placeholder = `Search across all ${totalCount} utilities (Playwright, Docker, JSON, Cron)...`;
+  }
+
+  // 3. Dynamically rewrite every category pill button using regex
+  const pills = document.querySelectorAll('.cat-pill, [data-pill]');
+  pills.forEach((pill) => {
+    const cat = pill.getAttribute('data-pill');
+    if (!cat) return;
+
+    const count = cat === 'all'
+      ? totalCount
+      : db.filter((t) => t.cat === cat).length;
+
+    // Check if element has child span for counts
+    const countSpan = pill.querySelector('span[id^="cat-count-"]');
+    if (countSpan) {
+      countSpan.innerText = count;
+    } else if (/\(\s*\d+\s*\)/.test(pill.innerHTML)) {
+      pill.innerHTML = pill.innerHTML.replace(/\(\s*\d+\s*\)/, `(${count})`);
+    } else {
+      pill.innerHTML = `${pill.innerHTML.trim()} (${count})`;
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Service Worker Registration
+// ---------------------------------------------------------------------------
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
@@ -119,6 +163,9 @@ function triggerPwaInstall() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Theme Manager
+// ---------------------------------------------------------------------------
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('mdt_theme', theme);
@@ -135,6 +182,9 @@ function setTheme(theme) {
 }
 setTheme(localStorage.getItem('mdt_theme') || 'dark');
 
+// ---------------------------------------------------------------------------
+// View Density Switcher
+// ---------------------------------------------------------------------------
 function setViewDensity(density) {
   viewDensity = density;
   localStorage.setItem('mdt_view_density', density);
@@ -157,6 +207,9 @@ function setViewDensity(density) {
   renderToolsGrid();
 }
 
+// ---------------------------------------------------------------------------
+// Sticky A-Z Jump Navigation Bar
+// ---------------------------------------------------------------------------
 function renderAlphabetJumpBar(availableLetters = []) {
   const container = document.getElementById('az-jump-container');
   const bar = document.getElementById('az-jump-bar');
@@ -190,6 +243,9 @@ function jumpToLetter(letter) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Single Card Generator
+// ---------------------------------------------------------------------------
 function renderSingleCard(tool) {
   const s = categoryStyles[tool.cat] || categoryStyles.ai;
 
@@ -237,6 +293,9 @@ function renderSingleCard(tool) {
   `;
 }
 
+// ---------------------------------------------------------------------------
+// Main Tools Grid Render
+// ---------------------------------------------------------------------------
 function renderToolsGrid() {
   const grid = document.getElementById('tools-grid');
   const emptyState = document.getElementById('no-tools-found');
@@ -301,6 +360,9 @@ function renderToolsGrid() {
   if (window.lucide) lucide.createIcons();
 }
 
+// ---------------------------------------------------------------------------
+// Filtering & Interaction
+// ---------------------------------------------------------------------------
 function setCategoryFilter(cat) {
   currentActiveCategory = cat;
   const searchInput = document.getElementById('tool-search');
@@ -342,32 +404,6 @@ function handleMainSearchEnter() {
   filterTools();
   const visible = Array.from(document.querySelectorAll('.tool-card'));
   if (visible.length === 1) visible[0].click();
-}
-
-// Dynamically compute and sync count labels to the actual length of toolsDatabase
-function updateCategoryCounts() {
-  const db = window.toolsDatabase || [];
-  
-  const allCount = document.getElementById('cat-count-all');
-  if (allCount) allCount.innerText = db.length;
-
-  const cats = ['ai', 'testing', 'data', 'security', 'web', 'design', 'devops', 'text', 'math', 'media'];
-  cats.forEach(c => {
-    const el = document.getElementById(`cat-count-${c}`);
-    if (el) {
-      el.innerText = db.filter(t => t.cat === c).length;
-    }
-  });
-
-  const counterBadge = document.getElementById('navbar-tool-count');
-  if (counterBadge) {
-    counterBadge.innerText = `${db.length} Offline Utilities`;
-  }
-  
-  const searchInput = document.getElementById('tool-search');
-  if (searchInput) {
-    searchInput.placeholder = `Search across all ${db.length} utilities (Playwright, Docker, JSON, Cron)...`;
-  }
 }
 
 function switchView(viewName) {
@@ -561,7 +597,9 @@ function checkUrlHash() {
   }
 }
 
-// App Initialization
+// ---------------------------------------------------------------------------
+// Initialization
+// ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
   updateCategoryCounts();
   renderToolsGrid();
