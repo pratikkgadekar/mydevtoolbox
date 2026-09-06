@@ -1,6 +1,8 @@
-/* js/tools-catalog-2.js - Categories 6 to 10 (250 Tools) */
+/* js/tools-catalog-2.js - Tools 251 to 500 (50 Tools per Category for CSS, DevOps, Text, Math, Media) */
 window.toolsCatalogPart2 = [
+  // ---------------------------------------------------------------------------
   // 6. CSS, STYLING & UI DESIGN (50 Tools)
+  // ---------------------------------------------------------------------------
   ['box-shadow', 'CSS Box-Shadow Studio', 'Visual sliders for offsets, blur, and spread with instant CSS copy', 'design', 'layers', 'CSS Studio'],
   ['flexbox-play', 'CSS Flexbox Playground', 'Interactive visual sandbox for justify-content, align-items, and flex-wrap', 'design', 'layout', 'Flexbox'],
   ['grid-gen', 'CSS Grid Code Generator', 'Design responsive CSS grid layouts visually with template columns and rows', 'design', 'grid-3x3', 'Grid'],
@@ -52,7 +54,9 @@ window.toolsCatalogPart2 = [
   ['css-tooltip-maker', 'Pure CSS Data-Tooltip Generator', 'Generate hover tooltips using [data-tooltip]::before and ::after pseudo-elements', 'design', 'message-circle', 'Tooltips'],
   ['letter-spacing-calc', 'Tracking & Letter Spacing Converter', 'Convert Photoshop/Figma tracking values (-20, 50) into CSS em/px letter-spacing', 'design', 'type', 'Spacing'],
 
+  // ---------------------------------------------------------------------------
   // 7. DEVOPS, CONTAINERS & LINUX (50 Tools)
+  // ---------------------------------------------------------------------------
   ['cron-builder', 'Cron Expression Explainer', 'Translate 5-part cron syntax into human-readable sentences with presets', 'devops', 'clock', 'Crontab'],
   ['dockerfile-lint', 'Dockerfile Validator & Linter', 'Inspect Dockerfile instructions for caching efficiency and security practices', 'devops', 'container', 'Docker'],
   ['k8s-yaml', 'Kubernetes YAML Formatter', 'Format and validate Kubernetes Deployment, Service, and Ingress specs', 'devops', 'boxes', 'K8s'],
@@ -104,7 +108,9 @@ window.toolsCatalogPart2 = [
   ['git-squash-helper', 'Git Interactive Rebase Command Helper', 'Generate git rebase -i HEAD~N command sequences with squash and fixup hints', 'devops', 'git-merge', 'Git'],
   ['helm-chart-yaml-scaffold', 'Helm Chart.yaml Metadata Builder', 'Build standardized Chart.yaml definitions with version, appVersion, and dependencies', 'devops', 'file-text', 'Helm'],
 
+  // ---------------------------------------------------------------------------
   // 8. CONTENT, TEXT & MARKDOWN (50 Tools)
+  // ---------------------------------------------------------------------------
   ['markdown-live', 'Markdown Live Previewer', 'Live Markdown to styled HTML renderer with word count and stats', 'text', 'file-text', 'Markdown'],
   ['word-counter', 'Word & Character Counter', 'Real-time word, character, sentence, paragraph, and reading time metrics', 'text', 'spell-check', 'Metrics'],
   ['case-convert', 'Text Case Converter', 'Switch text across Title Case, UPPERCASE, lowercase, camelCase, snake_case', 'text', 'type', 'Formatting'],
@@ -156,7 +162,9 @@ window.toolsCatalogPart2 = [
   ['text-mask-emails', 'Email Address Privacy Masker', 'Mask email user handles (j***@example.com) for public display and GDPR compliance', 'text', 'eye-off', 'GDPR'],
   ['emoji-stripper', 'Unicode Emoji Character Stripper', 'Strip all emojis and surrogate pair symbols from text to ensure ASCII compatibility', 'text', 'smile', 'Clean'],
 
+  // ---------------------------------------------------------------------------
   // 9. MATH, TIME & FINANCIAL (50 Tools)
+  // ---------------------------------------------------------------------------
   ['base-converter', 'Number Base Converter', 'Simultaneous live conversion across Decimal, Hexadecimal, Binary, and Octal', 'math', 'binary', 'Base 2-16'],
   ['unit-convert', 'Universal Unit Converter', 'Convert length, mass, temperature, data storage, and speed instantly', 'math', 'scale', '6 Categories'],
   ['percent-calc', 'Percentage Calculator', 'Calculate percentage increase, decrease, fraction ratios, and discounts', 'math', 'percent', 'Math'],
@@ -208,7 +216,9 @@ window.toolsCatalogPart2 = [
   ['unit-price-comparator', 'Price-per-Unit Comparison Tool', 'Compare multi-pack grocery sizes to find the lowest price per ounce or liter', 'math', 'shopping-cart', 'Best Value'],
   ['year-progress-bar', 'Current Year Percentage Completion Bar', 'Calculate what percentage of the current calendar year has elapsed down to seconds', 'math', 'clock', 'Year Progress'],
 
+  // ---------------------------------------------------------------------------
   // 10. FILE, MEDIA & CANVAS (50 Tools)
+  // ---------------------------------------------------------------------------
   ['img-compress', 'Image Compressor & WebP', 'Reduce PNG/JPG file sizes and convert to next-gen WebP directly in Canvas', 'media', 'image', 'WebP Canvas'],
   ['b64-canvas', 'Base64 Image Inspector', 'Paste Base64 data URLs to preview dimensions, aspect ratio, and download image', 'media', 'file-image', 'Inspector'],
   ['b64-file', 'Base64 to File Downloader', 'Convert Base64 data strings back into downloadable binary files', 'media', 'file-down', 'Decoder'],
