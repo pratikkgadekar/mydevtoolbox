@@ -1,11 +1,9 @@
-/* sw.js - Service Worker Cache v11 */
-const CACHE_NAME = 'mdt-cache-v13';
+/* sw.js - Service Worker Cache v14 */
+const CACHE_NAME = 'mdt-cache-v14';
 const ASSETS = [
   './',
   './index.html',
   './css/style.css',
-  './js/tools-catalog-1.js',
-  './js/tools-catalog-2.js',
   './js/tools.js',
   './js/core.js',
   './manifest.json'
