@@ -1,4 +1,4 @@
-/* js/core.js - Controller & Dynamic Filter Synchronization */
+/* js/core.js - Controller & Navigation Engine */
 
 let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
@@ -31,13 +31,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 function updateInstallBadgeCount() {
-  let count = parseInt(localStorage.getItem('mdt_install_count') || '1240');
+  let count = parseInt(localStorage.getItem('mdt_install_count') || '1240', 10);
   const badge = document.getElementById('install-counter-badge');
   if (badge) badge.innerText = count >= 1000 ? (count / 1000).toFixed(1) + 'k+' : count;
 }
 
 function triggerPwaInstall() {
-  let count = parseInt(localStorage.getItem('mdt_install_count') || '1240') + 1;
+  let count = parseInt(localStorage.getItem('mdt_install_count') || '1240', 10) + 1;
   localStorage.setItem('mdt_install_count', count);
   updateInstallBadgeCount();
 
