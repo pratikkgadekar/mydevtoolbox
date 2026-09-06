@@ -538,6 +538,7 @@
   });
 
   window.toolsDatabase = verified;
+  console.log("MyDevToolbox Catalog Initialized. Total Unique Tools:", window.toolsDatabase.length);
 })();
 
 function getToolGuide(tool) {
@@ -553,55 +554,38 @@ function renderToolView(toolId) {
   if (!container || !window.toolsDatabase) return;
 
   const tool = window.toolsDatabase.find(t => t.id === toolId) || window.toolsDatabase[0];
-  const guide = getToolGuide(tool);
 
   if (typeof recordToolUsage === 'function') {
     recordToolUsage(tool.id, tool.name);
   }
 
-  const headerHtml = `
-    <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-      <div>
-        <h2 class="text-2xl font-bold flex items-center gap-2">
-          <i data-lucide="${tool.icon}" class="w-6 h-6 text-indigo-400"></i> ${tool.name}
-        </h2>
-        <p class="text-xs opacity-70 mt-1">${tool.desc}</p>
-      </div>
-      <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-xl text-xs font-mono font-bold self-start sm:self-auto">${tool.badge}</span>
-    </div>
+  // Delegate directly to the Smart UI Archetype Engine
+  if (typeof window.renderSmartToolUI === 'function') {
+    window.renderSmartToolUI(tool);
+    return;
+  }
 
-    <div class="p-5 theme-card border border-indigo-500/20 rounded-3xl space-y-3">
-      <div class="flex items-center gap-2 text-xs font-extrabold text-indigo-400">
-        <i data-lucide="book-open" class="w-4 h-4"></i>
-        <span>Engineering Guide: ${tool.name}</span>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs opacity-90 leading-relaxed">
-        <div class="space-y-1">
-          <strong class="block text-indigo-400 font-bold">${guide.p1.title}</strong>
-          <p>${guide.p1.text}</p>
-        </div>
-        <div class="space-y-1">
-          <strong class="block text-pink-400 font-bold">${guide.p2.title}</strong>
-          <p>${guide.p2.text}</p>
-        </div>
-        <div class="space-y-1">
-          <strong class="block text-emerald-400 font-bold">${guide.p3.title}</strong>
-          <p>${guide.p3.text}</p>
-        </div>
-      </div>
-    </div>
-  `;
-
+  // Safe fallback if archetypes script has not finished loading
+  const guide = getToolGuide(tool);
   container.innerHTML = `
     <div class="space-y-5">
-      ${headerHtml}
+      <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-2xl font-bold flex items-center gap-2" style="color: var(--text-main);">
+            <i data-lucide="${tool.icon}" class="w-6 h-6 text-indigo-400"></i> ${tool.name}
+          </h2>
+          <p class="text-xs opacity-70 mt-1">${tool.desc}</p>
+        </div>
+        <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-xl text-xs font-mono font-bold self-start sm:self-auto">${tool.badge}</span>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="theme-card border p-4 rounded-3xl space-y-3 flex flex-col">
           <div class="flex justify-between items-center text-xs font-bold opacity-80">
             <span>Input Workspace for ${tool.name}</span>
             <button onclick="document.getElementById('generic-input').value=''" class="text-rose-400 hover:underline">Clear</button>
           </div>
-          <textarea id="generic-input" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Paste your input or parameters here..."></textarea>
+          <textarea id="generic-input" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Paste data or parameters here..."></textarea>
           <button onclick="processGenericTool('${toolId}')" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Process & Run</button>
         </div>
         <div class="theme-card border p-4 rounded-3xl space-y-3 flex flex-col">
