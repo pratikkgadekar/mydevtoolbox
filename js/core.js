@@ -420,7 +420,6 @@ function checkUrlHash() {
   }
 }
 
-// Initialization on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   renderToolsGrid();
   setViewDensity(viewDensity);
