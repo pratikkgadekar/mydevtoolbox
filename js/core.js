@@ -4,7 +4,6 @@ let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
 let currentSearchQuery = '';
 
-// High-contrast multi-color category styling
 const categoryStyles = {
   ai: {
     bg: 'bg-purple-500/10',
@@ -78,7 +77,6 @@ const categoryStyles = {
   }
 };
 
-// Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
@@ -349,20 +347,21 @@ function handleMainSearchEnter() {
 // Dynamically sync count labels to actual array count
 function updateCategoryCounts() {
   const db = window.toolsDatabase || [];
-  document.querySelectorAll('.cat-pill').forEach((pill) => {
-    const cat = pill.getAttribute('data-pill');
-    if (!cat) return;
-    const count = cat === 'all'
-      ? db.length
-      : db.filter((t) => t.cat === cat).length;
+  
+  const allCount = document.getElementById('cat-count-all');
+  if (allCount) allCount.innerText = db.length;
 
-    const label = pill.innerText.split('(')[0].trim();
-    pill.innerText = `${label} (${count})`;
+  const cats = ['ai', 'testing', 'data', 'security', 'web', 'design', 'devops', 'text', 'math', 'media'];
+  cats.forEach(c => {
+    const el = document.getElementById(`cat-count-${c}`);
+    if (el) {
+      el.innerText = db.filter(t => t.cat === c).length;
+    }
   });
 
   const counterBadge = document.getElementById('navbar-tool-count');
   if (counterBadge) {
-    counterBadge.innerText = `${db.length}+ Offline Utilities`;
+    counterBadge.innerText = `${db.length} Offline Utilities`;
   }
 }
 
