@@ -60,6 +60,15 @@ body {
   background-attachment: fixed;
 }
 
+/* Smooth Scrolling & Anchor Offsets */
+html {
+  scroll-behavior: smooth;
+}
+
+section[id^="anchor-"] {
+  scroll-margin-top: 10rem;
+}
+
 /* -------------------------------------------------------------------------- */
 /* TOOL CARDS & EDITORS                                                       */
 /* -------------------------------------------------------------------------- */
@@ -140,21 +149,4 @@ body {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
   transform: scale(0.85);
   cursor: default;
-}
-
-/* -------------------------------------------------------------------------- */
-/* DYNAMIC TOOL MODAL & WORKSPACE TRANSITIONS                                 */
-/* -------------------------------------------------------------------------- */
-#tool-modal { 
-  transition: opacity 0.2s ease-out; 
-}
-#tool-modal > div { 
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
-}
-#tool-modal.hidden { 
-  opacity: 0; 
-  pointer-events: none; 
-}
-#tool-modal.hidden > div { 
-  transform: translateY(20px) scale(0.98); 
 }
