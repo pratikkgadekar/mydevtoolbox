@@ -1,15 +1,10 @@
-/* js/core.js - State Management, Search, Multi-Color Category Themes & A-Z Grid Engine */
+/* js/core.js - Controller with Exact Dynamic Counting & A-Z Jump Navigation */
 
-// ---------------------------------------------------------------------------
-// 1. View Density & A-Z Navigation State
-// ---------------------------------------------------------------------------
 let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
 let currentSearchQuery = '';
 
-// ---------------------------------------------------------------------------
-// 2. High-Contrast Multi-Color Category Themes
-// ---------------------------------------------------------------------------
+// High-contrast multi-color category styling
 const categoryStyles = {
   ai: {
     bg: 'bg-purple-500/10',
@@ -83,9 +78,7 @@ const categoryStyles = {
   }
 };
 
-// ---------------------------------------------------------------------------
-// 3. Service Worker & PWA Install
-// ---------------------------------------------------------------------------
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
@@ -124,17 +117,10 @@ function triggerPwaInstall() {
       deferredPrompt = null;
     });
   } else {
-    alert(
-      '💡 To install MyDevToolbox:\n\n' +
-      '• Desktop: Click the install icon (⊕) on the address bar.\n' +
-      '• Mobile: Tap Share → "Add to Home Screen".'
-    );
+    alert('💡 To install MyDevToolbox:\n\n• Desktop: Click the install icon (⊕) on the address bar.\n• Mobile: Tap Share → "Add to Home Screen".');
   }
 }
 
-// ---------------------------------------------------------------------------
-// 4. Theme Manager
-// ---------------------------------------------------------------------------
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('mdt_theme', theme);
@@ -151,9 +137,6 @@ function setTheme(theme) {
 }
 setTheme(localStorage.getItem('mdt_theme') || 'dark');
 
-// ---------------------------------------------------------------------------
-// 5. View Density Switcher (Card Grid vs Compact List)
-// ---------------------------------------------------------------------------
 function setViewDensity(density) {
   viewDensity = density;
   localStorage.setItem('mdt_view_density', density);
@@ -176,9 +159,6 @@ function setViewDensity(density) {
   renderToolsGrid();
 }
 
-// ---------------------------------------------------------------------------
-// 6. Sticky A-Z Jump Navigation Bar
-// ---------------------------------------------------------------------------
 function renderAlphabetJumpBar(availableLetters = []) {
   const container = document.getElementById('az-jump-container');
   const bar = document.getElementById('az-jump-bar');
@@ -212,9 +192,6 @@ function jumpToLetter(letter) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// 7. Single Card HTML Generator
-// ---------------------------------------------------------------------------
 function renderSingleCard(tool) {
   const s = categoryStyles[tool.cat] || categoryStyles.ai;
 
@@ -262,9 +239,6 @@ function renderSingleCard(tool) {
   `;
 }
 
-// ---------------------------------------------------------------------------
-// 8. Render Tools Grid with Alphabetical Anchors
-// ---------------------------------------------------------------------------
 function renderToolsGrid() {
   const grid = document.getElementById('tools-grid');
   const emptyState = document.getElementById('no-tools-found');
@@ -329,9 +303,6 @@ function renderToolsGrid() {
   if (window.lucide) lucide.createIcons();
 }
 
-// ---------------------------------------------------------------------------
-// 9. Category & Search Filtering
-// ---------------------------------------------------------------------------
 function setCategoryFilter(cat) {
   currentActiveCategory = cat;
   const searchInput = document.getElementById('tool-search');
@@ -375,6 +346,7 @@ function handleMainSearchEnter() {
   if (visible.length === 1) visible[0].click();
 }
 
+// Dynamically sync count labels to actual array count
 function updateCategoryCounts() {
   const db = window.toolsDatabase || [];
   document.querySelectorAll('.cat-pill').forEach((pill) => {
@@ -394,9 +366,6 @@ function updateCategoryCounts() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// 10. View Switcher & Recents
-// ---------------------------------------------------------------------------
 function switchView(viewName) {
   const dashboard = document.getElementById('view-dashboard');
   const toolView = document.getElementById('view-tool');
@@ -588,13 +557,11 @@ function checkUrlHash() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// 11. Initializer
-// ---------------------------------------------------------------------------
+// App Initialization
 document.addEventListener('DOMContentLoaded', () => {
+  updateCategoryCounts();
   renderToolsGrid();
   setViewDensity(viewDensity);
-  updateCategoryCounts();
   renderRecentTools();
   updateInstallBadgeCount();
   checkUrlHash();
