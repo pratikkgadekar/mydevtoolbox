@@ -1,29 +1,14 @@
-/* sw.js - Service Worker Cache v21 */
-const CACHE_NAME = 'mdt-cache-v21';
-const ASSETS = [
-  './',
-  './index.html',
-  './css/style.css',
-  './js/tools.js',
-  './js/core.js',
-  './manifest.json'
-];
+/* sw.js - Service Worker Cache v25 (Force Purge) */
+const CACHE_NAME = 'mdt-cache-v25';
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
-  );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
-        })
-      )
+      Promise.all(keys.map((key) => caches.delete(key)))
     )
   );
   self.clients.claim();
@@ -31,6 +16,6 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
