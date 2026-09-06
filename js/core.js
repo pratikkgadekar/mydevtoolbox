@@ -1,4 +1,4 @@
-/* js/core.js - Controller with Exact Dynamic Counting & A-Z Jump Navigation */
+/* js/core.js - Controller with Real-Time Dynamic Counting & Accurate UI Sync */
 
 let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
@@ -344,7 +344,7 @@ function handleMainSearchEnter() {
   if (visible.length === 1) visible[0].click();
 }
 
-// Dynamically sync count labels to actual array count
+// Dynamically compute and sync count labels to the actual length of toolsDatabase
 function updateCategoryCounts() {
   const db = window.toolsDatabase || [];
   
@@ -362,6 +362,11 @@ function updateCategoryCounts() {
   const counterBadge = document.getElementById('navbar-tool-count');
   if (counterBadge) {
     counterBadge.innerText = `${db.length} Offline Utilities`;
+  }
+  
+  const searchInput = document.getElementById('tool-search');
+  if (searchInput) {
+    searchInput.placeholder = `Search across all ${db.length} utilities (Playwright, Docker, JSON, Cron)...`;
   }
 }
 
