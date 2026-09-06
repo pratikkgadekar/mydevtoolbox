@@ -1,9 +1,9 @@
-/* js/tools.js - Exact 500 Unique Developer, QA, DevOps & Data Utilities */
+/* js/tools.js - Verified Exactly 500 Unique Tools (10 Categories × 50 Tools) */
 
 (function initDatabase() {
   const rawCatalog = [
     // =========================================================================
-    // 1. AI, LLM & PROMPT ENGINEERING (50 Tools)
+    // 1. AI, LLM & PROMPTING (50 Tools)
     // =========================================================================
     ['llm-tokens', 'LLM Token Counter & Pricing', 'Estimate BPE tokens and query costs for GPT-4o, Claude 3.5, Gemini, and DeepSeek', 'ai', 'cpu', '14+ Models'],
     ['md-table-gen', 'Visual Markdown Table Builder', 'Spreadsheet grid builder that generates formatted copyable Markdown table syntax', 'ai', 'grid', 'Grid Studio'],
@@ -193,7 +193,6 @@
     ['nanoid-gen', 'NanoID Compact Generator', 'Generate URL-friendly, compact, cryptographically strong unique IDs', 'security', 'zap', 'NanoID'],
     ['hmac-sha512', 'HMAC-SHA512 Signer', 'Calculate high-entropy hash-based message authentication codes with SHA-512', 'security', 'file-signature', 'HMAC'],
     ['rot13-cipher', 'ROT13 & Caesar Cipher Rotator', 'Rotate alphabet characters by 13 positions for simple obfuscation', 'security', 'rotate-cw', 'Cipher'],
-    ['basic-auth-header', 'Basic Auth Header Generator', 'Generate Base64 Authorization: Basic headers from username and password', 'security', 'shield-alert', 'Headers'],
     ['bearer-header', 'Bearer Token Header Formatter', 'Format Authorization: Bearer token HTTP request headers safely', 'security', 'key', 'Auth'],
     ['url-safe-token', 'URL-Safe Cryptographic Nonce Generator', 'Generate high-entropy random bytes formatted for query strings and CSRF', 'security', 'shield-check', 'Nonce'],
     ['api-key-masker', 'API Key Secret Masker & Redactor', 'Mask private API keys, leaving only the last 4 characters visible for logs', 'security', 'eye-off', 'Sanitizer'],
@@ -217,6 +216,7 @@
     ['html-script-sanitizer', 'XSS String Payload Neutralizer', 'Neutralize JavaScript event handlers and script injection strings', 'security', 'shield-alert', 'Anti-XSS'],
     ['ssh-keygen-command', 'ssh-keygen Command Generator', 'Generate commands for Ed25519 and RSA keys with custom comments', 'security', 'terminal', 'SSH Gen'],
     ['content-disposition-safe', 'Safe Filename Content-Disposition', 'Sanitize download filenames to prevent directory traversal attacks', 'security', 'download', 'Headers'],
+    ['wireguard-key-inspector', 'WireGuard Base64 Key Validator', 'Inspect and validate 32-byte curve25519 public and private WireGuard keys', 'security', 'key', 'WireGuard'],
 
     // =========================================================================
     // 5. WEB, HTTP & APIS (50 Tools)
@@ -273,7 +273,7 @@
     ['ads-txt-validator', 'Google ads.txt / app-ads.txt Generator', 'Format authorized digital sellers listings for advertising monetization', 'web', 'dollar-sign', 'ads.txt'],
 
     // =========================================================================
-    // 6. CSS & UI DESIGN (50 Tools)
+    // 6. CSS, STYLING & UI DESIGN (50 Tools)
     // =========================================================================
     ['box-shadow', 'CSS Box-Shadow Studio', 'Visual sliders for offsets, blur, and spread with instant CSS copy', 'design', 'layers', 'CSS Studio'],
     ['flexbox-play', 'CSS Flexbox Playground', 'Interactive visual sandbox for justify-content, align-items, and flex-wrap', 'design', 'layout', 'Flexbox'],
@@ -327,7 +327,7 @@
     ['letter-spacing-calc', 'Tracking & Letter Spacing Converter', 'Convert Photoshop/Figma tracking values (-20, 50) into CSS em/px letter-spacing', 'design', 'type', 'Spacing'],
 
     // =========================================================================
-    // 7. DEVOPS, CLOUD & LINUX (50 Tools)
+    // 7. DEVOPS, CONTAINERS & LINUX (50 Tools)
     // =========================================================================
     ['cron-builder', 'Cron Expression Explainer', 'Translate 5-part cron syntax into human-readable sentences with presets', 'devops', 'clock', 'Crontab'],
     ['dockerfile-lint', 'Dockerfile Validator & Linter', 'Inspect Dockerfile instructions for caching efficiency and security practices', 'devops', 'container', 'Docker'],
@@ -372,7 +372,7 @@
     ['dnsmasq-conf-builder', 'Dnsmasq Local Resolver Config Maker', 'Build address=/domain/127.0.0.1 redirect rules for local DNS development', 'devops', 'network', 'Dnsmasq'],
     ['squid-proxy-acl-gen', 'Squid Proxy ACL Rule Generator', 'Format acl and http_access allow/deny rule blocks for web proxy gateways', 'devops', 'shield', 'Squid'],
     ['logrotate-conf-maker', 'Linux logrotate.d File Builder', 'Configure weekly rotation, compress, delaycompress, and maxsize log policies', 'devops', 'rotate-cw', 'Logrotate'],
-    ['ufw-firewall-cmd-gen', 'Ubuntu UFW Firewall Rule Builder', 'Generate ufw allow from <ip> to any port <port> firewall rules', 'devops', 'shield-check', 'UFW'],
+    ['ufw-firewall-cmd-gen', 'Ubuntu UFW Firewall Rule Builder', 'Generate ufw allow from to any port firewall rules', 'devops', 'shield-check', 'UFW'],
     ['iptables-rule-builder', 'Linux iptables NAT & Port Forwarder', 'Generate iptables -t nat -A PREROUTING port forwarding and masquerade rules', 'devops', 'terminal', 'iptables'],
     ['wireguard-peer-conf', 'WireGuard VPN Peer Config Builder', 'Build [Interface] and [Peer] ini configurations with private/public key pairs', 'devops', 'shield', 'WireGuard'],
     ['ip-vlan-tag-calc', '802.1Q VLAN Tag & ID Directory', 'Check standard 12-bit VLAN ID ranges (1 to 4094) and priority code points', 'devops', 'tag', 'VLAN'],
@@ -543,13 +543,13 @@
     ['favicon-ico-exporter', 'Favicon Multi-Size Asset Exporter', 'Generate responsive favicon assets (16x16, 32x32, 48x48) from uploaded icons', 'media', 'app-window', 'Favicon']
   ];
 
-  // Map compact array to full objects
+  // Map into window.toolsDatabase
   window.toolsDatabase = rawCatalog.map(([id, name, desc, cat, icon, badge]) => ({
     id, name, desc, cat, icon, badge
   }));
 })();
 
-// Active Tool View Logic
+// Execution logic for tools workspace
 function getToolGuide(tool) {
   return {
     p1: { title: '1. Primary Purpose', text: `${tool.name} is designed to ${tool.desc.toLowerCase()}. Processing executes 100% locally in browser memory.` },
@@ -578,7 +578,6 @@ function renderToolView(toolId) {
       <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-xl text-xs font-mono font-bold self-start sm:self-auto">${tool.badge}</span>
     </div>
 
-    <!-- USAGE & ENGINEERING GUIDE PANEL -->
     <div class="p-5 theme-card border border-indigo-500/20 rounded-3xl space-y-3">
       <div class="flex items-center gap-2 text-xs font-extrabold text-indigo-400">
         <i data-lucide="book-open" class="w-4 h-4"></i>
