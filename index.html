@@ -52,7 +52,7 @@
         </div>
         <div>
           <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
-          <span id="navbar-tool-count" class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">500+ Utilities</span>
+          <span id="navbar-tool-count" class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold font-mono">500 Offline Utilities</span>
         </div>
       </div>
 
@@ -62,7 +62,7 @@
           <span>Request Tool</span>
         </button>
 
-        <button onclick="triggerPwaInstall()" id="btn-pwa-install" title="Install MyDevToolbox as a PWA to run offline" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
+        <button onclick="triggerPwaInstall()" id="btn-pwa-install" title="Install MyDevToolbox as a Progressive Web App" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
           <i data-lucide="laptop" class="w-3.5 h-3.5"></i>
           <span>Install Offline</span>
           <span id="install-counter-badge" class="ml-1 px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-mono font-bold shadow-sm">1.2k+</span>
@@ -113,7 +113,7 @@
             id="tool-search" 
             oninput="filterTools()" 
             onkeydown="if(event.key === 'Enter') handleMainSearchEnter()" 
-            placeholder="Search across 500+ utilities (Playwright, Docker, JSON, Cron)..." 
+            placeholder="Search across all 500 utilities (Playwright, Docker, JSON, Cron)..." 
             class="w-full pl-3 pr-4 py-3.5 bg-transparent border-none text-sm focus:outline-none" 
           />
           <button onclick="filterTools()" class="mr-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">
@@ -133,22 +133,22 @@
           <div id="az-jump-bar" class="flex flex-wrap items-center justify-center gap-1.5 max-w-4xl mx-auto text-xs font-mono"></div>
         </div>
 
-        <!-- 10 Category Filter Pills -->
+        <!-- 10 Category Filter Pills with Dynamic Count Spans -->
         <div class="flex flex-wrap items-center justify-center gap-1.5 p-1.5 mt-2 rounded-2xl border theme-card max-w-5xl mx-auto text-xs font-semibold shadow-sm">
-          <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All (500)</button>
-          <button onclick="setCategoryFilter('ai')" data-pill="ai" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🤖 AI & LLM (50)</button>
-          <button onclick="setCategoryFilter('testing')" data-pill="testing" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🧪 QA Mocks (50)</button>
-          <button onclick="setCategoryFilter('data')" data-pill="data" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📊 JSON & Data (50)</button>
-          <button onclick="setCategoryFilter('security')" data-pill="security" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🔐 Security (50)</button>
-          <button onclick="setCategoryFilter('web')" data-pill="web" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🌐 Web & APIs (50)</button>
-          <button onclick="setCategoryFilter('design')" data-pill="design" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🎨 CSS & UI (50)</button>
-          <button onclick="setCategoryFilter('devops')" data-pill="devops" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">⚙️ DevOps (50)</button>
-          <button onclick="setCategoryFilter('text')" data-pill="text" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📝 Content (50)</button>
-          <button onclick="setCategoryFilter('math')" data-pill="math" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📐 Math & Units (50)</button>
-          <button onclick="setCategoryFilter('media')" data-pill="media" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📂 File & Media (50)</button>
+          <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All (<span id="cat-count-all">500</span>)</button>
+          <button onclick="setCategoryFilter('ai')" data-pill="ai" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🤖 AI & LLM (<span id="cat-count-ai">50</span>)</button>
+          <button onclick="setCategoryFilter('testing')" data-pill="testing" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🧪 QA Mocks (<span id="cat-count-testing">50</span>)</button>
+          <button onclick="setCategoryFilter('data')" data-pill="data" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📊 JSON & Data (<span id="cat-count-data">50</span>)</button>
+          <button onclick="setCategoryFilter('security')" data-pill="security" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🔐 Security (<span id="cat-count-security">50</span>)</button>
+          <button onclick="setCategoryFilter('web')" data-pill="web" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🌐 Web & APIs (<span id="cat-count-web">50</span>)</button>
+          <button onclick="setCategoryFilter('design')" data-pill="design" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🎨 CSS & UI (<span id="cat-count-design">50</span>)</button>
+          <button onclick="setCategoryFilter('devops')" data-pill="devops" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">⚙️ DevOps (<span id="cat-count-devops">50</span>)</button>
+          <button onclick="setCategoryFilter('text')" data-pill="text" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📝 Content (<span id="cat-count-text">50</span>)</button>
+          <button onclick="setCategoryFilter('math')" data-pill="math" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📐 Math & Units (<span id="cat-count-math">50</span>)</button>
+          <button onclick="setCategoryFilter('media')" data-pill="media" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📂 File & Media (<span id="cat-count-media">50</span>)</button>
         </div>
 
-        <!-- View Density Toggle Controls -->
+        <!-- View Mode Switcher -->
         <div class="flex items-center justify-between max-w-5xl mx-auto mt-4 px-2 text-xs font-semibold">
           <div id="view-mode-indicator" class="opacity-75 text-[11px] uppercase tracking-wider font-bold">
             Alphabetical A–Z Index
@@ -169,7 +169,7 @@
       <!-- DYNAMIC GRID CONTAINER -->
       <div id="tools-grid" class="w-full"></div>
 
-      <!-- Empty State -->
+      <!-- Empty Search State -->
       <div id="no-tools-found" class="hidden text-center py-16 theme-card border rounded-3xl p-8 max-w-md mx-auto my-6">
         <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mx-auto mb-3">
           <i data-lucide="search-x" class="w-6 h-6"></i>
@@ -205,7 +205,7 @@
       </section>
     </div>
 
-    <!-- VIEW 2: ACTIVE TOOL VIEW -->
+    <!-- VIEW 2: ACTIVE TOOL WORKSPACE VIEW -->
     <div id="view-tool" class="hidden">
       <div class="flex items-center justify-between pb-6 border-b border-slate-500/20 mb-6">
         <button onclick="switchView('dashboard')" class="flex items-center text-xs font-bold theme-card px-4 py-2.5 rounded-2xl border hover:border-indigo-500 transition">
@@ -320,7 +320,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT LOADING ORDER: ONLY 2 SCRIPTS REQUIRED -->
+  <!-- SCRIPT LOADING: tools.js sets window.toolsDatabase; core.js renders the UI -->
   <script src="js/tools.js"></script>
   <script src="js/core.js"></script>
 </body>
