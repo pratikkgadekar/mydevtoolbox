@@ -1,6 +1,8 @@
-/* js/tools-catalog-1.js - Categories 1 to 5 (250 Tools) */
+/* js/tools-catalog-1.js - Tools 1 to 250 (50 Tools per Category for AI, Testing, Data, Security, Web) */
 window.toolsCatalogPart1 = [
-  // 1. AI, LLM & PROMPTING (50 Tools)
+  // ---------------------------------------------------------------------------
+  // 1. AI, LLM & PROMPT ENGINEERING (50 Tools)
+  // ---------------------------------------------------------------------------
   ['llm-tokens', 'LLM Token Counter & Pricing', 'Estimate BPE tokens and query costs for GPT-4o, Claude 3.5, Gemini, and DeepSeek', 'ai', 'cpu', '14+ Models'],
   ['md-table-gen', 'Visual Markdown Table Builder', 'Spreadsheet grid builder that generates formatted copyable Markdown table syntax', 'ai', 'grid', 'Grid Studio'],
   ['wcag-contrast', 'WCAG Color Contrast Checker', 'Real-time foreground/background ratio calculator with instant AA/AAA accessibility ratings', 'ai', 'eye', 'WCAG 2.1'],
@@ -52,7 +54,9 @@ window.toolsCatalogPart1 = [
   ['multiturn-history-trim', 'Chat History Sliding Window Trimmer', 'Trim oldest conversation turns while preserving the foundational system prompt', 'ai', 'clock', 'Chat'],
   ['token-to-word-calc', 'BPE Token to Word Equivalence Sizer', 'Convert between token counts and word/page lengths across 8 languages', 'ai', 'type', 'Estimation'],
 
-  // 2. QA, TEST AUTOMATION & SCRAPING (50 Tools)
+  // ---------------------------------------------------------------------------
+  // 2. QA, TEST AUTOMATION & WEB SCRAPING (50 Tools)
+  // ---------------------------------------------------------------------------
   ['dummy-card', 'Dummy Test Card Generator', 'Generate Luhn-valid dummy credit card numbers strictly for billing QA', 'testing', 'credit-card', 'Luhn Valid'],
   ['pdf-toolkit', 'Client-Side PDF Merger', 'Combine multiple PDF documents safely in browser memory without uploads', 'testing', 'file-stack', 'In-Memory'],
   ['mock-user-gen', 'Mock User Profile Generator', 'Generate realistic test identities with names, avatars, emails, and addresses', 'testing', 'user-check', 'Mock Data'],
@@ -104,7 +108,9 @@ window.toolsCatalogPart1 = [
   ['load-test-rps-sizer', 'Virtual Users to Target RPS Sizer', 'Calculate required virtual users based on target requests/sec and average latency', 'testing', 'users', 'Load Test'],
   ['app-permission-matrix', 'Role-Based Access Control (RBAC) Matrix', 'Map User, Admin, and Guest roles against CRUD operation permission grids', 'testing', 'lock', 'RBAC'],
 
+  // ---------------------------------------------------------------------------
   // 3. JSON, CSV, XML & DATA FORMATS (50 Tools)
+  // ---------------------------------------------------------------------------
   ['json-formatter', 'JSON Pro Studio', 'Dual-pane syntax highlighting, beautifier, tree inspector, and validator', 'data', 'code-2', 'Dual-Pane'],
   ['json-csv', 'JSON to CSV Converter', 'Transform nested JSON object arrays into standard CSV spreadsheets', 'data', 'table', 'Tabular'],
   ['csv-json', 'CSV to JSON Converter', 'Parse comma-separated data sheets directly into structured JSON arrays', 'data', 'sheet', 'Parser'],
@@ -156,7 +162,9 @@ window.toolsCatalogPart1 = [
   ['json-type-inference', 'JSON Schema Type Extractor', 'Infer draft-07 JSON schemas from sample JSON payloads with enums', 'data', 'file-check', 'Schema'],
   ['json-merge-patch', 'RFC 7396 JSON Merge Patch Applier', 'Apply RFC 7396 merge patch delta documents to target JSON data trees', 'data', 'git-merge', 'RFC 7396'],
 
+  // ---------------------------------------------------------------------------
   // 4. SECURITY, TOKENS & CRYPTOGRAPHY (50 Tools)
+  // ---------------------------------------------------------------------------
   ['uuid-gen', 'UUID v4 Batch Creator', 'Generate batch RFC4122 v4 unique identifiers via Web Crypto API', 'security', 'key', 'RFC4122'],
   ['pwd-gen', 'Password & Token Generator', 'Create cryptographically secure passwords with custom lengths and symbols', 'security', 'shield-check', 'Entropy'],
   ['hash-gen', 'SHA-256 Hasher', 'Calculate cryptographic SHA-256 message digests in browser memory', 'security', 'hash', 'SHA-256'],
@@ -208,7 +216,9 @@ window.toolsCatalogPart1 = [
   ['content-disposition-safe', 'Safe Filename Content-Disposition', 'Sanitize download filenames to prevent directory traversal attacks', 'security', 'download', 'Headers'],
   ['wireguard-key-inspector', 'WireGuard Base64 Key Validator', 'Inspect and validate 32-byte curve25519 public and private WireGuard keys', 'security', 'key', 'WireGuard'],
 
+  // ---------------------------------------------------------------------------
   // 5. WEB, HTTP & APIS (50 Tools)
+  // ---------------------------------------------------------------------------
   ['http-codes', 'HTTP Status Codes Inspector', 'Searchable directory with code simulator, client/server causes, and snippets', 'web', 'server', 'Interactive'],
   ['curl-fetch', 'cURL to Fetch Converter', 'Translate raw cURL network commands into browser fetch() JavaScript syntax', 'web', 'terminal', 'cURL'],
   ['url-codec', 'URL Encoder & Decoder', 'Safely encode special query parameters or decode percent-encoded URLs', 'web', 'link', 'Encoding'],
