@@ -559,13 +559,13 @@ function renderToolView(toolId) {
     recordToolUsage(tool.id, tool.name);
   }
 
-  // Delegate directly to the Smart UI Archetype Engine
+  // Delegate directly to the Smart Tool UI Engine
   if (typeof window.renderSmartToolUI === 'function') {
     window.renderSmartToolUI(tool);
     return;
   }
 
-  // Safe fallback if archetypes script has not finished loading
+  // Safe fallback if the renderer is still loading
   const guide = getToolGuide(tool);
   container.innerHTML = `
     <div class="space-y-5">
