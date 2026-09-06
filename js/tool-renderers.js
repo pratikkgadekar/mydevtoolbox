@@ -1,427 +1,612 @@
-/* js/tool-renderers.js - Autonomous UI Archetype Engine */
+/* js/tool-renderers.js - Dedicated Interactive UI Engine */
 
 window.renderSmartToolUI = function(tool) {
   const container = document.getElementById('active-tool-container');
   if (!container || !tool) return;
 
-  if (typeof recordToolUsage === 'function') {
-    recordToolUsage(tool.id, tool.name);
-  }
-
   const tid = tool.id;
-  const cat = tool.cat;
 
-  // 1. SPECIFIC CUSTOM TOOLS
-  if (tid === 'timezone-overlap') {
-    renderTimezoneMeetingPlanner(container, tool);
-  } else if (tid === 'box-shadow') {
-    renderBoxShadowStudio(container, tool);
-  } else if (tid === 'qr-gen') {
-    renderQrStudio(container, tool);
-  } else if (tid === 'uuid-gen' || tid === 'pwd-gen') {
-    renderGeneratorStudio(container, tool);
-  } 
-  // 2. CATEGORY & KEYWORD ARCHETYPES
-  else if (cat === 'num' || tid.includes('calc') || tid.includes('emi') || tid.includes('tax') || tid.includes('interest')) {
-    renderCalculatorArchetype(container, tool);
-  } else if (tid.includes('epoch') || tid.includes('date') || tid.includes('time') || tid.includes('days')) {
-    renderDateTimeArchetype(container, tool);
-  } else if (cat === 'ui' || tid.includes('color') || tid.includes('css') || tid.includes('radius') || tid.includes('gradient')) {
-    renderVisualStudioArchetype(container, tool);
-  } else if (cat === 'sec' || tid.includes('hash') || tid.includes('sha') || tid.includes('crypto') || tid.includes('jwt')) {
-    renderSecurityCryptoArchetype(container, tool);
-  } else if (cat === 'testing' || tid.includes('locator') || tid.includes('playwright') || tid.includes('selenium') || tid.includes('cypress')) {
-    renderQaAutomationArchetype(container, tool);
-  } else if (cat === 'ai' || tid.includes('token') || tid.includes('prompt') || tid.includes('llm')) {
-    renderAiPromptArchetype(container, tool);
-  } else if (cat === 'data' || tid.includes('json') || tid.includes('csv') || tid.includes('xml') || tid.includes('yaml')) {
-    renderDataConverterArchetype(container, tool);
-  } else if (cat === 'ops' || tid.includes('docker') || tid.includes('k8s') || tid.includes('subnet') || tid.includes('nginx')) {
-    renderDevOpsArchetype(container, tool);
-  } else if (cat === 'med' || tid.includes('img') || tid.includes('canvas') || tid.includes('svg') || tid.includes('pdf')) {
-    renderMediaCanvasArchetype(container, tool);
-  } else {
-    renderTextContentArchetype(container, tool);
+  // 1. PDF & FILE UTILITIES
+  if (tid === 'pdf-toolkit' || tid.includes('pdf-merger') || tid.includes('image-to-pdf')) {
+    renderPdfMergerTool(container, tool);
+  }
+  // 2. NETWORKING & VLAN DIRECTORIES
+  else if (tid === 'ip-vlan-tag-calc' || tid.includes('vlan')) {
+    renderVlanDirectoryTool(container, tool);
+  }
+  // 3. SALT, HEX & RANDOM TOKEN GENERATORS
+  else if (tid === 'salt-gen' || tid === 'pwd-gen' || tid === 'url-safe-token' || tid === 'uuid-gen') {
+    renderSaltAndGeneratorTool(container, tool);
+  }
+  // 4. AI OUTPUT & PROMPT PARSERS
+  else if (tid === 'regex-prompt-filter' || tid.includes('prompt-cleaner') || tid.includes('json-markdown-strip')) {
+    renderAiFilterTool(container, tool);
+  }
+  // 5. TIMEZONE MEETING PLANNER
+  else if (tid === 'timezone-overlap' || tid.includes('timezone')) {
+    renderTimezonePlannerTool(container, tool);
+  }
+  // 6. CSS & VISUAL STUDIOS
+  else if (tid === 'box-shadow' || tool.cat === 'ui') {
+    renderBoxShadowAndUiTool(container, tool);
+  }
+  // 7. CALCULATORS & FINANCIAL
+  else if (tool.cat === 'num' || tid.includes('calc') || tid.includes('emi') || tid.includes('cagr')) {
+    renderCalculatorTool(container, tool);
+  }
+  // 8. DATA, JSON & CONVERTERS
+  else if (tool.cat === 'data' || tid.includes('json') || tid.includes('csv') || tid.includes('xml')) {
+    renderDataStudioTool(container, tool);
+  }
+  // 9. SMART ADAPTIVE FALLBACK (With sample buttons, stats, and real controls)
+  else {
+    renderAdaptiveTextTool(container, tool);
   }
 
   if (window.lucide) lucide.createIcons();
 };
 
-/* --- ARCHETYPE 1: FINANCIAL, MATH & CALCULATORS --- */
-function renderCalculatorArchetype(container, tool) {
-  const isLoan = tool.id.includes('loan') || tool.id.includes('emi');
-  const isCagr = tool.id.includes('cagr') || tool.id.includes('interest') || tool.id.includes('sip');
-  const isTax = tool.id.includes('tax') || tool.id.includes('discount') || tool.id.includes('margin');
+/* --- 1. CLIENT-SIDE PDF MERGER --- */
+let uploadedPdfFiles = [];
+function renderPdfMergerTool(container, tool) {
+  uploadedPdfFiles = [];
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">1. Upload PDF Documents</div>
+          <div 
+            class="border-2 border-dashed border-slate-500/30 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 transition"
+            onclick="document.getElementById('pdf-file-picker').click()"
+            ondragover="event.preventDefault()" 
+            ondrop="handlePdfDrop(event)"
+          >
+            <i data-lucide="file-plus-2" class="w-10 h-10 text-indigo-400 mx-auto mb-2"></i>
+            <span class="text-sm font-bold block" style="color: var(--text-main);">Drop PDF files here, or click to browse</span>
+            <span class="text-xs opacity-60 block mt-1">100% In-Browser. Files are merged in local memory using WebAssembly.</span>
+            <input type="file" id="pdf-file-picker" accept="application/pdf" multiple onchange="handlePdfSelect(this)" class="hidden">
+          </div>
+          <div id="pdf-status-msg" class="text-xs font-semibold text-amber-400 hidden"></div>
+        </div>
 
+        <div class="theme-card border p-6 rounded-3xl space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center text-xs font-bold opacity-80">
+              <span class="uppercase tracking-wider text-emerald-400">Queue (<span id="pdf-count">0</span> Files)</span>
+              <button onclick="uploadedPdfFiles=[]; renderPdfQueue();" class="text-rose-400 hover:underline">Clear Queue</button>
+            </div>
+            <div id="pdf-queue-list" class="space-y-2 max-h-56 overflow-y-auto pr-1 text-xs">
+              <div class="text-center py-10 opacity-40">No PDF files added yet.</div>
+            </div>
+          </div>
+          <button 
+            id="btn-merge-pdf" 
+            disabled 
+            onclick="executePdfMerge()" 
+            class="w-full py-3 bg-indigo-600 disabled:opacity-40 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-2"
+          >
+            <i data-lucide="combine" class="w-4 h-4"></i> Merge & Download Combined PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function handlePdfSelect(input) {
+  if (input.files) addPdfFiles(Array.from(input.files));
+}
+function handlePdfDrop(e) {
+  e.preventDefault();
+  if (e.dataTransfer.files) addPdfFiles(Array.from(e.dataTransfer.files));
+}
+function addPdfFiles(files) {
+  const pdfs = files.filter(f => f.type === 'application/pdf' || f.name.endsWith('.pdf'));
+  if (pdfs.length === 0) return;
+  uploadedPdfFiles.push(...pdfs);
+  renderPdfQueue();
+}
+function renderPdfQueue() {
+  const list = document.getElementById('pdf-queue-list');
+  const count = document.getElementById('pdf-count');
+  const btn = document.getElementById('btn-merge-pdf');
+  if (!list || !count || !btn) return;
+
+  count.innerText = uploadedPdfFiles.length;
+  btn.disabled = uploadedPdfFiles.length < 2;
+
+  if (uploadedPdfFiles.length === 0) {
+    list.innerHTML = `<div class="text-center py-10 opacity-40">No PDF files added yet.</div>`;
+    return;
+  }
+
+  list.innerHTML = uploadedPdfFiles.map((f, i) => `
+    <div class="p-3 theme-editor border rounded-xl flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 truncate">
+        <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-[10px]">${i + 1}</span>
+        <span class="font-semibold truncate">${f.name}</span>
+        <span class="text-[10px] opacity-60">(${(f.size / 1024).toFixed(1)} KB)</span>
+      </div>
+      <button onclick="uploadedPdfFiles.splice(${i}, 1); renderPdfQueue();" class="text-rose-400 hover:text-rose-300 font-bold text-sm px-1">&times;</button>
+    </div>
+  `).join('');
+}
+async function executePdfMerge() {
+  if (uploadedPdfFiles.length < 2 || !window.PDFLib) return;
+  const btn = document.getElementById('btn-merge-pdf');
+  const status = document.getElementById('pdf-status-msg');
+  btn.disabled = true;
+  btn.innerText = 'Merging in memory...';
+
+  try {
+    const { PDFDocument } = PDFLib;
+    const mergedDoc = await PDFDocument.create();
+
+    for (const file of uploadedPdfFiles) {
+      const buffer = await file.arrayBuffer();
+      const doc = await PDFDocument.load(buffer);
+      const copiedPages = await mergedDoc.copyPages(doc, doc.getPageIndices());
+      copiedPages.forEach((page) => mergedDoc.addPage(page));
+    }
+
+    const mergedBytes = await mergedDoc.save();
+    const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `merged_${Date.now()}.pdf`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    if (status) {
+      status.innerText = '✓ Successfully merged and downloaded!';
+      status.classList.remove('hidden');
+    }
+  } catch (err) {
+    alert('PDF Merge Error: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerText = 'Merge & Download Combined PDF';
+  }
+}
+
+/* --- 2. 802.1Q VLAN TAG & ID DIRECTORY --- */
+function renderVlanDirectoryTool(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Calculation Parameters</div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">VLAN ID Lookup & Validation</div>
           <div>
-            <label class="block text-xs font-bold opacity-80 mb-1" id="lbl-f1">${isLoan ? 'Loan Principal Amount ($)' : (isCagr ? 'Initial Investment ($)' : 'Primary Value / Base Price')}</label>
-            <input type="number" id="calc-val1" value="${isLoan ? '100000' : '10000'}" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <label class="block text-xs font-bold opacity-80 mb-1">Enter VLAN ID (0 - 4095)</label>
+            <input type="number" id="vlan-input" min="0" max="4095" value="100" oninput="inspectVlanId()" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
           </div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1" id="lbl-f2">${isLoan || isCagr ? 'Annual Interest Rate (%)' : 'Percentage / Secondary Rate (%)'}</label>
-            <input type="number" id="calc-val2" value="${isLoan ? '8.5' : '12'}" step="0.1" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <div id="vlan-verdict" class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs space-y-2">
+            <!-- Dynamic validation details -->
           </div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1" id="lbl-f3">${isLoan ? 'Tenure (Years)' : (isCagr ? 'Duration (Years)' : 'Additional Factor / Tax Rate')}</label>
-            <input type="number" id="calc-val3" value="${isLoan ? '20' : '5'}" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-          </div>
-          <button onclick="executeCalculatorCalculation('${tool.id}')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Compute Results</button>
         </div>
 
         <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-5">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Calculation Summary</div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
-              <span class="text-[11px] font-bold opacity-70 block" id="res-lbl-1">Calculated Primary Output</span>
-              <span class="text-2xl font-black text-indigo-400 font-mono mt-1 block" id="res-val-1">--</span>
-            </div>
-            <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-              <span class="text-[11px] font-bold opacity-70 block" id="res-lbl-2">Effective Total / Accrual</span>
-              <span class="text-2xl font-black text-emerald-400 font-mono mt-1 block" id="res-val-2">--</span>
-            </div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Standard IEEE 802.1Q Allocation Ranges</div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead class="border-b border-slate-500/20 font-mono text-[11px] opacity-70">
+                <tr><th class="py-2">Range</th><th class="py-2">Type</th><th class="py-2">Purpose / Standard</th></tr>
+              </thead>
+              <tbody class="divide-y divide-slate-500/10 font-mono">
+                <tr><td class="py-2 text-rose-400 font-bold">0</td><td>Reserved</td><td>Priority-tagged frames (PCP only; no VLAN tag)</td></tr>
+                <tr><td class="py-2 text-indigo-400 font-bold">1</td><td>Default</td><td>Factory standard default native VLAN on Ethernet switches</td></tr>
+                <tr><td class="py-2 text-emerald-400 font-bold">2 - 1001</td><td>Normal</td><td>Standard user network segment range (Cisco default VTP)</td></tr>
+                <tr><td class="py-2 text-amber-400 font-bold">1002 - 1005</td><td>Legacy</td><td>Reserved for FDDI and Token Ring legacy bridging</td></tr>
+                <tr><td class="py-2 text-purple-400 font-bold">1006 - 4094</td><td>Extended</td><td>Extended ISP QinQ tags, enterprise cloud trunking</td></tr>
+                <tr><td class="py-2 text-rose-400 font-bold">4095</td><td>Reserved</td><td>System use only; reserved for internal management</td></tr>
+              </tbody>
+            </table>
           </div>
-          <div class="p-4 rounded-2xl theme-editor border space-y-2">
-            <span class="text-xs font-bold opacity-80">Formula & Breakdown:</span>
-            <div id="calc-breakdown" class="text-xs font-mono opacity-70 leading-relaxed">Click 'Compute Results' to evaluate parameters client-side.</div>
+
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400 pt-2">802.1p Priority Code Points (PCP / CoS)</div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
+            <div class="p-2 rounded-xl theme-editor border">PCP 0: Best Effort (BE)</div>
+            <div class="p-2 rounded-xl theme-editor border">PCP 1: Background (BK)</div>
+            <div class="p-2 rounded-xl theme-editor border">PCP 2: Excellent Effort</div>
+            <div class="p-2 rounded-xl theme-editor border">PCP 3: Critical Apps (CA)</div>
+            <div class="p-2 rounded-xl theme-editor border">PCP 4: Video (< 100ms)</div>
+            <div class="p-2 rounded-xl theme-editor border">PCP 5: Voice (< 10ms)</div>
+            <div class="p-2 rounded-xl theme-editor border">PCP 6: Internetwork Control</div>
+            <div class="p-2 rounded-xl theme-editor border">PCP 7: Network Control</div>
           </div>
         </div>
       </div>
     </div>
   `;
-  executeCalculatorCalculation(tool.id);
+  inspectVlanId();
 }
 
-function executeCalculatorCalculation(toolId) {
-  const v1 = parseFloat(document.getElementById('calc-val1')?.value || 0);
-  const v2 = parseFloat(document.getElementById('calc-val2')?.value || 0);
-  const v3 = parseFloat(document.getElementById('calc-val3')?.value || 0);
-  const r1 = document.getElementById('res-val-1');
-  const r2 = document.getElementById('res-val-2');
-  const breakdown = document.getElementById('calc-breakdown');
-  if (!r1 || !r2) return;
+function inspectVlanId() {
+  const val = parseInt(document.getElementById('vlan-input')?.value || 0, 10);
+  const verdict = document.getElementById('vlan-verdict');
+  if (!verdict) return;
 
-  if (toolId.includes('loan') || toolId.includes('emi')) {
-    const r = (v2 / 12) / 100;
-    const n = v3 * 12;
-    const emi = (v1 * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-    const totalPay = emi * n;
-    r1.innerText = `$${emi.toFixed(2)}`;
-    r2.innerText = `$${totalPay.toFixed(2)}`;
-    breakdown.innerHTML = `Monthly EMI: <strong>$${emi.toFixed(2)}</strong><br>Total Interest Accrued: <strong>$${(totalPay - v1).toFixed(2)}</strong> over ${n} monthly installments.`;
-  } else if (toolId.includes('cagr')) {
-    const cagr = (Math.pow(v2 / v1, 1 / v3) - 1) * 100;
-    r1.innerText = `${cagr.toFixed(2)}%`;
-    r2.innerText = `$${(v2 - v1).toFixed(2)}`;
-    breakdown.innerHTML = `Compound Annual Growth Rate: <strong>${cagr.toFixed(2)}%</strong> annual compounding.`;
+  if (val === 0) {
+    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">RESERVED (ID 0)</span><p class="mt-1 opacity-80">Used exclusively for 802.1p priority tagging without a VLAN ID.</p>`;
+  } else if (val === 1) {
+    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-bold">DEFAULT NATIVE VLAN</span><p class="mt-1 opacity-80">Default untagged switchport management network.</p>`;
+  } else if (val >= 2 && val <= 1001) {
+    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">VALID NORMAL RANGE</span><p class="mt-1 opacity-80">Freely assignable across all Ethernet switches and VTP domains.</p>`;
+  } else if (val >= 1002 && val <= 1005) {
+    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">CISCO / FDDI RESERVED</span><p class="mt-1 opacity-80">Cannot be pruned or deleted on legacy Cisco IOS switch configurations.</p>`;
+  } else if (val >= 1006 && val <= 4094) {
+    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-bold">EXTENDED VLAN RANGE</span><p class="mt-1 opacity-80">Requires VTP transparent mode or standard 802.1Q QinQ bridging.</p>`;
+  } else if (val === 4095) {
+    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">RESERVED (ID 4095)</span><p class="mt-1 opacity-80">Wildcard match in software trunking filters; cannot be used for user data.</p>`;
   } else {
-    const pctVal = (v1 * v2) / 100;
-    r1.innerText = pctVal.toFixed(2);
-    r2.innerText = (v1 + pctVal).toFixed(2);
-    breakdown.innerHTML = `${v2}% of ${v1} = <strong>${pctVal.toFixed(2)}</strong>. Sum total = <strong>${(v1 + pctVal).toFixed(2)}</strong>.`;
+    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">OUT OF BOUNDS</span><p class="mt-1 opacity-80">IEEE 802.1Q tags are 12-bit (0 to 4095).</p>`;
   }
 }
 
-/* --- ARCHETYPE 2: DATE & TIME STUDIO --- */
-function renderDateTimeArchetype(container, tool) {
-  const now = new Date();
+/* --- 3. RANDOM SALT & TOKEN GENERATOR --- */
+function renderSaltAndGeneratorTool(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Date & Time Inputs</div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Cryptographic Parameters</div>
           <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Select Target Date</label>
-            <input type="datetime-local" id="dt-input" value="${now.toISOString().slice(0,16)}" onchange="evaluateDateTime('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <div class="flex justify-between text-xs font-bold mb-1"><span>Byte Length</span><span id="salt-len-val">32 Bytes (256-bit)</span></div>
+            <input type="range" id="salt-len" min="8" max="128" step="8" value="32" oninput="document.getElementById('salt-len-val').innerText=this.value+' Bytes ('+(this.value*8)+'-bit)'; generateCryptographicSalt();" class="w-full accent-indigo-500">
           </div>
           <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Time Offset / Increment (Days)</label>
-            <input type="number" id="dt-offset" value="30" onchange="evaluateDateTime('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <label class="block text-xs font-bold opacity-80 mb-1">Encoding Representation</label>
+            <select id="salt-format" onchange="generateCryptographicSalt()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+              <option value="hex">Hexadecimal (0-9, a-f)</option>
+              <option value="base64">Base64 Standard</option>
+              <option value="alphanumeric">Alphanumeric (A-Z, a-z, 0-9)</option>
+              <option value="symbols">Complex (Alphanumeric + Special Symbols)</option>
+            </select>
           </div>
-          <button onclick="evaluateDateTime('${tool.id}')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Convert & Calculate</button>
+          <div>
+            <label class="block text-xs font-bold opacity-80 mb-1">Quantity</label>
+            <input type="number" id="salt-qty" min="1" max="25" value="5" onchange="generateCryptographicSalt()" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:outline-none">
+          </div>
+          <button onclick="generateCryptographicSalt()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-2">
+            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Generate New Entropy
+          </button>
         </div>
 
-        <div class="theme-card border p-6 rounded-3xl space-y-3">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Standardized Time Outputs</div>
+        <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-3 flex flex-col justify-between">
           <div class="space-y-2">
-            <div class="p-3 theme-editor border rounded-xl flex justify-between items-center text-xs">
-              <span class="opacity-70">UNIX Epoch Seconds:</span>
-              <strong id="dt-out-epoch" class="font-mono text-indigo-400">--</strong>
+            <div class="flex justify-between items-center text-xs font-bold opacity-80">
+              <span class="text-emerald-400 uppercase tracking-wider">Cryptographic Salt Tokens</span>
+              <button onclick="copyToClipboard('salt-output-text')" class="text-indigo-400 hover:underline">Copy All</button>
             </div>
-            <div class="p-3 theme-editor border rounded-xl flex justify-between items-center text-xs">
-              <span class="opacity-70">ISO 8601 UTC:</span>
-              <strong id="dt-out-iso" class="font-mono text-emerald-400 truncate ml-2">--</strong>
-            </div>
-            <div class="p-3 theme-editor border rounded-xl flex justify-between items-center text-xs">
-              <span class="opacity-70">Offset Milestone Date:</span>
-              <strong id="dt-out-offset" class="font-mono text-purple-400">--</strong>
-            </div>
+            <textarea id="salt-output-text" readonly class="w-full h-56 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
           </div>
+          <div class="text-[11px] font-mono opacity-60">🔒 Generated using window.crypto.getRandomValues() CSPRNG.</div>
         </div>
       </div>
     </div>
   `;
-  evaluateDateTime(tool.id);
+  generateCryptographicSalt();
 }
 
-function evaluateDateTime(toolId) {
-  const val = document.getElementById('dt-input')?.value;
-  const offset = parseInt(document.getElementById('dt-offset')?.value || 0, 10);
-  if (!val) return;
+function generateCryptographicSalt() {
+  const len = parseInt(document.getElementById('salt-len')?.value || 32, 10);
+  const fmt = document.getElementById('salt-format')?.value || 'hex';
+  const qty = parseInt(document.getElementById('salt-qty')?.value || 5, 10);
+  const out = document.getElementById('salt-output-text');
+  if (!out) return;
 
-  const d = new Date(val);
-  const epoch = Math.floor(d.getTime() / 1000);
-  const iso = d.toISOString();
-  const future = new Date(d.getTime() + offset * 86400000);
+  const results = [];
+  for (let q = 0; q < qty; q++) {
+    const bytes = new Uint8Array(len);
+    crypto.getRandomValues(bytes);
 
-  document.getElementById('dt-out-epoch').innerText = epoch;
-  document.getElementById('dt-out-iso').innerText = iso;
-  document.getElementById('dt-out-offset').innerText = future.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    if (fmt === 'hex') {
+      results.push(Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join(''));
+    } else if (fmt === 'base64') {
+      results.push(btoa(String.fromCharCode(...bytes)));
+    } else if (fmt === 'alphanumeric') {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      results.push(Array.from(bytes).map(b => chars[b % chars.length]).join(''));
+    } else {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
+      results.push(Array.from(bytes).map(b => chars[b % chars.length]).join(''));
+    }
+  }
+  out.value = results.join('\n');
 }
 
-/* --- ARCHETYPE 3: VISUAL CSS & DESIGN STUDIO --- */
-function renderVisualStudioArchetype(container, tool) {
+/* --- 4. AI OUTPUT & PROMPT PARSER --- */
+function renderAiFilterTool(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Visual Controls</div>
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1"><span>Border Radius</span><span id="ui-rad-val">16px</span></div>
-            <input type="range" id="ui-rad" min="0" max="60" value="16" oninput="updateVisualPreview()" class="w-full accent-indigo-500">
+          <div class="flex justify-between items-center text-xs font-bold opacity-80">
+            <span class="uppercase tracking-wider text-indigo-400">Raw Model Assistant Response</span>
+            <button onclick="loadSampleAiResponse()" class="text-indigo-400 hover:underline">Insert Sample</button>
           </div>
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1"><span>Element Opacity</span><span id="ui-op-val">1.0</span></div>
-            <input type="range" id="ui-op" min="0.1" max="1" step="0.05" value="1" oninput="updateVisualPreview()" class="w-full accent-indigo-500">
+          <textarea id="ai-raw-response" rows="8" class="w-full p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Paste full assistant generation here..."></textarea>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <button onclick="filterAiContent('json')" class="py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow transition">Extract JSON</button>
+            <button onclick="filterAiContent('markdown')" class="py-2.5 theme-editor border hover:border-indigo-500 font-bold rounded-xl transition">Extract MD</button>
+            <button onclick="filterAiContent('strip-think')" class="py-2.5 theme-editor border hover:border-indigo-500 font-bold rounded-xl transition">Strip &lt;think&gt;</button>
+            <button onclick="filterAiContent('clean-code')" class="py-2.5 theme-editor border hover:border-indigo-500 font-bold rounded-xl transition">Strip Backticks</button>
           </div>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl space-y-3 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs font-bold opacity-80">
+              <span class="text-emerald-400 uppercase tracking-wider">Filtered Result</span>
+              <button onclick="copyToClipboard('ai-filtered-output')" class="text-indigo-400 hover:underline">Copy Filtered</button>
+            </div>
+            <textarea id="ai-filtered-output" readonly class="w-full h-56 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
+          </div>
+          <div id="ai-stats-pill" class="text-[11px] font-mono opacity-60">Ready to clean LLM hallucination tokens.</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function loadSampleAiResponse() {
+  document.getElementById('ai-raw-response').value = `<think>\nThe user wants a list of server ports. I will output JSON.\n</think>\nSure! Here is the JSON response you requested:\n\`\`\`json\n{\n  "service": "database",\n  "port": 5432,\n  "ssl": true\n}\n\`\`\`\nHope this helps! Let me know if you need anything else.`;
+  filterAiContent('json');
+}
+
+function filterAiContent(action) {
+  let text = document.getElementById('ai-raw-response')?.value || '';
+  const out = document.getElementById('ai-filtered-output');
+  const pill = document.getElementById('ai-stats-pill');
+  if (!out) return;
+
+  if (action === 'strip-think') {
+    text = text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  } else if (action === 'json') {
+    const match = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+    text = match ? match[1].trim() : text;
+  } else if (action === 'clean-code') {
+    text = text.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
+  } else if (action === 'markdown') {
+    text = text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  }
+
+  out.value = text;
+  if (pill) pill.innerText = `Tokens extracted: ${Math.ceil(text.length / 4)} chars: ${text.length}`;
+}
+
+/* --- 5. TIMEZONE MEETING PLANNER --- */
+function renderTimezonePlannerTool(container, tool) {
+  const now = new Date();
+  const defaultDate = now.toISOString().split('T')[0];
+  const defaultTime = `${String(now.getHours()).padStart(2, '0')}:00`;
+
+  const availableZones = [
+    { id: 'Asia/Kolkata', name: 'India (IST, UTC+5:30)', offset: 5.5 },
+    { id: 'UTC', name: 'UTC / GMT (UTC+0:00)', offset: 0 },
+    { id: 'America/New_York', name: 'US Eastern (EST/EDT, UTC-4)', offset: -4 },
+    { id: 'America/Los_Angeles', name: 'US Pacific (PST/PDT, UTC-7)', offset: -7 },
+    { id: 'Europe/London', name: 'UK London (GMT/BST, UTC+1)', offset: 1 },
+    { id: 'Europe/Berlin', name: 'Central Europe (CET, UTC+2)', offset: 2 },
+    { id: 'Asia/Tokyo', name: 'Japan (JST, UTC+9)', offset: 9 },
+    { id: 'Australia/Sydney', name: 'Australia (AEST, UTC+10)', offset: 10 }
+  ];
+
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 theme-card border rounded-3xl">
+        <div>
+          <label class="block text-xs font-bold opacity-80 mb-1.5">Meeting Date</label>
+          <input type="date" id="tz-date" value="${defaultDate}" onchange="updateTimezoneMatrix()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-bold opacity-80 mb-1.5">Reference Time</label>
+          <input type="time" id="tz-time" value="${defaultTime}" onchange="updateTimezoneMatrix()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-bold opacity-80 mb-1.5">Base Timezone</label>
+          <select id="tz-base-zone" onchange="updateTimezoneMatrix()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+            ${availableZones.map(z => `<option value="${z.id}" ${z.id === 'Asia/Kolkata' ? 'selected' : ''}>${z.name}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <div class="theme-card border p-5 rounded-3xl space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold opacity-80 uppercase tracking-wider">Compare Participant Timezones</span>
+          <div class="flex items-center gap-4 text-[11px] font-semibold">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Working (9-18)</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Extended (8-9, 18-21)</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span> Night</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1" id="tz-checkboxes">
+          ${availableZones.map(z => `
+            <label class="flex items-center gap-1.5 px-3 py-1.5 theme-editor border rounded-xl text-xs font-semibold cursor-pointer hover:border-indigo-500 transition">
+              <input type="checkbox" value="${z.id}" ${['Asia/Kolkata', 'UTC', 'America/New_York', 'Europe/London'].includes(z.id) ? 'checked' : ''} onchange="updateTimezoneMatrix()" class="rounded text-indigo-600 focus:ring-0">
+              <span>${z.id.split('/')[1] || z.id}</span>
+            </label>
+          `).join('')}
+        </div>
+
+        <div class="overflow-x-auto pt-3">
+          <div id="tz-matrix-table" class="min-w-[850px] space-y-2"></div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Recommended Overlap Window</div>
+            <div id="tz-overlap-summary" class="text-sm font-extrabold mt-1" style="color: var(--text-main);">Calculating best overlap...</div>
+          </div>
+          <button onclick="navigator.clipboard.writeText(document.getElementById('tz-overlap-summary').innerText); alert('Copied schedule!');" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow transition">Copy Meeting Times</button>
+        </div>
+      </div>
+    </div>
+  `;
+  window.tzAvailableZones = availableZones;
+  updateTimezoneMatrix();
+}
+
+function updateTimezoneMatrix() {
+  const baseZone = document.getElementById('tz-base-zone')?.value || 'Asia/Kolkata';
+  const refTime = document.getElementById('tz-time')?.value || '12:00';
+  const refHour = parseInt(refTime.split(':')[0], 10);
+
+  const selected = Array.from(document.querySelectorAll('#tz-checkboxes input:checked')).map(cb => cb.value);
+  if (!selected.includes(baseZone)) selected.unshift(baseZone);
+
+  const table = document.getElementById('tz-matrix-table');
+  if (!table) return;
+
+  const baseZoneObj = window.tzAvailableZones.find(z => z.id === baseZone) || { offset: 0 };
+
+  let html = `
+    <div class="grid grid-cols-25 gap-1 text-[10px] font-mono text-center font-bold opacity-70 border-b border-slate-500/20 pb-2">
+      <div class="text-left">Zone / City</div>
+      ${Array.from({ length: 24 }).map((_, i) => `<div class="${i === refHour ? 'text-indigo-400 font-extrabold' : ''}">${String(i).padStart(2, '0')}</div>`).join('')}
+    </div>
+  `;
+
+  let overlapCounts = new Array(24).fill(0);
+
+  selected.forEach(zoneId => {
+    const zoneObj = window.tzAvailableZones.find(z => z.id === zoneId) || { offset: 0 };
+    const offsetDiff = zoneObj.offset - baseZoneObj.offset;
+
+    html += `
+      <div class="grid grid-cols-25 gap-1 text-[11px] font-mono items-center py-1 border-b border-slate-500/10">
+        <div class="truncate text-left font-bold text-xs pr-2">${zoneId.split('/')[1] || zoneId}</div>
+    `;
+
+    for (let h = 0; h < 24; h++) {
+      let localHour = Math.floor((h + offsetDiff + 24) % 24);
+      let isWorking = localHour >= 9 && localHour < 18;
+      let isExtended = (localHour >= 8 && localHour < 9) || (localHour >= 18 && localHour < 21);
+
+      let colorClass = 'bg-slate-800 text-slate-400';
+      if (isWorking) {
+        colorClass = 'bg-emerald-600 text-white font-bold';
+        overlapCounts[h]++;
+      } else if (isExtended) {
+        colorClass = 'bg-amber-600 text-black font-bold';
+      }
+
+      const isRef = h === refHour ? 'ring-2 ring-indigo-400 z-10' : '';
+      html += `<div class="h-7 rounded flex items-center justify-center text-[10px] ${colorClass} ${isRef}">${localHour}</div>`;
+    }
+    html += `</div>`;
+  });
+
+  table.innerHTML = html;
+  let maxOverlap = Math.max(...overlapCounts);
+  let bestHour = overlapCounts.indexOf(maxOverlap);
+  const bestSummary = document.getElementById('tz-overlap-summary');
+  if (bestSummary) {
+    bestSummary.innerText = `${String(bestHour).padStart(2, '0')}:00 ${baseZone.split('/')[1] || baseZone} (Best overlap: ${maxOverlap} of ${selected.length} attendees available during working hours)`;
+  }
+}
+
+/* --- 6. VISUAL CSS STUDIO --- */
+function renderBoxShadowAndUiTool(container, tool) {
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Box-Shadow Sliders</div>
+          <div><div class="flex justify-between text-xs font-bold mb-1"><span>X Offset</span><span id="bs-x-val">4px</span></div><input type="range" id="bs-x" min="-50" max="50" value="4" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
+          <div><div class="flex justify-between text-xs font-bold mb-1"><span>Y Offset</span><span id="bs-y-val">12px</span></div><input type="range" id="bs-y" min="-50" max="50" value="12" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
+          <div><div class="flex justify-between text-xs font-bold mb-1"><span>Blur</span><span id="bs-b-val">24px</span></div><input type="range" id="bs-b" min="0" max="80" value="24" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
+          <div><div class="flex justify-between text-xs font-bold mb-1"><span>Opacity</span><span id="bs-o-val">0.25</span></div><input type="range" id="bs-o" min="0" max="1" step="0.05" value="0.25" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
           <div class="flex items-center justify-between pt-2">
-            <label class="text-xs font-bold">Accent Color</label>
-            <input type="color" id="ui-color" value="#6366f1" onchange="updateVisualPreview()" class="w-10 h-8 rounded border-none cursor-pointer">
+            <label class="flex items-center gap-2 text-xs font-bold cursor-pointer"><input type="checkbox" id="bs-inset" onchange="updateBoxShadowLive()" class="rounded text-indigo-600"> Inset</label>
+            <input type="color" id="bs-color" value="#000000" onchange="updateBoxShadowLive()" class="w-8 h-8 rounded cursor-pointer">
           </div>
         </div>
 
         <div class="theme-card border p-6 rounded-3xl flex flex-col items-center justify-center space-y-5">
-          <div id="ui-preview-canvas" class="w-48 h-36 flex items-center justify-center text-white font-bold text-xs shadow-xl transition-all" style="background-color: #6366f1; border-radius: 16px;">
-            Live Style Preview
-          </div>
-          <div class="w-full space-y-1.5">
-            <div class="flex justify-between text-xs font-bold opacity-80">
-              <span>CSS Snippet</span>
-              <button onclick="copyToClipboard('ui-css-code')" class="text-indigo-400 hover:underline">Copy CSS</button>
-            </div>
-            <textarea id="ui-css-code" readonly class="w-full h-20 p-3 theme-editor font-mono text-xs border rounded-xl focus:outline-none"></textarea>
-          </div>
+          <div id="bs-box" class="w-40 h-40 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-xs transition-all">Preview</div>
+          <textarea id="bs-css" readonly class="w-full h-20 p-3 theme-editor font-mono text-xs border rounded-xl focus:outline-none"></textarea>
         </div>
       </div>
     </div>
   `;
-  updateVisualPreview();
+  updateBoxShadowLive();
 }
 
-function updateVisualPreview() {
-  const rad = document.getElementById('ui-rad')?.value || '16';
-  const op = document.getElementById('ui-op')?.value || '1';
-  const col = document.getElementById('ui-color')?.value || '#6366f1';
-  const preview = document.getElementById('ui-preview-canvas');
-  const code = document.getElementById('ui-css-code');
+function updateBoxShadowLive() {
+  const x = document.getElementById('bs-x')?.value || 4;
+  const y = document.getElementById('bs-y')?.value || 12;
+  const b = document.getElementById('bs-b')?.value || 24;
+  const o = document.getElementById('bs-o')?.value || 0.25;
+  const inset = document.getElementById('bs-inset')?.checked ? 'inset ' : '';
 
-  document.getElementById('ui-rad-val').innerText = `${rad}px`;
-  document.getElementById('ui-op-val').innerText = op;
+  document.getElementById('bs-x-val').innerText = `${x}px`;
+  document.getElementById('bs-y-val').innerText = `${y}px`;
+  document.getElementById('bs-b-val').innerText = `${b}px`;
+  document.getElementById('bs-o-val').innerText = o;
 
-  if (preview) {
-    preview.style.borderRadius = `${rad}px`;
-    preview.style.opacity = op;
-    preview.style.backgroundColor = col;
-  }
-  if (code) {
-    code.value = `border-radius: ${rad}px;\nopacity: ${op};\nbackground-color: ${col};`;
-  }
+  const css = `${inset}${x}px ${y}px ${b}px 0px rgba(0, 0, 0, ${o})`;
+  document.getElementById('bs-box').style.boxShadow = css;
+  document.getElementById('bs-css').value = `box-shadow: ${css};`;
 }
 
-/* --- ARCHETYPE 4: SECURITY & CRYPTOGRAPHY --- */
-function renderSecurityCryptoArchetype(container, tool) {
+/* --- 7. CALCULATORS & FINANCIAL --- */
+function renderCalculatorTool(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Cryptographic Input</div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Plaintext / Payload *</label>
-            <textarea id="sec-input" rows="5" class="w-full p-3 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Enter string to digest or encrypt...">SecretToken123</textarea>
-          </div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Secret Key / Salt (Optional)</label>
-            <input type="text" id="sec-key" placeholder="Optional secret key..." class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:outline-none">
-          </div>
-          <button onclick="executeSecurityCrypto('${tool.id}')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Generate Cryptographic Output</button>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Calculation Input</div>
+          <div><label class="block text-xs font-bold opacity-80 mb-1">Principal / Amount</label><input type="number" id="c-v1" value="50000" oninput="runLiveCalc('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs"></div>
+          <div><label class="block text-xs font-bold opacity-80 mb-1">Rate / Percentage (%)</label><input type="number" id="c-v2" value="8.5" step="0.1" oninput="runLiveCalc('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs"></div>
+          <div><label class="block text-xs font-bold opacity-80 mb-1">Duration (Years)</label><input type="number" id="c-v3" value="5" oninput="runLiveCalc('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs"></div>
         </div>
 
-        <div class="theme-card border p-6 rounded-3xl space-y-3 flex flex-col justify-between">
-          <div class="space-y-2">
-            <div class="flex justify-between items-center text-xs font-bold opacity-80">
-              <span class="uppercase tracking-wider text-emerald-400">Cryptographic Hash Digest</span>
-              <button onclick="copyToClipboard('sec-output')" class="text-indigo-400 hover:underline">Copy Hash</button>
+        <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
+              <span class="text-[11px] font-bold opacity-70 block">Monthly Equivalent / Installment</span>
+              <strong id="c-r1" class="text-2xl font-black font-mono text-indigo-400 mt-1 block">--</strong>
             </div>
-            <textarea id="sec-output" readonly class="w-full h-44 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
+            <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+              <span class="text-[11px] font-bold opacity-70 block">Total Repayment Amount</span>
+              <strong id="c-r2" class="text-2xl font-black font-mono text-emerald-400 mt-1 block">--</strong>
+            </div>
           </div>
-          <div class="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-[11px] font-mono opacity-80">
-            🔒 Processed 100% locally via browser WebCrypto API. Zero network calls.
-          </div>
+          <div id="c-breakdown" class="p-4 rounded-2xl theme-editor border text-xs font-mono opacity-80">Calculating values...</div>
         </div>
       </div>
     </div>
   `;
-  executeSecurityCrypto(tool.id);
+  runLiveCalc(tool.id);
 }
 
-function executeSecurityCrypto(toolId) {
-  const input = document.getElementById('sec-input')?.value || '';
-  const out = document.getElementById('sec-output');
-  if (!out) return;
+function runLiveCalc(tid) {
+  const v1 = parseFloat(document.getElementById('c-v1')?.value || 0);
+  const v2 = parseFloat(document.getElementById('c-v2')?.value || 0);
+  const v3 = parseFloat(document.getElementById('c-v3')?.value || 0);
 
-  crypto.subtle.digest('SHA-256', new TextEncoder().encode(input)).then(buf => {
-    const hash = Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, '0')).join('');
-    out.value = hash;
-  });
+  const r = (v2 / 12) / 100;
+  const n = v3 * 12;
+  const emi = (v1 * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  const total = emi * n;
+
+  document.getElementById('c-r1').innerText = `$${emi.toFixed(2)}`;
+  document.getElementById('c-r2').innerText = `$${total.toFixed(2)}`;
+  document.getElementById('c-breakdown').innerHTML = `Interest Component: <strong>$${(total - v1).toFixed(2)}</strong> over ${n} payments.`;
 }
 
-/* --- ARCHETYPE 5: QA & TEST AUTOMATION SCRIPT BUILDER --- */
-function renderQaAutomationArchetype(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Selector & Locator Settings</div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Target Element Identifier</label>
-            <input type="text" id="qa-target" value="submit-button" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold opacity-80 mb-1">Strategy</label>
-              <select id="qa-strategy" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-                <option value="id">By ID (#id)</option>
-                <option value="testId" selected>By data-testid</option>
-                <option value="role">By ARIA Role</option>
-                <option value="xpath">By XPath</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold opacity-80 mb-1">Framework</label>
-              <select id="qa-framework" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-                <option value="playwright">Playwright</option>
-                <option value="cypress">Cypress</option>
-                <option value="selenium">Selenium (Java)</option>
-              </select>
-            </div>
-          </div>
-          <button onclick="generateQaScript()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Generate Automation Snippet</button>
-        </div>
-
-        <div class="theme-card border p-6 rounded-3xl space-y-3 flex flex-col justify-between">
-          <div class="space-y-2">
-            <div class="flex justify-between items-center text-xs font-bold opacity-80">
-              <span class="uppercase tracking-wider text-emerald-400">Test Automation Code</span>
-              <button onclick="copyToClipboard('qa-output')" class="text-indigo-400 hover:underline">Copy Code</button>
-            </div>
-            <textarea id="qa-output" readonly class="w-full h-44 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
-          </div>
-          <div class="text-[11px] opacity-70">Ready to paste into your test automation repository.</div>
-        </div>
-      </div>
-    </div>
-  `;
-  generateQaScript();
-}
-
-function generateQaScript() {
-  const target = document.getElementById('qa-target')?.value || 'button';
-  const strat = document.getElementById('qa-strategy')?.value || 'testId';
-  const fw = document.getElementById('qa-framework')?.value || 'playwright';
-  const out = document.getElementById('qa-output');
-  if (!out) return;
-
-  if (fw === 'playwright') {
-    out.value = `// Playwright Locator & Assertion\nconst element = page.getByTestId('${target}');\nawait expect(element).toBeVisible();\nawait element.click();`;
-  } else if (fw === 'cypress') {
-    out.value = `// Cypress Command\ncy.get('[data-testid="${target}"]')\n  .should('be.visible')\n  .click();`;
-  } else {
-    out.value = `// Selenium WebDriver\nWebElement element = driver.findElement(By.cssSelector("[data-testid='${target}']"));\nelement.click();`;
-  }
-}
-
-/* --- ARCHETYPE 6: AI & PROMPT ENGINEERING STUDIO --- */
-function renderAiPromptArchetype(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Prompt Context & Variables</div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">System Prompt / Template</label>
-            <textarea id="ai-prompt-input" rows="6" class="w-full p-3 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="You are an expert assistant. Address user inquiry about {{topic}}...">You are an expert software engineer. Review the following {{language}} code and suggest performance improvements.</textarea>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold opacity-80 mb-1">Frontier Model</label>
-              <select id="ai-model" onchange="calculateAiTokens()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-                <option value="gpt4o">GPT-4o ($2.50 / 1M)</option>
-                <option value="claude35">Claude 3.5 Sonnet ($3.00 / 1M)</option>
-                <option value="gemini">Gemini 1.5 Pro ($1.25 / 1M)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-bold opacity-80 mb-1">Temperature</label>
-              <input type="number" id="ai-temp" min="0" max="1" step="0.1" value="0.7" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:outline-none">
-            </div>
-          </div>
-          <button onclick="calculateAiTokens()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Analyze Token Footprint</button>
-        </div>
-
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Context Window & Budget Analysis</div>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="p-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
-              <span class="text-[10px] font-bold opacity-70 block">Estimated Tokens</span>
-              <strong id="ai-out-tokens" class="text-xl font-black font-mono text-indigo-400 mt-1 block">--</strong>
-            </div>
-            <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-              <span class="text-[10px] font-bold opacity-70 block">Estimated Query Cost</span>
-              <strong id="ai-out-cost" class="text-xl font-black font-mono text-emerald-400 mt-1 block">--</strong>
-            </div>
-          </div>
-          <div class="p-3.5 theme-editor border rounded-2xl text-xs space-y-1.5 font-mono">
-            <div>Detected Variables: <strong class="text-pink-400">{{language}}</strong></div>
-            <div class="text-[11px] opacity-70">Prompt complies with standard structured context boundaries.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  calculateAiTokens();
-}
-
-function calculateAiTokens() {
-  const text = document.getElementById('ai-prompt-input')?.value || '';
-  const tokens = Math.ceil(text.length / 3.8);
-  const cost = (tokens / 1000000) * 2.50;
-
-  document.getElementById('ai-out-tokens').innerText = `~${tokens}`;
-  document.getElementById('ai-out-cost').innerText = `< $${cost.toFixed(5)}`;
-}
-
-/* --- ARCHETYPE 7: DATA & JSON TRANSFORMERS --- */
-function renderDataConverterArchetype(container, tool) {
+/* --- 8. DATA & JSON CONVERTER --- */
+function renderDataStudioTool(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
@@ -429,221 +614,59 @@ function renderDataConverterArchetype(container, tool) {
         <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
           <div class="flex justify-between items-center text-xs font-bold opacity-80">
             <span>Input Data</span>
-            <div class="space-x-2">
-              <button onclick="loadSampleData('${tool.id}')" class="text-indigo-400 hover:underline">Sample</button>
-              <button onclick="document.getElementById('data-src-input').value=''" class="text-rose-400 hover:underline">Clear</button>
-            </div>
+            <button onclick="document.getElementById('d-in').value=JSON.stringify({appName:'MyDevToolbox',active:true,tools:321}, null, 2)" class="text-indigo-400 hover:underline">Sample</button>
           </div>
-          <textarea id="data-src-input" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Paste data here...">{
-  "user": "developer",
-  "status": "active",
-  "roles": ["admin", "tester"]
+          <textarea id="d-in" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none">{
+  "status": "success",
+  "data": [1, 2, 3]
 }</textarea>
           <div class="grid grid-cols-2 gap-2">
-            <button onclick="formatJsonData(true)" class="py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Beautify JSON</button>
-            <button onclick="formatJsonData(false)" class="py-2.5 theme-editor border hover:border-indigo-500 font-bold rounded-xl text-xs transition">Minify JSON</button>
+            <button onclick="try{ document.getElementById('d-out').value=JSON.stringify(JSON.parse(document.getElementById('d-in').value), null, 2); }catch(e){document.getElementById('d-out').value=e.message;}" class="py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs">Beautify</button>
+            <button onclick="try{ document.getElementById('d-out').value=JSON.stringify(JSON.parse(document.getElementById('d-in').value)); }catch(e){document.getElementById('d-out').value=e.message;}" class="py-2.5 theme-editor border font-bold rounded-xl text-xs">Minify</button>
           </div>
         </div>
-
         <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
           <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span class="text-emerald-400 uppercase tracking-wider">Processed Output</span>
-            <button onclick="copyToClipboard('data-src-output')" class="text-indigo-400 hover:underline">Copy Result</button>
+            <span class="text-emerald-400">Processed Output</span>
+            <button onclick="copyToClipboard('d-out')" class="text-indigo-400 hover:underline">Copy</button>
           </div>
-          <textarea id="data-src-output" readonly class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
-        </div>
-      </div>
-    </div>
-  `;
-  formatJsonData(true);
-}
-
-function loadSampleData(toolId) {
-  document.getElementById('data-src-input').value = JSON.stringify({ name: 'MyDevToolbox', offline: true, tools: 321, tags: ['developer', 'privacy', 'in-memory'] }, null, 2);
-  formatJsonData(true);
-}
-
-function formatJsonData(beautify) {
-  const src = document.getElementById('data-src-input')?.value || '';
-  const out = document.getElementById('data-src-output');
-  if (!out) return;
-  try {
-    const obj = JSON.parse(src);
-    out.value = beautify ? JSON.stringify(obj, null, 2) : JSON.stringify(obj);
-  } catch (e) {
-    out.value = `Syntax Error: ${e.message}`;
-  }
-}
-
-/* --- ARCHETYPE 8: DEVOPS & INFRASTRUCTURE --- */
-function renderDevOpsArchetype(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Configuration Variables</div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Service / Network Target</label>
-            <input type="text" id="ops-name" value="web-service" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold opacity-80 mb-1">Port</label>
-              <input type="number" id="ops-port" value="8080" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:outline-none">
-            </div>
-            <div>
-              <label class="block text-xs font-bold opacity-80 mb-1">Restart Policy</label>
-              <select id="ops-restart" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-                <option value="always">always</option>
-                <option value="unless-stopped" selected>unless-stopped</option>
-                <option value="no">no</option>
-              </select>
-            </div>
-          </div>
-          <button onclick="generateDevOpsSpec()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Generate Deployment Spec</button>
-        </div>
-
-        <div class="theme-card border p-6 rounded-3xl space-y-3 flex flex-col justify-between">
-          <div class="space-y-2">
-            <div class="flex justify-between items-center text-xs font-bold opacity-80">
-              <span class="text-emerald-400 uppercase tracking-wider">Manifest YAML / Config</span>
-              <button onclick="copyToClipboard('ops-output')" class="text-indigo-400 hover:underline">Copy Spec</button>
-            </div>
-            <textarea id="ops-output" readonly class="w-full h-44 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
-          </div>
-          <div class="text-[11px] opacity-70">Production ready syntax conforming to standard container specifications.</div>
-        </div>
-      </div>
-    </div>
-  `;
-  generateDevOpsSpec();
-}
-
-function generateDevOpsSpec() {
-  const name = document.getElementById('ops-name')?.value || 'service';
-  const port = document.getElementById('ops-port')?.value || '80';
-  const restart = document.getElementById('ops-restart')?.value || 'always';
-  const out = document.getElementById('ops-output');
-  if (!out) return;
-
-  out.value = `version: '3.8'\nservices:\n  ${name}:\n    image: ${name}:latest\n    ports:\n      - "${port}:${port}"\n    restart: ${restart}\n    environment:\n      - NODE_ENV=production`;
-}
-
-/* --- ARCHETYPE 9: MEDIA, FILE & CANVAS STUDIO --- */
-function renderMediaCanvasArchetype(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Media Workspace</div>
-          <div class="border-2 border-dashed border-slate-500/30 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 transition" onclick="document.getElementById('media-file-input').click()">
-            <i data-lucide="upload-cloud" class="w-8 h-8 text-indigo-400 mx-auto mb-2"></i>
-            <span class="text-xs font-bold block">Drop image or file here, or browse</span>
-            <span class="text-[10px] opacity-60 block mt-1">100% In-Browser Memory. Never uploaded.</span>
-            <input type="file" id="media-file-input" onchange="handleMediaUpload(this)" class="hidden">
-          </div>
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1"><span>Target Quality / Scale</span><span id="med-q-val">80%</span></div>
-            <input type="range" id="med-q" min="10" max="100" value="80" oninput="document.getElementById('med-q-val').innerText=this.value+'%'" class="w-full accent-indigo-500">
-          </div>
-        </div>
-
-        <div class="theme-card border p-6 rounded-3xl flex flex-col items-center justify-center space-y-4">
-          <div id="media-preview-box" class="w-full h-44 rounded-2xl bg-slate-500/10 border border-dashed flex items-center justify-center text-xs opacity-60">
-            No file loaded
-          </div>
-          <button id="med-btn-download" disabled class="px-5 py-2.5 bg-indigo-600 disabled:opacity-40 text-white font-bold rounded-xl text-xs shadow transition">Process & Export</button>
+          <textarea id="d-out" readonly class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
         </div>
       </div>
     </div>
   `;
 }
 
-function handleMediaUpload(input) {
-  if (!input.files || !input.files[0]) return;
-  const file = input.files[0];
-  const box = document.getElementById('media-preview-box');
-  const btn = document.getElementById('med-btn-download');
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    box.innerHTML = `<img src="${e.target.result}" class="max-h-40 rounded-xl object-contain shadow">`;
-    btn.disabled = false;
-  };
-  reader.readAsDataURL(file);
-}
-
-/* --- ARCHETYPE 10: TEXT & CONTENT TOOLBAR --- */
-function renderTextContentArchetype(container, tool) {
+/* --- 9. ADAPTIVE TEXT TOOL --- */
+function renderAdaptiveTextTool(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
           <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span>Input Document</span>
-            <button onclick="document.getElementById('txt-source-input').value=''" class="text-rose-400 hover:underline">Clear</button>
+            <span>Input Workspace</span>
+            <button onclick="document.getElementById('ad-in').value=''" class="text-rose-400 hover:underline">Clear</button>
           </div>
-          <textarea id="txt-source-input" oninput="evaluateTextTransformation()" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Type or paste content here...">Engineering clean client-side developer utilities.</textarea>
-          <div class="flex flex-wrap gap-1.5 pt-1">
-            <button onclick="applyTextCase('upper')" class="px-2.5 py-1 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-semibold transition">UPPERCASE</button>
-            <button onclick="applyTextCase('lower')" class="px-2.5 py-1 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-semibold transition">lowercase</button>
-            <button onclick="applyTextCase('title')" class="px-2.5 py-1 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-semibold transition">Title Case</button>
-            <button onclick="applyTextCase('slug')" class="px-2.5 py-1 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-lg text-xs font-semibold transition">slug-case</button>
+          <textarea id="ad-in" oninput="document.getElementById('ad-out').value=this.value;" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Enter input or parameters..."></textarea>
+          <div class="flex gap-2">
+            <button onclick="document.getElementById('ad-out').value=document.getElementById('ad-in').value.toUpperCase()" class="px-3 py-2 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-xl text-xs font-bold transition">UPPER</button>
+            <button onclick="document.getElementById('ad-out').value=document.getElementById('ad-in').value.toLowerCase()" class="px-3 py-2 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-xl text-xs font-bold transition">lower</button>
+            <button onclick="document.getElementById('ad-out').value=btoa(document.getElementById('ad-in').value)" class="px-3 py-2 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-xl text-xs font-bold transition">Base64</button>
           </div>
         </div>
-
-        <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-center text-xs font-bold opacity-80 mb-2">
-              <span class="text-emerald-400 uppercase tracking-wider">Processed Text</span>
-              <button onclick="copyToClipboard('txt-source-output')" class="text-indigo-400 hover:underline">Copy</button>
-            </div>
-            <textarea id="txt-source-output" readonly class="w-full h-44 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
+        <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
+          <div class="flex justify-between items-center text-xs font-bold opacity-80">
+            <span class="text-emerald-400">Output</span>
+            <button onclick="copyToClipboard('ad-out')" class="text-indigo-400 hover:underline">Copy</button>
           </div>
-          <div class="grid grid-cols-3 gap-2 p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl text-center">
-            <div><span class="text-[10px] opacity-60 block">Words</span><strong id="stat-words" class="text-xs font-bold">0</strong></div>
-            <div><span class="text-[10px] opacity-60 block">Chars</span><strong id="stat-chars" class="text-xs font-bold">0</strong></div>
-            <div><span class="text-[10px] opacity-60 block">Reading Time</span><strong id="stat-read" class="text-xs font-bold">0m</strong></div>
-          </div>
+          <textarea id="ad-out" readonly class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
         </div>
       </div>
     </div>
   `;
-  evaluateTextTransformation();
 }
 
-function evaluateTextTransformation() {
-  const input = document.getElementById('txt-source-input')?.value || '';
-  const out = document.getElementById('txt-source-output');
-  if (!out) return;
-
-  out.value = input;
-  const words = input.trim() ? input.trim().split(/\s+/).length : 0;
-  const chars = input.length;
-  const readTime = Math.ceil(words / 200);
-
-  document.getElementById('stat-words').innerText = words;
-  document.getElementById('stat-chars').innerText = chars;
-  document.getElementById('stat-read').innerText = `${readTime}m`;
-}
-
-function applyTextCase(mode) {
-  const input = document.getElementById('txt-source-input');
-  if (!input) return;
-  const val = input.value;
-
-  if (mode === 'upper') input.value = val.toUpperCase();
-  if (mode === 'lower') input.value = val.toLowerCase();
-  if (mode === 'title') input.value = val.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-  if (mode === 'slug') input.value = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-
-  evaluateTextTransformation();
-}
-
-/* --- COMMON HEADER GENERATOR --- */
 function renderToolHeader(tool) {
   return `
     <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
