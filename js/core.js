@@ -1,131 +1,25 @@
-/* js/core.js - Dynamic Counter Synchronization & Grid Controller */
+/* js/core.js - Controller & Grid Synchronization Engine */
 
 let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
 let currentSearchQuery = '';
 
 const categoryStyles = {
-  ai: {
-    bg: 'bg-purple-500/10',
-    border: 'border-purple-500/30',
-    text: 'text-purple-400',
-    badge: 'bg-purple-500/10 text-purple-300 border-purple-500/30',
-    hoverBorder: 'hover:border-purple-500'
-  },
-  testing: {
-    bg: 'bg-emerald-500/10',
-    border: 'border-emerald-500/30',
-    text: 'text-emerald-400',
-    badge: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30',
-    hoverBorder: 'hover:border-emerald-500'
-  },
-  data: {
-    bg: 'bg-teal-500/10',
-    border: 'border-teal-500/30',
-    text: 'text-teal-400',
-    badge: 'bg-teal-500/10 text-teal-300 border-teal-500/30',
-    hoverBorder: 'hover:border-teal-500'
-  },
-  security: {
-    bg: 'bg-amber-500/10',
-    border: 'border-amber-500/30',
-    text: 'text-amber-400',
-    badge: 'bg-amber-500/10 text-amber-300 border-amber-500/30',
-    hoverBorder: 'hover:border-amber-500'
-  },
-  web: {
-    bg: 'bg-sky-500/10',
-    border: 'border-sky-500/30',
-    text: 'text-sky-400',
-    badge: 'bg-sky-500/10 text-sky-300 border-sky-500/30',
-    hoverBorder: 'hover:border-sky-500'
-  },
-  design: {
-    bg: 'bg-violet-500/10',
-    border: 'border-violet-500/30',
-    text: 'text-violet-400',
-    badge: 'bg-violet-500/10 text-violet-300 border-violet-500/30',
-    hoverBorder: 'hover:border-violet-500'
-  },
-  devops: {
-    bg: 'bg-cyan-500/10',
-    border: 'border-cyan-500/30',
-    text: 'text-cyan-400',
-    badge: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30',
-    hoverBorder: 'hover:border-cyan-500'
-  },
-  text: {
-    bg: 'bg-rose-500/10',
-    border: 'border-rose-500/30',
-    text: 'text-rose-400',
-    badge: 'bg-rose-500/10 text-rose-300 border-rose-500/30',
-    hoverBorder: 'hover:border-rose-500'
-  },
-  math: {
-    bg: 'bg-indigo-500/10',
-    border: 'border-indigo-500/30',
-    text: 'text-indigo-400',
-    badge: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30',
-    hoverBorder: 'hover:border-indigo-500'
-  },
-  media: {
-    bg: 'bg-pink-500/10',
-    border: 'border-pink-500/30',
-    text: 'text-pink-400',
-    badge: 'bg-pink-500/10 text-pink-300 border-pink-500/30',
-    hoverBorder: 'hover:border-pink-500'
-  }
+  ai: { bg: 'bg-purple-500/10', border: 'border-purple-500/30', text: 'text-purple-400', badge: 'bg-purple-500/10 text-purple-300 border-purple-500/30', hoverBorder: 'hover:border-purple-500' },
+  testing: { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', badge: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30', hoverBorder: 'hover:border-emerald-500' },
+  data: { bg: 'bg-teal-500/10', border: 'border-teal-500/30', text: 'text-teal-400', badge: 'bg-teal-500/10 text-teal-300 border-teal-500/30', hoverBorder: 'hover:border-teal-500' },
+  security: { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', badge: 'bg-amber-500/10 text-amber-300 border-amber-500/30', hoverBorder: 'hover:border-amber-500' },
+  web: { bg: 'bg-sky-500/10', border: 'border-sky-500/30', text: 'text-sky-400', badge: 'bg-sky-500/10 text-sky-300 border-sky-500/30', hoverBorder: 'hover:border-sky-500' },
+  design: { bg: 'bg-violet-500/10', border: 'border-violet-500/30', text: 'text-violet-400', badge: 'bg-violet-500/10 text-violet-300 border-violet-500/30', hoverBorder: 'hover:border-violet-500' },
+  devops: { bg: 'bg-cyan-500/10', border: 'border-cyan-500/30', text: 'text-cyan-400', badge: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30', hoverBorder: 'hover:border-cyan-500' },
+  text: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', badge: 'bg-rose-500/10 text-rose-300 border-rose-500/30', hoverBorder: 'hover:border-rose-500' },
+  math: { bg: 'bg-indigo-500/10', border: 'border-indigo-500/30', text: 'text-indigo-400', badge: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/30', hoverBorder: 'hover:border-indigo-500' },
+  media: { bg: 'bg-pink-500/10', border: 'border-pink-500/30', text: 'text-pink-400', badge: 'bg-pink-500/10 text-pink-300 border-pink-500/30', hoverBorder: 'hover:border-pink-500' }
 };
 
-// ---------------------------------------------------------------------------
-// Dynamic Category & Counter Sync
-// ---------------------------------------------------------------------------
-function updateCategoryCounts() {
-  const db = window.toolsDatabase || [];
-  const totalCount = db.length;
-
-  // 1. Update Top Navbar Badge
-  const navbarBadge = document.getElementById('navbar-tool-count');
-  if (navbarBadge) {
-    navbarBadge.innerText = `${totalCount} Offline Utilities`;
-  }
-
-  // 2. Update Search Bar Placeholder
-  const searchInput = document.getElementById('tool-search');
-  if (searchInput) {
-    searchInput.placeholder = `Search across all ${totalCount} utilities (Playwright, Docker, JSON, Cron)...`;
-  }
-
-  // 3. Dynamically rewrite every category pill button using regex
-  const pills = document.querySelectorAll('.cat-pill, [data-pill]');
-  pills.forEach((pill) => {
-    const cat = pill.getAttribute('data-pill');
-    if (!cat) return;
-
-    const count = cat === 'all'
-      ? totalCount
-      : db.filter((t) => t.cat === cat).length;
-
-    // Check if element has child span for counts
-    const countSpan = pill.querySelector('span[id^="cat-count-"]');
-    if (countSpan) {
-      countSpan.innerText = count;
-    } else if (/\(\s*\d+\s*\)/.test(pill.innerHTML)) {
-      pill.innerHTML = pill.innerHTML.replace(/\(\s*\d+\s*\)/, `(${count})`);
-    } else {
-      pill.innerHTML = `${pill.innerHTML.trim()} (${count})`;
-    }
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Service Worker Registration
-// ---------------------------------------------------------------------------
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('./sw.js')
-      .catch((err) => console.log('SW registration error:', err));
+    navigator.serviceWorker.register('./sw.js').catch((err) => console.log('SW error:', err));
   });
 }
 
@@ -133,16 +27,13 @@ let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  const installBtn = document.getElementById('btn-pwa-install');
-  if (installBtn) installBtn.classList.remove('hidden');
+  document.getElementById('btn-pwa-install')?.classList.remove('hidden');
 });
 
 function updateInstallBadgeCount() {
   let count = parseInt(localStorage.getItem('mdt_install_count') || '1240');
   const badge = document.getElementById('install-counter-badge');
-  if (badge) {
-    badge.innerText = count >= 1000 ? (count / 1000).toFixed(1) + 'k+' : count;
-  }
+  if (badge) badge.innerText = count >= 1000 ? (count / 1000).toFixed(1) + 'k+' : count;
 }
 
 function triggerPwaInstall() {
@@ -163,32 +54,21 @@ function triggerPwaInstall() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Theme Manager
-// ---------------------------------------------------------------------------
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('mdt_theme', theme);
   ['light', 'dim', 'dark'].forEach((t) => {
     const btn = document.getElementById('btn-theme-' + t);
     if (btn) {
-      if (t === theme) {
-        btn.className = 'p-1.5 rounded-xl bg-indigo-600 text-white shadow-sm transition';
-      } else {
-        btn.className = 'p-1.5 rounded-xl opacity-60 hover:opacity-100 transition';
-      }
+      btn.className = t === theme ? 'p-1.5 rounded-xl bg-indigo-600 text-white shadow-sm transition' : 'p-1.5 rounded-xl opacity-60 hover:opacity-100 transition';
     }
   });
 }
 setTheme(localStorage.getItem('mdt_theme') || 'dark');
 
-// ---------------------------------------------------------------------------
-// View Density Switcher
-// ---------------------------------------------------------------------------
 function setViewDensity(density) {
   viewDensity = density;
   localStorage.setItem('mdt_view_density', density);
-
   const btnGrid = document.getElementById('btn-view-grid');
   const btnCompact = document.getElementById('btn-view-compact');
 
@@ -203,13 +83,9 @@ function setViewDensity(density) {
     btnCompact?.classList.remove('bg-indigo-600', 'text-white');
     btnCompact?.classList.add('opacity-70');
   }
-
   renderToolsGrid();
 }
 
-// ---------------------------------------------------------------------------
-// Sticky A-Z Jump Navigation Bar
-// ---------------------------------------------------------------------------
 function renderAlphabetJumpBar(availableLetters = []) {
   const container = document.getElementById('az-jump-container');
   const bar = document.getElementById('az-jump-bar');
@@ -227,34 +103,19 @@ function renderAlphabetJumpBar(availableLetters = []) {
     const classes = hasTools
       ? 'px-2.5 py-1 rounded-lg border theme-card hover:border-indigo-500 hover:text-indigo-400 font-bold transition cursor-pointer shadow-sm'
       : 'px-2.5 py-1 rounded-lg border theme-card opacity-25 cursor-not-allowed';
-    
-    return `<button 
-      onclick="${hasTools ? `jumpToLetter('${char}')` : 'return false;'}" 
-      class="${classes}">
-      ${char}
-    </button>`;
+    return `<button onclick="${hasTools ? `jumpToLetter('${char}')` : 'return false;'}" class="${classes}">${char}</button>`;
   }).join('');
 }
 
 function jumpToLetter(letter) {
-  const target = document.getElementById(`anchor-${letter}`);
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  document.getElementById(`anchor-${letter}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ---------------------------------------------------------------------------
-// Single Card Generator
-// ---------------------------------------------------------------------------
 function renderSingleCard(tool) {
   const s = categoryStyles[tool.cat] || categoryStyles.ai;
-
   if (viewDensity === 'compact') {
     return `
-      <div 
-        class="tool-card theme-card border p-3 rounded-2xl cursor-pointer ${s.hoverBorder} transition flex items-center justify-between gap-3 group" 
-        data-cat="${tool.cat}" 
-        onclick="openTool('${tool.id}')">
+      <div class="tool-card theme-card border p-3 rounded-2xl cursor-pointer ${s.hoverBorder} transition flex items-center justify-between gap-3 group" data-cat="${tool.cat}" onclick="openTool('${tool.id}')">
         <div class="flex items-center gap-3 min-w-0">
           <div class="w-9 h-9 rounded-xl ${s.bg} border ${s.border} flex-shrink-0 flex items-center justify-center ${s.text} shadow-sm">
             <i data-lucide="${tool.icon}" class="w-4 h-4"></i>
@@ -265,23 +126,16 @@ function renderSingleCard(tool) {
           </div>
         </div>
         <i data-lucide="chevron-right" class="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition flex-shrink-0 ${s.text}"></i>
-      </div>
-    `;
+      </div>`;
   }
-
   return `
-    <div 
-      class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1 ${s.hoverBorder} flex flex-col justify-between" 
-      data-cat="${tool.cat}" 
-      onclick="openTool('${tool.id}')">
+    <div class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1 ${s.hoverBorder} flex flex-col justify-between" data-cat="${tool.cat}" onclick="openTool('${tool.id}')">
       <div>
         <div class="flex items-start justify-between gap-2">
           <div class="w-12 h-12 rounded-2xl ${s.bg} border ${s.border} flex items-center justify-center ${s.text} shadow-inner">
             <i data-lucide="${tool.icon}" class="w-6 h-6"></i>
           </div>
-          <span class="text-[10px] font-bold uppercase border px-2.5 py-1 rounded-full font-mono ${s.badge}">
-            ${tool.badge}
-          </span>
+          <span class="text-[10px] font-bold uppercase border px-2.5 py-1 rounded-full font-mono ${s.badge}">${tool.badge}</span>
         </div>
         <h3 class="font-bold text-base mt-4 tracking-tight leading-snug" style="color: var(--text-main);">${tool.name}</h3>
         <p class="text-xs opacity-75 mt-1.5 leading-relaxed">${tool.desc}</p>
@@ -289,13 +143,9 @@ function renderSingleCard(tool) {
       <div class="mt-5 pt-3 border-t border-slate-700/40 flex items-center text-xs font-bold ${s.text}">
         Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1.5"></i>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-// ---------------------------------------------------------------------------
-// Main Tools Grid Render
-// ---------------------------------------------------------------------------
 function renderToolsGrid() {
   const grid = document.getElementById('tools-grid');
   const emptyState = document.getElementById('no-tools-found');
@@ -309,7 +159,6 @@ function renderToolsGrid() {
       tool.name.toLowerCase().includes(currentSearchQuery) ||
       tool.desc.toLowerCase().includes(currentSearchQuery) ||
       tool.badge.toLowerCase().includes(currentSearchQuery);
-
     return matchCat && matchQuery;
   });
 
@@ -321,14 +170,11 @@ function renderToolsGrid() {
   }
   emptyState?.classList.add('hidden');
 
-  const subGridClasses = viewDensity === 'compact'
-    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'
-    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+  const subGridClasses = viewDensity === 'compact' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
 
   if (currentActiveCategory === 'all' && !currentSearchQuery) {
     const sorted = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
     const grouped = {};
-
     sorted.forEach((tool) => {
       const firstChar = tool.name.charAt(0).toUpperCase();
       const key = /[A-Z]/.test(firstChar) ? firstChar : '#';
@@ -349,8 +195,7 @@ function renderToolsGrid() {
         <div class="${subGridClasses}">
           ${grouped[char].map((tool) => renderSingleCard(tool)).join('')}
         </div>
-      </section>
-    `).join('');
+      </section>`).join('');
   } else {
     renderAlphabetJumpBar([]);
     grid.className = subGridClasses;
@@ -360,9 +205,6 @@ function renderToolsGrid() {
   if (window.lucide) lucide.createIcons();
 }
 
-// ---------------------------------------------------------------------------
-// Filtering & Interaction
-// ---------------------------------------------------------------------------
 function setCategoryFilter(cat) {
   currentActiveCategory = cat;
   const searchInput = document.getElementById('tool-search');
@@ -375,11 +217,7 @@ function setCategoryFilter(cat) {
     btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
   });
 
-  const activePill = document.querySelector(`.cat-pill[data-pill="${cat}"]`);
-  if (activePill) {
-    activePill.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
-  }
-
+  document.querySelector(`.cat-pill[data-pill="${cat}"]`)?.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
   renderToolsGrid();
 }
 
@@ -472,11 +310,8 @@ function toggleSpotlight() {
   if (!modal) return;
   modal.classList.toggle('hidden');
   if (!modal.classList.contains('hidden')) {
-    const input = document.getElementById('spotlight-input');
-    if (input) {
-      input.value = '';
-      input.focus();
-    }
+    document.getElementById('spotlight-input').value = '';
+    document.getElementById('spotlight-input').focus();
   }
 }
 
@@ -499,7 +334,6 @@ function handleSpotlightSearch() {
 
   const q = input.value.toLowerCase().trim();
   container.innerHTML = '';
-
   const matches = db.filter((t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
 
   matches.slice(0, 10).forEach((t) => {
@@ -554,32 +388,21 @@ async function submitToolRequest(e) {
     const res = await fetch('https://formspree.io/f/mwlkkgwz', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        tool_name: toolName,
-        details: toolDetails,
-        timestamp: new Date().toISOString(),
-        site: 'mydevtoolbox.in'
-      })
+      body: JSON.stringify({ tool_name: toolName, details: toolDetails, timestamp: new Date().toISOString(), site: 'mydevtoolbox.in' })
     });
 
     if (res.ok) {
       status.innerText = '✓ Thank you! Your tool request has been received.';
       status.classList.remove('hidden');
       document.getElementById('request-tool-form')?.reset();
-      setTimeout(() => {
-        toggleRequestModal();
-        status.classList.add('hidden');
-      }, 2000);
+      setTimeout(() => { toggleRequestModal(); status.classList.add('hidden'); }, 2000);
     } else {
       throw new Error('Failed');
     }
   } catch (err) {
     status.innerText = '✓ Request recorded locally!';
     status.classList.remove('hidden');
-    setTimeout(() => {
-      toggleRequestModal();
-      status.classList.add('hidden');
-    }, 2000);
+    setTimeout(() => { toggleRequestModal(); status.classList.add('hidden'); }, 2000);
   } finally {
     btn.disabled = false;
     btn.innerHTML = 'Submit Request';
@@ -597,11 +420,8 @@ function checkUrlHash() {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Initialization
-// ---------------------------------------------------------------------------
+// Initialization on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-  updateCategoryCounts();
   renderToolsGrid();
   setViewDensity(viewDensity);
   renderRecentTools();
