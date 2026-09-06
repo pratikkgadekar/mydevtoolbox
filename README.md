@@ -22,16 +22,16 @@ Most online formatters, decoders, and PDF converters send private data, secret k
 
 | Category | Icon | Count | Focus Areas |
 | :--- | :---: | :--- | :--- |
-| **AI, LLM & Prompting** | 🤖 | 50 Tools | Token pricing calculators (GPT-4o, Claude 3.5, Gemini, DeepSeek), RAG window chunking, ChatML/Claude XML formatters, prompt sanitizers, temperature simulators. |
-| **QA & Test Automation** | 🧪 | 50 Tools | Playwright locators (`getByRole`, `getByTestId`), XPath-to-CSS converters, Boundary Value Analysis (BVA), All-Pairs/Orthogonal arrays, Cypress commands, JMeter thread estimators. |
-| **JSON & Data Formats** | 📊 | 50 Tools | JSON Pro Studio, multi-format conversions (CSV, XML, YAML, TOML, TSV, NDJSON), nested object flatteners, JSON Schema validators, code model generators (TypeScript, Pydantic, Go, Java POJO). |
-| **Security & Cryptography** | 🔐 | 50 Tools | Web Crypto SHA-256/SHA-512, HMAC signers, JWT claims inspector, client-side AES-GCM 256-bit encrypt/decrypt, UUID v4/v7 generators, TOTP 2FA simulators, random salt generators. |
-| **Web & APIs** | 🌐 | 50 Tools | cURL-to-Code translators (fetch, Axios, Python, Go, Rust), HTTP status code diagnostics, Accept header quality weight sorters, CORS builders, CSP validators, bulk UTM strippers. |
-| **CSS & UI Design** | 🎨 | 50 Tools | Accessible focus ring stylers, live Box-shadow studios, Flexbox/Grid visual sandboxes, 8-point border-radius makers, WCAG contrast checkers, fluid typography `clamp()` calculators. |
-| **DevOps & Cloud** | ⚙️ | 50 Tools | AWS IAM trust policy builders, `.env` sanitizers and linters, 802.1Q VLAN directory, `docker run` to `docker-compose` converters, Crontab explainers, Linux `chmod` calculators, CIDR subnetting. |
-| **Content & Markdown** | 📝 | 50 Tools | Live Markdown previewers, case converters (camel, snake, kebab), text deduplication, regex extractors, SQL `IN ('a','b')` wrappers, readability indices. |
-| **Math & Financial** | 📐 | 50 Tools | 24-hour military time converters, timezone overlap meeting planners, UNIX timestamp tools, business day counters, Loan EMI amortizations, mutual fund SIP visualizers. |
-| **File, Media & Canvas** | 📂 | 50 Tools | 1-click privacy EXIF metadata strippers, client-side PDF mergers, in-browser WebP compressors, vector QR code generators, SVG code optimizers, hardware diagnostic testers. |
+| **AI, LLM & Prompting** | 🤖 | 35 Tools | Token pricing calculators (GPT-4o, Claude 3.5, Gemini, DeepSeek), RAG window chunking, ChatML/Claude XML formatters, prompt sanitizers, temperature simulators. |
+| **QA & Test Automation** | 🧪 | 32 Tools | Playwright locators (`getByRole`, `getByTestId`), XPath-to-CSS converters, Boundary Value Analysis (BVA), All-Pairs/Orthogonal arrays, Cypress commands, JMeter thread estimators. |
+| **JSON & Data Formats** | 📊 | 32 Tools | JSON Pro Studio, multi-format conversions (CSV, XML, YAML, TOML, TSV, NDJSON), nested object flatteners, JSON Schema validators, code model generators (TypeScript, Pydantic, Go, Java POJO). |
+| **Security & Cryptography** | 🔐 | 32 Tools | Web Crypto SHA-256/SHA-512, HMAC signers, JWT claims inspector, client-side AES-GCM 256-bit encrypt/decrypt, UUID v4/v7 generators, TOTP 2FA simulators, random salt generators. |
+| **Web & APIs** | 🌐 | 32 Tools | cURL-to-Code translators (fetch, Axios, Python, Go, Rust), HTTP status code diagnostics, Accept header quality weight sorters, CORS builders, CSP validators, bulk UTM strippers. |
+| **CSS & UI Design** | 🎨 | 32 Tools | Accessible focus ring stylers, live Box-shadow studios, Flexbox/Grid visual sandboxes, 8-point border-radius makers, WCAG contrast checkers, fluid typography `clamp()` calculators. |
+| **DevOps & Cloud** | ⚙️ | 31 Tools | AWS IAM trust policy builders, `.env` sanitizers and linters, 802.1Q VLAN directory, `docker run` to `docker-compose` converters, Crontab explainers, Linux `chmod` calculators, CIDR subnetting. |
+| **Content & Markdown** | 📝 | 32 Tools | Live Markdown previewers, case converters (camel, snake, kebab), text deduplication, regex extractors, SQL `IN ('a','b')` wrappers, readability indices. |
+| **Math & Financial** | 📐 | 31 Tools | 24-hour military time converters, timezone overlap meeting planners, UNIX timestamp tools, business day counters, Loan EMI amortizations, mutual fund SIP visualizers. |
+| **File, Media & Canvas** | 📂 | 31 Tools | 1-click privacy EXIF metadata strippers, client-side PDF mergers, in-browser WebP compressors, vector QR code generators, SVG code optimizers, hardware diagnostic testers. |
 
 ---
 
