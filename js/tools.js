@@ -538,16 +538,8 @@
   });
 
   window.toolsDatabase = verified;
-  console.log("MyDevToolbox Catalog Initialized. Total Unique Tools:", window.toolsDatabase.length);
+  console.log("Catalog loaded with", window.toolsDatabase.length, "unique utilities.");
 })();
-
-function getToolGuide(tool) {
-  return {
-    p1: { title: '1. Primary Purpose', text: `${tool.name} is designed to ${tool.desc.toLowerCase()}. Processing executes 100% locally in browser memory.` },
-    p2: { title: '2. Input Instructions', text: `Provide your input data or parameters below. The tool calculates outputs client-side without server uploads.` },
-    p3: { title: '3. Instant Export', text: `Click 'Process & Run' to inspect results, and use 'Copy Result' to copy outputs directly to your clipboard.` }
-  };
-}
 
 function renderToolView(toolId) {
   const container = document.getElementById('active-tool-container');
@@ -559,74 +551,15 @@ function renderToolView(toolId) {
     recordToolUsage(tool.id, tool.name);
   }
 
-  // Delegate directly to the Smart Tool UI Engine
+  // Route directly to the Universal Archetype UI Engine
   if (typeof window.renderSmartToolUI === 'function') {
     window.renderSmartToolUI(tool);
-    return;
   }
-
-  // Safe fallback if the renderer is still loading
-  const guide = getToolGuide(tool);
-  container.innerHTML = `
-    <div class="space-y-5">
-      <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <h2 class="text-2xl font-bold flex items-center gap-2" style="color: var(--text-main);">
-            <i data-lucide="${tool.icon}" class="w-6 h-6 text-indigo-400"></i> ${tool.name}
-          </h2>
-          <p class="text-xs opacity-70 mt-1">${tool.desc}</p>
-        </div>
-        <span class="px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-xl text-xs font-mono font-bold self-start sm:self-auto">${tool.badge}</span>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="theme-card border p-4 rounded-3xl space-y-3 flex flex-col">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span>Input Workspace for ${tool.name}</span>
-            <button onclick="document.getElementById('generic-input').value=''" class="text-rose-400 hover:underline">Clear</button>
-          </div>
-          <textarea id="generic-input" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Paste data or parameters here..."></textarea>
-          <button onclick="processGenericTool('${toolId}')" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Process & Run</button>
-        </div>
-        <div class="theme-card border p-4 rounded-3xl space-y-3 flex flex-col">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span>Output Terminal</span>
-            <button onclick="copyToClipboard('generic-output')" class="text-indigo-400 hover:underline">Copy Result</button>
-          </div>
-          <textarea id="generic-output" readonly class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none" placeholder="Processed output will appear here..."></textarea>
-        </div>
-      </div>
-    </div>
-  `;
-
-  if (window.lucide) lucide.createIcons();
 }
 
-function processGenericTool(toolId) {
-  const input = (document.getElementById('generic-input')?.value || '').trim();
-  const out = document.getElementById('generic-output');
-  if (!out) return;
-
-  if (!input) {
-    out.value = `Error: Please provide input data in the workspace box.`;
-    return;
-  }
-
-  try {
-    if (toolId.includes('json')) {
-      out.value = JSON.stringify(JSON.parse(input), null, 2);
-    } else if (toolId === 'base64') {
-      out.value = btoa(unescape(encodeURIComponent(input)));
-    } else if (toolId.includes('hash') || toolId.includes('sha')) {
-      crypto.subtle.digest('SHA-256', new TextEncoder().encode(input)).then(b => {
-        out.value = Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, '0')).join('');
-      });
-    } else if (toolId === 'case-convert') {
-      out.value = `UPPERCASE:\n${input.toUpperCase()}\n\nlowercase:\n${input.toLowerCase()}\n\nTitle Case:\n${input.replace(/\\w\\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())}`;
-    } else {
-      out.value = `✓ Executed [${toolId}] successfully on ${input.length} characters:\n\n${input}`;
-    }
-  } catch (err) {
-    out.value = `Execution Error: ${err.message}`;
-  }
+function copyToClipboard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.value || el.innerText);
+  alert('Copied to clipboard!');
 }
