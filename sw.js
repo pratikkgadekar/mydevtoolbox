@@ -1,5 +1,5 @@
-/* sw.js - Service Worker Cache v60 */
-const CACHE_NAME = 'mdt-cache-v60';
+/* sw.js - Service Worker Cache v85 (Aggressive Flush) */
+const CACHE_NAME = 'mdt-cache-v85';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
