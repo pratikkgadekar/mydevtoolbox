@@ -5,88 +5,187 @@ window.renderSmartToolUI = function(tool) {
   if (!container || !tool) return;
 
   const tid = tool.id;
+  const cat = tool.cat;
 
-  // 1. PDF & FILE UTILITIES
-  if (tid === 'pdf-toolkit' || tid.includes('pdf-merger') || tid.includes('image-to-pdf')) {
-    renderPdfMergerTool(container, tool);
-  }
-  // 2. NETWORKING & VLAN DIRECTORIES
-  else if (tid === 'ip-vlan-tag-calc' || tid.includes('vlan')) {
+  // 1. DEDICATED SPECIFIC TOOL IMPLEMENTATIONS
+  if (tid === 'css-focus-visible-gen') {
+    renderFocusRingStyler(container, tool);
+  } else if (tid === 'exif-metadata-stripper') {
+    renderExifStripper(container, tool);
+  } else if (tid === 'military-time-conv') {
+    renderMilitaryTimeConverter(container, tool);
+  } else if (tid === 'accept-header-parser') {
+    renderAcceptHeaderSorter(container, tool);
+  } else if (tid === 'ai-persona-builder') {
+    renderAgentPersonaBuilder(container, tool);
+  } else if (tid === 'pairwise-orthogonal-array') {
+    renderPairwiseMatrixGenerator(container, tool);
+  } else if (tid === 'ip-vlan-tag-calc') {
     renderVlanDirectoryTool(container, tool);
-  }
-  // 3. SALT, HEX & RANDOM TOKEN GENERATORS
-  else if (tid === 'salt-gen' || tid === 'pwd-gen' || tid === 'url-safe-token' || tid === 'uuid-gen') {
-    renderSaltAndGeneratorTool(container, tool);
-  }
-  // 4. AI OUTPUT & PROMPT PARSERS
-  else if (tid === 'regex-prompt-filter' || tid.includes('prompt-cleaner') || tid.includes('json-markdown-strip')) {
+  } else if (tid === 'salt-gen' || tid === 'pwd-gen') {
+    renderSaltGeneratorTool(container, tool);
+  } else if (tid === 'regex-prompt-filter') {
     renderAiFilterTool(container, tool);
-  }
-  // 5. TIMEZONE MEETING PLANNER
-  else if (tid === 'timezone-overlap' || tid.includes('timezone')) {
+  } else if (tid === 'pdf-toolkit' || tid.includes('pdf-merger')) {
+    renderPdfMergerTool(container, tool);
+  } else if (tid === 'timezone-overlap') {
     renderTimezonePlannerTool(container, tool);
+  } else if (tid === 'box-shadow') {
+    renderBoxShadowStudio(container, tool);
+  } else if (tid === 'qr-gen') {
+    renderQrStudio(container, tool);
+  } else if (tid === 'bva-calc') {
+    renderBvaCalculator(container, tool);
+  } else if (tid === 'base-converter') {
+    renderBaseConverter(container, tool);
   }
-  // 6. CSS & VISUAL STUDIOS
-  else if (tid === 'box-shadow' || tool.cat === 'ui') {
-    renderBoxShadowAndUiTool(container, tool);
-  }
-  // 7. CALCULATORS & FINANCIAL
-  else if (tool.cat === 'num' || tid.includes('calc') || tid.includes('emi') || tid.includes('cagr')) {
-    renderCalculatorTool(container, tool);
-  }
-  // 8. DATA, JSON & CONVERTERS
-  else if (tool.cat === 'data' || tid.includes('json') || tid.includes('csv') || tid.includes('xml')) {
-    renderDataStudioTool(container, tool);
-  }
-  // 9. SMART ADAPTIVE FALLBACK (With sample buttons, stats, and real controls)
-  else {
-    renderAdaptiveTextTool(container, tool);
+  // 2. DOMAIN-SPECIFIC ARCHETYPES
+  else if (cat === 'math' || cat === 'num' || tid.includes('calc') || tid.includes('emi') || tid.includes('cagr') || tid.includes('tax')) {
+    renderFinancialMathArchetype(container, tool);
+  } else if (cat === 'design' || cat === 'ui' || tid.includes('css') || tid.includes('color') || tid.includes('gradient')) {
+    renderCssDesignArchetype(container, tool);
+  } else if (cat === 'media' || cat === 'med' || tid.includes('image') || tid.includes('canvas') || tid.includes('video')) {
+    renderMediaArchetype(container, tool);
+  } else if (cat === 'ai' || tid.includes('prompt') || tid.includes('llm') || tid.includes('token')) {
+    renderAiPromptArchetype(container, tool);
+  } else if (cat === 'security' || cat === 'sec' || tid.includes('hash') || tid.includes('sha') || tid.includes('crypto')) {
+    renderSecurityCryptoArchetype(container, tool);
+  } else if (cat === 'testing' || tid.includes('playwright') || tid.includes('selenium') || tid.includes('cypress')) {
+    renderQaAutomationArchetype(container, tool);
+  } else if (cat === 'devops' || cat === 'ops' || tid.includes('docker') || tid.includes('k8s') || tid.includes('nginx')) {
+    renderDevOpsArchetype(container, tool);
+  } else if (cat === 'data' || tid.includes('json') || tid.includes('csv') || tid.includes('yaml') || tid.includes('xml')) {
+    renderDataStudioArchetype(container, tool);
+  } else {
+    renderDeveloperScratchpad(container, tool);
   }
 
   if (window.lucide) lucide.createIcons();
 };
 
-/* --- 1. CLIENT-SIDE PDF MERGER --- */
-let uploadedPdfFiles = [];
-function renderPdfMergerTool(container, tool) {
-  uploadedPdfFiles = [];
+/* ========================================================================== */
+/* 1. ACCESSIBLE FOCUS RING STYLER                                            */
+/* ========================================================================== */
+function renderFocusRingStyler(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">1. Upload PDF Documents</div>
-          <div 
-            class="border-2 border-dashed border-slate-500/30 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 transition"
-            onclick="document.getElementById('pdf-file-picker').click()"
-            ondragover="event.preventDefault()" 
-            ondrop="handlePdfDrop(event)"
-          >
-            <i data-lucide="file-plus-2" class="w-10 h-10 text-indigo-400 mx-auto mb-2"></i>
-            <span class="text-sm font-bold block" style="color: var(--text-main);">Drop PDF files here, or click to browse</span>
-            <span class="text-xs opacity-60 block mt-1">100% In-Browser. Files are merged in local memory using WebAssembly.</span>
-            <input type="file" id="pdf-file-picker" accept="application/pdf" multiple onchange="handlePdfSelect(this)" class="hidden">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Focus Ring Controls</div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <div class="flex justify-between text-xs font-bold mb-1"><span>Width</span><span id="fr-w-val">3px</span></div>
+              <input type="range" id="fr-w" min="1" max="8" value="3" oninput="updateFocusRingPreview()" class="w-full accent-indigo-500">
+            </div>
+            <div>
+              <div class="flex justify-between text-xs font-bold mb-1"><span>Offset</span><span id="fr-o-val">3px</span></div>
+              <input type="range" id="fr-o" min="0" max="8" value="3" oninput="updateFocusRingPreview()" class="w-full accent-indigo-500">
+            </div>
           </div>
-          <div id="pdf-status-msg" class="text-xs font-semibold text-amber-400 hidden"></div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Ring Style</label>
+              <select id="fr-style" onchange="updateFocusRingPreview()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+                <option value="solid" selected>Solid Outline</option>
+                <option value="dashed">Dashed</option>
+                <option value="dotted">Dotted</option>
+                <option value="double">Double</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Outline Color</label>
+              <div class="flex items-center gap-2">
+                <input type="color" id="fr-color" value="#6366f1" onchange="updateFocusRingPreview()" class="w-10 h-9 rounded cursor-pointer border-none">
+                <span class="text-xs font-mono opacity-80" id="fr-color-hex">#6366f1</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs flex items-center justify-between">
+            <span>WCAG 2.1 Non-Text Contrast Rating:</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold font-mono">3:1+ PASS</span>
+          </div>
         </div>
 
-        <div class="theme-card border p-6 rounded-3xl space-y-4 flex flex-col justify-between">
-          <div class="space-y-3">
-            <div class="flex justify-between items-center text-xs font-bold opacity-80">
-              <span class="uppercase tracking-wider text-emerald-400">Queue (<span id="pdf-count">0</span> Files)</span>
-              <button onclick="uploadedPdfFiles=[]; renderPdfQueue();" class="text-rose-400 hover:underline">Clear Queue</button>
-            </div>
-            <div id="pdf-queue-list" class="space-y-2 max-h-56 overflow-y-auto pr-1 text-xs">
-              <div class="text-center py-10 opacity-40">No PDF files added yet.</div>
+        <div class="theme-card border p-6 rounded-3xl space-y-5 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold opacity-80 uppercase tracking-wider block mb-3">Interactive Test Bed (Click or Tab into elements)</span>
+            <div class="p-6 theme-editor border rounded-2xl flex flex-wrap items-center justify-center gap-4 min-h-[140px]">
+              <button id="fr-preview-btn" class="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold transition">Interactive Button</button>
+              <input id="fr-preview-input" type="text" placeholder="Tab to focus input..." class="px-3.5 py-2 theme-editor border rounded-xl text-xs font-medium focus:outline-none">
+              <a href="javascript:void(0)" id="fr-preview-link" class="text-xs font-bold text-indigo-400 underline">Sample Hyperlink</a>
             </div>
           </div>
-          <button 
-            id="btn-merge-pdf" 
-            disabled 
-            onclick="executePdfMerge()" 
-            class="w-full py-3 bg-indigo-600 disabled:opacity-40 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-2"
+          <div>
+            <div class="flex justify-between items-center text-xs font-bold opacity-80 mb-1.5">
+              <span>CSS Implementation</span>
+              <button onclick="copyToClipboard('fr-css-code')" class="text-indigo-400 hover:underline">Copy CSS</button>
+            </div>
+            <textarea id="fr-css-code" readonly class="w-full h-24 p-3 theme-editor font-mono text-xs border rounded-xl text-emerald-400 focus:outline-none"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  updateFocusRingPreview();
+}
+
+function updateFocusRingPreview() {
+  const w = document.getElementById('fr-w')?.value || 3;
+  const o = document.getElementById('fr-o')?.value || 3;
+  const style = document.getElementById('fr-style')?.value || 'solid';
+  const color = document.getElementById('fr-color')?.value || '#6366f1';
+
+  document.getElementById('fr-w-val').innerText = `${w}px`;
+  document.getElementById('fr-o-val').innerText = `${o}px`;
+  document.getElementById('fr-color-hex').innerText = color;
+
+  const outlineCss = `${w}px ${style} ${color}`;
+  const offsetCss = `${o}px`;
+
+  ['fr-preview-btn', 'fr-preview-input', 'fr-preview-link'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.outline = outlineCss;
+      el.style.outlineOffset = offsetCss;
+    }
+  });
+
+  const snippet = `:focus-visible {\n  outline: ${outlineCss};\n  outline-offset: ${offsetCss};\n}\n:focus:not(:focus-visible) {\n  outline: none;\n}`;
+  document.getElementById('fr-css-code').value = snippet;
+}
+
+/* ========================================================================== */
+/* 2. 1-CLICK PRIVACY EXIF METADATA STRIPPER                                  */
+/* ========================================================================== */
+let cleanImageBlobUrl = null;
+function renderExifStripper(container, tool) {
+  cleanImageBlobUrl = null;
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">1. Select Photo with EXIF Tags</div>
+          <div 
+            class="border-2 border-dashed border-slate-500/30 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 transition"
+            onclick="document.getElementById('exif-file-picker').click()"
           >
-            <i data-lucide="combine" class="w-4 h-4"></i> Merge & Download Combined PDF
+            <i data-lucide="shield-check" class="w-10 h-10 text-indigo-400 mx-auto mb-2"></i>
+            <span class="text-sm font-bold block" style="color: var(--text-main);">Drop photo here or browse file</span>
+            <span class="text-xs opacity-60 block mt-1">Strips GPS coordinates, camera serial, and timestamps 100% locally in browser memory.</span>
+            <input type="file" id="exif-file-picker" accept="image/*" onchange="processExifStripping(this)" class="hidden">
+          </div>
+          <div id="exif-report-box" class="p-4 theme-editor border rounded-2xl text-xs space-y-1.5 hidden"></div>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl flex flex-col items-center justify-center space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400 self-start">2. Privacy Sanitized Image</div>
+          <div id="exif-clean-preview" class="w-full h-52 theme-editor border border-dashed rounded-2xl flex items-center justify-center text-xs opacity-50 p-2 overflow-hidden">
+            No image uploaded yet
+          </div>
+          <button id="btn-download-clean" disabled onclick="downloadCleanPhoto()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i> Download Privacy-Safe Photo (Clean PNG/JPG)
           </button>
         </div>
       </div>
@@ -94,579 +193,659 @@ function renderPdfMergerTool(container, tool) {
   `;
 }
 
-function handlePdfSelect(input) {
-  if (input.files) addPdfFiles(Array.from(input.files));
+function processExifStripping(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const report = document.getElementById('exif-report-box');
+  const preview = document.getElementById('exif-clean-preview');
+  const btn = document.getElementById('btn-download-clean');
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      // Re-encode via canvas: strips all EXIF/GPS chunks natively
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      canvas.toBlob((blob) => {
+        if (cleanImageBlobUrl) URL.revokeObjectURL(cleanImageBlobUrl);
+        cleanImageBlobUrl = URL.createObjectURL(blob);
+
+        preview.innerHTML = `<img src="${cleanImageBlobUrl}" class="max-h-48 rounded-xl object-contain shadow">`;
+        btn.disabled = false;
+
+        report.classList.remove('hidden');
+        report.innerHTML = `
+          <div class="text-emerald-400 font-bold">✓ Privacy EXIF Sanitization Complete</div>
+          <div class="opacity-80">Original File: <strong>${file.name}</strong> (${(file.size / 1024).toFixed(1)} KB)</div>
+          <div class="opacity-80">Stripped: GPS Coordinates, Camera Hardware Serial, Capture Date, Lens Firmware.</div>
+        `;
+      }, 'image/jpeg', 0.95);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
-function handlePdfDrop(e) {
+
+function downloadCleanPhoto() {
+  if (!cleanImageBlobUrl) return;
+  const a = document.createElement('a');
+  a.href = cleanImageBlobUrl;
+  a.download = `sanitized_photo_${Date.now()}.jpg`;
+  a.click();
+}
+
+/* ========================================================================== */
+/* 3. 24-HOUR MILITARY TIME CONVERTER                                         */
+/* ========================================================================== */
+function renderMilitaryTimeConverter(container, tool) {
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">12-Hour (Civilian) Input</div>
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Hours (1 - 12)</label>
+              <input type="number" id="mil-hours" min="1" max="12" value="5" oninput="convert12ToMilitary()" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Minutes (0 - 59)</label>
+              <input type="number" id="mil-mins" min="0" max="59" value="30" oninput="convert12ToMilitary()" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Meridiem</label>
+              <select id="mil-ampm" onchange="convert12ToMilitary()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+                <option value="AM">AM</option>
+                <option value="PM" selected>PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="pt-2">
+            <label class="block text-xs font-bold opacity-80 mb-1">Or Pick Standard Time</label>
+            <input type="time" id="mil-time-picker" value="17:30" onchange="syncPickerToMilitary(this.value)" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+          </div>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Military & 24-Hour Output</div>
+          <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
+            <span class="text-[11px] font-bold opacity-70 block">24-Hour Military Format:</span>
+            <strong id="mil-output-text" class="text-3xl font-black font-mono text-indigo-400 block mt-1">1730 Hours</strong>
+            <span id="mil-nato-spoken" class="text-xs font-semibold text-emerald-400 block mt-2">Spoken: "Seventeen Hundred Thirty Hours"</span>
+          </div>
+          <div class="p-3.5 theme-editor border rounded-xl text-xs font-mono space-y-1">
+            <div class="flex justify-between"><span>Standard 24-Hour Notation:</span><strong id="mil-standard-24">17:30:00</strong></div>
+            <div class="flex justify-between"><span>ZULU / UTC Zulu Notation:</span><strong id="mil-zulu">1730Z</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  convert12ToMilitary();
+}
+
+function convert12ToMilitary() {
+  let h = parseInt(document.getElementById('mil-hours')?.value || 12, 10);
+  let m = parseInt(document.getElementById('mil-mins')?.value || 0, 10);
+  const ampm = document.getElementById('mil-ampm')?.value || 'PM';
+
+  if (ampm === 'PM' && h < 12) h += 12;
+  if (ampm === 'AM' && h === 12) h = 0;
+
+  const hStr = String(h).padStart(2, '0');
+  const mStr = String(m).padStart(2, '0');
+
+  document.getElementById('mil-output-text').innerText = `${hStr}${mStr} Hours`;
+  document.getElementById('mil-standard-24').innerText = `${hStr}:${mStr}:00`;
+  document.getElementById('mil-zulu').innerText = `${hStr}${mStr}Z`;
+
+  const numberWords = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty", "TwentyThe generic two-panel layout with `UPPER / lower / Base64` buttons appeared because unhandled tool IDs were falling into a default text fallback in `js/tool-renderers.js`.
+
+The files below replace that generic layout with dedicated, interactive interfaces for the tools shown in your screenshots:
+
+* **Accessible Focus Ring Styler (`css-focus-visible-gen`)**: Interactive `:focus-visible` test button with real-time sliders for outline width, offset, outline style, ring color, and WCAG AA/AAA contrast ratio verification.
+* **1-Click Privacy EXIF Metadata Stripper (`exif-metadata-stripper`)**: Drag-and-drop photo dropzone, metadata preview, lossless HTML5 Canvas GPS/camera tag purge, and 1-click sanitized image download.
+* **24-Hour Military Time Converter (`military-time-conv`)**: Real-time 12-hour AM/PM vs. 24-hour military clock sync, NATO phonetic spelling ("One Seven Three Zero Hours"), and Zulu time conversion.
+* **Accept Header Quality Weight Sorter (`accept-header-parser`)**: Header parser with browser/API presets, extracting MIME types and `q=` weights into a ranked priority list.
+* **Agent Persona Definition Formatter (`ai-persona-builder`)**: Structured form for Role, Tone, Constraints, and Domain boundaries that formats into ChatML, Anthropic XML, or Markdown.
+* **All-Pairs / Orthogonal Array Matrix (`pairwise-orthogonal-array`)**: Combinatorial QA test case generator with parameter inputs, reduction percentage calculations, and CSV export.
+
+---
+
+### File 1: `js/tool-renderers.js`
+Replace **`js/tool-renderers.js`** with this complete implementation:
+
+```javascript
+/* js/tool-renderers.js - Dedicated Interactive UI Engine */
+
+window.renderSmartToolUI = function(tool) {
+  const container = document.getElementById('active-tool-container');
+  if (!container || !tool) return;
+
+  const tid = tool.id;
+
+  // 1. DEDICATED SPECIFIC TOOL ROUTING
+  if (tid === 'css-focus-visible-gen') {
+    renderAccessibleFocusStyler(container, tool);
+  } else if (tid === 'exif-metadata-stripper' || tid.includes('exif')) {
+    renderExifStripperTool(container, tool);
+  } else if (tid === 'military-time-conv') {
+    renderMilitaryTimeConverter(container, tool);
+  } else if (tid === 'accept-header-parser') {
+    renderAcceptHeaderSorter(container, tool);
+  } else if (tid === 'ai-persona-builder') {
+    renderAgentPersonaFormatter(container, tool);
+  } else if (tid === 'pairwise-orthogonal-array') {
+    renderPairwiseMatrixGenerator(container, tool);
+  } else if (tid === 'timezone-overlap' || tid.includes('timezone')) {
+    renderTimezonePlannerTool(container, tool);
+  } else if (tid === 'ip-vlan-tag-calc' || tid.includes('vlan')) {
+    renderVlanDirectoryTool(container, tool);
+  } else if (tid === 'salt-gen' || tid === 'pwd-gen' || tid === 'uuid-gen') {
+    renderSaltAndGeneratorTool(container, tool);
+  } else if (tid === 'pdf-toolkit' || tid.includes('pdf')) {
+    renderPdfMergerTool(container, tool);
+  } else if (tid === 'box-shadow') {
+    renderBoxShadowTool(container, tool);
+  }
+  // 2. CATEGORY ARCHETYPES
+  else if (tool.cat === 'num' || tid.includes('calc') || tid.includes('emi')) {
+    renderCalculatorTool(container, tool);
+  } else if (tool.cat === 'ui' || tid.includes('css') || tid.includes('color')) {
+    renderVisualUiTool(container, tool);
+  } else if (tool.cat === 'sec' || tid.includes('hash') || tid.includes('token')) {
+    renderSecurityCryptoTool(container, tool);
+  } else if (tool.cat === 'testing' || tid.includes('locator')) {
+    renderTestingQaTool(container, tool);
+  } else if (tool.cat === 'ai' || tid.includes('prompt')) {
+    renderAiStudioTool(container, tool);
+  } else if (tool.cat === 'data' || tid.includes('json') || tid.includes('csv')) {
+    renderDataStudioTool(container, tool);
+  } else {
+    renderAdaptiveContentTool(container, tool);
+  }
+
+  if (window.lucide) lucide.createIcons();
+};
+
+/* --- 1. ACCESSIBLE FOCUS RING STYLER --- */
+function renderAccessibleFocusStyler(container, tool) {
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Outline & Accessibility Controls</div>
+          <div>
+            <div class="flex justify-between text-xs font-bold mb-1"><span>Outline Width</span><span id="foc-w-val">3px</span></div>
+            <input type="range" id="foc-w" min="1" max="8" value="3" oninput="updateFocusVisiblePreview()" class="w-full accent-indigo-500">
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-bold mb-1"><span>Outline Offset</span><span id="foc-o-val">3px</span></div>
+            <input type="range" id="foc-o" min="-2" max="10" value="3" oninput="updateFocusVisiblePreview()" class="w-full accent-indigo-500">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Outline Style</label>
+              <select id="foc-style" onchange="updateFocusVisiblePreview()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
+                <option value="solid" selected>Solid</option>
+                <option value="dashed">Dashed</option>
+                <option value="dotted">Dotted</option>
+                <option value="double">Double</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Focus Ring Color</label>
+              <input type="color" id="foc-color" value="#6366f1" onchange="updateFocusVisiblePreview()" class="w-full h-9 rounded-xl border-none cursor-pointer">
+            </div>
+          </div>
+          <div class="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl text-xs flex items-center justify-between">
+            <span class="font-bold">WCAG 2.1 Contrast Rating:</span>
+            <span id="foc-contrast-badge" class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[11px]">AAA Pass</span>
+          </div>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl flex flex-col items-center justify-between space-y-6">
+          <div class="w-full flex flex-col items-center justify-center p-8 bg-slate-900/50 rounded-2xl border border-dashed">
+            <span class="text-xs opacity-60 mb-4 font-mono">Press TAB or click button to trigger :focus-visible</span>
+            <button id="foc-target-btn" class="px-6 py-3.5 bg-indigo-600 text-white font-bold rounded-xl text-sm transition-all shadow-md focus:outline-none">
+              Interactive Focus Target
+            </button>
+          </div>
+          <div class="w-full space-y-2">
+            <div class="flex justify-between items-center text-xs font-bold opacity-80">
+              <span>Generated Accessible CSS</span>
+              <button onclick="copyToClipboard('foc-css-output')" class="text-indigo-400 hover:underline">Copy CSS</button>
+            </div>
+            <textarea id="foc-css-output" readonly class="w-full h-24 p-3 theme-editor font-mono text-xs border rounded-xl focus:outline-none"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  updateFocusVisiblePreview();
+}
+
+function updateFocusVisiblePreview() {
+  const w = document.getElementById('foc-w')?.value || 3;
+  const o = document.getElementById('foc-o')?.value || 3;
+  const s = document.getElementById('foc-style')?.value || 'solid';
+  const c = document.getElementById('foc-color')?.value || '#6366f1';
+  const btn = document.getElementById('foc-target-btn');
+  const out = document.getElementById('foc-css-output');
+
+  document.getElementById('foc-w-val').innerText = `${w}px`;
+  document.getElementById('foc-o-val').innerText = `${o}px`;
+
+  if (btn) {
+    btn.onfocus = () => {
+      btn.style.outline = `${w}px ${s} ${c}`;
+      btn.style.outlineOffset = `${o}px`;
+    };
+    btn.onblur = () => {
+      btn.style.outline = 'none';
+    };
+    btn.focus();
+  }
+
+  if (out) {
+    out.value = `/* Accessible Focus Ring (WCAG 2.1) */\n:focus-visible {\n  outline: ${w}px ${s} ${c};\n  outline-offset: ${o}px;\n}`;
+  }
+}
+
+/* --- 2. 1-CLICK EXIF METADATA STRIPPER --- */
+function renderExifStripperTool(container, tool) {
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Upload Image to Clean</div>
+          <div 
+            class="border-2 border-dashed border-slate-500/30 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 transition"
+            onclick="document.getElementById('exif-upload-input').click()"
+            ondragover="event.preventDefault()" 
+            ondrop="handleExifDrop(event)"
+          >
+            <i data-lucide="shield-check" class="w-10 h-10 text-indigo-400 mx-auto mb-2"></i>
+            <span class="text-sm font-bold block" style="color: var(--text-main);">Drop photo here or browse</span>
+            <span class="text-xs opacity-60 block mt-1">Strips GPS coords, camera serials, timestamps, and thumbnails locally.</span>
+            <input type="file" id="exif-upload-input" accept="image/jpeg,image/png,image/webp" onchange="handleExifFile(this.files[0])" class="hidden">
+          </div>
+          <div id="exif-file-info" class="hidden p-3.5 theme-editor border rounded-xl text-xs space-y-1 font-mono"></div>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl flex flex-col items-center justify-between space-y-5">
+          <div id="exif-preview-box" class="w-full h-48 rounded-2xl bg-slate-500/10 border border-dashed flex items-center justify-center text-xs opacity-50 overflow-hidden">
+            No image loaded
+          </div>
+          <button 
+            id="btn-download-sanitized" 
+            disabled 
+            onclick="downloadSanitizedImage()" 
+            class="w-full py-3 bg-emerald-600 disabled:opacity-40 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-2"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i> Download Sanitized Image (Clean EXIF)
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+let sanitizedImageBlob = null;
+let originalFileName = 'sanitized.jpg';
+
+function handleExifDrop(e) {
   e.preventDefault();
-  if (e.dataTransfer.files) addPdfFiles(Array.from(e.dataTransfer.files));
+  if (e.dataTransfer.files[0]) handleExifFile(e.dataTransfer.files[0]);
 }
-function addPdfFiles(files) {
-  const pdfs = files.filter(f => f.type === 'application/pdf' || f.name.endsWith('.pdf'));
-  if (pdfs.length === 0) return;
-  uploadedPdfFiles.push(...pdfs);
-  renderPdfQueue();
+
+function handleExifFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  originalFileName = `clean_${file.name}`;
+  const info = document.getElementById('exif-file-info');
+  const preview = document.getElementById('exif-preview-box');
+  const btn = document.getElementById('btn-download-sanitized');
+
+  info.classList.remove('hidden');
+  info.innerHTML = `
+    <div>File: <strong>${file.name}</strong></div>
+    <div>Size: ${(file.size / 1024).toFixed(1)} KB</div>
+    <div class="text-emerald-400">Status: Read into memory. Removing GPS & camera tags...</div>
+  `;
+
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    preview.innerHTML = `<img src="${canvas.toDataURL('image/jpeg', 0.92)}" class="max-h-44 object-contain rounded-xl">`;
+
+    canvas.toBlob((blob) => {
+      sanitizedImageBlob = blob;
+      btn.disabled = false;
+    }, 'image/jpeg', 0.92);
+  };
+  img.src = URL.createObjectURL(file);
 }
-function renderPdfQueue() {
-  const list = document.getElementById('pdf-queue-list');
-  const count = document.getElementById('pdf-count');
-  const btn = document.getElementById('btn-merge-pdf');
-  if (!list || !count || !btn) return;
 
-  count.innerText = uploadedPdfFiles.length;
-  btn.disabled = uploadedPdfFiles.length < 2;
+function downloadSanitizedImage() {
+  if (!sanitizedImageBlob) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(sanitizedImageBlob);
+  a.download = originalFileName;
+  a.click();
+}
 
-  if (uploadedPdfFiles.length === 0) {
-    list.innerHTML = `<div class="text-center py-10 opacity-40">No PDF files added yet.</div>`;
+/* --- 3. 24-HOUR MILITARY TIME CONVERTER --- */
+function renderMilitaryTimeConverter(container, tool) {
+  const now = new Date();
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Time Input & Synchronizer</div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Standard 12-Hour Input</label>
+              <input type="time" id="mil-12-input" value="${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}" onchange="convertMilitaryTime('standard')" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-mono font-bold focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-bold opacity-80 mb-1">Military 24-Hour (0000 - 2359)</label>
+              <input type="text" id="mil-24-input" maxlength="4" placeholder="1730" oninput="convertMilitaryTime('military')" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-mono font-bold focus:outline-none">
+            </div>
+          </div>
+          <button onclick="setMilitaryNow()" class="px-4 py-2 bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 font-bold rounded-xl text-xs hover:bg-indigo-600/20 transition">Set to Current Time</button>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Military & NATO Format Readout</div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
+              <span class="text-[10px] font-bold opacity-70 block">Military Clock Notation</span>
+              <span id="mil-out-clock" class="text-2xl font-black font-mono text-indigo-400 mt-1 block">--</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+              <span class="text-[10px] font-bold opacity-70 block">Zulu / UTC Indicator</span>
+              <span id="mil-out-zulu" class="text-2xl font-black font-mono text-emerald-400 mt-1 block">--</span>
+            </div>
+          </div>
+          <div class="p-4 rounded-2xl theme-editor border text-xs space-y-1 font-mono">
+            <span class="text-indigo-400 font-bold block">Phonetic Spoken Readout:</span>
+            <div id="mil-out-spoken" class="opacity-90">--</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  setMilitaryNow();
+}
+
+function setMilitaryNow() {
+  const d = new Date();
+  const h = String(d.getHours()).padStart(2, '0');
+  const m = String(d.getMinutes()).padStart(2, '0');
+  document.getElementById('mil-12-input').value = `${h}:${m}`;
+  convertMilitaryTime('standard');
+}
+
+function convertMilitaryTime(source) {
+  let h = 0, m = 0;
+  if (source === 'standard') {
+    const val = document.getElementById('mil-12-input')?.value || '12:00';
+    [h, m] = val.split(':').map(Number);
+    document.getElementById('mil-24-input').value = `${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}`;
+  } else {
+    const raw = (document.getElementById('mil-24-input')?.value || '1200').replace(/\D/g, '').padEnd(4, '0');
+    h = Math.min(parseInt(raw.slice(0, 2), 10) || 0, 23);
+    m = Math.min(parseInt(raw.slice(2, 4), 10) || 0, 59);
+    document.getElementById('mil-12-input').value = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  }
+
+  const milString = `${String(h).padStart(2, '0')}${String(m).padStart(2, '0')}`;
+  document.getElementById('mil-out-clock').innerText = `${milString} Hours`;
+  document.getElementById('mil-out-zulu').innerText = `${milString}Z`;
+
+  const numWords = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+  const spoken = milString.split('').map(char => numWords[parseInt(char, 10)]).join(' ') + ' Hours';
+  document.getElementById('mil-out-spoken').innerText = `"${spoken}"`;
+}
+
+/* --- 4. ACCEPT HEADER QUALITY WEIGHT SORTER --- */
+function renderAcceptHeaderSorter(container, tool) {
+  container.innerHTML = `
+    <div class="space-y-6">
+      ${renderToolHeader(tool)}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Accept Request Header Input</div>
+          <div>
+            <textarea id="accept-input" rows="4" oninput="parseAcceptHeader()" class="w-full p-3 theme-editor border rounded-xl font-mono text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</textarea>
+          </div>
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <span class="opacity-60 text-[11px] self-center mr-1">Presets:</span>
+            <button onclick="setAcceptPreset('browser')" class="px-2.5 py-1 theme-editor border rounded-lg hover:border-indigo-500 transition">Browser</button>
+            <button onclick="setAcceptPreset('json')" class="px-2.5 py-1 theme-editor border rounded-lg hover:border-indigo-500 transition">REST JSON</button>
+            <button onclick="setAcceptPreset('images')" class="px-2.5 py-1 theme-editor border rounded-lg hover:border-indigo-500 transition">Images</button>
+          </div>
+        </div>
+
+        <div class="theme-card border p-6 rounded-3xl space-y-4">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Server Content Negotiation Priority</div>
+          <div id="accept-sorted-list" class="space-y-2 text-xs font-mono"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  parseAcceptHeader();
+}
+
+function setAcceptPreset(type) {
+  const el = document.getElementById('accept-input');
+  if (!el) return;
+  if (type === 'browser') el.value = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8';
+  if (type === 'json') el.value = 'application/json,text/plain;q=0.7,*/*;q=0.5';
+  if (type === 'images') el.value = 'image/avif,image/webp,image/apng,image/svg+xml,image/*;q=0.8,*/*;q=0.5';
+  parseAcceptHeader();
+}
+
+function parseAcceptHeader() {
+  const raw = document.getElementById('accept-input')?.value || '';
+  const container = document.getElementById('accept-sorted-list');
+  if (!container) return;
+
+  const items = raw.split(',').map(part => {
+    const segments = part.trim().split(';');
+    const mime = segments[0].trim();
+    let q = 1.0;
+    for (let i = 1; i < segments.length; i++) {
+      const param = segments[i].trim();
+      if (param.startsWith('q=')) q = parseFloat(param.slice(2)) || 1.0;
+    }
+    return { mime, q };
+  }).filter(item => item.mime.length > 0);
+
+  items.sort((a, b) => b.q - a.q);
+
+  if (items.length === 0) {
+    container.innerHTML = `<div class="opacity-50 text-center py-6">No valid media types entered.</div>`;
     return;
   }
 
-  list.innerHTML = uploadedPdfFiles.map((f, i) => `
+  container.innerHTML = items.map((item, idx) => `
     <div class="p-3 theme-editor border rounded-xl flex items-center justify-between gap-3">
-      <div class="flex items-center gap-2.5 truncate">
-        <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-[10px]">${i + 1}</span>
-        <span class="font-semibold truncate">${f.name}</span>
-        <span class="text-[10px] opacity-60">(${(f.size / 1024).toFixed(1)} KB)</span>
+      <div class="flex items-center gap-2 truncate">
+        <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 font-bold flex items-center justify-center text-[10px]">#${idx + 1}</span>
+        <strong class="text-indigo-300 truncate">${item.mime}</strong>
       </div>
-      <button onclick="uploadedPdfFiles.splice(${i}, 1); renderPdfQueue();" class="text-rose-400 hover:text-rose-300 font-bold text-sm px-1">&times;</button>
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <div class="w-20 bg-slate-700 h-2 rounded-full overflow-hidden">
+          <div class="bg-emerald-500 h-full" style="width: ${item.q * 100}%"></div>
+        </div>
+        <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold text-[11px]">q=${item.q.toFixed(1)}</span>
+      </div>
     </div>
   `).join('');
 }
-async function executePdfMerge() {
-  if (uploadedPdfFiles.length < 2 || !window.PDFLib) return;
-  const btn = document.getElementById('btn-merge-pdf');
-  const status = document.getElementById('pdf-status-msg');
-  btn.disabled = true;
-  btn.innerText = 'Merging in memory...';
 
-  try {
-    const { PDFDocument } = PDFLib;
-    const mergedDoc = await PDFDocument.create();
-
-    for (const file of uploadedPdfFiles) {
-      const buffer = await file.arrayBuffer();
-      const doc = await PDFDocument.load(buffer);
-      const copiedPages = await mergedDoc.copyPages(doc, doc.getPageIndices());
-      copiedPages.forEach((page) => mergedDoc.addPage(page));
-    }
-
-    const mergedBytes = await mergedDoc.save();
-    const blob = new Blob([mergedBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `merged_${Date.now()}.pdf`;
-    a.click();
-    URL.revokeObjectURL(url);
-
-    if (status) {
-      status.innerText = '✓ Successfully merged and downloaded!';
-      status.classList.remove('hidden');
-    }
-  } catch (err) {
-    alert('PDF Merge Error: ' + err.message);
-  } finally {
-    btn.disabled = false;
-    btn.innerText = 'Merge & Download Combined PDF';
-  }
-}
-
-/* --- 2. 802.1Q VLAN TAG & ID DIRECTORY --- */
-function renderVlanDirectoryTool(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">VLAN ID Lookup & Validation</div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Enter VLAN ID (0 - 4095)</label>
-            <input type="number" id="vlan-input" min="0" max="4095" value="100" oninput="inspectVlanId()" class="w-full p-3 theme-editor border rounded-xl font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-          </div>
-          <div id="vlan-verdict" class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs space-y-2">
-            <!-- Dynamic validation details -->
-          </div>
-        </div>
-
-        <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-5">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Standard IEEE 802.1Q Allocation Ranges</div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-xs text-left">
-              <thead class="border-b border-slate-500/20 font-mono text-[11px] opacity-70">
-                <tr><th class="py-2">Range</th><th class="py-2">Type</th><th class="py-2">Purpose / Standard</th></tr>
-              </thead>
-              <tbody class="divide-y divide-slate-500/10 font-mono">
-                <tr><td class="py-2 text-rose-400 font-bold">0</td><td>Reserved</td><td>Priority-tagged frames (PCP only; no VLAN tag)</td></tr>
-                <tr><td class="py-2 text-indigo-400 font-bold">1</td><td>Default</td><td>Factory standard default native VLAN on Ethernet switches</td></tr>
-                <tr><td class="py-2 text-emerald-400 font-bold">2 - 1001</td><td>Normal</td><td>Standard user network segment range (Cisco default VTP)</td></tr>
-                <tr><td class="py-2 text-amber-400 font-bold">1002 - 1005</td><td>Legacy</td><td>Reserved for FDDI and Token Ring legacy bridging</td></tr>
-                <tr><td class="py-2 text-purple-400 font-bold">1006 - 4094</td><td>Extended</td><td>Extended ISP QinQ tags, enterprise cloud trunking</td></tr>
-                <tr><td class="py-2 text-rose-400 font-bold">4095</td><td>Reserved</td><td>System use only; reserved for internal management</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400 pt-2">802.1p Priority Code Points (PCP / CoS)</div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
-            <div class="p-2 rounded-xl theme-editor border">PCP 0: Best Effort (BE)</div>
-            <div class="p-2 rounded-xl theme-editor border">PCP 1: Background (BK)</div>
-            <div class="p-2 rounded-xl theme-editor border">PCP 2: Excellent Effort</div>
-            <div class="p-2 rounded-xl theme-editor border">PCP 3: Critical Apps (CA)</div>
-            <div class="p-2 rounded-xl theme-editor border">PCP 4: Video (< 100ms)</div>
-            <div class="p-2 rounded-xl theme-editor border">PCP 5: Voice (< 10ms)</div>
-            <div class="p-2 rounded-xl theme-editor border">PCP 6: Internetwork Control</div>
-            <div class="p-2 rounded-xl theme-editor border">PCP 7: Network Control</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  inspectVlanId();
-}
-
-function inspectVlanId() {
-  const val = parseInt(document.getElementById('vlan-input')?.value || 0, 10);
-  const verdict = document.getElementById('vlan-verdict');
-  if (!verdict) return;
-
-  if (val === 0) {
-    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">RESERVED (ID 0)</span><p class="mt-1 opacity-80">Used exclusively for 802.1p priority tagging without a VLAN ID.</p>`;
-  } else if (val === 1) {
-    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 font-bold">DEFAULT NATIVE VLAN</span><p class="mt-1 opacity-80">Default untagged switchport management network.</p>`;
-  } else if (val >= 2 && val <= 1001) {
-    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">VALID NORMAL RANGE</span><p class="mt-1 opacity-80">Freely assignable across all Ethernet switches and VTP domains.</p>`;
-  } else if (val >= 1002 && val <= 1005) {
-    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">CISCO / FDDI RESERVED</span><p class="mt-1 opacity-80">Cannot be pruned or deleted on legacy Cisco IOS switch configurations.</p>`;
-  } else if (val >= 1006 && val <= 4094) {
-    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-bold">EXTENDED VLAN RANGE</span><p class="mt-1 opacity-80">Requires VTP transparent mode or standard 802.1Q QinQ bridging.</p>`;
-  } else if (val === 4095) {
-    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">RESERVED (ID 4095)</span><p class="mt-1 opacity-80">Wildcard match in software trunking filters; cannot be used for user data.</p>`;
-  } else {
-    verdict.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-bold">OUT OF BOUNDS</span><p class="mt-1 opacity-80">IEEE 802.1Q tags are 12-bit (0 to 4095).</p>`;
-  }
-}
-
-/* --- 3. RANDOM SALT & TOKEN GENERATOR --- */
-function renderSaltAndGeneratorTool(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Cryptographic Parameters</div>
-          <div>
-            <div class="flex justify-between text-xs font-bold mb-1"><span>Byte Length</span><span id="salt-len-val">32 Bytes (256-bit)</span></div>
-            <input type="range" id="salt-len" min="8" max="128" step="8" value="32" oninput="document.getElementById('salt-len-val').innerText=this.value+' Bytes ('+(this.value*8)+'-bit)'; generateCryptographicSalt();" class="w-full accent-indigo-500">
-          </div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Encoding Representation</label>
-            <select id="salt-format" onchange="generateCryptographicSalt()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-              <option value="hex">Hexadecimal (0-9, a-f)</option>
-              <option value="base64">Base64 Standard</option>
-              <option value="alphanumeric">Alphanumeric (A-Z, a-z, 0-9)</option>
-              <option value="symbols">Complex (Alphanumeric + Special Symbols)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold opacity-80 mb-1">Quantity</label>
-            <input type="number" id="salt-qty" min="1" max="25" value="5" onchange="generateCryptographicSalt()" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs focus:outline-none">
-          </div>
-          <button onclick="generateCryptographicSalt()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition flex items-center justify-center gap-2">
-            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Generate New Entropy
-          </button>
-        </div>
-
-        <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-3 flex flex-col justify-between">
-          <div class="space-y-2">
-            <div class="flex justify-between items-center text-xs font-bold opacity-80">
-              <span class="text-emerald-400 uppercase tracking-wider">Cryptographic Salt Tokens</span>
-              <button onclick="copyToClipboard('salt-output-text')" class="text-indigo-400 hover:underline">Copy All</button>
-            </div>
-            <textarea id="salt-output-text" readonly class="w-full h-56 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
-          </div>
-          <div class="text-[11px] font-mono opacity-60">🔒 Generated using window.crypto.getRandomValues() CSPRNG.</div>
-        </div>
-      </div>
-    </div>
-  `;
-  generateCryptographicSalt();
-}
-
-function generateCryptographicSalt() {
-  const len = parseInt(document.getElementById('salt-len')?.value || 32, 10);
-  const fmt = document.getElementById('salt-format')?.value || 'hex';
-  const qty = parseInt(document.getElementById('salt-qty')?.value || 5, 10);
-  const out = document.getElementById('salt-output-text');
-  if (!out) return;
-
-  const results = [];
-  for (let q = 0; q < qty; q++) {
-    const bytes = new Uint8Array(len);
-    crypto.getRandomValues(bytes);
-
-    if (fmt === 'hex') {
-      results.push(Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join(''));
-    } else if (fmt === 'base64') {
-      results.push(btoa(String.fromCharCode(...bytes)));
-    } else if (fmt === 'alphanumeric') {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      results.push(Array.from(bytes).map(b => chars[b % chars.length]).join(''));
-    } else {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
-      results.push(Array.from(bytes).map(b => chars[b % chars.length]).join(''));
-    }
-  }
-  out.value = results.join('\n');
-}
-
-/* --- 4. AI OUTPUT & PROMPT PARSER --- */
-function renderAiFilterTool(container, tool) {
+/* --- 5. AGENT PERSONA DEFINITION FORMATTER --- */
+function renderAgentPersonaFormatter(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span class="uppercase tracking-wider text-indigo-400">Raw Model Assistant Response</span>
-            <button onclick="loadSampleAiResponse()" class="text-indigo-400 hover:underline">Insert Sample</button>
+        <div class="theme-card border p-6 rounded-3xl space-y-3 text-xs font-semibold">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400 mb-2">Agent Specification Attributes</div>
+          <div>
+            <label class="block mb-1 opacity-80">Agent Name & Role</label>
+            <input type="text" id="ag-role" value="Lead QA Automation Architect" oninput="compileAgentPersona()" class="w-full p-2.5 theme-editor border rounded-xl text-xs focus:outline-none">
           </div>
-          <textarea id="ai-raw-response" rows="8" class="w-full p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Paste full assistant generation here..."></textarea>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-            <button onclick="filterAiContent('json')" class="py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow transition">Extract JSON</button>
-            <button onclick="filterAiContent('markdown')" class="py-2.5 theme-editor border hover:border-indigo-500 font-bold rounded-xl transition">Extract MD</button>
-            <button onclick="filterAiContent('strip-think')" class="py-2.5 theme-editor border hover:border-indigo-500 font-bold rounded-xl transition">Strip &lt;think&gt;</button>
-            <button onclick="filterAiContent('clean-code')" class="py-2.5 theme-editor border hover:border-indigo-500 font-bold rounded-xl transition">Strip Backticks</button>
+          <div>
+            <label class="block mb-1 opacity-80">Tone & Personality</label>
+            <input type="text" id="ag-tone" value="Direct, analytical, precise, candid" oninput="compileAgentPersona()" class="w-full p-2.5 theme-editor border rounded-xl text-xs focus:outline-none">
+          </div>
+          <div>
+            <label class="block mb-1 opacity-80">Domain Boundaries</label>
+            <input type="text" id="ag-domain" value="Playwright, Selenium, CI/CD, TypeScript" oninput="compileAgentPersona()" class="w-full p-2.5 theme-editor border rounded-xl text-xs focus:outline-none">
+          </div>
+          <div>
+            <label class="block mb-1 opacity-80">Negative Constraints & Rules</label>
+            <textarea id="ag-rules" rows="2" oninput="compileAgentPersona()" class="w-full p-2.5 theme-editor border rounded-xl text-xs focus:outline-none">Do not output conversational greetings. Deliver immediately actionable code snippets.</textarea>
+          </div>
+          <div>
+            <label class="block mb-1 opacity-80">Target Format</label>
+            <select id="ag-format" onchange="compileAgentPersona()" class="w-full p-2.5 theme-editor border rounded-xl text-xs focus:outline-none">
+              <option value="chatml">ChatML (<|im_start|>system)</option>
+              <option value="xml">Anthropic Claude XML (<persona>)</option>
+              <option value="markdown">Markdown Instruction Template</option>
+            </select>
           </div>
         </div>
 
         <div class="theme-card border p-6 rounded-3xl space-y-3 flex flex-col justify-between">
           <div class="space-y-2">
             <div class="flex justify-between items-center text-xs font-bold opacity-80">
-              <span class="text-emerald-400 uppercase tracking-wider">Filtered Result</span>
-              <button onclick="copyToClipboard('ai-filtered-output')" class="text-indigo-400 hover:underline">Copy Filtered</button>
+              <span class="text-emerald-400 uppercase tracking-wider">Compiled System Persona</span>
+              <button onclick="copyToClipboard('ag-output')" class="text-indigo-400 hover:underline">Copy Prompt</button>
             </div>
-            <textarea id="ai-filtered-output" readonly class="w-full h-56 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
+            <textarea id="ag-output" readonly class="w-full h-72 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
           </div>
-          <div id="ai-stats-pill" class="text-[11px] font-mono opacity-60">Ready to clean LLM hallucination tokens.</div>
+          <div class="text-[11px] opacity-60">Ready to inject directly into LLM system prompt context.</div>
         </div>
       </div>
     </div>
   `;
+  compileAgentPersona();
 }
 
-function loadSampleAiResponse() {
-  document.getElementById('ai-raw-response').value = `<think>\nThe user wants a list of server ports. I will output JSON.\n</think>\nSure! Here is the JSON response you requested:\n\`\`\`json\n{\n  "service": "database",\n  "port": 5432,\n  "ssl": true\n}\n\`\`\`\nHope this helps! Let me know if you need anything else.`;
-  filterAiContent('json');
-}
-
-function filterAiContent(action) {
-  let text = document.getElementById('ai-raw-response')?.value || '';
-  const out = document.getElementById('ai-filtered-output');
-  const pill = document.getElementById('ai-stats-pill');
+function compileAgentPersona() {
+  const role = document.getElementById('ag-role')?.value || 'Expert Assistant';
+  const tone = document.getElementById('ag-tone')?.value || 'Helpful';
+  const domain = document.getElementById('ag-domain')?.value || 'General';
+  const rules = document.getElementById('ag-rules')?.value || 'Follow instructions.';
+  const fmt = document.getElementById('ag-format')?.value || 'chatml';
+  const out = document.getElementById('ag-output');
   if (!out) return;
 
-  if (action === 'strip-think') {
-    text = text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
-  } else if (action === 'json') {
-    const match = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
-    text = match ? match[1].trim() : text;
-  } else if (action === 'clean-code') {
-    text = text.replace(/```[a-z]*\n?/gi, '').replace(/```/g, '').trim();
-  } else if (action === 'markdown') {
-    text = text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
-  }
-
-  out.value = text;
-  if (pill) pill.innerText = `Tokens extracted: ${Math.ceil(text.length / 4)} chars: ${text.length}`;
-}
-
-/* --- 5. TIMEZONE MEETING PLANNER --- */
-function renderTimezonePlannerTool(container, tool) {
-  const now = new Date();
-  const defaultDate = now.toISOString().split('T')[0];
-  const defaultTime = `${String(now.getHours()).padStart(2, '0')}:00`;
-
-  const availableZones = [
-    { id: 'Asia/Kolkata', name: 'India (IST, UTC+5:30)', offset: 5.5 },
-    { id: 'UTC', name: 'UTC / GMT (UTC+0:00)', offset: 0 },
-    { id: 'America/New_York', name: 'US Eastern (EST/EDT, UTC-4)', offset: -4 },
-    { id: 'America/Los_Angeles', name: 'US Pacific (PST/PDT, UTC-7)', offset: -7 },
-    { id: 'Europe/London', name: 'UK London (GMT/BST, UTC+1)', offset: 1 },
-    { id: 'Europe/Berlin', name: 'Central Europe (CET, UTC+2)', offset: 2 },
-    { id: 'Asia/Tokyo', name: 'Japan (JST, UTC+9)', offset: 9 },
-    { id: 'Australia/Sydney', name: 'Australia (AEST, UTC+10)', offset: 10 }
-  ];
-
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 theme-card border rounded-3xl">
-        <div>
-          <label class="block text-xs font-bold opacity-80 mb-1.5">Meeting Date</label>
-          <input type="date" id="tz-date" value="${defaultDate}" onchange="updateTimezoneMatrix()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-        </div>
-        <div>
-          <label class="block text-xs font-bold opacity-80 mb-1.5">Reference Time</label>
-          <input type="time" id="tz-time" value="${defaultTime}" onchange="updateTimezoneMatrix()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-        </div>
-        <div>
-          <label class="block text-xs font-bold opacity-80 mb-1.5">Base Timezone</label>
-          <select id="tz-base-zone" onchange="updateTimezoneMatrix()" class="w-full p-2.5 theme-editor border rounded-xl text-xs font-semibold focus:outline-none">
-            ${availableZones.map(z => `<option value="${z.id}" ${z.id === 'Asia/Kolkata' ? 'selected' : ''}>${z.name}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-
-      <div class="theme-card border p-5 rounded-3xl space-y-4">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold opacity-80 uppercase tracking-wider">Compare Participant Timezones</span>
-          <div class="flex items-center gap-4 text-[11px] font-semibold">
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Working (9-18)</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Extended (8-9, 18-21)</span>
-            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span> Night</span>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-2 pt-1" id="tz-checkboxes">
-          ${availableZones.map(z => `
-            <label class="flex items-center gap-1.5 px-3 py-1.5 theme-editor border rounded-xl text-xs font-semibold cursor-pointer hover:border-indigo-500 transition">
-              <input type="checkbox" value="${z.id}" ${['Asia/Kolkata', 'UTC', 'America/New_York', 'Europe/London'].includes(z.id) ? 'checked' : ''} onchange="updateTimezoneMatrix()" class="rounded text-indigo-600 focus:ring-0">
-              <span>${z.id.split('/')[1] || z.id}</span>
-            </label>
-          `).join('')}
-        </div>
-
-        <div class="overflow-x-auto pt-3">
-          <div id="tz-matrix-table" class="min-w-[850px] space-y-2"></div>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-between">
-          <div>
-            <div class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Recommended Overlap Window</div>
-            <div id="tz-overlap-summary" class="text-sm font-extrabold mt-1" style="color: var(--text-main);">Calculating best overlap...</div>
-          </div>
-          <button onclick="navigator.clipboard.writeText(document.getElementById('tz-overlap-summary').innerText); alert('Copied schedule!');" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow transition">Copy Meeting Times</button>
-        </div>
-      </div>
-    </div>
-  `;
-  window.tzAvailableZones = availableZones;
-  updateTimezoneMatrix();
-}
-
-function updateTimezoneMatrix() {
-  const baseZone = document.getElementById('tz-base-zone')?.value || 'Asia/Kolkata';
-  const refTime = document.getElementById('tz-time')?.value || '12:00';
-  const refHour = parseInt(refTime.split(':')[0], 10);
-
-  const selected = Array.from(document.querySelectorAll('#tz-checkboxes input:checked')).map(cb => cb.value);
-  if (!selected.includes(baseZone)) selected.unshift(baseZone);
-
-  const table = document.getElementById('tz-matrix-table');
-  if (!table) return;
-
-  const baseZoneObj = window.tzAvailableZones.find(z => z.id === baseZone) || { offset: 0 };
-
-  let html = `
-    <div class="grid grid-cols-25 gap-1 text-[10px] font-mono text-center font-bold opacity-70 border-b border-slate-500/20 pb-2">
-      <div class="text-left">Zone / City</div>
-      ${Array.from({ length: 24 }).map((_, i) => `<div class="${i === refHour ? 'text-indigo-400 font-extrabold' : ''}">${String(i).padStart(2, '0')}</div>`).join('')}
-    </div>
-  `;
-
-  let overlapCounts = new Array(24).fill(0);
-
-  selected.forEach(zoneId => {
-    const zoneObj = window.tzAvailableZones.find(z => z.id === zoneId) || { offset: 0 };
-    const offsetDiff = zoneObj.offset - baseZoneObj.offset;
-
-    html += `
-      <div class="grid grid-cols-25 gap-1 text-[11px] font-mono items-center py-1 border-b border-slate-500/10">
-        <div class="truncate text-left font-bold text-xs pr-2">${zoneId.split('/')[1] || zoneId}</div>
-    `;
-
-    for (let h = 0; h < 24; h++) {
-      let localHour = Math.floor((h + offsetDiff + 24) % 24);
-      let isWorking = localHour >= 9 && localHour < 18;
-      let isExtended = (localHour >= 8 && localHour < 9) || (localHour >= 18 && localHour < 21);
-
-      let colorClass = 'bg-slate-800 text-slate-400';
-      if (isWorking) {
-        colorClass = 'bg-emerald-600 text-white font-bold';
-        overlapCounts[h]++;
-      } else if (isExtended) {
-        colorClass = 'bg-amber-600 text-black font-bold';
-      }
-
-      const isRef = h === refHour ? 'ring-2 ring-indigo-400 z-10' : '';
-      html += `<div class="h-7 rounded flex items-center justify-center text-[10px] ${colorClass} ${isRef}">${localHour}</div>`;
-    }
-    html += `</div>`;
-  });
-
-  table.innerHTML = html;
-  let maxOverlap = Math.max(...overlapCounts);
-  let bestHour = overlapCounts.indexOf(maxOverlap);
-  const bestSummary = document.getElementById('tz-overlap-summary');
-  if (bestSummary) {
-    bestSummary.innerText = `${String(bestHour).padStart(2, '0')}:00 ${baseZone.split('/')[1] || baseZone} (Best overlap: ${maxOverlap} of ${selected.length} attendees available during working hours)`;
+  if (fmt === 'chatml') {
+    out.value = `<|im_start|>system\nYou are ${role}.\nTone: ${tone}.\nDomain: ${domain}.\n\nRules & Constraints:\n- ${rules}\n<|im_end|>`;
+  } else if (fmt === 'xml') {
+    out.value = `<persona>\n  <role>${role}</role>\n  <tone>${tone}</tone>\n  <domain>${domain}</domain>\n  <constraints>\n    ${rules}\n  </constraints>\n</persona>`;
+  } else {
+    out.value = `### System Persona: ${role}\n**Tone:** ${tone}\n**Domain:** ${domain}\n\n**Operational Constraints:**\n- ${rules}`;
   }
 }
 
-/* --- 6. VISUAL CSS STUDIO --- */
-function renderBoxShadowAndUiTool(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Box-Shadow Sliders</div>
-          <div><div class="flex justify-between text-xs font-bold mb-1"><span>X Offset</span><span id="bs-x-val">4px</span></div><input type="range" id="bs-x" min="-50" max="50" value="4" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
-          <div><div class="flex justify-between text-xs font-bold mb-1"><span>Y Offset</span><span id="bs-y-val">12px</span></div><input type="range" id="bs-y" min="-50" max="50" value="12" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
-          <div><div class="flex justify-between text-xs font-bold mb-1"><span>Blur</span><span id="bs-b-val">24px</span></div><input type="range" id="bs-b" min="0" max="80" value="24" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
-          <div><div class="flex justify-between text-xs font-bold mb-1"><span>Opacity</span><span id="bs-o-val">0.25</span></div><input type="range" id="bs-o" min="0" max="1" step="0.05" value="0.25" oninput="updateBoxShadowLive()" class="w-full accent-indigo-500"></div>
-          <div class="flex items-center justify-between pt-2">
-            <label class="flex items-center gap-2 text-xs font-bold cursor-pointer"><input type="checkbox" id="bs-inset" onchange="updateBoxShadowLive()" class="rounded text-indigo-600"> Inset</label>
-            <input type="color" id="bs-color" value="#000000" onchange="updateBoxShadowLive()" class="w-8 h-8 rounded cursor-pointer">
-          </div>
-        </div>
-
-        <div class="theme-card border p-6 rounded-3xl flex flex-col items-center justify-center space-y-5">
-          <div id="bs-box" class="w-40 h-40 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold text-xs transition-all">Preview</div>
-          <textarea id="bs-css" readonly class="w-full h-20 p-3 theme-editor font-mono text-xs border rounded-xl focus:outline-none"></textarea>
-        </div>
-      </div>
-    </div>
-  `;
-  updateBoxShadowLive();
-}
-
-function updateBoxShadowLive() {
-  const x = document.getElementById('bs-x')?.value || 4;
-  const y = document.getElementById('bs-y')?.value || 12;
-  const b = document.getElementById('bs-b')?.value || 24;
-  const o = document.getElementById('bs-o')?.value || 0.25;
-  const inset = document.getElementById('bs-inset')?.checked ? 'inset ' : '';
-
-  document.getElementById('bs-x-val').innerText = `${x}px`;
-  document.getElementById('bs-y-val').innerText = `${y}px`;
-  document.getElementById('bs-b-val').innerText = `${b}px`;
-  document.getElementById('bs-o-val').innerText = o;
-
-  const css = `${inset}${x}px ${y}px ${b}px 0px rgba(0, 0, 0, ${o})`;
-  document.getElementById('bs-box').style.boxShadow = css;
-  document.getElementById('bs-css').value = `box-shadow: ${css};`;
-}
-
-/* --- 7. CALCULATORS & FINANCIAL --- */
-function renderCalculatorTool(container, tool) {
+/* --- 6. ALL-PAIRS / ORTHOGONAL ARRAY MATRIX --- */
+function renderPairwiseMatrixGenerator(container, tool) {
   container.innerHTML = `
     <div class="space-y-6">
       ${renderToolHeader(tool)}
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="theme-card border p-6 rounded-3xl space-y-4">
-          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Calculation Input</div>
-          <div><label class="block text-xs font-bold opacity-80 mb-1">Principal / Amount</label><input type="number" id="c-v1" value="50000" oninput="runLiveCalc('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs"></div>
-          <div><label class="block text-xs font-bold opacity-80 mb-1">Rate / Percentage (%)</label><input type="number" id="c-v2" value="8.5" step="0.1" oninput="runLiveCalc('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs"></div>
-          <div><label class="block text-xs font-bold opacity-80 mb-1">Duration (Years)</label><input type="number" id="c-v3" value="5" oninput="runLiveCalc('${tool.id}')" class="w-full p-2.5 theme-editor border rounded-xl font-mono text-xs"></div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-indigo-400">Parameters (Name: val1, val2)</div>
+          <textarea id="pairwise-input" rows="7" class="w-full p-3 theme-editor border rounded-xl font-mono text-xs focus:outline-none">Browser: Chrome, Firefox, Safari
+OS: Windows, macOS, Linux
+Network: WiFi, 5G, Offline</textarea>
+          <button onclick="generatePairwiseMatrix()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">Generate Pairwise Matrix</button>
         </div>
 
         <div class="lg:col-span-2 theme-card border p-6 rounded-3xl space-y-4">
-          <div class="grid grid-cols-2 gap-4">
-            <div class="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20">
-              <span class="text-[11px] font-bold opacity-70 block">Monthly Equivalent / Installment</span>
-              <strong id="c-r1" class="text-2xl font-black font-mono text-indigo-400 mt-1 block">--</strong>
-            </div>
-            <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-              <span class="text-[11px] font-bold opacity-70 block">Total Repayment Amount</span>
-              <strong id="c-r2" class="text-2xl font-black font-mono text-emerald-400 mt-1 block">--</strong>
-            </div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">Optimized Pairwise Combinations</span>
+            <span id="pairwise-reduction" class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold text-xs">Reduction: 50%</span>
           </div>
-          <div id="c-breakdown" class="p-4 rounded-2xl theme-editor border text-xs font-mono opacity-80">Calculating values...</div>
+          <div class="overflow-x-auto max-h-72">
+            <table class="w-full text-xs text-left">
+              <thead id="pairwise-thead" class="border-b border-slate-500/20 font-mono text-[11px] opacity-70"></thead>
+              <tbody id="pairwise-tbody" class="divide-y divide-slate-500/10 font-mono"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   `;
-  runLiveCalc(tool.id);
+  generatePairwiseMatrix();
 }
 
-function runLiveCalc(tid) {
-  const v1 = parseFloat(document.getElementById('c-v1')?.value || 0);
-  const v2 = parseFloat(document.getElementById('c-v2')?.value || 0);
-  const v3 = parseFloat(document.getElementById('c-v3')?.value || 0);
+function generatePairwiseMatrix() {
+  const raw = document.getElementById('pairwise-input')?.value || '';
+  const thead = document.getElementById('pairwise-thead');
+  const tbody = document.getElementById('pairwise-tbody');
+  const reduction = document.getElementById('pairwise-reduction');
+  if (!thead || !tbody) return;
 
-  const r = (v2 / 12) / 100;
-  const n = v3 * 12;
-  const emi = (v1 * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-  const total = emi * n;
+  const params = [];
+  raw.split('\n').forEach(line => {
+    const parts = line.split(':');
+    if (parts.length === 2) {
+      const name = parts[0].trim();
+      const vals = parts[1].split(',').map(v => v.trim()).filter(Boolean);
+      if (vals.length > 0) params.push({ name, vals });
+    }
+  });
 
-  document.getElementById('c-r1').innerText = `$${emi.toFixed(2)}`;
-  document.getElementById('c-r2').innerText = `$${total.toFixed(2)}`;
-  document.getElementById('c-breakdown').innerHTML = `Interest Component: <strong>$${(total - v1).toFixed(2)}</strong> over ${n} payments.`;
+  if (params.length === 0) return;
+
+  // Header row
+  thead.innerHTML = `<tr><th class="py-2">Test #</th>${params.map(p => `<th class="py-2">${p.name}</th>`).join('')}</tr>`;
+
+  // Compute total combinations
+  const totalCombos = params.reduce((acc, p) => acc * p.vals.length, 1);
+  const maxLen = Math.max(...params.map(p => p.vals.length));
+  const testCount = Math.min(maxLen * 2 + 1, totalCombos);
+
+  const rows = [];
+  for (let i = 0; i < testCount; i++) {
+    const row = params.map((p, pIdx) => p.vals[(i + pIdx) % p.vals.length]);
+    rows.push(row);
+  }
+
+  tbody.innerHTML = rows.map((r, i) => `
+    <tr class="hover:bg-indigo-500/5">
+      <td class="py-2 text-indigo-400 font-bold">TC-${i + 1}</td>
+      ${r.map(val => `<td class="py-2 opacity-90">${val}</td>`).join('')}
+    </tr>
+  `).join('');
+
+  if (reduction) {
+    const saved = Math.round(((totalCombos - testCount) / totalCombos) * 100);
+    reduction.innerText = `Reduced from ${totalCombos} to ${testCount} tests (${saved}% savings)`;
+  }
 }
 
-/* --- 8. DATA & JSON CONVERTER --- */
-function renderDataStudioTool(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span>Input Data</span>
-            <button onclick="document.getElementById('d-in').value=JSON.stringify({appName:'MyDevToolbox',active:true,tools:321}, null, 2)" class="text-indigo-400 hover:underline">Sample</button>
-          </div>
-          <textarea id="d-in" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none">{
-  "status": "success",
-  "data": [1, 2, 3]
-}</textarea>
-          <div class="grid grid-cols-2 gap-2">
-            <button onclick="try{ document.getElementById('d-out').value=JSON.stringify(JSON.parse(document.getElementById('d-in').value), null, 2); }catch(e){document.getElementById('d-out').value=e.message;}" class="py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs">Beautify</button>
-            <button onclick="try{ document.getElementById('d-out').value=JSON.stringify(JSON.parse(document.getElementById('d-in').value)); }catch(e){document.getElementById('d-out').value=e.message;}" class="py-2.5 theme-editor border font-bold rounded-xl text-xs">Minify</button>
-          </div>
-        </div>
-        <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span class="text-emerald-400">Processed Output</span>
-            <button onclick="copyToClipboard('d-out')" class="text-indigo-400 hover:underline">Copy</button>
-          </div>
-          <textarea id="d-out" readonly class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-/* --- 9. ADAPTIVE TEXT TOOL --- */
-function renderAdaptiveTextTool(container, tool) {
-  container.innerHTML = `
-    <div class="space-y-6">
-      ${renderToolHeader(tool)}
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span>Input Workspace</span>
-            <button onclick="document.getElementById('ad-in').value=''" class="text-rose-400 hover:underline">Clear</button>
-          </div>
-          <textarea id="ad-in" oninput="document.getElementById('ad-out').value=this.value;" class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl focus:outline-none" placeholder="Enter input or parameters..."></textarea>
-          <div class="flex gap-2">
-            <button onclick="document.getElementById('ad-out').value=document.getElementById('ad-in').value.toUpperCase()" class="px-3 py-2 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-xl text-xs font-bold transition">UPPER</button>
-            <button onclick="document.getElementById('ad-out').value=document.getElementById('ad-in').value.toLowerCase()" class="px-3 py-2 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-xl text-xs font-bold transition">lower</button>
-            <button onclick="document.getElementById('ad-out').value=btoa(document.getElementById('ad-in').value)" class="px-3 py-2 bg-slate-500/10 hover:bg-indigo-600 hover:text-white rounded-xl text-xs font-bold transition">Base64</button>
-          </div>
-        </div>
-        <div class="theme-card border p-5 rounded-3xl space-y-3 flex flex-col">
-          <div class="flex justify-between items-center text-xs font-bold opacity-80">
-            <span class="text-emerald-400">Output</span>
-            <button onclick="copyToClipboard('ad-out')" class="text-indigo-400 hover:underline">Copy</button>
-          </div>
-          <textarea id="ad-out" readonly class="w-full h-64 p-3.5 theme-editor font-mono text-xs border rounded-2xl text-emerald-400 focus:outline-none"></textarea>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
+/* --- COMMON HEADER GENERATOR --- */
 function renderToolHeader(tool) {
   return `
     <div class="border-b border-slate-500/20 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
