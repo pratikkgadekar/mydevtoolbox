@@ -1,7 +1,7 @@
-/* js/core.js - Controller with Multi-Color Theme Mapping, High-Contrast Text & Merged A-Z Jump Navigation */
+/* js/core.js - State Management, Search, Multi-Color Category Themes & A-Z Grid Engine */
 
 // ---------------------------------------------------------------------------
-// 1. State Management
+// 1. View Density & A-Z Navigation State
 // ---------------------------------------------------------------------------
 let viewDensity = localStorage.getItem('mdt_view_density') || 'grid';
 let currentActiveCategory = 'all';
@@ -124,7 +124,11 @@ function triggerPwaInstall() {
       deferredPrompt = null;
     });
   } else {
-    alert('💡 To install MyDevToolbox:\n\n• Desktop: Click the install icon (⊕) on the address bar.\n• Mobile: Tap Share → "Add to Home Screen".');
+    alert(
+      '💡 To install MyDevToolbox:\n\n' +
+      '• Desktop: Click the install icon (⊕) on the address bar.\n' +
+      '• Mobile: Tap Share → "Add to Home Screen".'
+    );
   }
 }
 
