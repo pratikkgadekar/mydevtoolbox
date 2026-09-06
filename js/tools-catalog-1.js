@@ -1,6 +1,6 @@
-/* js/tools-catalog-1.js - Tools 1 to 250 */
+/* js/tools-catalog-1.js - Tools 1 to 250 (AI, QA, Data, Security, Web) */
 window.toolsCatalogPart1 = [
-  // 1. AI, LLM & PROMPTING (50 Tools)
+  // 1. AI, LLM & PROMPT ENGINEERING (50 Tools)
   ['llm-tokens', 'LLM Token Counter & Pricing', 'Estimate BPE tokens and query costs for GPT-4o, Claude 3.5, Gemini, and DeepSeek', 'ai', 'cpu', '14+ Models'],
   ['md-table-gen', 'Visual Markdown Table Builder', 'Spreadsheet grid builder that generates formatted copyable Markdown table syntax', 'ai', 'grid', 'Grid Studio'],
   ['wcag-contrast', 'WCAG Color Contrast Checker', 'Real-time foreground/background ratio calculator with instant AA/AAA accessibility ratings', 'ai', 'eye', 'WCAG 2.1'],
@@ -279,7 +279,7 @@ window.toolsCatalogPart1 = [
   ['neumorphism-gen', 'CSS Neumorphism Soft UI Studio', 'Design soft extruded and inset shadow states for modern neumorphic interfaces', 'design', 'sun', 'Soft UI'],
   ['scrollbar-customizer', 'CSS Scrollbar Styler', 'Generate cross-browser ::-webkit-scrollbar and scrollbar-color CSS styles', 'design', 'sliders', 'Scrollbar'],
   ['color-shades-gen', 'Monochromatic Color Shades & Tints', 'Generate 10-step light-to-dark color scales (50 to 900) for UI design systems', 'design', 'palette', 'Shades'],
-  ['svg-data-uri-gen', 'SVG to CSS Background Data URI', 'Encode raw SVG vector code into safe inline background-image data URI styles', 'design', 'image', 'Data URI'],
+  ['svg-data-uri-gen', 'SVG to CSS Background Data URI', 'Encode raw SVG vector code into safe inline background-image: url("data:image...") styles', 'design', 'image', 'Data URI'],
   ['css-filters-sandbox', 'CSS Filter Playground', 'Interactively adjust blur, brightness, contrast, grayscale, and invert filters', 'design', 'sliders', 'Filters'],
   ['css-animation-keyframes', 'CSS Keyframe Animation Studio', 'Build 0% to 100% keyframe transitions with pulse, bounce, and fade presets', 'design', 'play', 'Keyframes'],
   ['cubic-bezier-tester', 'Cubic-Bezier Easing Inspector', 'Visual cubic-bezier(x1, y1, x2, y2) timing curve generator for smooth transitions', 'design', 'activity', 'Easing'],
