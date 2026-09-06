@@ -1,5 +1,5 @@
-/* sw.js - Offline Cache for 500 Tools */
-const CACHE_NAME = 'mdt-cache-v4';
+/* sw.js - Offline Cache for 500 Tools (Bumped to v6) */
+const CACHE_NAME = 'mdt-cache-v6';
 const ASSETS = [
   './',
   './index.html',
