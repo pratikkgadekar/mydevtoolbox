@@ -1,5 +1,5 @@
-/* sw.js - Service Worker Cache v8 */
-const CACHE_NAME = 'mdt-cache-v8';
+/* sw.js - Service Worker Cache v9 */
+const CACHE_NAME = 'mdt-cache-v9';
 const ASSETS = [
   './',
   './index.html',
