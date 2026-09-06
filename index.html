@@ -52,7 +52,7 @@
         </div>
         <div>
           <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
-          <span id="navbar-tool-count" class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold font-mono">Utilities Suite</span>
+          <span id="navbar-tool-count" class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold font-mono">Offline Utilities</span>
         </div>
       </div>
 
@@ -113,7 +113,7 @@
             id="tool-search" 
             oninput="filterTools()" 
             onkeydown="if(event.key === 'Enter') handleMainSearchEnter()" 
-            placeholder="Search across all utilities..." 
+            placeholder="Search across all developer utilities..." 
             class="w-full pl-3 pr-4 py-3.5 bg-transparent border-none text-sm focus:outline-none" 
           />
           <button onclick="filterTools()" class="mr-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">
@@ -133,19 +133,19 @@
           <div id="az-jump-bar" class="flex flex-wrap items-center justify-center gap-1.5 max-w-4xl mx-auto text-xs font-mono"></div>
         </div>
 
-        <!-- 10 Category Filter Pills with Dynamic Count Spans -->
+        <!-- 10 Category Filter Pills with Dynamic Count Placeholders -->
         <div class="flex flex-wrap items-center justify-center gap-1.5 p-1.5 mt-2 rounded-2xl border theme-card max-w-5xl mx-auto text-xs font-semibold shadow-sm">
-          <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All (<span id="cat-count-all">0</span>)</button>
-          <button onclick="setCategoryFilter('ai')" data-pill="ai" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🤖 AI & LLM (<span id="cat-count-ai">0</span>)</button>
-          <button onclick="setCategoryFilter('testing')" data-pill="testing" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🧪 QA Mocks (<span id="cat-count-testing">0</span>)</button>
-          <button onclick="setCategoryFilter('data')" data-pill="data" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📊 JSON & Data (<span id="cat-count-data">0</span>)</button>
-          <button onclick="setCategoryFilter('security')" data-pill="security" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🔐 Security (<span id="cat-count-security">0</span>)</button>
-          <button onclick="setCategoryFilter('web')" data-pill="web" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🌐 Web & APIs (<span id="cat-count-web">0</span>)</button>
-          <button onclick="setCategoryFilter('design')" data-pill="design" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🎨 CSS & UI (<span id="cat-count-design">0</span>)</button>
-          <button onclick="setCategoryFilter('devops')" data-pill="devops" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">⚙️ DevOps (<span id="cat-count-devops">0</span>)</button>
-          <button onclick="setCategoryFilter('text')" data-pill="text" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📝 Content (<span id="cat-count-text">0</span>)</button>
-          <button onclick="setCategoryFilter('math')" data-pill="math" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📐 Math & Units (<span id="cat-count-math">0</span>)</button>
-          <button onclick="setCategoryFilter('media')" data-pill="media" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📂 File & Media (<span id="cat-count-media">0</span>)</button>
+          <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All (<span id="cat-count-all">...</span>)</button>
+          <button onclick="setCategoryFilter('ai')" data-pill="ai" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🤖 AI & LLM (<span id="cat-count-ai">...</span>)</button>
+          <button onclick="setCategoryFilter('testing')" data-pill="testing" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🧪 QA Mocks (<span id="cat-count-testing">...</span>)</button>
+          <button onclick="setCategoryFilter('data')" data-pill="data" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📊 JSON & Data (<span id="cat-count-data">...</span>)</button>
+          <button onclick="setCategoryFilter('security')" data-pill="security" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🔐 Security (<span id="cat-count-security">...</span>)</button>
+          <button onclick="setCategoryFilter('web')" data-pill="web" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🌐 Web & APIs (<span id="cat-count-web">...</span>)</button>
+          <button onclick="setCategoryFilter('design')" data-pill="design" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🎨 CSS & UI (<span id="cat-count-design">...</span>)</button>
+          <button onclick="setCategoryFilter('devops')" data-pill="devops" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">⚙️ DevOps (<span id="cat-count-devops">...</span>)</button>
+          <button onclick="setCategoryFilter('text')" data-pill="text" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📝 Content (<span id="cat-count-text">...</span>)</button>
+          <button onclick="setCategoryFilter('math')" data-pill="math" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📐 Math & Units (<span id="cat-count-math">...</span>)</button>
+          <button onclick="setCategoryFilter('media')" data-pill="media" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📂 File & Media (<span id="cat-count-media">...</span>)</button>
         </div>
 
         <!-- View Mode Switcher -->
