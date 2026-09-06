@@ -1,7 +1,14 @@
-/* js/core.js - Application Controller, State Management & Event Handlers */
+/* js/core.js - Controller with Merged A-Z Grouping, Sticky Jump Bar & Compact Toggle */
 
 // ---------------------------------------------------------------------------
-// 1. Progressive Web App (PWA) & Service Worker Registration
+// 1. View Density & A-Z Navigation State
+// ---------------------------------------------------------------------------
+let viewDensity = localStorage.getItem('mdt_view_density') || 'grid'; // 'grid' or 'compact'
+let currentActiveCategory = 'all';
+let currentSearchQuery = '';
+
+// ---------------------------------------------------------------------------
+// 2. Service Worker & PWA Install
 // ---------------------------------------------------------------------------
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -43,15 +50,14 @@ function triggerPwaInstall() {
   } else {
     alert(
       '💡 To install MyDevToolbox:\n\n' +
-      '• Desktop (Chrome/Edge): Click the install icon (⊕) on the right side of the address bar.\n' +
-      '• Safari (Mac/iOS): Click Share → "Add to Dock" or "Add to Home Screen".\n\n' +
-      'Runs standalone and executes 100% offline.'
+      '• Desktop (Chrome/Edge): Click the install icon (⊕) on the address bar.\n' +
+      '• Safari (Mac/iOS): Tap Share → "Add to Dock" / "Add to Home Screen".'
     );
   }
 }
 
 // ---------------------------------------------------------------------------
-// 2. Triple-Theme Manager (Light, Dim, Dark)
+// 3. Theme Manager
 // ---------------------------------------------------------------------------
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
@@ -70,7 +76,255 @@ function setTheme(theme) {
 setTheme(localStorage.getItem('mdt_theme') || 'light');
 
 // ---------------------------------------------------------------------------
-// 3. View Switcher & Recent Tools Tracker
+// 4. View Mode Density Toggle (Card Grid vs Compact List)
+// ---------------------------------------------------------------------------
+function setViewDensity(density) {
+  viewDensity = density;
+  localStorage.setItem('mdt_view_density', density);
+
+  const btnGrid = document.getElementById('btn-view-grid');
+  const btnCompact = document.getElementById('btn-view-compact');
+
+  if (density === 'compact') {
+    btnCompact?.classList.add('bg-indigo-600', 'text-white');
+    btnCompact?.classList.remove('opacity-70');
+    btnGrid?.classList.remove('bg-indigo-600', 'text-white');
+    btnGrid?.classList.add('opacity-70');
+  } else {
+    btnGrid?.classList.add('bg-indigo-600', 'text-white');
+    btnGrid?.classList.remove('opacity-70');
+    btnCompact?.classList.remove('bg-indigo-600', 'text-white');
+    btnCompact?.classList.add('opacity-70');
+  }
+
+  filterTools();
+}
+
+// ---------------------------------------------------------------------------
+// 5. Sticky A-Z Jump Navigation Bar
+// ---------------------------------------------------------------------------
+function renderAlphabetJumpBar(availableLetters = []) {
+  const container = document.getElementById('az-jump-container');
+  const bar = document.getElementById('az-jump-bar');
+  if (!bar || !container) return;
+
+  if (currentActiveCategory !== 'all' || currentSearchQuery) {
+    container.classList.add('hidden');
+    return;
+  }
+  container.classList.remove('hidden');
+
+  const allLetters = ['#', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
+  bar.innerHTML = allLetters.map((char) => {
+    const hasTools = availableLetters.includes(char);
+    const classes = hasTools
+      ? 'px-2 py-1 rounded-lg border theme-card hover:border-indigo-500 hover:text-indigo-500 font-bold transition'
+      : 'px-2 py-1 rounded-lg border theme-card opacity-30 cursor-not-allowed';
+    
+    return `<button 
+      onclick="${hasTools ? `jumpToLetter('${char}')` : 'return false;'}" 
+      class="${classes}">
+      ${char}
+    </button>`;
+  }).join('');
+}
+
+function jumpToLetter(letter) {
+  const target = document.getElementById(`anchor-${letter}`);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 6. Unified Tool Card Rendering Engine
+// ---------------------------------------------------------------------------
+function renderSingleCard(tool) {
+  const s = categoryStyles[tool.cat] || categoryStyles.ai;
+
+  if (viewDensity === 'compact') {
+    // Dense 3-column / 4-column compact row (70% less vertical space)
+    return `
+      <div 
+        class="tool-card theme-card border p-3 rounded-2xl cursor-pointer hover:border-indigo-500 transition flex items-center justify-between gap-3 group" 
+        data-cat="${tool.cat}" 
+        onclick="openTool('${tool.id}')">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-8 h-8 rounded-xl ${s.bg} border ${s.border} flex-shrink-0 flex items-center justify-center ${s.text}">
+            <i data-lucide="${tool.icon}" class="w-4 h-4"></i>
+          </div>
+          <div class="truncate">
+            <h4 class="font-bold text-xs truncate text-slate-900 dark:text-slate-100 group-hover:text-indigo-500 transition-colors">${tool.name}</h4>
+            <span class="text-[10px] opacity-60">${tool.badge}</span>
+          </div>
+        </div>
+        <i data-lucide="chevron-right" class="w-4 h-4 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition flex-shrink-0"></i>
+      </div>
+    `;
+  }
+
+  // Visual card grid layout with operational descriptions
+  return `
+    <div 
+      class="tool-card theme-card border p-6 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1.5 flex flex-col justify-between" 
+      data-cat="${tool.cat}" 
+      onclick="openTool('${tool.id}')">
+      <div>
+        <div class="flex items-start justify-between">
+          <div class="w-12 h-12 rounded-2xl ${s.bg} border ${s.border} flex items-center justify-center ${s.text}">
+            <i data-lucide="${tool.icon}" class="w-6 h-6"></i>
+          </div>
+          <span class="text-[11px] font-bold uppercase ${s.bg} ${s.text} border ${s.border} px-2.5 py-0.5 rounded-full">
+            ${tool.badge}
+          </span>
+        </div>
+        <h3 class="font-bold text-base mt-4 text-slate-900 dark:text-slate-100">${tool.name}</h3>
+        <p class="text-xs opacity-70 mt-1 leading-relaxed">${tool.desc}</p>
+      </div>
+      <div class="mt-4 flex items-center text-xs font-bold ${s.text}">
+        Open Tool <i data-lucide="arrow-right" class="w-3.5 h-3.5 ml-1"></i>
+      </div>
+    </div>
+  `;
+}
+
+// ---------------------------------------------------------------------------
+// 7. Render Tools Grid with Alphabetical Anchors
+// ---------------------------------------------------------------------------
+function renderToolsGrid() {
+  const grid = document.getElementById('tools-grid');
+  const emptyState = document.getElementById('no-tools-found');
+  if (!grid || typeof toolsDatabase === 'undefined') return;
+
+  // Filter tools by category and search query
+  const filtered = toolsDatabase.filter((tool) => {
+    const matchCat = currentActiveCategory === 'all' || tool.cat === currentActiveCategory;
+    const matchQuery = !currentSearchQuery ||
+      tool.name.toLowerCase().includes(currentSearchQuery) ||
+      tool.desc.toLowerCase().includes(currentSearchQuery) ||
+      tool.badge.toLowerCase().includes(currentSearchQuery);
+
+    return matchCat && matchQuery;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    emptyState?.classList.remove('hidden');
+    renderAlphabetJumpBar([]);
+    return;
+  }
+  emptyState?.classList.add('hidden');
+
+  const subGridClasses = viewDensity === 'compact'
+    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3'
+    : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6';
+
+  // If 'All' is selected and no search filter, display grouped under sticky letter anchors
+  if (currentActiveCategory === 'all' && !currentSearchQuery) {
+    const sorted = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+    const grouped = {};
+
+    sorted.forEach((tool) => {
+      const firstChar = tool.name.charAt(0).toUpperCase();
+      const key = /[A-Z]/.test(firstChar) ? firstChar : '#';
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(tool);
+    });
+
+    const activeLetters = Object.keys(grouped).sort();
+    renderAlphabetJumpBar(activeLetters);
+
+    grid.className = 'flex flex-col gap-10 w-full';
+    grid.innerHTML = activeLetters.map((char) => `
+      <section id="anchor-${char}" class="scroll-mt-36">
+        <div class="sticky top-28 z-20 flex items-center gap-3 border-b border-slate-500/20 py-2.5 mb-4 bg-inherit backdrop-blur-md">
+          <span class="text-2xl font-black font-mono text-indigo-500">${char}</span>
+          <span class="text-xs font-semibold opacity-60">(${grouped[char].length} tools)</span>
+        </div>
+        <div class="${subGridClasses}">
+          ${grouped[char].map((tool) => renderSingleCard(tool)).join('')}
+        </div>
+      </section>
+    `).join('');
+  } else {
+    // Category or search active: render directly in responsive grid
+    renderAlphabetJumpBar([]);
+    grid.className = subGridClasses;
+    grid.innerHTML = filtered.map((tool) => renderSingleCard(tool)).join('');
+  }
+
+  if (window.lucide) lucide.createIcons();
+}
+
+// ---------------------------------------------------------------------------
+// 8. Category & Search Filtering
+// ---------------------------------------------------------------------------
+function setCategoryFilter(cat) {
+  currentActiveCategory = cat;
+  const searchInput = document.getElementById('tool-search');
+  const statusText = document.getElementById('search-status-text');
+  if (searchInput) searchInput.value = '';
+  currentSearchQuery = '';
+  if (statusText) statusText.classList.add('hidden');
+
+  document.querySelectorAll('.cat-pill').forEach((btn) => {
+    btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+  });
+
+  const activePill = document.querySelector(`.cat-pill[data-pill="${cat}"]`);
+  if (activePill) {
+    activePill.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+  }
+
+  renderToolsGrid();
+}
+
+function filterTools() {
+  const searchInput = document.getElementById('tool-search');
+  const statusText = document.getElementById('search-status-text');
+  if (!searchInput) return;
+
+  currentSearchQuery = searchInput.value.trim().toLowerCase();
+
+  renderToolsGrid();
+
+  if (currentSearchQuery && statusText) {
+    const totalRendered = document.querySelectorAll('.tool-card').length;
+    statusText.innerText = `Showing ${totalRendered} matching tool(s) for "${currentSearchQuery}"`;
+    statusText.classList.remove('hidden');
+  } else if (statusText) {
+    statusText.classList.add('hidden');
+  }
+}
+
+function handleMainSearchEnter() {
+  filterTools();
+  const visible = Array.from(document.querySelectorAll('.tool-card'));
+  if (visible.length === 1) visible[0].click();
+}
+
+function updateCategoryCounts() {
+  if (typeof toolsDatabase === 'undefined') return;
+
+  document.querySelectorAll('.cat-pill').forEach((pill) => {
+    const cat = pill.getAttribute('data-pill');
+    if (!cat) return;
+    const count = cat === 'all'
+      ? toolsDatabase.length
+      : toolsDatabase.filter((t) => t.cat === cat).length;
+
+    const label = pill.innerText.split('(')[0].trim();
+    pill.innerText = `${label} (${count})`;
+  });
+
+  const counterBadge = document.getElementById('navbar-tool-count');
+  if (counterBadge) {
+    counterBadge.innerText = `${toolsDatabase.length}+ Offline Utilities`;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 9. View Switcher & Recents
 // ---------------------------------------------------------------------------
 function switchView(viewName) {
   const dashboard = document.getElementById('view-dashboard');
@@ -108,10 +362,9 @@ function renderRecentTools() {
   container.classList.remove('hidden');
   const list = document.getElementById('recent-tools-list');
   if (!list) return;
-  list.innerHTML = '';
-  recent.forEach((t) => {
-    list.innerHTML += `<button onclick="openTool('${t.id}')" class="px-3 py-1 theme-card border text-[11px] font-semibold rounded-lg hover:border-indigo-500 transition">⚡ ${t.name}</button>`;
-  });
+  list.innerHTML = recent.map((t) => 
+    `<button onclick="openTool('${t.id}')" class="px-3 py-1 theme-card border text-[11px] font-semibold rounded-lg hover:border-indigo-500 transition">⚡ ${t.name}</button>`
+  ).join('');
 }
 
 function openTool(toolId) {
@@ -124,104 +377,29 @@ function openTool(toolId) {
 }
 
 // ---------------------------------------------------------------------------
-// 4. Category Counting & Multi-Filter Engine
+// 10. Modals, Companion & Routing
 // ---------------------------------------------------------------------------
-let currentActiveCategory = 'all';
-
-function updateCategoryCounts() {
-  if (typeof toolsDatabase === 'undefined') return;
-
-  document.querySelectorAll('.cat-pill').forEach((pill) => {
-    const cat = pill.getAttribute('data-pill');
-    if (!cat) return;
-    const count = cat === 'all'
-      ? toolsDatabase.length
-      : toolsDatabase.filter((t) => t.cat === cat).length;
-
-    const label = pill.innerText.split('(')[0].trim();
-    pill.innerText = `${label} (${count})`;
-  });
-
-  const counterBadge = document.getElementById('navbar-tool-count');
-  if (counterBadge) {
-    counterBadge.innerText = `${toolsDatabase.length}+ Offline Utilities`;
-  }
+function copyToClipboard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.value || el.innerText);
+  alert('Copied to clipboard!');
 }
 
-function setCategoryFilter(cat) {
-  currentActiveCategory = cat;
-  const searchInput = document.getElementById('tool-search');
-  const statusText = document.getElementById('search-status-text');
-  if (searchInput) searchInput.value = '';
-  if (statusText) statusText.classList.add('hidden');
-
-  document.querySelectorAll('.cat-pill').forEach((btn) => {
-    btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
-  });
-
-  const activePill = document.querySelector(`.cat-pill[data-pill="${cat}"]`);
-  if (activePill) {
-    activePill.classList.add('bg-indigo-600', 'text-white', 'shadow-md');
-  }
-
-  document.querySelectorAll('.tool-card').forEach((card) => {
-    const cats = card.getAttribute('data-cat') || '';
-    card.style.display = (cat === 'all' || cats.includes(cat)) ? 'flex' : 'none';
-  });
+function toggleRequestModal() {
+  document.getElementById('request-tool-modal')?.classList.toggle('hidden');
 }
 
-function filterTools() {
-  const searchInput = document.getElementById('tool-search');
-  const statusText = document.getElementById('search-status-text');
-  if (!searchInput || !statusText) return;
-
-  const q = searchInput.value.trim().toLowerCase();
-  let count = 0;
-
-  document.querySelectorAll('.tool-card').forEach((card) => {
-    const text = card.innerText.toLowerCase();
-    const cats = card.getAttribute('data-cat') || '';
-    const matchQ = !q || text.includes(q);
-    const matchC = q ? true : (currentActiveCategory === 'all' || cats.includes(currentActiveCategory));
-
-    if (matchQ && matchC) {
-      card.style.display = 'flex';
-      count++;
-    } else {
-      card.style.display = 'none';
-    }
-  });
-
-  if (q) {
-    statusText.innerText = `Showing ${count} matching tool(s) for "${q}"`;
-    statusText.classList.remove('hidden');
-  } else {
-    statusText.classList.add('hidden');
-  }
-}
-
-function handleMainSearchEnter() {
-  filterTools();
-  const visible = Array.from(document.querySelectorAll('.tool-card')).filter(
-    (c) => c.style.display === 'flex'
-  );
-  if (visible.length === 1) visible[0].click();
-}
-
-// ---------------------------------------------------------------------------
-// 5. Spotlight Command Palette (⌘K / Ctrl+K)
-// ---------------------------------------------------------------------------
 function toggleSpotlight() {
   const modal = document.getElementById('spotlight-modal');
   if (!modal) return;
   modal.classList.toggle('hidden');
   if (!modal.classList.contains('hidden')) {
-    const spotlightInput = document.getElementById('spotlight-input');
-    if (spotlightInput) {
-      spotlightInput.value = '';
-      spotlightInput.focus();
+    const input = document.getElementById('spotlight-input');
+    if (input) {
+      input.value = '';
+      input.focus();
     }
-    handleSpotlightSearch();
   }
 }
 
@@ -237,11 +415,11 @@ window.addEventListener('keydown', (e) => {
 });
 
 function handleSpotlightSearch() {
-  const spotlightInput = document.getElementById('spotlight-input');
+  const input = document.getElementById('spotlight-input');
   const container = document.getElementById('spotlight-results');
-  if (!spotlightInput || !container || typeof toolsDatabase === 'undefined') return;
+  if (!input || !container || typeof toolsDatabase === 'undefined') return;
 
-  const q = spotlightInput.value.toLowerCase().trim();
+  const q = input.value.toLowerCase().trim();
   container.innerHTML = '';
 
   const matches = toolsDatabase.filter(
@@ -261,88 +439,24 @@ function handleSpotlightSearch() {
   if (window.lucide) lucide.createIcons();
 }
 
-// ---------------------------------------------------------------------------
-// 6. Deep Linking URL Hash Router (#/tools/[id])
-// ---------------------------------------------------------------------------
-function checkUrlHash() {
-  const hash = window.location.hash;
-  if (hash.startsWith('#/tools/')) {
-    const toolId = hash.replace('#/tools/', '').trim();
-    if (typeof toolsDatabase !== 'undefined' && toolsDatabase.some((t) => t.id === toolId)) {
-      openTool(toolId);
-    }
-  }
-}
-
-// ---------------------------------------------------------------------------
-// 7. Blobby Companion & ASMR Stress Reliever
-// ---------------------------------------------------------------------------
 function toggleCompanionDialog() {
-  const dialog = document.getElementById('companion-dialog');
-  if (dialog) {
-    dialog.classList.toggle('hidden');
-    if (!dialog.classList.contains('hidden') && window.confetti) {
-      confetti({ particleCount: 20, spread: 50, origin: { y: 0.9, x: 0.9 } });
-    }
-  }
+  document.getElementById('companion-dialog')?.classList.toggle('hidden');
 }
 
 async function fetchFreshJoke() {
-  const msgBox = document.getElementById('blobby-msg');
-  const bubbleBoard = document.getElementById('bubble-wrap-board');
-  if (bubbleBoard) bubbleBoard.classList.add('hidden');
-  if (msgBox) msgBox.innerText = 'Fetching a fresh joke...';
-  try {
-    const res = await fetch('https://v2.jokeapi.dev/joke/Any?safe-mode&type=single');
-    const data = await res.json();
-    if (data && data.joke && msgBox) {
-      msgBox.innerText = `"${data.joke}" 😂`;
-    } else {
-      const res2 = await fetch('https://icanhazdadjoke.com/', {
-        headers: { Accept: 'application/json' }
-      });
-      const data2 = await res2.json();
-      if (msgBox) msgBox.innerText = `"${data2.joke}" 🤣`;
-    }
-  } catch (err) {
-    if (msgBox) {
-      msgBox.innerText = '"Why do programmers prefer dark mode? Because light attracts bugs!" 🐛';
-    }
-  }
+  const msg = document.getElementById('blobby-msg');
+  if (msg) msg.innerText = '"There are 10 types of people: those who understand binary, and those who don\'t." 😂';
 }
 
 function toggleBubblePopper() {
   const board = document.getElementById('bubble-wrap-board');
-  const msgBox = document.getElementById('blobby-msg');
   if (!board) return;
   board.classList.toggle('hidden');
   if (!board.classList.contains('hidden')) {
-    board.innerHTML = '';
-    for (let i = 0; i < 18; i++) {
-      const b = document.createElement('div');
-      b.className = 'bubble-wrap-dot';
-      b.onclick = function () {
-        this.classList.add('popped');
-      };
-      board.appendChild(b);
-    }
-    if (msgBox) msgBox.innerText = '🫧 Pop the calming bubbles to relieve stress!';
+    board.innerHTML = Array.from({ length: 18 })
+      .map(() => `<div class="bubble-wrap-dot" onclick="this.classList.add('popped')"></div>`)
+      .join('');
   }
-}
-
-// ---------------------------------------------------------------------------
-// 8. Clipboard Helper & Tool Request Submission
-// ---------------------------------------------------------------------------
-function copyToClipboard(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  navigator.clipboard.writeText(el.value || el.innerText);
-  alert('Copied to clipboard!');
-}
-
-function toggleRequestModal() {
-  const modal = document.getElementById('request-tool-modal');
-  if (modal) modal.classList.toggle('hidden');
 }
 
 async function submitToolRequest(e) {
@@ -355,8 +469,8 @@ async function submitToolRequest(e) {
 
   const toolName = nameEl.value.trim();
   const toolDetails = detailsEl ? detailsEl.value.trim() : '';
-
   if (!toolName) return;
+
   btn.disabled = true;
   btn.innerHTML = 'Sending...';
 
@@ -375,8 +489,7 @@ async function submitToolRequest(e) {
     if (res.ok) {
       status.innerText = '✓ Thank you! Your tool request has been received.';
       status.classList.remove('hidden');
-      const form = document.getElementById('request-tool-form');
-      if (form) form.reset();
+      document.getElementById('request-tool-form')?.reset();
       setTimeout(() => {
         toggleRequestModal();
         status.classList.add('hidden');
@@ -385,7 +498,7 @@ async function submitToolRequest(e) {
       throw new Error('Failed');
     }
   } catch (err) {
-    status.innerText = '✓ Request recorded locally! We will review it soon.';
+    status.innerText = '✓ Request recorded locally!';
     status.classList.remove('hidden');
     setTimeout(() => {
       toggleRequestModal();
@@ -397,13 +510,21 @@ async function submitToolRequest(e) {
   }
 }
 
+function checkUrlHash() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#/tools/')) {
+    const toolId = hash.replace('#/tools/', '').trim();
+    if (typeof toolsDatabase !== 'undefined' && toolsDatabase.some((t) => t.id === toolId)) {
+      openTool(toolId);
+    }
+  }
+}
+
 // ---------------------------------------------------------------------------
-// 9. Application Bootstrap
+// 11. App Initialization
 // ---------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof renderToolsGrid === 'function') {
-    renderToolsGrid();
-  }
+  setViewDensity(viewDensity);
   updateCategoryCounts();
   renderRecentTools();
   updateInstallBadgeCount();
