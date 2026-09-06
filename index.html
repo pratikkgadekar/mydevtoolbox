@@ -11,10 +11,8 @@
   <meta name="theme-color" content="#4f46e5" />
   <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/906/906324.png" />
 
-  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2884422236657572" crossorigin="anonymous"></script>
 
-  <!-- Tailwind & Core Libraries -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -54,7 +52,7 @@
         </div>
         <div>
           <span class="font-extrabold text-lg tracking-tight">MyDev<span class="text-indigo-500">Toolbox</span></span>
-          <span class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">500+ Offline Utilities</span>
+          <span id="navbar-tool-count" class="text-[10px] ml-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold">500+ Utilities</span>
         </div>
       </div>
 
@@ -64,7 +62,7 @@
           <span>Request Tool</span>
         </button>
 
-        <button onclick="triggerPwaInstall()" id="btn-pwa-install" title="Install MyDevToolbox as a Progressive Web App (PWA) to run standalone and work 100% offline without internet connection." class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
+        <button onclick="triggerPwaInstall()" id="btn-pwa-install" title="Install MyDevToolbox as a Progressive Web App (PWA) to run offline" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500/20 text-xs font-bold transition shadow-sm">
           <i data-lucide="laptop" class="w-3.5 h-3.5"></i>
           <span>Install Offline</span>
           <span id="install-counter-badge" class="ml-1 px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-mono font-bold shadow-sm">1.2k+</span>
@@ -92,11 +90,11 @@
   </div>
 
   <!-- MAIN CONTAINER -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
 
     <!-- DASHBOARD VIEW -->
     <div id="view-dashboard">
-      <div class="text-center max-w-3xl mx-auto mb-6 pt-2">
+      <div class="text-center max-w-3xl mx-auto mb-4 pt-1">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-500 text-xs font-bold mb-3">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 100% In-Browser • In-Memory Processing • Zero Server Uploads
         </div>
@@ -115,7 +113,7 @@
             id="tool-search" 
             oninput="filterTools()" 
             onkeydown="if(event.key === 'Enter') handleMainSearchEnter()" 
-            placeholder="Search across all 500+ utilities (Tokens, JSON, Diff, Hashes, CSS, Regex)..." 
+            placeholder="Search across 500+ utilities (Playwright, Docker, JSON, Cron)..." 
             class="w-full pl-3 pr-4 py-3.5 bg-transparent border-none text-sm focus:outline-none" 
           />
           <button onclick="filterTools()" class="mr-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs shadow transition">
@@ -130,8 +128,13 @@
           <div id="recent-tools-list" class="flex flex-wrap justify-center items-center gap-1.5 no-scrollbar"></div>
         </div>
 
-        <!-- 10 Responsive Category Pills (Counts updated dynamically) -->
-        <div class="flex flex-wrap items-center justify-center gap-1.5 p-1.5 mt-6 rounded-2xl border theme-card max-w-5xl mx-auto text-xs font-semibold shadow-sm">
+        <!-- Sticky A-Z Jump Bar (Visible when 'All' category is selected) -->
+        <div id="az-jump-container" class="sticky top-16 z-30 pt-3 pb-2 bg-inherit backdrop-blur-md">
+          <div id="az-jump-bar" class="flex flex-wrap items-center justify-center gap-1 max-w-4xl mx-auto text-xs font-mono"></div>
+        </div>
+
+        <!-- 10 Category Filter Pills -->
+        <div class="flex flex-wrap items-center justify-center gap-1.5 p-1.5 mt-2 rounded-2xl border theme-card max-w-5xl mx-auto text-xs font-semibold shadow-sm">
           <button onclick="setCategoryFilter('all')" data-pill="all" class="cat-pill active px-3.5 py-1.5 rounded-xl bg-indigo-600 text-white font-bold shadow-md shadow-indigo-500/20 transition">All (500)</button>
           <button onclick="setCategoryFilter('ai')" data-pill="ai" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🤖 AI & LLM (50)</button>
           <button onclick="setCategoryFilter('testing')" data-pill="testing" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">🧪 QA Mocks (50)</button>
@@ -144,10 +147,27 @@
           <button onclick="setCategoryFilter('math')" data-pill="math" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📐 Math & Units (50)</button>
           <button onclick="setCategoryFilter('media')" data-pill="media" class="cat-pill px-3 py-1.5 rounded-xl hover:bg-slate-500/10 transition">📂 File & Media (50)</button>
         </div>
+
+        <!-- View Density Toggle Controls -->
+        <div class="flex items-center justify-between max-w-5xl mx-auto mt-4 px-2 text-xs font-semibold">
+          <div id="view-mode-indicator" class="opacity-70 text-[11px] uppercase tracking-wider">
+            Displaying alphabetically with letter anchors
+          </div>
+          <div class="flex items-center gap-1 p-1 rounded-xl border theme-card">
+            <button onclick="setViewDensity('grid')" id="btn-view-grid" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-600 text-white transition shadow-sm" title="Visual Card Grid">
+              <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+              <span>Card Grid</span>
+            </button>
+            <button onclick="setViewDensity('compact')" id="btn-view-compact" class="flex items-center gap-1 px-2.5 py-1 rounded-lg opacity-70 hover:opacity-100 transition" title="Dense 3-Column Compact List">
+              <i data-lucide="list" class="w-3.5 h-3.5"></i>
+              <span>Compact List</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- FULL 500-TOOL GRID (Rendered programmatically by tools.js & core.js) -->
-      <div id="tools-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <!-- TOOLS CONTAINER (Populated dynamically) -->
+      <div id="tools-grid" class="w-full"></div>
 
       <!-- Empty State -->
       <div id="no-tools-found" class="hidden text-center py-16 theme-card border rounded-3xl p-8 max-w-md mx-auto my-6">
@@ -300,7 +320,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT LOADING ORDER: tools.js MUST load BEFORE core.js -->
+  <!-- SCRIPT LOADING ORDER -->
   <script src="js/tools-data.js"></script>
   <script src="js/tools.js"></script>
   <script src="js/core.js"></script>
